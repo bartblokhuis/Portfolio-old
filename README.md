@@ -38,5 +38,5 @@ To start the public website first check again if the baseApiUrl in the environme
 Now open a new terminal in the public folder and run the following commands:
 ```
 $ npm i
-$ ng serve --urls https://localhost:4201
+$ ng serve --port 4201
 ```
