@@ -1,0 +1,10 @@
+
+<quill-editor 
+    [formControl]="control"
+    name="editor" 
+    [placeholder]="''" 
+    [required]="true"
+    [maxLength]="10"
+    class="text-editor"
+    (onContentChanged)="onChange($event)">
+</quill-editor>

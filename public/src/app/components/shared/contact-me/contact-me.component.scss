@@ -1,0 +1,189 @@
+@import "../../../../assets/scss/variables.scss";
+
+
+
+
+    .contact-me-wrapper{
+        display: inline-block;
+        background-color: #fff;
+        font-size: 1.5em;
+        overflow: hidden;
+        border-radius: 30px;
+
+        .contact-me-header {
+            padding: 20px 50px;
+            text-align: left;
+            
+            @media(min-width: 748px){
+                display: flex;
+                justify-content: center;
+                align-items: center;
+
+                label {
+                    text-align: left;
+                    padding-right: 10px;
+                }
+            }
+            &> * {
+                display: block;
+                text-align: center;
+            }
+            #ContactMe{
+                margin: 0 auto;
+            }
+        }
+
+        .contact-me-body {
+            padding: 0 50px;
+            width: 100%;
+            max-height: 0;
+            box-sizing: border-box;
+            background-color: $primary-background-color;
+            transition: max-height 500ms ease-in-out;
+
+            &.open {
+                max-height: 800px;
+                margin-bottom: 20px;
+            }
+
+            #contatcMeForm{
+                overflow: hidden;
+
+                > div{
+                    padding-top: 20px;
+
+                    > label {
+                        display: block;
+                        text-align: left;
+                        padding-bottom: 2px;
+                    }
+
+                    textarea,
+                    input {
+                        box-sizing: border-box !important;
+                        padding: 8px 12px;
+                        border-radius: 12px;
+                        border: none;
+                        outline: 0;
+                        box-shadow: rgb(0 0 0 / 16%) -1px -1px 3px 0px, rgb(0 0 0 / 16%) 1px 1px 3px 0px;
+                        font-size: .8em;
+                        margin: 0 0 0 0;
+                    }
+
+                    textarea{
+                        width: 100%;
+                        max-width: 100%;
+                        min-height: 100px;
+                    }
+
+                    input[type='email']{
+                        width: 100%;
+                    }
+
+                    &:first-child input{
+                        width: 100%;
+
+                        @media(min-width: 748px){
+                            width: 48%;
+                            margin-right: 2%;
+
+                            &:last-child {
+                                margin-top: 0;
+                                margin-right: 0;
+                                margin-left: 2%;
+                            }
+                        }
+
+                        &:last-child {
+                            margin-top: 10px;
+                        }
+                    }
+                }
+
+                .submit-btn{
+                    display: block;
+                    padding: 10px 20px;
+                    border-radius: 30px;
+                    font-size: 1em;
+                    margin: 20px 0;
+                    border-width: 0;
+                    position: relative;
+                    width: 100%;
+
+                    label {
+                        display: none;
+                    }
+
+                    &.default{
+                        .default{
+                            display: block;
+                        }
+                    }
+
+                    &.loading {
+                        .default {
+                            display: block;
+                            visibility: hidden;
+                        }
+                        .loading-animation {
+                            display: block;
+                            position: absolute;
+                            top: 50%;
+                            left: 50%;
+                            transform: translate(-50%, -50%);
+                            img {
+                                height: 1em;
+                            }
+                        }
+                    }
+
+                    &.successfull {
+                        .success {
+                            display: block;
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    .social-links-wrapper{
+        margin-top: 50px;
+        
+        .social-links {
+            display:inline-block;
+            margin: 0 auto;
+            text-align: center;
+    
+            .link{
+                height: 50px;
+                width: 50px;
+                overflow: hidden;
+                display: block;
+                float: left;
+                margin: 0 10px;
+                padding: 10px;
+                border-radius: 50%;
+                box-shadow: rgba(0, 0, 0, 0.16) -1px -1px 3px 0px, rgba(0, 0, 0, 0.16) 1px 1px 3px 0px;
+                font-size: 0;
+                box-sizing: border-box;
+                background-color: #fff;
+                position: relative;
+
+                &:hover::before{
+                    content: "";
+                    position: absolute;
+                    background-color: #000;
+                    top: 0;
+                    bottom:0;
+                    left:0;
+                    right:0;
+                    opacity: .1;
+                }
+            }
+        }
+    }
+
+section.footer textarea, section.footer input, .contact-me-header, .contact-me-body, .project > div, .hero-wrapper{
+    box-sizing: border-box;
+}

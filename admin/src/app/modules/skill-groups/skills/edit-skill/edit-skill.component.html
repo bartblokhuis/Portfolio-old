@@ -1,0 +1,35 @@
+<div class="modal-header">
+    <h4 class="modal-title" id="modal-project-title">Edit skill</h4>
+    <button type="button" class="close" aria-label="Close" >
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <form [formGroup]="editForm" (ngSubmit)="submit()">
+  <div class="modal-body">
+    
+      <div class="row">
+        <div class="col-6">
+            <div class="form-group">
+                <label>Name</label>
+                <input formControlName="name" class="form-control" type="text" />
+            </div>
+        </div>
+        <div class="col-6">
+            <div class="form-group">
+                <label>Icon file</label>
+                <div class="custom-file">
+                    <input formControlName="file" type="file" class="form-control" id="customFile"  (change)="onFileChange($event)" />
+                    <label class="custom-file-label" for="customFile">{{currentFileName}}</label>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+  </div>
+  <div class="modal-footer justify-content-between">
+    
+    <button type="button" class="btn btn-default">Cancel</button>
+    <button type="submit" class="btn btn-primary">Save</button>
+  </div>
+
+  </form>

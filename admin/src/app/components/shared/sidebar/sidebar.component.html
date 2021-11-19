@@ -1,0 +1,68 @@
+<aside class="main-sidebar sidebar-dark-primary elevation-4">
+    <!-- Brand Logo -->
+    <a href="#" class="brand-link">
+      <span class="brand-text font-weight-light">Bart's Portfolio</span>
+    </a>
+
+    <!-- Sidebar -->
+    <div class="sidebar">
+
+      <!-- Sidebar Menu -->
+      <nav class="mt-2">
+        
+        <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
+          
+         <ng-container *ngFor="let menuItem of menuItems;" 
+          [ngTemplateOutlet]="menuItem.menuItems ? navDropDown : navLink" 
+          [ngTemplateOutletContext]="{menuItem:menuItem}">
+
+         </ng-container>
+
+
+        </ul>
+      </nav>
+      <!-- /.sidebar-menu -->
+    </div>
+    <!-- /.sidebar -->
+  </aside>
+
+  <ng-template #navLink let-menuItem='menuItem'>
+
+    <li class="nav-item">
+      <a [routerLink]="menuItem.path" routerLinkActive="active" class="nav-link">
+        <i [class]="menuItem.icon"></i>
+        <p>{{ menuItem.name }}
+
+          <ng-container *ngIf="menuItem.badge">
+            <span [class]="menuItem.badge.style"> {{ menuItem.badge.value }} </span>
+          </ng-container>
+
+        </p>
+      </a>
+    </li>
+
+  </ng-template>
+
+  <ng-template #navDropDown let-menuItem='menuItem'>
+
+    <li class="nav-item">
+      <a class="nav-link">
+        <i [class]="menuItem.icon"></i>
+        <p>{{ menuItem.name }}
+
+          <i class="fas fa-angle-left right"></i>
+          <ng-container *ngIf="menuItem.badge">
+            <span [class]="menuItem.badge.style"> {{ menuItem.badge.value }} </span>
+          </ng-container>
+
+        </p>
+      </a>
+      <ul *ngFor="let childMenuItem of menuItem.menuItems" class="nav nav-treeview">
+        <ng-container
+          [ngTemplateOutlet]="childMenuItem.menuItems ? navDropDown : navLink" 
+          [ngTemplateOutletContext]="{menuItem:childMenuItem}">
+        </ng-container>
+      </ul>
+    </li>
+
+  </ng-template>

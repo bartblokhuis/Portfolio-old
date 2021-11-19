@@ -1,0 +1,65 @@
+<section class="content">
+  <div class="container-fluid">
+    <div class="row">
+      <div class="col-12">
+        <div class="card">
+          <div class="card-header">
+            <h3 class="card-title">Messages</h3>
+          </div>
+          <div class="card-body table-responsive p-0">
+            <table class="table table-head-fixed text-nowrap">
+              <thead>
+                <tr>
+                  <th>Name</th>
+                  <th>Email</th>
+                  <th>Message</th>
+                  <th>Status</th>
+                  <th>Received date</th>
+                  <th>Last updated date</th>
+                  <th>Actions</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr *ngFor="let message of messages;">
+                  <td> {{ message.firstName }} {{ message.lastName }} </td>
+                  <td> {{ message.email }} </td>
+                  <td [innerHtml]="message.messageContent"></td>
+                  <td> 
+                    <ng-template [ngIf]="message.messageStatus == 0">
+                      <span class="badge bg-danger">Unread</span>
+                    </ng-template>
+                    <ng-template [ngIf]="message.messageStatus == 1">
+                      <span class="badge bg-warning">Read</span>
+                    </ng-template>
+                    <ng-template [ngIf]="message.messageStatus == 2">
+                      <span class="badge bg-primary">Awaiting response</span>
+                    </ng-template>
+                    <ng-template [ngIf]="message.messageStatus == 3">
+                      <span class="badge bg-success">Closed</span>
+                    </ng-template>
+                  </td>
+                  <td> 
+                    <date-printer [date]="message.createdAtUTC"></date-printer>
+                  </td>
+                  <td> 
+                    <date-printer [date]="message.updatedAtUtc"></date-printer>
+                   </td>
+                  <td> 
+                    <div class="actions">
+                      <div (click)="editMessage(message)" class="action">
+                        <i class="fas fa-pen-alt"></i>
+                      </div>
+                      <div (click)="deleteMessage(message)" class="action">
+                        <i class="fas fa-trash-alt danger"></i>
+                      </div>
+                    </div>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

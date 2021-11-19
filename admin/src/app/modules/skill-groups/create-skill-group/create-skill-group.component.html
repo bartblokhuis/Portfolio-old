@@ -1,0 +1,31 @@
+<form>
+    <div class="card">
+      <div class="card-header">
+        <div class="float-left">
+          <input class="form-control" #titleControl [formControl]="title" type="text">
+        </div>
+        <div class="float-right">
+          <i class="fas fa-save" (click)="submit(false)" id="new_skill_group_save"></i>
+        </div>
+        
+      </div>
+
+      <div class="card-body table-responsive p-0" style="height: 300px;">
+        <table class="table table-head-fixed text-nowrap">
+          <thead>
+            <tr>
+              <th>Name</th>
+              <th>Icon</th>
+              <th>Actions</th>
+            </tr>
+          </thead>
+          <tbody>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="card-footer">
+        <button type="button" (click)="submit(true)" class="btn btn-primary">Add skill</button>
+      </div>
+    </div>
+  </form>

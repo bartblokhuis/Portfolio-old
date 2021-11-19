@@ -1,0 +1,90 @@
+.table-responsive {
+
+    td.icon,
+    th.icon,
+    td.number,
+    th.number,
+    td.actions,
+    th.actions {
+        text-align: center;
+    }
+
+    .action {
+        display: inline-block;
+        padding: 6px;
+        background-color: #f1f1f1;
+        border-radius: 50%;
+        height: 16px;
+        width: 16px;
+        box-sizing: content-box;
+        margin: 0 3px;
+        position: relative;
+
+        i{
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            color: rgba(0,0,0,.5);
+        }
+
+        &:hover{
+            cursor: pointer;
+
+            i {
+                color: rgba(0,0,0,8);
+            }
+
+            i.danger{
+                color: #dc3545;
+            }
+            
+        }
+    }
+}
+
+/* Animate items as they're being sorted. */
+.cdk-drop-list-dragging .cdk-drag {
+    transition: transform 250ms cubic-bezier(0, 0, 0.2, 1);
+  }
+  
+  .cdk-drag-preview {
+    box-sizing: border-box;
+    border-radius: 4px;
+    box-shadow: 0 5px 5px -3px rgba(0, 0, 0, 0.2), 0 8px 10px 1px rgba(0, 0, 0, 0.14),
+      0 3px 14px 2px rgba(0, 0, 0, 0.12);
+    padding: 4px;
+    background-color: #f1f1f1;
+    opacity: 1;
+  }
+
+  tbody{
+    
+  }
+
+
+  .col-xs {
+    width: 2%;
+  }
+  
+  .col-sm {
+    width: 10%;
+  }
+  
+  .col-md {
+    width: 20%;
+  }
+
+  /* Animate items as they're being sorted. */
+.cdk-drop-list-dragging .cdk-drag {
+  transition: transform 250ms cubic-bezier(0, 0, 0.2, 1);
+}
+
+/* Animate an item that has been dropped. */
+.cdk-drag-animating {
+  transition: transform 300ms cubic-bezier(0, 0, 0.2, 1);
+}
+
+.cdk-drag-handle:hover{
+  cursor: pointer;
+}

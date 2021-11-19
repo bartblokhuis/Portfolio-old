@@ -1,0 +1,15 @@
+.card-header i{
+    display: inline-block;
+    padding: 0 5px;
+
+    &:hover{
+        cursor: pointer;
+    }
+}
+
+.input-group-append{
+    justify-content: center;
+    flex-direction: column;
+    background-color: #e9ecef;
+    padding: 0 5px;
+}
