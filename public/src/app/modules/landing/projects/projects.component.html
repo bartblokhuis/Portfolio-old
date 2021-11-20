@@ -22,12 +22,12 @@
                 <div class="project-description">
                     <div [innerHTML]="project.description"></div>
                 </div>
-                <div class="project-footer">
-                    <div class="skills-container">
-                        <label>Skills used to make this project</label>
-                        <div class="skills">
-                            <span *ngFor="let skill of project.skills" class="badge">{{skill.name}}</span>
-                        </div>
+            </div>
+            <div class="project-footer">
+                <div class="skills-container">
+                    <label>Skills used in this project</label>
+                    <div class="skills">
+                        <span *ngFor="let skill of project.skills" class="badge">{{skill.name}}</span>
                     </div>
                 </div>
             </div>
