@@ -1,7 +1,16 @@
-<app-header></app-header>
-<app-sidebar></app-sidebar>
-<div class="content-wrapper">
-    <page-header></page-header>
-    <router-outlet></router-outlet>
+<div class="wrapper">
+
+    <app-main-header></app-main-header>
+    <app-sidebar></app-sidebar>
+
+    <div class="content-wrapper">
+        <app-content-header></app-content-header>
+        <section class="content">
+            <div class="container-fluid">
+                <router-outlet></router-outlet>
+            </div>
+        </section>
+    </div>
+    
+  <app-footer></app-footer>
 </div>
-<app-footer></app-footer>

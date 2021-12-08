@@ -1,0 +1,30 @@
+<div class="card-body">
+    <table class="table table-hover text-nowrap">
+        <thead>
+            <tr>
+                <th>Name</th>
+                <th>Icon</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let skill of skillGroup.skills">
+                <td> {{ skill.name }} </td>
+                <td> <img *ngIf="skill.iconPath !== null" [src]="baseUrl + skill.iconPath"> </td>
+                <td> 
+                  <div class="actions">
+                    <div (click)="editSkill(skill)" class="action">
+                      <i class="fas fa-pen-alt"></i>
+                    </div>
+                    <div (click)="deleteSkill(skill)" class="action">
+                      <i class="fas fa-trash-alt danger"></i>
+                    </div>
+                  </div>
+                </td>
+              </tr>
+        </tbody>
+    </table>
+</div>
+<div class="card-footer">
+    <button class="btn btn-primary" (click)="addSkill()">Add Skill</button>
+</div>

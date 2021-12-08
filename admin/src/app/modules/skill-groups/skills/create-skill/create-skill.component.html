@@ -1,33 +1,26 @@
 <div class="modal-header">
     <h4 class="modal-title" id="modal-project-title">Create skill</h4>
-    <button type="button" class="close" aria-label="Close" >
+    <button type="button" class="close" aria-label="Close" (click)="modalRef?.close()">
       <span aria-hidden="true">&times;</span>
     </button>
-  </div>
-  <form [formGroup]="createForm" (ngSubmit)="submit()">
-  <div class="modal-body">
-    
-    <div class="row">
-      <div class="col-6">
-          <div class="form-group">
-              <label>Name</label>
-              <input formControlName="name" class="form-control" type="text" />
-          </div>
-      </div>
-      <div class="col-6">
-          <div class="form-group">
-              <label>Icon file</label>
-              <div class="custom-file">
-                  <input formControlName="file" type="file" class="form-control" id="customFile" (change)="onFileChange($event)"/>
-                  <label class="custom-file-label" for="customFile">{{currentFileName}}</label>
-              </div>
-          </div>
-      </div>
-  </div>
-  </div>
-  <div class="modal-footer justify-content-between">
-    
-    <button type="button" class="btn btn-default">Cancel</button>
-    <button type="submit" class="btn btn-primary">Save</button>
-  </div>
+</div>
+<form id="addSkillForm">
+    <div class="modal-body">
+        <div class="form-group">
+            <label>Name</label>
+            <input class="form-control" type="text" required [(ngModel)]="model.name" name="name"/>
+            <span class="custom-error" *ngIf="error">{{error}}</span>
+        </div>
+        <div class="form-group">
+            <label>Demo image</label>
+            <div class="custom-file">
+              <input type="file" class="form-control" id="file" name="file" (change)="onFileChange($event)"/>
+              <label class="custom-file-label" for="file">{{ currentFileName }}</label>
+            </div>
+        </div>
+    </div>
+    <div class="modal-footer justify-content-between">
+        <button type="button" class="btn btn-default" (click)="modalRef?.close()">Cancel</button>
+        <button type="button" class="btn btn-primary" (click)="submit()">Save</button>
+    </div>
 </form>

@@ -1,0 +1,21 @@
+i {
+    padding: 0 5px 0 5px;
+
+    &:hover{
+        cursor: pointer;
+    }
+}
+
+.float-left{
+    max-width: 75%;
+}
+
+table {
+    height: 300px;
+}
+
+.form-control{
+    padding-top: 0;
+    padding-bottom: 0;
+    height: auto;
+}

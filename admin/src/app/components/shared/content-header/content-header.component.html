@@ -1,0 +1,30 @@
+<div class="content-header">
+    <div class="container-fluid">
+      <div class="row mb-2">
+        <div class="col-sm-6">
+          <h1 class="m-0">{{ title }}</h1>
+        </div><!-- /.col -->
+        <div class="col-sm-6">
+          <ol class="breadcrumb float-sm-right">
+              <ng-container >
+                <li *ngFor='let breadcrumb of breadcrumbs;' class="breadcrumb-item" [ngClass]="breadcrumb.active ? 'active' : ''">
+                    <ng-container 
+                        [ngTemplateOutlet]="breadcrumb.path ? withPath : withoutPath" 
+                        [ngTemplateOutletContext]="{breadcrumb:breadcrumb}">
+                    </ng-container>
+                </li>
+              </ng-container>
+          </ol>
+        </div><!-- /.col -->
+      </div><!-- /.row -->
+    </div><!-- /.container-fluid -->
+</div>
+
+<ng-template #withPath let-breadcrumb='breadcrumb'>
+    <a [routerLink]="breadcrumb.path" >{{breadcrumb.name}}</a>
+</ng-template>
+
+
+<ng-template #withoutPath let-breadcrumb='breadcrumb'>
+    {{breadcrumb.name}}
+</ng-template>

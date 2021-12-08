@@ -1,23 +1,33 @@
-import { Routes } from '@angular/router';
+import { Routes } from "@angular/router";
+import { AntiAuthGuard } from "src/app/helpers/AntiAuthGuard";
+import { AuthGuard } from "src/app/helpers/AuthGuard";
+import { AdminComponent } from "src/app/layouts/admin/admin.component";
+import { AuthComponent } from "src/app/layouts/auth/auth.component";
+import { LoginComponent } from "./login/login.component";
+import { UserEditComponent } from "./user-edit/user-edit.component";
 
-import { LoginComponent } from './login/login.component';
-import { EditComponent } from './edit/edit.component';
-import { AuthComponent } from '../../layouts/auth/auth.component';
-import { AdminComponent } from '../../layouts/admin/admin.component';
-
-export const UserRoutes: Routes = [{
-    path: '',
-    component: AuthComponent,
-    children: [{
-        path: 'login',
-        component: LoginComponent
-    }]},
+export const UserRoutes: Routes = [
+    {
+        path: '',
+        component: AuthComponent,
+        children: [
+            {
+                path: 'login',
+                component: LoginComponent
+            }
+        ],
+        canActivate: [AntiAuthGuard]
+        
+    },
     {
         path: '',
         component: AdminComponent,
-        children: [{
-            path: 'user/details',
-            component: EditComponent
-        }]
+        children: [
+            {
+                path: 'user/details',
+                component: UserEditComponent
+            }
+        ],
+        canActivate: [AuthGuard]
     }
-];
+]

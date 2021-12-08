@@ -1,22 +1,22 @@
 import { NgModule } from '@angular/core';
-import { RouterModule } from '@angular/router';
 import { CommonModule } from '@angular/common';
-import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-
 import { AboutMeComponent } from './about-me/about-me.component';
+import { RouterModule } from '@angular/router';
 import { AboutMeRoutes } from './about-me.routes';
-import { ComponentsModule } from '../../components/components.module';
-import { SharedModule } from '../../components/shared/shared.module';
+import { QuillModule } from 'ngx-quill';
+import { FormsModule } from '@angular/forms';
+
+
 
 @NgModule({
+  declarations: [
+    AboutMeComponent
+  ],
   imports: [
     CommonModule,
-    RouterModule.forChild(AboutMeRoutes),
+    QuillModule,
     FormsModule,
-    SharedModule,
-    ReactiveFormsModule,
-    ComponentsModule
-],
-declarations: [AboutMeComponent]
+    RouterModule.forChild(AboutMeRoutes),
+  ]
 })
 export class AboutMeModule { }

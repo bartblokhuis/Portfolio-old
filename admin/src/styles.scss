@@ -1,17 +1,50 @@
-/* You can add global styles to this file, and also import other style files */
-@import '~quill/dist/quill.core.css';
-@import '~quill/dist/quill.snow.css';
+.custom-error {
+    color: #dc3545;
+}
 
-/* Importing Bootstrap SCSS file. */
-@import '~bootstrap/scss/bootstrap';
+.select2-container--default .select2-selection--multiple .select2-selection__choice__remove{
+    color: #000;
+}
 
-// if you'd like to use it without importing all of bootstrap it requires
-@import '~bootstrap/scss/functions';
-@import '~bootstrap/scss/variables';
-@import '~bootstrap/scss/mixins';
-@import '~ngx-toastr/toastr-bs4-alert';
+.dark-mode {
 
-// bootstrap style toast
-// or import a bootstrap 4 alert styled design (SASS ONLY)
-// should be after your bootstrap imports, it uses bs4 variables, mixins, functions
-@import '~ngx-toastr/toastr-bs4-alert';
+    /* Add dark-mode support for quill */
+    .ql-snow .ql-stroke{
+        stroke: #fff;
+    }
+
+    .ql-snow .ql-picker{
+        color: #fff;
+    }
+
+    .ql-snow .ql-fill, .ql-snow .ql-stroke.ql-fill{
+        fill: #fff;
+    }
+
+    /* Add dark-mode support for select2 */
+    .select2-container--default .select2-selection--multiple{
+        background-color: #343a40;
+    }
+
+    .select2-container--default .select2-selection--multiple .select2-selection__choice{
+        background-color: rgba(0,0,0,.1);
+    }
+
+    .select2-container--default .select2-selection--multiple .select2-selection__choice__remove{
+        color: #fff;
+    }
+}
+
+.no-search .select2-search {
+    display:none
+}
+
+/* ql.scss */
+.ql-editor{
+    min-height: 10em;
+}
+
+.dark-mode .ql-toolbar.ql-snow,
+.dark-mode .ql-container.ql-snow {
+    border-color: #6c757d;
+}

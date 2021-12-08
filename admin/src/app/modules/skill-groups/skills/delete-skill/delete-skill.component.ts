@@ -1,8 +1,8 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
-import { ToastrService } from 'ngx-toastr';
-import { Skill } from 'src/app/data/Skill';
-import { SkillService } from 'src/app/services/skills/skill.service';
+import { Skill } from 'src/app/data/skills/skill';
+import { ApiService } from 'src/app/services/api/api.service';
+import { NotificationService } from 'src/app/services/notification/notification.service';
 
 @Component({
   selector: 'app-delete-skill',
@@ -11,22 +11,21 @@ import { SkillService } from 'src/app/services/skills/skill.service';
 })
 export class DeleteSkillComponent implements OnInit {
 
-  @Input() skill: Skill;
-  @Input() modalRef: NgbModalRef;
+  @Input() modal: NgbModalRef | undefined;
+  @Input() skill: Skill | undefined;
 
-  constructor(private skillService: SkillService, private toastr: ToastrService) { }
+  constructor(private apiService: ApiService, private notificationService: NotificationService) { }
 
   ngOnInit(): void {
   }
 
-  close(){
-    this.modalRef.close();
-  }
+  remove(): void {
 
-  remove(id: number){
-    this.skillService.deleteSkill(id).subscribe(result => {
-      this.modalRef.close();
-      this.toastr.success("Removed skill: " + this.skill.name)
+    if(!this.skill) return;
+
+    this.apiService.delete(`Skill?id=${this.skill.id}`).subscribe(() => {
+      this.notificationService.success(`Removed skill: ${this.skill?.name}`)
+      this.modal?.close("removed");
     });
   }
 

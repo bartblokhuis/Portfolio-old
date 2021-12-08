@@ -1,31 +1,30 @@
-<form>
-    <div class="card">
-      <div class="card-header">
+<div class="card">
+    <div class="card-header">
         <div class="float-left">
-          <input class="form-control" #titleControl [formControl]="title" type="text">
+            <form id="createForm">
+                <input type="text" class="form-control" id="tite" name="title"  [(ngModel)]="model.title">
+                <span class="custom-error" *ngIf="error">{{ error }}</span>
+            </form>
         </div>
         <div class="float-right">
-          <i class="fas fa-save" (click)="submit(false)" id="new_skill_group_save"></i>
+            <i class="fas fa-save" (click)="save(false)"></i>
+            <i class="fas fa-times" (click)="cancel()"></i>
         </div>
-        
-      </div>
-
-      <div class="card-body table-responsive p-0" style="height: 300px;">
-        <table class="table table-head-fixed text-nowrap">
-          <thead>
-            <tr>
-              <th>Name</th>
-              <th>Icon</th>
-              <th>Actions</th>
-            </tr>
-          </thead>
-          <tbody>
-          </tbody>
-        </table>
-      </div>
-
-      <div class="card-footer">
-        <button type="button" (click)="submit(true)" class="btn btn-primary">Add skill</button>
-      </div>
     </div>
-  </form>
+    <div class="card-body">
+        <table class="table table-hover text-nowrap">
+            <thead>
+                <tr>
+                    <th>Name</th>
+                    <th>Icon</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+            </tbody>
+        </table>
+    </div>
+    <div class="card-footer">
+        <button class="btn btn-primary" (click)="save(true)">Add Skill</button>
+    </div>
+</div>

@@ -1,9 +1,9 @@
 import { Component, OnInit } from '@angular/core';
-import { FormControl, FormGroup } from '@angular/forms';
-import { ToastrService } from 'ngx-toastr';
-import { AboutMe } from '../../../data/AboutMe';
-import { AboutMeService } from '../../../services/about-me/about-me.service';
+import { AboutMe } from 'src/app/data/about-me';
+import { ApiService } from 'src/app/services/api/api.service';
+import { NotificationService } from 'src/app/services/notification/notification.service';
 
+declare var $:any;
 @Component({
   selector: 'app-about-me',
   templateUrl: './about-me.component.html',
@@ -11,36 +11,58 @@ import { AboutMeService } from '../../../services/about-me/about-me.service';
 })
 export class AboutMeComponent implements OnInit {
 
-  public abouteMe: AboutMe = {title: "", content: ""};
-  showSaveButton: boolean = false;
+  aboutMe : AboutMe = { title: '', content: '' }
+  aboutMeForm: any;
 
-  public aboutMeForm = new FormGroup({
-    title: new FormControl(''),
-    content: new FormControl('')
-  });
-
-  constructor(private aboutMeService: AboutMeService, private toastr: ToastrService) {
-
-    aboutMeService.getAboutMe().subscribe((aboutMe) => {
-      this.aboutMeForm.controls.title.setValue(aboutMe.title);
-      this.aboutMeForm.controls.content.setValue(aboutMe.content);
-    });
-  }
+  constructor(private apiService: ApiService, private notificationService: NotificationService) { }
 
   ngOnInit(): void {
-    this.showSaveButton = false;
-  }
+    this.aboutMeForm = $('#aboutMeForm');
+    this.validateAboutMe();
 
-  changedAboutMe(): void {
-    this.showSaveButton = true;
-  }
-
-  saveAboutMe(): void {
-    this.aboutMeService.saveAboutMe(this.aboutMeForm.value).subscribe((aboutMe) => {
-      this.abouteMe = aboutMe;
-      this.toastr.success("Saved changes");
-      this.showSaveButton = false;
+    this.apiService.get<AboutMe>('AboutMe').subscribe((result: AboutMe) => {
+      this.aboutMe = result;
     });
   }
 
+  textChanged($event : any) {
+    const MAX_LENGTH = 256;
+    if ($event.editor.getLength() > MAX_LENGTH) {
+      $event.editor.deleteText(MAX_LENGTH, $event.editor.getLength());
+    }
+  }
+
+  submit(){
+    if (!this.aboutMeForm.valid()) return;
+
+    this.apiService.post('AboutMe', this.aboutMe).subscribe((result) => {
+      this.notificationService.success('Saved the changes')
+    })
+  }
+
+  validateAboutMe() {
+    this.aboutMeForm.validate({
+      rules: {
+        title: {
+          required: true,
+        },
+      },
+      messages: {
+        title: {
+          required: "Please enter a title",
+        },
+      },
+      errorElement: 'span',
+      errorPlacement: function (error: any, element: any) {
+        error.addClass('invalid-feedback');
+        element.closest('.form-group').append(error);
+      },
+      highlight: function (element: any, errorClass: any, validClass: any) {
+        $(element).addClass('is-invalid');
+      },
+      unhighlight: function (element: any, errorClass: any, validClass: any) {
+        $(element).removeClass('is-invalid');
+      }
+    });
+  }
 }

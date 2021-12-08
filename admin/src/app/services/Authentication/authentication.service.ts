@@ -1,66 +1,52 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
-import { BehaviorSubject, Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
-
-import { environment } from '../../../environments/environment';
-import { User, UserDetails } from '../../data/User';
+import { BehaviorSubject, Observable } from 'rxjs';
+import { ApiService } from '../api/api.service';
+import { User } from 'src/app/data/user/user';
 
 @Injectable({
   providedIn: 'root'
 })
 export class AuthenticationService {
-  private currentUserSubject: BehaviorSubject<User>;
-  public currentUser: Observable<User>;
 
-  constructor(private http: HttpClient) {
-        this.currentUserSubject = new BehaviorSubject<User>(JSON.parse(localStorage.getItem('currentUser')));
-        this.currentUser = this.currentUserSubject.asObservable();
+  private currentUserSubject: BehaviorSubject<User> | undefined;
+  public currentUser: Observable<User> | undefined;
+  
+  constructor(private apiService: ApiService) { 
+
+    let localStorageUser = localStorage.getItem('currentUser');
+    if(localStorageUser){
+      this.currentUserSubject = new BehaviorSubject<User>(JSON.parse(localStorageUser));
+      this.currentUser = this.currentUserSubject.asObservable();
+    }
   }
 
-  public get currentUserValue(): User {
-      return this.currentUserSubject.value;
+  public get currentUserValue(): User | undefined {
+    return this.currentUserSubject?.value;
   }
 
-  login(username: string, password: string, rememberMe: boolean) {
-    return this.http.post<any>(`${environment.baseApiUrl}login`, { username, password, rememberMe })
-        .pipe(map(user => {
-            // store user details and jwt token in local storage to keep user logged in between page refreshes
-            localStorage.setItem('currentUser', JSON.stringify(user));
-            this.currentUserSubject.next(user);
-            return user;
-        }));
+  login(username: string, password: string, rememberMe: boolean): Observable<any> {
+    return this.apiService.post<any>('login', {username, password, rememberMe})
+      .pipe(map(result => {
+
+        //If we dont have a token it means the login request failed.
+        if(!result.token) return result;
+
+        const user: User = { username: username, expiration: result.expiration, id: result.userId, token: result.token }
+        localStorage.setItem('currentUser', JSON.stringify(user));
+
+        console.log(this.currentUserSubject);
+        if(!this.currentUserSubject) this.currentUserSubject = new BehaviorSubject<User>(user);
+        else this.currentUserSubject?.next(user)
+        
+        return result;
+      }))
   }
 
   logout() {
     // remove user from local storage to log user out
     localStorage.removeItem('currentUser');
-    this.currentUserSubject.next(null);
+    this.currentUserSubject = undefined;
   }
 
-  getUserDetails() : Observable<UserDetails> {
-    return this.http.get<UserDetails>(`${environment.baseApiUrl}user/details`);
-  }
-
-  updateUserDetails(username: string, email: string, password: string) {
-    return this.http.put<any>(`${environment.baseApiUrl}user/details`, {username, email, password})
-    .pipe(map(user => {
-      // store user details and jwt token in local storage to keep user logged in between page refreshes
-      localStorage.removeItem('currentUser');
-      localStorage.setItem('currentUser', JSON.stringify(user));
-      this.currentUserSubject.next(user);
-      return user;
-  }));
-  }
-
-  updatePassword(password: string, oldPassword: string){
-    return this.http.put<any>(`${environment.baseApiUrl}user/updatePassword`, {password, oldPassword})
-    .pipe(map(user => {
-      // store user details and jwt token in local storage to keep user logged in between page refreshes
-      localStorage.removeItem('currentUser');
-      localStorage.setItem('currentUser', JSON.stringify(user));
-      this.currentUserSubject.next(user);
-      return user;
-  }));
-  }
 }

@@ -1,9 +1,10 @@
-import { AfterViewInit, Component, ElementRef, EventEmitter, OnInit, Output, ViewChild } from '@angular/core';
-import { FormControl } from '@angular/forms';
-import { ToastrService } from 'ngx-toastr';
-import { SkillGroup } from 'src/app/data/SkillGroup';
-import { SkillGroupService } from 'src/app/services/skillgroup/skillgroup.service';
+import { Component, EventEmitter, OnInit, Output } from '@angular/core';
+import { CreateUpdateSkillGroup } from 'src/app/data/skill-groups/create-update-skill-group';
+import { CreateSkillGroupCreatedEvent } from 'src/app/data/skill-groups/events/create-skill-group-created-event';
+import { SkillGroup } from 'src/app/data/skill-groups/skill-group';
+import { ApiService } from 'src/app/services/api/api.service';
 
+declare var $: any;
 @Component({
   selector: 'app-create-skill-group',
   templateUrl: './create-skill-group.component.html',
@@ -11,33 +12,57 @@ import { SkillGroupService } from 'src/app/services/skillgroup/skillgroup.servic
 })
 export class CreateSkillGroupComponent implements OnInit {
 
-  @ViewChild('titleControl') titleControl: ElementRef;
+  @Output() onCreated: EventEmitter<CreateSkillGroupCreatedEvent | undefined> = new EventEmitter();
 
-  @Output() onCreated: EventEmitter<any> = new EventEmitter();
-  title: FormControl = new FormControl('');
+  model: CreateUpdateSkillGroup = { title: '', displayNumber: 0, id: 0 }
+  form: any;
 
-  constructor(private skillGroupService: SkillGroupService, private toastr: ToastrService) { }
+  error: string | undefined;
   
-  ngAfterViewInit(): void {
-    this.titleControl.nativeElement.focus();
+  constructor(private apiService: ApiService) { }
+
+  ngOnInit(): void { 
+    this.form = $('#createForm');
+    this.validaitonRules();
+  }
+
+  validaitonRules(): void{
+    this.form.validate({
+      rules: {
+        title: {
+          required: true,
+        },
+      },
+      messages: {
+        title: {
+          required: "Please enter a title"
+        }
+      },
+      errorElement: 'span',
+      errorPlacement: function (error: any, element: any) {
+        error.addClass('invalid-feedback');
+        element.closest('.form-group').append(error);
+      },
+      highlight: function (element: any, errorClass: any, validClass: any) {
+        $(element).addClass('is-invalid');
+      },
+      unhighlight: function (element: any, errorClass: any, validClass: any) {
+        $(element).removeClass('is-invalid');
+      }
+    });
+  }
+
+  cancel(): void {
+    this.onCreated.emit();
+  }
+
+  save(openNewSkillModal: boolean): void {
+    if(!this.form.valid()) return;
     
-  }
-
-  ngOnInit(): void {
-  }
-
-  submit(openNewSkillModal: boolean): void {
-    const newSkillgroup: SkillGroup = {
-      id: 0,
-      displayNumber: 0,
-      title: this.title.value,
-      skills: null
-    }
-
-    this.skillGroupService.createSkillGroup(newSkillgroup).subscribe((skillGroup) => {
-      this.toastr.success("Saved skill group " + skillGroup.title);
-      this.onCreated.emit([skillGroup, openNewSkillModal]);
-    })
+    this.apiService.post<SkillGroup>('SkillGroup', this.model).subscribe((result) => {
+      const event: CreateSkillGroupCreatedEvent = { skillGroup: result, openNewSkillModal: openNewSkillModal};
+      this.onCreated.emit(event);
+    }, error => this.error = error);
   }
 
 }

@@ -9,6 +9,7 @@ using Microsoft.Extensions.Logging;
 using Portfolio.Core.Interfaces;
 using Portfolio.Core.Interfaces.Common;
 using Portfolio.Domain.Dtos;
+using Portfolio.Domain.Dtos.Skills;
 using Portfolio.Domain.Models;
 
 namespace Portfolio.Controllers
@@ -58,10 +59,8 @@ namespace Portfolio.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> Create(CreateUpdateSkill model)
+        public async Task<IActionResult> Create(CreateSkillDto model)
         {
-            model.Id = 0;
-
             if (!ModelState.IsValid)
                 throw new Exception("Invalid model"); //TODO Better excaption handling
 
@@ -69,7 +68,7 @@ namespace Portfolio.Controllers
                 throw new Exception("Skill group not found");
 
             if (await _skillService.IsExistingSkill(model.Name, model.SkillGroupId))
-                throw new Exception("Skill with the same name already exists");
+                throw new Exception("There already is a skill with the same name");
 
             var skill = _mapper.Map<Skill>(model);
             await _skillService.Insert(skill);
@@ -94,7 +93,7 @@ namespace Portfolio.Controllers
         }
 
         [HttpPut]
-        public async Task<IActionResult> Update(CreateUpdateSkill model)
+        public async Task<IActionResult> Update(UpdateSkillDto model)
         {
             if (!ModelState.IsValid)
                 throw new Exception("Invalid model"); //TODO Better excaption handling
@@ -107,7 +106,7 @@ namespace Portfolio.Controllers
                 throw new Exception("Skill group not found");
 
             if (await _skillService.IsExistingSkill(model.Name, model.SkillGroupId, skill))
-                throw new Exception("Skill with the same name already exists");
+                throw new Exception("There already is a skill with the same name");
 
             model.IconPath = skill.IconPath;
 

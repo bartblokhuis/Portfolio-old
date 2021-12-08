@@ -9,6 +9,7 @@ using Portfolio.Domain.Models.Authentication;
 using System;
 using System.Collections.Generic;
 using System.IdentityModel.Tokens.Jwt;
+using System.Linq;
 using System.Security.Claims;
 using System.Text;
 using System.Threading.Tasks;
@@ -46,10 +47,13 @@ namespace Portfolio.Controllers
         {
             var user = await _userManager.FindByNameAsync(model.Username);
             if (user == null || !await _userManager.CheckPasswordAsync(user, model.Password))
-                return Unauthorized();
+                return Ok(new
+                    {
+                        error = "Invalid username or password."
+                    });
+            
 
             var token = await GetJwtSecurityToken(user, model.RememberMe);
-
             return Ok(new
             {
                 token = new JwtSecurityTokenHandler().WriteToken(token),
@@ -118,7 +122,10 @@ namespace Portfolio.Controllers
 
             var user = await GetUserFromContext();
             if (user == null || !await _userManager.CheckPasswordAsync(user, model.Password))
-                return Unauthorized();
+                return Ok(new
+                {
+                    error = "Invalid username or password."
+                });
 
             user.UserName = model.Username;
             user.NormalizedUserName = model.Username.ToUpper();
@@ -127,16 +134,7 @@ namespace Portfolio.Controllers
             user.NormalizedEmail = model.Email.ToUpper();
 
             await _userManager.UpdateAsync(user);
-
-            //Generate a new token
-            var token = await GetJwtSecurityToken(user, false);
-
-            return Ok(new
-            {
-                token = new JwtSecurityTokenHandler().WriteToken(token),
-                expiration = token.ValidTo,
-                userId = user.Id
-            });
+            return Ok();
         }
 
         [HttpPut]
@@ -151,19 +149,19 @@ namespace Portfolio.Controllers
 
             var user = await GetUserFromContext();
             if (user == null || !await _userManager.CheckPasswordAsync(user, model.OldPassword))
-                return Unauthorized();
+                return Ok(new
+                {
+                    error = "Invalid username or password."
+                });
 
-            await _userManager.ChangePasswordAsync(user, model.OldPassword, model.Password);
+            var result = await _userManager.ChangePasswordAsync(user, model.OldPassword, model.Password);
+            if (!result.Succeeded)
+                return Ok(new
+                {
+                    errors = result.Errors.Select(x => x.Description)
+                });
 
-            //Generate a new token
-            var token = await GetJwtSecurityToken(user, false);
-
-            return Ok(new
-            {
-                token = new JwtSecurityTokenHandler().WriteToken(token),
-                expiration = token.ValidTo,
-                userId = user.Id
-            });
+            return Ok();
         }
 
         #endregion

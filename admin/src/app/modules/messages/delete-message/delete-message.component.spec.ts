@@ -1,4 +1,4 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { DeleteMessageComponent } from './delete-message.component';
 
@@ -6,12 +6,12 @@ describe('DeleteMessageComponent', () => {
   let component: DeleteMessageComponent;
   let fixture: ComponentFixture<DeleteMessageComponent>;
 
-  beforeEach(async(() => {
-    TestBed.configureTestingModule({
+  beforeEach(async () => {
+    await TestBed.configureTestingModule({
       declarations: [ DeleteMessageComponent ]
     })
     .compileComponents();
-  }));
+  });
 
   beforeEach(() => {
     fixture = TestBed.createComponent(DeleteMessageComponent);

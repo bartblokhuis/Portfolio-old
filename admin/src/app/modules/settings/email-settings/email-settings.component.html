@@ -1,66 +1,52 @@
-  <section class="content">
-    <div class="container-fluid">
-      <!-- Content starts here -->
-      <div class="row">
-        <div class="col-lg-8">
-  
-          <form [formGroup]="emailSettingsForm" (ngSubmit)="saveEmailSettings()">
-            <div class="card card-primary">
-  
-              <div class="card-body">
-                
-                <div class="form-group">
-                  <label>Email address</label>
-                  <input type="text" formControlName="email" name="email" class="form-control" (input)="changedSettings()" />
-                </div>
-
-                <div class="form-group">
-                    <label>Display name</label>
-                    <input type="text" formControlName="displayName" name="displayName" class="form-control" (input)="changedSettings()" />
-                </div>
-
-                <div class="form-group">
-                    <label>Host</label>
-                    <input type="text" formControlName="host" name="host" class="form-control" (input)="changedSettings()" />
-                  </div>
-
-                  <div class="form-group">
-                    <label>Port</label>
-                    <input type="number" formControlName="port" name="port" class="form-control" (input)="changedSettings()" />
-                  </div>
-  
-                  <div class="form-group">
-                      <label>Username</label>
-                      <input type="text" formControlName="username" name="username" class="form-control" (input)="changedSettings()" />
-                  </div>
-
-                  <div class="form-group">
-                    <label>Password</label>
-                    <input type="password" autocomplete="on" formControlName="password" name="password" class="form-control" (input)="changedSettings()" />
-                  </div>
-  
-                  <div class="form-group">
-                      <label>Send test mail to</label>
-                      <input type="text" formControlName="sendTestEmailTo" name="sendTestEmailTo" class="form-control" (input)="changedSettings()" />
-                  </div>
-
-                  <div class="form-check">
-                    <input id="enableSsl" formControlName="enableSsl" class="form-check-input" type="checkbox" (input)="changedSettings()"/>
-                    <label class="form-check-label" for="enableSsl">Enable SSL</label>
-                  </div>
-
-                  <div class="form-check">
-                    <input id="useDefaultCredentials" formControlName="useDefaultCredentials" class="form-check-input" type="checkbox" (input)="changedSettings()"/>
-                    <label class="form-check-label" for="useDefaultCredentials">Use default credentials</label>
-                  </div>
-
-              </div>
-              <div class="card-footer">
-                <button type="submit" class="btn btn-primary" *ngIf="showSaveButton">Save</button>
-              </div>
+<div class="row">
+    <div class="col-12">
+        <div class="card">
+            <div class="card-header">
+                <h3 class="card-title">Email Settings</h3>
             </div>
-          </form>
+            <div class="card-body">
+                <form id='email-settings-form'>
+                    <div class="form-group">
+                        <label class="col-form-label">Email address</label>
+                        <input type="email" autocomplete="email" class="form-control" [(ngModel)]="model.email" name="email">
+                    </div>
+                    <div class="form-group">
+                        <label class="col-form-label">Display name</label>
+                        <input type="text" class="form-control" [(ngModel)]="model.displayName" name="displayName">
+                    </div>
+                    <div class="form-group">
+                        <label class="col-form-label">Host</label>
+                        <input type="text" class="form-control" [(ngModel)]="model.host" name="host">
+                    </div>
+                    <div class="form-group">
+                        <label class="col-form-label">Port</label>
+                        <input type="number" class="form-control" [(ngModel)]="model.port" name="port">
+                    </div>
+                    <div class="form-group">
+                        <label class="col-form-label">Username</label>
+                        <input type="text" class="form-control" [(ngModel)]="model.username" name="username">
+                    </div>
+                    <div class="form-group">
+                        <label class="col-form-label">Password</label>
+                        <input type="password" autocomplete="current-password" class="form-control" [(ngModel)]="model.password" name="password">
+                    </div>
+                    <div class="form-group">
+                        <label class="col-form-label">Send test mail to</label>
+                        <input type="text" class="form-control" [(ngModel)]="model.sendTestEmailTo" name="sendTestEmailTo">
+                    </div>
+                    <div class="form-check">
+                        <input type="checkbox" class="form-check-input" [(ngModel)]="model.enableSsl" name="enableSsl" id="enableSsl">
+                        <label class="form-check-label" for="enableSsl">Enable SSL</label>
+                    </div>
+                    <div class="form-check">
+                        <input type="checkbox" class="form-check-input" [(ngModel)]="model.useDefaultCredentials" name="useDefaultCredentials" id="useDefaultCredentials">
+                        <label class="form-check-label" for="useDefaultCredentials">Use default credentials</label>
+                    </div>
+                </form>
+            </div>
+            <div class="card-footer">
+                <button class="btn btn-primary" (click)="submit()">Save</button>
+            </div>
         </div>
-      </div>
     </div>
-  </section>
+</div>

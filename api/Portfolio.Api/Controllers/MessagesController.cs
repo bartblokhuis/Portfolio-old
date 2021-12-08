@@ -91,9 +91,9 @@ namespace Portfolio.Controllers
         }
 
         [HttpDelete]
-        public async Task<IActionResult> Delete(int messageId)
+        public async Task<IActionResult> Delete(int id)
         {
-            var message = await _messageService.GetById(messageId);
+            var message = await _messageService.GetById(id);
             if (message == null)
                 return BadRequest("Message not found");
 

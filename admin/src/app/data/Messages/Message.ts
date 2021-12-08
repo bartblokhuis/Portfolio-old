@@ -1,13 +1,6 @@
-import { BaseEntity } from '../BaseEntity';
+import { MessageStatus } from "./message-status";
 
-export enum MessageStatus {
-    Unread,
-    Read,
-    WaitingResponse,
-    Closed
-  }
-  
-export interface Message extends BaseEntity {
+export interface Message {
     firstName: string,
     lastName: string,
     email: string,
@@ -15,11 +8,6 @@ export interface Message extends BaseEntity {
     createdAtUTC: Date,
     updatedAtUtc?: Date,
     messageStatus: MessageStatus
+    id: number
 }
 
-export const MessageStatusToLabelMapping = {
-    [MessageStatus.Unread]: "Unread",
-    [MessageStatus.Read]: "Read",
-    [MessageStatus.WaitingResponse]: "Awaiting response",
-    [MessageStatus.Closed]: "Closed",
-  }

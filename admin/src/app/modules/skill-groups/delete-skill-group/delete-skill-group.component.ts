@@ -1,8 +1,8 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { NgbModal, NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
-import { ToastrService } from 'ngx-toastr';
-import { SkillGroup } from 'src/app/data/SkillGroup';
-import { SkillGroupService } from 'src/app/services/skillgroup/skillgroup.service';
+import { NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
+import { SkillGroup } from 'src/app/data/skill-groups/skill-group';
+import { ApiService } from 'src/app/services/api/api.service';
+import { NotificationService } from 'src/app/services/notification/notification.service';
 
 @Component({
   selector: 'app-delete-skill-group',
@@ -11,22 +11,22 @@ import { SkillGroupService } from 'src/app/services/skillgroup/skillgroup.servic
 })
 export class DeleteSkillGroupComponent implements OnInit {
 
-  @Input() skillGroup: SkillGroup;
-  @Input() modalRef: NgbModalRef;
+  @Input() modalRef: NgbModalRef | undefined;
+  @Input() skillGroup: SkillGroup | undefined;
 
-  constructor(private skillGroupService: SkillGroupService, private toastr: ToastrService) { }
+  constructor(private apiService: ApiService, private notificationService: NotificationService) { }
 
   ngOnInit(): void {
   }
 
   close(){
-    this.modalRef.close();
+    this.modalRef?.close();
   }
 
-  remove(id: number){
-    this.skillGroupService.deleteSkillGroup(id).subscribe(() => {
-      this.toastr.success("Removed skill group:" + this.skillGroup.title);
-      this.modalRef.close();
+  remove() {
+    this.apiService.delete(`SkillGroup?id=${this.skillGroup?.id}`).subscribe(() => {
+      this.notificationService.success(`Removed the ${this.skillGroup?.title} skill group`)
+      this.modalRef?.close();
     });
   }
 

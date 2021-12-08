@@ -1,22 +1,24 @@
 import { NgModule } from '@angular/core';
-import { RouterModule } from '@angular/router';
 import { CommonModule } from '@angular/common';
-import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-
 import { ListMessagesComponent } from './list-messages/list-messages.component';
-import { DeleteMessageComponent } from './delete-message/delete-message.component';
-import { EditMessageComponent } from './edit-message/edit-message.component';
+import { RouterModule } from '@angular/router';
 import { MessageRoutes } from './messages.routes';
-import { ComponentsModule } from 'src/app/components/components.module';
+import { SharedComponentsModule } from 'src/app/components/shared/shared-components.module';
+import { EditMessageComponent } from './edit-message/edit-message.component';
+import { DeleteMessageComponent } from './delete-message/delete-message.component';
+
+
 
 @NgModule({
-  declarations: [ListMessagesComponent, DeleteMessageComponent, EditMessageComponent],
+  declarations: [
+    ListMessagesComponent,
+    EditMessageComponent,
+    DeleteMessageComponent
+  ],
   imports: [
     CommonModule,
+    SharedComponentsModule,
     RouterModule.forChild(MessageRoutes),
-    FormsModule,
-    ReactiveFormsModule,
-    ComponentsModule
   ]
 })
 export class MessagesModule { }

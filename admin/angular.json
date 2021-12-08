@@ -3,11 +3,14 @@
   "version": 1,
   "newProjectRoot": "projects",
   "projects": {
-    "Admin": {
+    "admin": {
       "projectType": "application",
       "schematics": {
         "@schematics/angular:component": {
           "style": "scss"
+        },
+        "@schematics/angular:application": {
+          "strict": true
         }
       },
       "root": "",
@@ -17,77 +20,88 @@
         "build": {
           "builder": "@angular-devkit/build-angular:browser",
           "options": {
-            "outputPath": "dist/Admin",
+            "outputPath": "dist/admin",
             "index": "src/index.html",
             "main": "src/main.ts",
             "polyfills": "src/polyfills.ts",
             "tsConfig": "tsconfig.app.json",
-            "aot": true,
+            "inlineStyleLanguage": "scss",
             "assets": [
               "src/favicon.ico",
               "src/assets"
             ],
             "styles": [
-              "src/styles.scss",
-              "node_modules/ngx-toastr/toastr.css",
-              "src/assets/plugins/fontawesome-free/css/all.min.css",
-              "src/assets/plugins/tempusdominus-bootstrap-4/css/tempusdominus-bootstrap-4.min.css",
-              "src/assets/plugins/icheck-bootstrap/icheck-bootstrap.min.css",
-              "src/assets/plugins/jqvmap/jqvmap.min.css",
-              "src/assets/dist/css/adminlte.min.css",
-              "src/assets/plugins/overlayScrollbars/css/OverlayScrollbars.min.css",
-              "src/assets/plugins/daterangepicker/daterangepicker.css",
-              "src/assets/plugins/summernote/summernote-bs4.css"
-
+              "src/assets/admin-lte/css/all.min.css",
+              "src/assets/admin-lte/css/OverlayScrollbars.min.css",
+              "src/assets/admin-lte/css/sweetalert-2-bootstrap.min.css",
+              "src/assets/admin-lte/css/select2.min.css",
+              "./node_modules/quill/dist/quill.core.css",
+              "./node_modules/quill/dist/quill.bubble.css",
+              "./node_modules/quill/dist/quill.snow.css",
+              "src/assets/admin-lte/css/adminlte.min.css",
+              "src/styles.scss","src/styles.scss"
             ],
-            "scripts": []
+            "scripts": [
+              "src/assets/admin-lte/scripts/jquery.min.js",
+              "src/assets/admin-lte/scripts/bootstrap.bundle.min.js",
+              "src/assets/admin-lte/scripts/jquery.overlayScrollbars.min.js",
+              "src/assets/admin-lte/scripts/adminlte.min.js",
+              "src/assets/admin-lte/scripts/jquery.validate.min.js",
+              "src/assets/admin-lte/scripts/additional-methods.min.js",
+              "src/assets/admin-lte/scripts/sweetalert2.min.js",
+              "src/assets/admin-lte/scripts/select2.min.js",
+              "./node_modules/quill/dist/quill.min.js"
+            ]
           },
           "configurations": {
             "production": {
+              "budgets": [
+                {
+                  "type": "initial",
+                  "maximumWarning": "500kb",
+                  "maximumError": "1mb"
+                },
+                {
+                  "type": "anyComponentStyle",
+                  "maximumWarning": "2kb",
+                  "maximumError": "4kb"
+                }
+              ],
               "fileReplacements": [
                 {
                   "replace": "src/environments/environment.ts",
                   "with": "src/environments/environment.prod.ts"
                 }
               ],
-              "optimization": true,
-              "outputHashing": "all",
-              "sourceMap": false,
-              "extractCss": true,
-              "namedChunks": false,
-              "extractLicenses": true,
-              "vendorChunk": false,
-              "buildOptimizer": true,
-              "budgets": [
-                {
-                  "type": "initial",
-                  "maximumWarning": "2mb",
-                  "maximumError": "5mb"
-                },
-                {
-                  "type": "anyComponentStyle",
-                  "maximumWarning": "6kb",
-                  "maximumError": "10kb"
-                }
-              ]
+              "outputHashing": "all"
+            },
+            "development": {
+              "buildOptimizer": false,
+              "optimization": false,
+              "vendorChunk": true,
+              "extractLicenses": false,
+              "sourceMap": true,
+              "namedChunks": true
             }
-          }
+          },
+          "defaultConfiguration": "production"
         },
         "serve": {
           "builder": "@angular-devkit/build-angular:dev-server",
-          "options": {
-            "browserTarget": "Admin:build"
-          },
           "configurations": {
             "production": {
-              "browserTarget": "Admin:build:production"
+              "browserTarget": "admin:build:production"
+            },
+            "development": {
+              "browserTarget": "admin:build:development"
             }
-          }
+          },
+          "defaultConfiguration": "development"
         },
         "extract-i18n": {
           "builder": "@angular-devkit/build-angular:extract-i18n",
           "options": {
-            "browserTarget": "Admin:build"
+            "browserTarget": "admin:build"
           }
         },
         "test": {
@@ -97,6 +111,7 @@
             "polyfills": "src/polyfills.ts",
             "tsConfig": "tsconfig.spec.json",
             "karmaConfig": "karma.conf.js",
+            "inlineStyleLanguage": "scss",
             "assets": [
               "src/favicon.ico",
               "src/assets"
@@ -106,37 +121,9 @@
             ],
             "scripts": []
           }
-        },
-        "lint": {
-          "builder": "@angular-devkit/build-angular:tslint",
-          "options": {
-            "tsConfig": [
-              "tsconfig.app.json",
-              "tsconfig.spec.json",
-              "e2e/tsconfig.json"
-            ],
-            "exclude": [
-              "**/node_modules/**"
-            ]
-          }
-        },
-        "e2e": {
-          "builder": "@angular-devkit/build-angular:protractor",
-          "options": {
-            "protractorConfig": "e2e/protractor.conf.js",
-            "devServerTarget": "Admin:serve"
-          },
-          "configurations": {
-            "production": {
-              "devServerTarget": "Admin:serve:production"
-            }
-          }
         }
       }
     }
   },
-  "defaultProject": "Admin",
-  "cli": {
-    "analytics": false
-  }
+  "defaultProject": "admin"
 }

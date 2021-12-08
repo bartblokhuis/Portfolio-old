@@ -1,71 +1,56 @@
-  <section class="content">
-    <div class="container-fluid">
-      <!-- Content starts here -->
-      <div class="row">
-        <div class="col-lg-8">
-  
-          <form [formGroup]="seoSettingsForm" (ngSubmit)="saveSeoSettings()">
-            <div class="card card-primary">
-  
-              <div class="card-body">
-                
-                <div class="form-group">
-                  <label>Landing title</label>
-                  <input type="text" formControlName="landingTitle" name="landingTitle" class="form-control" (input)="changedSettings()" />
-                </div>
-
-                <div class="form-group">
-                    <label>Landing description</label>
-                    <input type="text" formControlName="landingDescription" name="landingDescription" class="form-control" (input)="changedSettings()" />
-                </div>
-
-                <div class="form-group">
-                    <label>Call to action text</label>
-                    <input type="text" formControlName="callToActionText" name="callToActionText" class="form-control" (input)="changedSettings()" />
-                  </div>
-
-                  <div class="form-group">
-                    <label>Linkedin profile</label>
-                    <input type="text" formControlName="linkedInUrl" name="linkedInUrl" class="form-control" (input)="changedSettings()" />
-                  </div>
-
-                  <div class="form-group">
-                    <label>Github profile</label>
-                    <input type="text" formControlName="githubUrl" name="githubUrl" class="form-control" (input)="changedSettings()" />
-                  </div>
-
-                  <div class="form-group">
-                    <label>Stack overflow profile</label>
-                    <input type="text" formControlName="stackOverFlowUrl" name="stackOverFlowUrl" class="form-control" (input)="changedSettings()" />
-                  </div>
-
-                  <div class="form-group">
-                    <label>Footer text</label>
-                    <input type="text" formControlName="footerText" name="footerText" class="form-control" (input)="changedSettings()" />
-                  </div>
-
-                  <div class="form-check">
-                    <input id="showCopyRightInFooter" formControlName="showCopyRightInFooter" class="form-check-input" type="checkbox" (input)="changedSettings()"/>
-                    <label class="form-check-label" for="showCopyRightInFooter">Show copyright in footer</label>
-                  </div>
-
-                  <div class="form-check">
-                    <input id="footerTextBetweenCopyRightAndYear" formControlName="footerTextBetweenCopyRightAndYear" class="form-check-input" type="checkbox" (input)="changedSettings()"/>
-                    <label class="form-check-label" for="footerTextBetweenCopyRightAndYear">Place footer text between copy right and year</label>
-                  </div>
-
-                  <div class="form-check">
-                    <input id="showContactMeForm" formControlName="showContactMeForm" class="form-check-input" type="checkbox" (input)="changedSettings()"/>
-                    <label class="form-check-label" for="showContactMeForm">Show contact me form</label>
-                  </div>
-
-              </div>
-              <div class="card-footer">
-                <button type="submit" class="btn btn-primary" *ngIf="showSaveButton">Save</button>
-              </div>
+<div class="row">
+    <div class="col-12">
+        <div class="card">
+            <div class="card-header">
+                <h3 class="card-title">General Settings</h3>
             </div>
-          </form>
+            <div class="card-body">
+                <form>
+                    <div class="form-group">
+                        <label class="col-form-label">Landing title</label>
+                        <input type="text" class="form-control" required [(ngModel)]="model.landingTitle" name="landingTitle">
+                    </div>
+                    <div class="form-group">
+                        <label class="col-form-label">Landing description</label>
+                        <input type="text" class="form-control" required [(ngModel)]="model.landingDescription" name="landingDescription">
+                    </div>
+                    <div class="form-group">
+                        <label class="col-form-label">Call to action text</label>
+                        <input type="text" class="form-control" required [(ngModel)]="model.callToActionText" name="callToActionText">
+                    </div>
+                    <div class="form-group">
+                        <label class="col-form-label">Linkedin profile</label>
+                        <input type="text" class="form-control" required [(ngModel)]="model.linkedInUrl" name="linkedInUrl">
+                    </div>
+                    <div class="form-group">
+                        <label class="col-form-label">Github profile</label>
+                        <input type="text" class="form-control" required [(ngModel)]="model.githubUrl" name="githubUrl">
+                    </div>
+                    <div class="form-group">
+                        <label class="col-form-label">Stack overflow profile</label>
+                        <input type="text" class="form-control" required [(ngModel)]="model.stackOverFlowUrl" name="stackOverFlowUrl">
+                    </div>
+                    <div class="form-group">
+                        <label class="col-form-label">Footer text</label>
+                        <input type="text" class="form-control" required [(ngModel)]="model.footerText" name="footerText">
+                    </div>
+                    <div class="form-check">
+                        <input type="checkbox" class="form-check-input" required [(ngModel)]="model.showCopyRightInFooter" name="showCopyRightInFooter" id="showCopyRightInFooter">
+                        <label class="form-check-label" for="showCopyRightInFooter">Show copyright in footer</label>
+                    </div>
+                    <div class="form-check">
+                        <input type="checkbox" class="form-check-input" required [(ngModel)]="model.footerTextBetweenCopyRightAndYear" name="footerTextBetweenCopyRightAndYear" id="footerTextBetweenCopyRightAndYear">
+                        <label class="form-check-label" for="footerTextBetweenCopyRightAndYear">Place footer text between copy right and year</label>
+                    </div>
+                    <div class="form-check">
+                        <input type="checkbox" class="form-check-input" required [(ngModel)]="model.showContactMeForm" name="showContactMeForm" id="showContactMeForm">
+                        <label class="form-check-label" for="showContactMeForm">Show contact me form</label>
+                    </div>
+                </form>
+            </div>
+            <div class="card-footer">
+                <button class="btn btn-primary" (click)="submit()">Save</button>
+            </div>
         </div>
-      </div>
     </div>
-  </section>
+</div>

@@ -1,13 +1,7 @@
-import { Routes } from '@angular/router';
-
-import { AboutMeComponent } from './about-me/about-me.component';
-import { AuthGuard } from '../../helpers/AuthGuard';
+import { Routes } from "@angular/router";
+import { AboutMeComponent } from "./about-me/about-me.component";
 
 export const AboutMeRoutes: Routes = [{
-    path: '',
-    canActivate: [AuthGuard],
-    children: [{
-        path: 'about-me',
-        component: AboutMeComponent
-    }]
-}];
+    path: 'about-me',
+    component: AboutMeComponent
+}]

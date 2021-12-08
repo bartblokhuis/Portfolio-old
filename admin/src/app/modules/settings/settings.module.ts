@@ -1,20 +1,23 @@
 import { NgModule } from '@angular/core';
-import { RouterModule } from '@angular/router';
 import { CommonModule } from '@angular/common';
-import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-
-import { SettingsRoutes } from './settings.routes';
-import { EmailSettingsComponent } from './email-settings/email-settings.component';
-import { SeoSettingsComponent } from './seo-settings/seo-settings.component';
+import { RouterModule } from '@angular/router';
+import { SettingRoutes } from './settings.routes';
 import { GeneralSettingsComponent } from './general-settings/general-settings.component';
+import { SeoSettingsComponent } from './seo-settings/seo-settings.component';
+import { EmailSettingsComponent } from './email-settings/email-settings.component';
+import { FormsModule } from '@angular/forms';
+
 
 @NgModule({
-  declarations: [EmailSettingsComponent, SeoSettingsComponent, GeneralSettingsComponent],
+  declarations: [
+    GeneralSettingsComponent,
+    SeoSettingsComponent,
+    EmailSettingsComponent
+  ],
   imports: [
     CommonModule,
-    RouterModule.forChild(SettingsRoutes),
     FormsModule,
-    ReactiveFormsModule,
+    RouterModule.forChild(SettingRoutes),
   ]
 })
 export class SettingsModule { }

@@ -1,0 +1,8 @@
+
+.dark-mode .form-control:not(.form-control-navbar):not(.form-control-sidebar):not(.is-invalid):not(:focus):not(:read-only){
+    
+}
+
+.form-control:disabled, .form-control[readonly]{
+    opacity: 0.5 !important;
+}

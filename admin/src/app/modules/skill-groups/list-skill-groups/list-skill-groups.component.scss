@@ -1,0 +1,28 @@
+.edit {
+    
+    .float-left{
+        max-width: 75%;
+    }
+
+    .form-control{
+        padding-top: 0;
+        padding-bottom: 0;
+        height: auto;
+    }
+}
+
+.title {
+    .float-left {
+        padding-top: 1px;
+        padding-bottom: 1px;
+    }
+    
+}
+
+i {
+    padding: 0 5px 0 5px;
+
+    &:hover{
+        cursor: pointer;
+    }
+}

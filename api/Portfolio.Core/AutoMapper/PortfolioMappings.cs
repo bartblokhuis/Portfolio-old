@@ -3,6 +3,7 @@ using Portfolio.Domain.Dtos;
 using Portfolio.Domain.Dtos.Messages;
 using Portfolio.Domain.Dtos.Projects;
 using Portfolio.Domain.Dtos.SkillGroup;
+using Portfolio.Domain.Dtos.Skills;
 using Portfolio.Domain.Models;
 
 namespace Portfolio.Core.AutoMapper
@@ -28,7 +29,8 @@ namespace Portfolio.Core.AutoMapper
             CreateMap<Project, ProjectDto>().ReverseMap();
             CreateMap<CreateUpdateProject, Project>();
 
-            CreateMap<CreateUpdateSkill, Skill>();
+            CreateMap<CreateSkillDto, Skill>();
+            CreateMap<UpdateSkillDto, Skill>();
             CreateMap<Skill, SkillDto>();
             CreateMap<SkillDto, Skill>();
 

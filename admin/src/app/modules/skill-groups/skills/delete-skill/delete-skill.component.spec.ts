@@ -1,4 +1,4 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { DeleteSkillComponent } from './delete-skill.component';
 
@@ -6,12 +6,12 @@ describe('DeleteSkillComponent', () => {
   let component: DeleteSkillComponent;
   let fixture: ComponentFixture<DeleteSkillComponent>;
 
-  beforeEach(async(() => {
-    TestBed.configureTestingModule({
+  beforeEach(async () => {
+    await TestBed.configureTestingModule({
       declarations: [ DeleteSkillComponent ]
     })
     .compileComponents();
-  }));
+  });
 
   beforeEach(() => {
     fixture = TestBed.createComponent(DeleteSkillComponent);

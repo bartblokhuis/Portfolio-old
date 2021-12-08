@@ -1,4 +1,4 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { SeoSettingsComponent } from './seo-settings.component';
 
@@ -6,12 +6,12 @@ describe('SeoSettingsComponent', () => {
   let component: SeoSettingsComponent;
   let fixture: ComponentFixture<SeoSettingsComponent>;
 
-  beforeEach(async(() => {
-    TestBed.configureTestingModule({
+  beforeEach(async () => {
+    await TestBed.configureTestingModule({
       declarations: [ SeoSettingsComponent ]
     })
     .compileComponents();
-  }));
+  });
 
   beforeEach(() => {
     fixture = TestBed.createComponent(SeoSettingsComponent);

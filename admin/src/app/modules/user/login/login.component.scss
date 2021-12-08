@@ -1,32 +1,7 @@
-body{
-    
-}
+@import url('../../../../assets/admin-lte/css/icheck-bootstrap.min.css');
 
-.wrapper{
-    position: relative;
-    z-index: 1;
-    height: 100vh;
-}
-.container{
-    padding-top: 22vh;
-}
-    
-
-.card {
-    box-shadow: 0 25px 30px -13px rgb(40 40 40 / 40%);
-    border-radius: 8px;
-
-    .card-header{
-        font-size: 22px;
-    }
-
-    .content {
-        padding: 15px;
-    }
-}
-
-.login-page-bg-image{
-    background-image: url('../../../../assets/img/login-background.jpg');
+.login-page-bg-image {
+    background-image: url('../../../../assets/img/login-background-light.jpg');
     background-size: cover;
     background-repeat: no-repeat;
     position: absolute;
@@ -34,4 +9,9 @@ body{
     left: 0;
     bottom: 0;
     right: 0;
+}
+
+
+.dark-mode .login-page-bg-image {
+    background-image: url('../../../../assets/img/login-background-dark.jpg');
 }

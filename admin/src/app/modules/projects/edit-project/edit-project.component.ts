@@ -1,144 +1,113 @@
-import { Component, Input, OnInit } from '@angular/core';
-import { FormControl, FormGroup } from '@angular/forms';
+import { AfterViewInit, Component, Input, OnInit, QueryList, ViewChildren } from '@angular/core';
 import { NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
-import { ToastrService } from 'ngx-toastr';
-import { Observable } from 'rxjs';
-import { Project, UpdateProjectSkills } from 'src/app/data/project';
-import { ProjectService } from 'src/app/services/projects/project.service';
-import { SkillService } from 'src/app/services/skills/skill.service';
+import { combineLatest, observable, Observable } from 'rxjs';
+import { AddUpdateProject } from 'src/app/data/projects/add-update-project';
+import { Project } from 'src/app/data/projects/project';
+import { UpdateProjectSkills } from 'src/app/data/projects/update-project-skills';
+import { SkillGroup } from 'src/app/data/skill-groups/skill-group';
+import { ApiService } from 'src/app/services/api/api.service';
+import { NotificationService } from 'src/app/services/notification/notification.service';
+import { formatProjectSkillsSelect, validateProjectForm } from '../helpers/project-helpers';
+
+declare var $:any;
 
 @Component({
   selector: 'app-edit-project',
   templateUrl: './edit-project.component.html',
   styleUrls: ['./edit-project.component.scss']
 })
-export class EditProjectComponent implements OnInit {
+export class EditProjectComponent implements OnInit, AfterViewInit {
 
-  @Input() project: Project;
-  @Input() modalRef: NgbModalRef;
+  @Input() modalRef: NgbModalRef | undefined;
+  @Input() project: Project | undefined;
+@ViewChildren('skillSelect') skills: QueryList<any> | undefined;
 
-  editForm = new FormGroup({
-    title: new FormControl(''),
-    description: new FormControl(''),
-    demoUrl: new FormControl(''),
-    githubUrl: new FormControl(''),
-    isPublished: new FormControl(),
-    file: new FormControl(''),
-    fileSource: new FormControl(''),
-  });
-
-  cities: any = [];
-  selectedItems: any = [];
-  dropdownSettings: any = {};
-  currentFileName = "";
-
-  dropdownList = null;
-  skillsDropDown = new FormControl('');
-  skills: any[];
-
-  constructor(private skillService: SkillService, private projectService: ProjectService, private toastr: ToastrService) { }
+  skillIds: number[] = [];
+  model: AddUpdateProject = { description: '', displayNumber: 0, imagePath: '', isPublished: false, title: '', demoUrl: '',githubUrl: '' }
+  skillModel: UpdateProjectSkills = {projectId: 0, skillIds: undefined }
+  currentFileName: string = '';
+  skillGroups: SkillGroup[] | undefined = undefined;
+  formData: FormData | undefined;
+  editProjectForm: any;
+  projectTitle: string = '';
+  
+  constructor(private apiService: ApiService, private notificationService: NotificationService) { }
+  
 
   ngOnInit(): void {
+    if(this.project === undefined) {
+      this.close();
+      return;
+    }
 
-    this.dropdownSettings = {
-      singleSelection: false,
-      idField: 'item_id',
-      textField: 'item_text',
-      selectAllText: 'Select All',
-      enableCheckAll: false,
-      itemsShowLimit: 3,
-      allowSearchFilter: false
-  };
+    this.projectTitle = this.project.title;
 
+    if(this.project.skills){
+      this.skillIds = this.project.skills?.map(x => x.id);
+    }
 
-    this.skillService.getSkills().subscribe((skills) => {
+    this.currentFileName = this.project.imagePath;
+    this.model.id = this.project.id;
 
-      if(this.project.skills){
-        var projectSkillIds: number[] = this.project.skills.map((skill) => skill.id);
-        this.selectedItems = skills.filter((skill) => projectSkillIds.indexOf(skill.id) !== -1).map((skill) => ({item_id: skill.id, item_text: skill.name}));
-        this.skillsDropDown.setValue(this.selectedItems);
-      }
-      
-      this.skills = skills.map((skill) => ({item_id: skill.id, item_text: skill.name}));
+    $('.select2').select2({closeOnSelect: false, templateResult: formatProjectSkillsSelect, tags: true});
+    $('.select2').on('change', (e: any) => this.skillModel.skillIds = $('.select2').val().map((x: string) => parseInt(x)));
+
+    
+
+    this.model = this.project;
+    this.editProjectForm = $("#editProjectForm");
+    validateProjectForm(this.editProjectForm);
+
+    this.apiService.get<SkillGroup[]>('SkillGroup').subscribe((result: SkillGroup[]) => {
+      this.skillGroups = result;
     });
-
-    this.editForm.controls.title.setValue(this.project.title);
-    this.editForm.controls.description.setValue(this.project.description);
-    this.editForm.controls.demoUrl.setValue(this.project.demoUrl);
-    this.editForm.controls.githubUrl.setValue(this.project.githubUrl);
-    this.editForm.controls.isPublished.setValue(this.project.isPublished);
   }
 
-  onFileChange(event) {
-    if (event.target.files.length > 0) {
-      const file = event.target.files[0];
+  ngAfterViewInit(): void {
+    this.skills?.changes.subscribe(t => {
+      $('.select2').select2({closeOnSelect: false, templateResult: formatProjectSkillsSelect, tags: true});
+    });
+  }
+
+  close(){
+    this.modalRef?.close();
+  }
+
+  onFileChange($event: any) {
+    if ($event.target.files.length > 0) {
+      const file = $event.target.files[0];
       this.currentFileName = file.name;
-      this.editForm.patchValue({
-        fileSource: file
-      });
+      this.formData = new FormData();
+      this.formData.append('icon', file);
     }
   }
 
-  close(): void {
-    this.modalRef.close();
-  }
+  submit() {
+    if(!this.editProjectForm.valid() || !this.project) return;
 
-  submit():void {
-    let project: Project = {
-      title: this.editForm.controls.title.value,
-      description: this.editForm.controls.description.value,
-      isPublished: this.editForm.controls.isPublished.value ?? false,
-      demoUrl: this.editForm.controls.demoUrl.value,
-      githubUrl: this.editForm.controls.githubUrl.value,
-      imagePath: this.project.imagePath,
-      displayNumber: this.project.displayNumber,
-      id: this.project.id
-    };
+    let observables: Observable<any>[] = [];
+    observables.push(this.apiService.put<Project>("Project", this.model));
 
-    this.projectService.updateProject(project).subscribe(() => {
-      this.uploadProjectSkills(project.id).subscribe(() => {
+    if(this.skillModel.skillIds && this.skillModel.skillIds.length !== 0){
+      this.skillModel.projectId = this.project.id;
+      observables.push(this.apiService.put("Project/UpdateSkills", this.skillModel));
+    }
 
-        var uploadImageRequest = this.uploadProjectImage(project.id)
+    if(this.formData) {
+      observables.push(this.apiService.put(`Project/UpdateDemoImage/${this.project.id}`, this.formData));
+    }
 
-        if(uploadImageRequest){
-          uploadImageRequest.subscribe(() => {
-            this.modalRef.close();
-            this.savedProjectNotification();
-            return;
-          });
-        }else{
-          this.modalRef.close();
-          this.savedProjectNotification();
-            return;
-        }
-      })
+    combineLatest(observables).subscribe(() => {
+      this.notify()
+      this.modalRef?.close();
+      return;
     })
   }
 
-  uploadProjectSkills(projectId: number): Observable<object> {
-    const updateModel: UpdateProjectSkills = {
-      projectId: projectId,
-      skillIds: this.skillsDropDown.value.map(x => x.item_id)
-    };
-
-    return this.projectService.updateProjectSkills(updateModel);
-  }
-
-  uploadProjectImage(projectId: number): Observable<object> {
-
-      const fileSource = this.editForm.get('fileSource').value;
-      if(!fileSource) {
-        return;
-      }
-
-      const formData = new FormData();
-      formData.append('icon', fileSource);
-
-      return this.projectService.updateProjectImage(projectId, formData);
-  }
-
-  savedProjectNotification(){
-    this.toastr.success("Saved " + this.project.title);
+  notify(): void {
+    this.notificationService.success("Updated the project");
   }
 
 }
+
+

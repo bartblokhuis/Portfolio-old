@@ -1,31 +1,32 @@
-import { Component, Input } from '@angular/core';
-import { Message } from 'src/app/data/Messages/Message';
-import { NgbModal, NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
-import { MessageService } from 'src/app/services/messages/message.service';
-import { ToastrService } from 'ngx-toastr';
+import { Component, Input, OnInit } from '@angular/core';
+import { NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
+import { Message } from 'src/app/data/messages/message';
+import { MessagesService } from 'src/app/services/messages/messages.service';
+import { NotificationService } from 'src/app/services/notification/notification.service';
 
 @Component({
   selector: 'app-delete-message',
   templateUrl: './delete-message.component.html',
   styleUrls: ['./delete-message.component.scss']
 })
-export class DeleteMessageComponent {
+export class DeleteMessageComponent implements OnInit {
 
-  @Input() message: Message;
-  @Input() modalRef: NgbModalRef;
+  @Input() modal: NgbModalRef | undefined;
+  @Input() message: Message | undefined;
+  
+  constructor(private messagesService: MessagesService, private notificationService: NotificationService) { }
 
-  constructor(private messageService: MessageService, private toastr: ToastrService){
+  ngOnInit(): void {
   }
 
-  close(){
-    this.modalRef.close();
-  }
+  remove(){
 
-  remove(id: number){
-    this.messageService.deleteMessage(id).then(() => {
-      this.modalRef.close();
-      this.toastr.success("Removed message");
-    });
+    if(!this.message) return;
+
+    this.messagesService.deleteMessage(this.message).subscribe(() => {
+      this.notificationService.success(`rRemoved ${this.message?.firstName} ${this.message?.lastName}'s message.'`);
+      this.modal?.close();
+    })
   }
 
 }

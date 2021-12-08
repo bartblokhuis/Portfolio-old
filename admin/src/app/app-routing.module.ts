@@ -1,59 +1,61 @@
 import { NgModule } from '@angular/core';
-import { Routes, RouterModule } from '@angular/router';
+import { RouterModule, Routes } from '@angular/router';
 import { AuthGuard } from './helpers/AuthGuard';
 import { AdminComponent } from './layouts/admin/admin.component';
-import { AuthComponent } from './layouts/auth/auth.component';
-
 
 const routes: Routes = [
   {
     path: '',
-    redirectTo: 'dashboard',
-    pathMatch: 'full',
-},
-  {
-    path: '',
-    component: AdminComponent,
-    canActivate: [AuthGuard],
-    children: [
-      { 
-        path: '', 
-        loadChildren: './modules/dashboard/dashboard.module#DashboardModule',
-      }, 
-      {
-        path: '',
-        loadChildren: './modules/about-me/about-me.module#AboutMeModule',
-      }, 
-      {
-        path: '',
-        loadChildren: './modules/skill-groups/skill-groups.module#SkillGroupsModule'
-      }, 
-      {
-        path: '',
-        loadChildren: './modules/projects/projects.module#ProjectsModule' 
-      }, 
-      {
-        path: '',
-        loadChildren: './modules/messages/messages.module#MessagesModule' 
-      }, 
-      {
-        path: '',
-        loadChildren: './modules/settings/settings.module#SettingsModule' 
-      }
-    ]
+    redirectTo: 'about-me',
+    pathMatch: 'full'
   },
   {
     path: '',
-    component: AuthComponent,
-    children: [{
-      path: '',
-      loadChildren: './modules/user/user.module#UserModule'
-    }]
+    component: AdminComponent,
+    children: [
+      {
+        path: '',
+        loadChildren: () => import('./modules/about-me/about-me.module').then(
+          module => module.AboutMeModule
+        ),
+      },
+      {
+        path: '',
+        loadChildren: () => import('./modules/messages/messages.module').then(
+          module => module.MessagesModule
+        ),
+      },
+      {
+        path: '',
+        loadChildren: () => import('./modules/projects/projects.module').then(
+          module => module.ProjectsModule
+        ),
+      },
+      {
+        path: '',
+        loadChildren: () => import('./modules/skill-groups/skill-groups.module').then(
+          module => module.SkillGroupsModule
+        ),
+      },
+      {
+        path: '',
+        loadChildren: () => import('./modules/settings/settings.module').then(
+          module => module.SettingsModule
+        ),
+      }
+    ],
+    canActivate: [AuthGuard]
+  },
+  {
+    path: '',
+    loadChildren: () => import('./modules/user/user.module').then(
+      module => module.UserModule
+    )
   }
 ];
 
 @NgModule({
-  imports: [RouterModule.forRoot(routes, {useHash: true})],
+  imports: [RouterModule.forRoot(routes)],
   exports: [RouterModule]
 })
 export class AppRoutingModule { }

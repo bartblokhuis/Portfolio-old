@@ -1,11 +1,11 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
-import { ToastrService } from 'ngx-toastr';
-import { CreateUpdateSkill, Skill } from 'src/app/data/Skill';
-import { SkillGroup } from 'src/app/data/SkillGroup';
-import { SkillService } from 'src/app/services/skills/skill.service';
+import { EditSkill } from 'src/app/data/skills/edit-skill';
+import { Skill } from 'src/app/data/skills/skill';
+import { ApiService } from 'src/app/services/api/api.service';
+import { validateSkillForm } from '../helpers/skill-helpers';
 
+declare var $: any;
 @Component({
   selector: 'app-edit-skill',
   templateUrl: './edit-skill.component.html',
@@ -13,61 +13,52 @@ import { SkillService } from 'src/app/services/skills/skill.service';
 })
 export class EditSkillComponent implements OnInit {
 
-  @Input() skillGroup: SkillGroup;
-  @Input() modalRef: NgbModalRef;
-  @Input() skill: Skill
+  @Input() modal: NgbModalRef | undefined;
+  @Input() skill: Skill | undefined;
 
-  currentFileName: string = 'File';
+  model: EditSkill = { displayNumber: 0, iconPath: '', id: 0, name: '', skillGroupId: 0}
+  form: any;
 
-  editForm = new FormGroup({
-    name: new FormControl('test'),
-    file: new FormControl('', [Validators.required]),
-    fileSource: new FormControl('', [Validators.required])
-  });
+  currentFileName = "";
+  formData: FormData | undefined;
+  error: string | undefined;
 
-  constructor(private skillService: SkillService, private toastr: ToastrService) { }
+  constructor(private apiService: ApiService) { }
 
   ngOnInit(): void {
-    this.editForm.controls.name.setValue(this.skill.name);
+    this.currentFileName = this.skill?.iconPath ?? "";
+
+    if(!this.skill) return;
+
+    this.model = { displayNumber: this.skill.displayNumber, iconPath: this.skill.iconPath, id: this.skill.id, name: this.skill.name, skillGroupId: this.skill.skillGroupId };
+
+    this.form = $("#editSkillForm");
+    validateSkillForm(this.form);
   }
 
-  onFileChange(event) {
-    if (event.target.files.length > 0) {
-      const file = event.target.files[0];
-      this.currentFileName = file.name;
-      this.editForm.patchValue({
-        fileSource: file
-      });
-    }
-  }
+  submit() : void {
+    if(!this.form.valid()) return;
 
-  submit(){
+    this.apiService.put<Skill>("Skill", this.model).subscribe((result: Skill) => {
 
-    const skill: CreateUpdateSkill = {
-      id: this.skill.id,
-      displayNumber: this.skill.displayNumber,
-      iconPath: this.skill.iconPath,
-      skillGroupId: this.skillGroup.id,
-      name: this.editForm.get('name').value
-    };
-
-    this.skillService.editSkill(skill).subscribe((skill) =>{
-      const fileSource = this.editForm.get('fileSource').value;
-      
-      if(!fileSource) {
-        this.modalRef.close();
-        this.toastr.success("Saved skill: " + skill.name)
-        return;
+      if(this.formData) {
+        this.apiService.put<Skill>(`Skill/SaveSkillImage/${result.id}`, this.formData).subscribe((resultWithImage: Skill) => {
+          this.modal?.close(resultWithImage);
+        });
       }
+      else {
+        this.modal?.close(result);
+      }
+    }, error => this.error = error);
+  }
 
-      const formData = new FormData();
-      formData.append('icon', fileSource);
-
-      this.skillService.saveSkillImage(skill.id, formData).subscribe(() => {
-        this.modalRef.close();
-        this.toastr.success("Saved skill: " + skill.name)
-      });
-    })
+  onFileChange($event: any) {
+    if ($event.target.files.length > 0) {
+      const file = $event.target.files[0];
+      this.currentFileName = file.name;
+      this.formData = new FormData();
+      this.formData.append('icon', file);
+    }
   }
 
 }

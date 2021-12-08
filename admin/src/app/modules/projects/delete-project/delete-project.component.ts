@@ -1,29 +1,32 @@
-import { Component, Input } from '@angular/core';
-import { Project } from '../../../data/project';
-import { NgbModal, NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
-import { ProjectService } from 'src/app/services/projects/project.service';
-import { ToastrService } from 'ngx-toastr';
+import { Component, Input, OnInit } from '@angular/core';
+import { NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
+import { Project } from 'src/app/data/projects/project';
+import { ApiService } from 'src/app/services/api/api.service';
+import { NotificationService } from 'src/app/services/notification/notification.service';
 
 @Component({
   selector: 'app-delete-project',
   templateUrl: './delete-project.component.html',
   styleUrls: ['./delete-project.component.scss']
 })
-export class DeleteProjectComponent {
+export class DeleteProjectComponent implements OnInit {
 
-  @Input() project: Project;
-  @Input() modalRef: NgbModalRef;
+  @Input() modalRef: NgbModalRef | undefined;
+  @Input() project: Project | undefined;
 
-  constructor(private projectSerivce: ProjectService, private toastr: ToastrService){ }
+  constructor(private apiService: ApiService, private notificationService: NotificationService) { }
 
-  close(){
-    this.modalRef.close();
+  ngOnInit(): void {
   }
 
-  remove(id: number){
-    this.projectSerivce.deleteProject(id).subscribe(() => {
-      this.modalRef.close();
-      this.toastr.success("Removed " + this.project.title);
+  close(){
+    this.modalRef?.close();
+  }
+
+  remove() {
+    this.apiService.delete(`Project?id=${this.project?.id}`).subscribe(() => {
+      this.notificationService.success("Removed the project")
+      this.modalRef?.close();
     });
   }
 

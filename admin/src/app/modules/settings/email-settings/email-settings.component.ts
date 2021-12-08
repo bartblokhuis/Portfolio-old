@@ -1,10 +1,10 @@
 import { Component, OnInit } from '@angular/core';
-import { FormControl, FormGroup } from '@angular/forms';
-import { ToastrService } from 'ngx-toastr';
-import { EmailSettings } from 'src/app/data/EmailSettings';
+import { EmailSettings } from 'src/app/data/settings/email-settings';
+import { ApiService } from 'src/app/services/api/api.service';
+import { BreadcrumbsService } from 'src/app/services/breadcrumbs/breadcrumbs.service';
+import { NotificationService } from 'src/app/services/notification/notification.service';
 
-import { SettingserviceService } from '../../../services/settings/settingservice.service';
-
+declare var $: any;
 @Component({
   selector: 'app-email-settings',
   templateUrl: './email-settings.component.html',
@@ -12,61 +12,77 @@ import { SettingserviceService } from '../../../services/settings/settingservice
 })
 export class EmailSettingsComponent implements OnInit {
 
-  showSaveButton = false;
+  model: EmailSettings = { displayName: '', email: '', enableSsl: false, host: '', password: '', port: 0, sendTestEmailTo: '', useDefaultCredentials: false, username: ''}
+  private url = "Settings/EmailSettings";
+  private form: any;
 
-  emailSettingsForm = new FormGroup({
-    email: new FormControl(''),
-    displayName: new FormControl(''),
-    host: new FormControl(''),
-    port: new FormControl(''),
-    username: new FormControl(''),
-    password: new FormControl(''),
-    enableSsl: new FormControl(''),
-    useDefaultCredentials: new FormControl(''),
-    sendTestEmailTo: new FormControl(''),
-  });
-
-  constructor(private settngsService: SettingserviceService, private toastrService: ToastrService) { }
-
-   // convenience getter for easy access to form fields
-   get f() { return this.emailSettingsForm.controls; }
+  constructor(private readonly BreadcrumbService: BreadcrumbsService, private apiService: ApiService, private notificationService: NotificationService) { }
 
   ngOnInit(): void {
+    this.form = $("#email-settings-form");
+    this.validate();
+    this.BreadcrumbService.setBreadcrumb([
+      {
+        name: 'Settings',
+        path: undefined,
+        active: true
+      },
+      {
+        name: 'Email Settings',
+        path: undefined,
+        active: true
+      }
+    ]);
 
-    this.settngsService.get<EmailSettings>("EmailSettings").subscribe((settings) => {
-      this.f.email.setValue(settings.email);
-      this.f.displayName.setValue(settings.displayName);
-      this.f.host.setValue(settings.host);
-      this.f.port.setValue(settings.port);
-      this.f.username.setValue(settings.username);
-      this.f.password.setValue(settings.password);
-      this.f.enableSsl.setValue(settings.enableSsl);
-      this.f.useDefaultCredentials.setValue(settings.useDefaultCredentials);
-      this.f.sendTestEmailTo.setValue(settings.sendTestEmailTo);
+    this.apiService.get<EmailSettings>(this.url).subscribe((result: EmailSettings) => {
+      this.model = result;
+    })
+  }
+
+  validate() {
+    this.form.validate({
+      rules: {
+        email: {
+          required: true,
+          email: true,
+        },
+        displayName: {
+          required: true
+        },
+        sendTestEmailTo: {
+          email: true,
+        }
+      },
+      messages: {
+        email: {
+          required: "Please enter a email address",
+          email: "Please enter a valid email address"
+        },
+        displayName: {
+          required: "Please enter a display name"
+        },
+        sendTestEmailTo: {
+          email: "Please enter a valid email address"
+        },
+      },
+      errorElement: 'span',
+      errorPlacement: function (error: any, element: any) {
+        error.addClass('invalid-feedback');
+        element.closest('.form-group').append(error);
+      },
+      highlight: function (element: any, errorClass: any, validClass: any) {
+        $(element).addClass('is-invalid');
+      },
+      unhighlight: function (element: any, errorClass: any, validClass: any) {
+        $(element).removeClass('is-invalid');
+      }
     });
-
   }
 
-  changedSettings(): void {
-    this.showSaveButton = true;
-  }
-
-  saveEmailSettings(): void {
-    var settings: EmailSettings = {
-      email: this.f.email.value,
-      displayName: this.f.displayName.value,
-      enableSsl: this.f.enableSsl.value,
-      host: this.f.host.value,
-      password: this.f.password.value,
-      port: this.f.port.value,
-      sendTestEmailTo: this.f.sendTestEmailTo.value,
-      useDefaultCredentials: this.f.useDefaultCredentials.value ?? false,
-      username: this.f.username.value ?? false
-    };
-
-    this.settngsService.save<EmailSettings>(settings, "EmailSettings").subscribe(() => {
-      this.toastrService.success("Saved email settings");
-      this.showSaveButton = false;
+  submit() : void {
+    if(!this.form.valid()) return;
+    this.apiService.post(this.url, this.model).subscribe((result) => {
+      this.notificationService.success('Saved the changes')
     });
   }
 

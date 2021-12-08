@@ -1,10 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import { FormControl, FormGroup } from '@angular/forms';
-import { ToastrService } from 'ngx-toastr';
-import { GeneralSettings } from 'src/app/data/GeneralSettings';
-
-import { SettingserviceService } from '../../../services/settings/settingservice.service';
-
+import { GeneralSettings } from 'src/app/data/settings/general-settings';
+import { ApiService } from 'src/app/services/api/api.service';
+import { BreadcrumbsService } from 'src/app/services/breadcrumbs/breadcrumbs.service';
+import { NotificationService } from 'src/app/services/notification/notification.service';
 
 @Component({
   selector: 'app-general-settings',
@@ -13,66 +11,35 @@ import { SettingserviceService } from '../../../services/settings/settingservice
 })
 export class GeneralSettingsComponent implements OnInit {
 
-  showSaveButton = false;
+  model: GeneralSettings = { callToActionText: '', footerText: '', footerTextBetweenCopyRightAndYear: false, githubUrl: '', landingDescription: '', landingTitle: '', linkedInUrl: '', showContactMeForm: false, showCopyRightInFooter: false, stackOverFlowUrl: ''}
+  private url = "Settings/GeneralSettings";
+  private form: any;
 
-  seoSettingsForm = new FormGroup({
-    landingTitle: new FormControl(''),
-    landingDescription: new FormControl(''),
-    callToActionText: new FormControl(''),
-    linkedInUrl: new FormControl(''),
-    githubUrl: new FormControl(''),
-    stackOverFlowUrl: new FormControl(''),
-    footerText: new FormControl(''),
-    showCopyRightInFooter: new FormControl(''),
-    footerTextBetweenCopyRightAndYear: new FormControl(''),
-    showContactMeForm: new FormControl(''),
-  });
-
-  constructor(private settingsService: SettingserviceService, private toastrService: ToastrService) { }
-
-  get f() { return this.seoSettingsForm.controls; }
+  constructor(private readonly BreadcrumbService: BreadcrumbsService, private apiService: ApiService, private notificationService: NotificationService) { }
 
   ngOnInit(): void {
+    this.BreadcrumbService.setBreadcrumb([
+      {
+        name: 'Settings',
+        path: undefined,
+        active: true
+      },
+      {
+        name: 'General Settings',
+        path: undefined,
+        active: true
+      }
+    ]);
 
-    this.settingsService.get<GeneralSettings>("GeneralSettings").subscribe((settings) => {
-      this.f.landingTitle.setValue(settings.landingTitle);
-      this.f.landingDescription.setValue(settings.landingDescription);
-      this.f.callToActionText.setValue(settings.callToActionText);
-      this.f.linkedInUrl.setValue(settings.linkedInUrl);
-      this.f.githubUrl.setValue(settings.githubUrl);
-      this.f.stackOverFlowUrl.setValue(settings.stackOverFlowUrl);
-      this.f.footerText.setValue(settings.footerText);
-      this.f.showCopyRightInFooter.setValue(settings.showCopyRightInFooter);
-      this.f.footerTextBetweenCopyRightAndYear.setValue(settings.footerTextBetweenCopyRightAndYear);
-      this.f.showContactMeForm.setValue(settings.showContactMeForm);
-    });
-
+    this.apiService.get<GeneralSettings>(this.url).subscribe((result: GeneralSettings) => {
+      this.model = result;
+    })
   }
 
-  changedSettings(): void {
-    this.showSaveButton = true;
-  }
-
-  saveSeoSettings(): void {
-
-    var settings: GeneralSettings = {
-      landingTitle: this.f.landingTitle.value,
-      landingDescription: this.f.landingDescription.value,
-      callToActionText: this.f.callToActionText.value,
-      linkedInUrl: this.f.linkedInUrl.value ?? false,
-      githubUrl: this.f.githubUrl.value ?? false,
-      stackOverFlowUrl: this.f.stackOverFlowUrl.value ?? false,
-      footerText: this.f.footerText.value ?? false,
-      showCopyRightInFooter: this.f.showCopyRightInFooter.value ?? false,
-      footerTextBetweenCopyRightAndYear: this.f.footerTextBetweenCopyRightAndYear.value ?? false,
-      showContactMeForm: this.f.showContactMeForm.value ?? false,
-    };
-
-    this.settingsService.save<GeneralSettings>(settings, "GeneralSettings").subscribe(() => {
-      this.toastrService.success("Saved general settings");
-      this.showSaveButton = false;
+  submit(): void {
+    this.apiService.post(this.url, this.model).subscribe((result) => {
+      this.notificationService.success('Saved the changes')
     });
   }
-
 
 }

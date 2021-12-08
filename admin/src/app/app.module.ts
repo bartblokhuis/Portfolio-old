@@ -1,25 +1,21 @@
-import { BrowserModule } from '@angular/platform-browser';
-import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { NgModule } from '@angular/core';
-import { HttpClientModule, HTTP_INTERCEPTORS }  from "@angular/common/http";
-import { AppComponent } from './app.component';
-import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
-import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
-import { ToastrModule } from 'ngx-toastr';
+import { BrowserModule } from '@angular/platform-browser';
+import { QuillModule } from 'ngx-quill';
+
 import { AppRoutingModule } from './app-routing.module';
-import { JwtInterceptor } from './helpers/JwtInterceptor';
-import { ErrorInterceptor } from './helpers/ErrorInterceptor';
+import { AppComponent } from './app.component';
+import { SharedComponentsModule } from './components/shared/shared-components.module';
+import { ErrorInterceptor } from './helpers/error-interceptor';
+import { JwtInterceptor } from './helpers/jwt-interceptor';
 import { AdminComponent } from './layouts/admin/admin.component';
 import { AuthComponent } from './layouts/auth/auth.component';
-import { SharedModule } from './components/shared/shared.module';
 import { AboutMeModule } from './modules/about-me/about-me.module';
 import { MessagesModule } from './modules/messages/messages.module';
-import { ComponentsModule } from './components/components.module';
-import { ProjectsModule } from './modules/projects/projects.module'; 
-import { DashboardModule } from './modules/dashboard/dashboard.module';
-import { UserModule } from './modules/user/user.module';
-import { SkillGroupsModule } from './modules/skill-groups/skill-groups.module';
+import { ProjectsModule } from './modules/projects/projects.module';
 import { SettingsModule } from './modules/settings/settings.module';
+import { SkillGroupsModule } from './modules/skill-groups/skill-groups.module';
+import { UserModule } from './modules/user/user.module';
 
 @NgModule({
   declarations: [
@@ -28,34 +24,30 @@ import { SettingsModule } from './modules/settings/settings.module';
     AuthComponent,
   ],
   imports: [
-    BrowserAnimationsModule,
+    BrowserModule,
     AppRoutingModule,
-    UserModule,
+    HttpClientModule,
     AboutMeModule,
+    SkillGroupsModule,
     MessagesModule,
     ProjectsModule,
-    DashboardModule,
-    SkillGroupsModule,
+    UserModule,
     SettingsModule,
-    BrowserModule,
-    SharedModule,
-    NgbModule,
-    HttpClientModule,
-    ComponentsModule,
-    ToastrModule.forRoot()
+    SharedComponentsModule,
+    QuillModule.forRoot() //<-- Updated Quill Module
   ],
-  providers: [{
-    provide: HTTP_INTERCEPTORS,
-    useClass: JwtInterceptor,
-    multi: true
-  },{
-    provide: HTTP_INTERCEPTORS,
-    useClass: ErrorInterceptor,
-    multi: true
-  }],
-  bootstrap: [AppComponent],
-  schemas: [
-    CUSTOM_ELEMENTS_SCHEMA
-  ]
+  providers: [
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: JwtInterceptor,
+      multi: true
+    },
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: ErrorInterceptor,
+      multi: true
+    }
+  ],
+  bootstrap: [AppComponent]
 })
 export class AppModule { }

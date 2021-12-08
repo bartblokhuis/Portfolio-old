@@ -1,0 +1,48 @@
+@import '../../../../assets/scss/table.scss';
+
+td {
+    max-width: 250px !important;
+    overflow: hidden;
+
+    a {
+        &:nth-child(odd) {
+            padding-right: 5px;
+        }
+
+        &:nth-child(even) {
+            padding-left: 5px;
+        }
+
+        img {
+            height: 25px;
+        }
+    }
+    
+    p {
+        max-width: 100%;
+        overflow: hidden;
+        margin: 0 0 0 0;
+        height: 100%;
+
+        span {
+            max-width: 250px;
+            display: inline-block;
+            overflow: hidden;
+            white-space: nowrap;
+            text-overflow: ellipsis;
+            vertical-align: middle;
+        }
+    }
+
+    .badge {
+        margin: 0 5px;
+
+        &:first-child{
+            margin: 0 5px 0 0;
+        }
+
+        &:last-child {
+            margin: 0 0 0 5px;
+        }
+    }
+}

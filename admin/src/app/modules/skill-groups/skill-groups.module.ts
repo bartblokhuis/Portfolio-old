@@ -1,26 +1,32 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { ListSkillGroupsComponent } from './list-skill-groups/list-skill-groups.component';
+import { SkillGroupRoutes } from './skill-groups.routes';
+import { RouterModule } from '@angular/router';
 import { CreateSkillGroupComponent } from './create-skill-group/create-skill-group.component';
+import { FormsModule } from '@angular/forms';
 import { DeleteSkillGroupComponent } from './delete-skill-group/delete-skill-group.component';
-import { ListSkillGroupComponent } from './list-skill-group/list-skill-group.component';
+import { ListSkillsComponent } from './skills/list-skills/list-skills.component';
 import { CreateSkillComponent } from './skills/create-skill/create-skill.component';
 import { EditSkillComponent } from './skills/edit-skill/edit-skill.component';
 import { DeleteSkillComponent } from './skills/delete-skill/delete-skill.component';
-import { ListSkillComponent } from './skills/list-skill/list-skill.component';
-import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { RouterModule } from '@angular/router';
-import { SkillGroupRoutes } from './skill-groups.route';
-import { EditSkillGroupComponent } from './edit-skill-group/edit-skill-group.component';
 
 
 
 @NgModule({
-  declarations: [CreateSkillGroupComponent, DeleteSkillGroupComponent, ListSkillGroupComponent, CreateSkillComponent, EditSkillComponent, DeleteSkillComponent, ListSkillComponent, EditSkillGroupComponent],
+  declarations: [
+    ListSkillGroupsComponent,
+    CreateSkillGroupComponent,
+    DeleteSkillGroupComponent,
+    ListSkillsComponent,
+    CreateSkillComponent,
+    EditSkillComponent,
+    DeleteSkillComponent,
+  ],
   imports: [
     CommonModule,
-    RouterModule.forChild(SkillGroupRoutes),
     FormsModule,
-    ReactiveFormsModule,
-],
+    RouterModule.forChild(SkillGroupRoutes),
+  ]
 })
 export class SkillGroupsModule { }

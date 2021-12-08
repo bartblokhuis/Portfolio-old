@@ -1,64 +1,62 @@
 <div class="modal-header">
-    <h4 class="modal-title" id="modal-project-title">Edit message</h4>
-    <button type="button" class="close" aria-label="Close" (click)="close()">
+    <h4 class="modal-title" id="modal-message-title">Edit message</h4>
+    <button type="button" class="close" aria-label="Close" (click)="modal?.close()">
       <span aria-hidden="true">&times;</span>
     </button>
-  </div>
-  <div class="modal-body">
-    <form [formGroup]="editMessageForm" (ngSubmit)="save()">
+</div>
+<form id="editMessageForm">
+    <div class="modal-body">
         <div class="row">
+
             <div class="col-sm-6">
                 <div class="form-group">
-                    <label>Status</label>
-                    <select class="custom-select" formControlName="messageStatus" required>
-                        <!--<option selected></option>-->
-                        <option [selected]="message.messageStatus == messageType" *ngFor="let messageType of messageTypes" [value]="messageType">{{ mapping[messageType] }}</option>
+                    <label>Skills</label>
+                    <select class="select2 form-control" style="width: 100%;" data-minimum-results-for-search="Infinity">
+                        <option [selected]="message?.messageStatus == messageType" *ngFor="let messageType of messageTypes" [value]="messageType">{{ mapping[messageType] }}</option>
                     </select>
                 </div>
             </div>
             <div class="col-sm-6">
                 <div class="form-group">
                     <label>Firstname</label>
-                    <input class="form-control" type="text" [value]="message.firstName" readonly="readonly" />
+                    <input class="form-control" type="text" [value]="message?.firstName" readonly="readonly" />
                 </div>
             </div>
             <div class="col-sm-6">
                 <div class="form-group">
                     <label>Lastname</label>
-                    <input class="form-control" type="text" [value]="message.lastName" readonly="readonly" />
+                    <input class="form-control" type="text" [value]="message?.lastName" readonly="readonly" />
                 </div>
             </div>
             <div class="col-sm-6">
                 <div class="form-group">
                     <label>Email</label>
-                    <input class="form-control" type="text" [value]="message.email" readonly="readonly" />
+                    <input class="form-control" type="text" [value]="message?.email" readonly="readonly" />
                 </div>
             </div>
             <div class="col-sm-12">
                 <div class="form-group">
                     <label>Message</label>
-                    <textarea class="form-control" type="text" [value]="message.messageContent" readonly="readonly"></textarea>
+                    <textarea class="form-control" type="text" [value]="message?.messageContent" readonly="readonly"></textarea>
                 </div>
             </div>
             <div class="col-sm-6">
                 <div class="form-group">
                     <label>Received date</label>
-                    <input class="form-control" type="text" [value]="message.createdAtUTC" readonly="readonly" />
+                    <input class="form-control" type="text" [value]="message?.createdAtUTC" readonly="readonly" />
                 </div>
             </div>
             <div class="col-sm-6">
                 <div class="form-group">
                     <label>Last updated date</label>
-                    <input *ngIf="message.updatedAtUtc" class="form-control" type="text" [value]="message.updatedAtUtc" readonly="readonly" />
-                    <input *ngIf="!message.updatedAtUtc" class="form-control" type="text" readonly="readonly" />
+                    <input *ngIf="message?.updatedAtUtc" class="form-control" type="text" [value]="message?.updatedAtUtc" readonly="readonly" />
+                    <input *ngIf="!message?.updatedAtUtc" class="form-control" type="text" readonly="readonly" />
                 </div>
             </div>
         </div>
-        
-        
-    </form>
-  </div>
-  <div class="modal-footer justify-content-between">
-    <button type="button" class="btn btn-default" (click)="close()">Cancel</button>
-    <button type="submit" class="btn btn-primary" (click)="save()">Save</button>
-  </div>
+    </div>
+    <div class="modal-footer justify-content-between">
+        <button type="button" class="btn btn-default" (click)="modal?.close()">Cancel</button>
+        <button type="button" class="btn btn-primary" (click)="edit()">Save</button>
+    </div>
+</form>

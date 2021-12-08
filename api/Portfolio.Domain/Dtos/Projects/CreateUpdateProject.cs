@@ -1,5 +1,6 @@
 ﻿using Portfolio.Domain.Dtos.Common;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 
 namespace Portfolio.Domain.Dtos.Projects
 {
@@ -7,6 +8,7 @@ namespace Portfolio.Domain.Dtos.Projects
     {
         #region Properties
 
+        [Required]
         public string Title { get; set; }
 
         public string Description { get; set; }

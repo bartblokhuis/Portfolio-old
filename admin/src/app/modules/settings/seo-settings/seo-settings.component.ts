@@ -1,9 +1,9 @@
 import { Component, OnInit } from '@angular/core';
-import { FormControl, FormGroup } from '@angular/forms';
-import { ToastrService } from 'ngx-toastr';
-import { SeoSettings } from 'src/app/data/SeoSettings';
-
-import { SettingserviceService } from '../../../services/settings/settingservice.service';
+import { SeoSettings } from 'src/app/data/settings/seo-settings';
+import { ApiService } from 'src/app/services/api/api.service';
+import { BreadcrumbsService } from 'src/app/services/breadcrumbs/breadcrumbs.service';
+import { ContentTitleService } from 'src/app/services/content-title/content-title.service';
+import { NotificationService } from 'src/app/services/notification/notification.service';
 
 @Component({
   selector: 'app-seo-settings',
@@ -12,49 +12,36 @@ import { SettingserviceService } from '../../../services/settings/settingservice
 })
 export class SeoSettingsComponent implements OnInit {
 
-  showSaveButton = false;
+  model: SeoSettings = { title: '', defaultMetaDescription: '', defaultMetaKeywords: '', useOpenGraphMetaTags: false, useTwitterMetaTags: false}
+  private url = "Settings/SeoSettings";
 
-  seoSettingsForm = new FormGroup({
-    title: new FormControl(''),
-    defaultMetaKeywords: new FormControl(''),
-    defaultMetaDescription: new FormControl(''),
-    useTwitterMetaTags: new FormControl(''),
-    useOpenGraphMetaTags: new FormControl(''),
-  });
-
-  constructor(private settingService: SettingserviceService, private toastrService: ToastrService) { }
-
-  get f() { return this.seoSettingsForm.controls; }
+  constructor(private readonly BreadcrumbService: BreadcrumbsService, private readonly contentTitleService: ContentTitleService, private apiService: ApiService, private notificationService: NotificationService) { }
 
   ngOnInit(): void {
+    this.BreadcrumbService.setBreadcrumb([
+      {
+        name: 'Settings',
+        path: undefined,
+        active: true
+      },
+      {
+        name: 'SEO Settings',
+        path: undefined,
+        active: true
+      }
+    ]);
 
-    this.settingService.get<SeoSettings>("SeoSettings").subscribe((settings) => {
-      this.f.title.setValue(settings.title);
-      this.f.defaultMetaKeywords.setValue(settings.defaultMetaKeywords);
-      this.f.defaultMetaDescription.setValue(settings.defaultMetaDescription);
-      this.f.useTwitterMetaTags.setValue(settings.useTwitterMetaTags);
-      this.f.useOpenGraphMetaTags.setValue(settings.useOpenGraphMetaTags);
-    });
+    this.contentTitleService.title.next("SEO Settings");
 
+    this.apiService.get<SeoSettings>(this.url).subscribe((result: SeoSettings) => {
+      this.model = result;
+    })
   }
 
-  changedSettings(): void {
-    this.showSaveButton = true;
-  }
 
-  saveSeoSettings(): void {
-
-    var settings: SeoSettings = {
-      title: this.f.title.value,
-      defaultMetaDescription: this.f.defaultMetaDescription.value,
-      defaultMetaKeywords: this.f.defaultMetaKeywords.value,
-      useOpenGraphMetaTags: this.f.useOpenGraphMetaTags.value ?? false,
-      useTwitterMetaTags: this.f.useTwitterMetaTags.value ?? false
-    };
-
-    this.settingService.save<SeoSettings>(settings, "SeoSettings").subscribe(() => {
-      this.toastrService.success("Saved seo settings");
-      this.showSaveButton = false;
+  submit() : void {
+    this.apiService.post(this.url, this.model).subscribe((result) => {
+      this.notificationService.success('Saved the changes')
     });
   }
 

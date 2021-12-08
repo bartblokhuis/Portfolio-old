@@ -1,32 +1,24 @@
-  <section class="content">
-    <div class="container-fluid">
-      <!-- Content starts here -->
-      <div class="row">
-        <div class="col-lg-8">
-  
-          <form [formGroup]="aboutMeForm" (ngSubmit)="saveAboutMe()">
-            <div class="card card-primary">
-  
-              <div class="card-body">
-                
-                <div class="form-group">
-                  <label>Title</label>
-                  <input type="text" formControlName="title" name="title" class="form-control" (input)="changedAboutMe()" />
-                </div>
-    
-                <div class="form-group">
-                  <label>Content</label>
-                  <app-rich-text-editor [control]="aboutMeForm.get('content')" name="test"
-                  (onContentChanged)="changedAboutMe()">
-                  </app-rich-text-editor>
-                </div>
-              </div>
-              <div class="card-footer">
-                <button type="submit" class="btn btn-primary" *ngIf="showSaveButton">Save</button>
-              </div>
+<div class="row">
+    <div class="col-12">
+        <div class="card">
+            <div class="card-header">
+                <h3 class="card-title">About Me</h3>
             </div>
-          </form>
+            <div class="card-body">
+                <form id="aboutMeForm">
+                    <div class="form-group">
+                        <label class="col-form-label">Title</label>
+                        <input type="text" class="form-control" required [(ngModel)]="aboutMe.title" name="title" id="title">
+                    </div>
+                    <div class="form-group">
+                        <label class="col-form-label">Content</label>
+                        <quill-editor (onContentChanged)="textChanged($event)" [(ngModel)]="aboutMe.content" name="content"></quill-editor>  
+                    </div>
+                </form>
+            </div>
+            <div class="card-footer">
+                <button class="btn btn-primary" (click)="submit()">Save</button>
+            </div>
         </div>
-      </div>
     </div>
-  </section>
+</div>

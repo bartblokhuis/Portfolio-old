@@ -1,9 +1,9 @@
 import { Component, OnInit } from '@angular/core';
-import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
-import { Message } from 'src/app/data/Messages/Message';
-import { DeleteMessageComponent } from '.././delete-message/delete-message.component';
-import { EditMessageComponent } from '.././edit-message/edit-message.component';
-import { MessageService } from '../../../services/messages/message.service';
+import { NgbModal, NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
+import { Message } from 'src/app/data/messages/message';
+import { MessagesService } from 'src/app/services/messages/messages.service';
+import { DeleteMessageComponent } from '../delete-message/delete-message.component';
+import { EditMessageComponent } from '../edit-message/edit-message.component';
 
 @Component({
   selector: 'app-list-messages',
@@ -12,44 +12,43 @@ import { MessageService } from '../../../services/messages/message.service';
 })
 export class ListMessagesComponent implements OnInit {
 
-  messages: Message[] = [];
-  currentDate: Date = new Date();
+  constructor(private messagesService: MessagesService, private modalService: NgbModal) { }
 
-  constructor(private messageService: MessageService, private modalService: NgbModal) { }
+  messages: Message[] = [];
 
   ngOnInit(): void {
-    this.LoadMessages();
-    this.messageService.updatedMessagesEventListener((messages) => {
-      this.messages = messages;
+    this.messagesService.getMessages().subscribe(result => this.messages = result);
+  }
+
+  edit(message: Message): void {
+    const modal = this.openModal(EditMessageComponent);
+    modal.componentInstance.message = message;
+
+    modal.result.then(() => {
+
     });
   }
 
-  LoadMessages(){
-    this.messageService.getMessages(true).then((messages) => {
-      this.messages = messages;
+  delete(message: Message): void {
+    const modal = this.openModal(DeleteMessageComponent);
+    modal.componentInstance.message = message;
+
+    modal.result.then((result) => {
+
+      if(result === 'canceled') return;
+
+      //Remove the message from the list without refreshing the entire list.
+      this.messages = this.messages.filter(x => x.id !== message.id);
     });
+
   }
 
-  editMessage(message: Message) {
-    const modalRef = this.modalService.open(EditMessageComponent, { size: 'lg' })
-    modalRef.componentInstance.message = message;
-    modalRef.componentInstance.modalRef = modalRef;
-    modalRef.result.then((result => {
-      //this.LoadMessages();
-    }))
-  }
+  openModal(component: any) : NgbModalRef {
 
-  deleteMessage(message: Message){
-    const modalRef = this.modalService.open(DeleteMessageComponent, { size: 'lg' });
-    modalRef.componentInstance.message = message;
-    modalRef.componentInstance.modalRef = modalRef;
+    const modal = this.modalService.open(component, { size: 'lg' });
+    modal.componentInstance.modal = modal;
 
-    modalRef.result.then((result => {
-      //this.LoadMessages();
-    }))
-    .catch((error) => {
-      console.log(`ran into error: ${error}`)
-    });
+    return modal;
   }
 
 }

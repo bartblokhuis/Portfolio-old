@@ -1,0 +1,70 @@
+<div class="row">
+    <div class="col-6">
+        <div class="card">
+            <div class="card-header">
+                <h3 class="card-title">User Details</h3>
+            </div>
+            <div class="card-body">
+                <form id="user-details-from">
+                    <div class="form-group">
+                        <label class="col-form-label">Username</label>
+                        <input type="text" autocomplete="username" class="form-control" required [(ngModel)]="userDetails.username" name="username">
+                    </div>
+                    <div class="form-group">
+                        <label class="col-form-label">Email</label>
+                        <input type="text" autocomplete="email" class="form-control" [(ngModel)]="userDetails.email" name="email">
+                    </div>
+                    <div class="form-group">
+                        <label class="col-form-label">Password</label>
+                        <input type="password" autocomplete="current-password" class="form-control" required [(ngModel)]="userDetails.password" name="password">
+                    </div>
+                    <div class="custom-error" *ngIf="userDetailsError">
+                        <span>{{userDetailsError}}</span>
+                    </div>
+                </form>
+            </div>
+            <div class="card-footer">
+                <button class="btn btn-primary" (click)="submit()">Save</button>
+            </div>
+        </div>
+    </div>
+    <div class="col-6">
+        <div class="card">
+            <div class="card-header">
+                <h3 class="card-title">Change Password</h3>
+            </div>
+            <div class="card-body">
+                <form id="change-password-form">
+                    <div class="form-group">
+                        <label class="col-form-label">Current password</label>
+                        <input type="password" autocomplete="current-password" class="form-control" required  [(ngModel)]="changePassword.oldPassword" name="oldPassword">
+                    </div>
+                    <div class="form-group">
+                        <label class="col-form-label">New Password</label>
+                        <input type="password" autocomplete="new-password" class="form-control" required  [(ngModel)]="changePassword.password" name="password" id="new-password">
+                    </div>
+                    <div class="form-group">
+                        <label class="col-form-label">Confirm new password</label>
+                        <input type="password" autocomplete="new-password" class="form-control" required name="confirmPassword">
+                    </div>
+                    <div class="error" *ngIf="changePasswordErrors">
+                        <ng-container *ngIf="changePasswordErrors.length > 1">
+                            <ul>
+                                <li *ngFor="let error of changePasswordErrors" class="custom-error">
+                                    {{error}}
+                                </li>
+                            </ul>
+                        </ng-container>
+                        <ng-container *ngIf="changePasswordErrors.length === 1">
+                            <span class="custom-error">{{changePasswordErrors[0]}}</span>
+                        </ng-container>
+                        
+                    </div>
+                </form>
+            </div>
+            <div class="card-footer">
+                <button class="btn btn-primary" (click)="submitChangePassword()">Save</button>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,21 +1,22 @@
 import { NgModule } from '@angular/core';
-import { RouterModule } from '@angular/router';
 import { CommonModule } from '@angular/common';
-import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-
-import { UserRoutes } from './user.routes';
 import { LoginComponent } from './login/login.component';
-import { EditComponent } from './edit/edit.component';
+import { RouterModule } from '@angular/router';
+import { UserRoutes } from './user.routes';
+import { UserEditComponent } from './user-edit/user-edit.component';
+import { FormsModule } from '@angular/forms';
 
 
 
 @NgModule({
-  declarations: [LoginComponent, EditComponent],
+  declarations: [
+    LoginComponent,
+    UserEditComponent
+  ],
   imports: [
     CommonModule,
-    RouterModule.forChild(UserRoutes),
     FormsModule,
-    ReactiveFormsModule,
-]
+    RouterModule.forChild(UserRoutes)
+  ]
 })
 export class UserModule { }
