@@ -16,7 +16,7 @@ namespace Portfolio
             Configuration = configuration;
         }
 
-        public IConfiguration Configuration { get; }
+        public IConfiguration Configuration { get; set; }
 
         public void ConfigureServices(IServiceCollection services)
         {
@@ -37,7 +37,7 @@ namespace Portfolio
 
                 await context.Response.WriteAsJsonAsync(new { error = exception.Message });
             }));
-            
+
             app.UseHttpsRedirection();
 
             app.UseRouting();

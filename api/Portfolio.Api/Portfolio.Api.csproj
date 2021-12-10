@@ -5,10 +5,6 @@
         <RootNamespace>Portfolio</RootNamespace>
         <UserSecretsId>d8d406a6-a658-4b04-9010-d63d9e1325dc</UserSecretsId>
     </PropertyGroup>
-
-    <ItemGroup>
-      <Content Remove="wwwroot\css3-original_aVcnJCVCD0eMZ08MJhYpOQ==.svg" />
-    </ItemGroup>
   
     <ItemGroup>
         <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="5.0.1" NoWarn="NU1605" />
@@ -24,11 +20,9 @@
     </ItemGroup>
 
     <ItemGroup>
-      <None Include="wwwroot\css3-original_aVcnJCVCD0eMZ08MJhYpOQ==.svg" />
-    </ItemGroup>
-
-    <ItemGroup>
-      <Folder Include="wwwroot\uploads\" />
+      <Folder Update="wwwroot\uploads\">
+        <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      </Folder>
     </ItemGroup>
 
 </Project>
