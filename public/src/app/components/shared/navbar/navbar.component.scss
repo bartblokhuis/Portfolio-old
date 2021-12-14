@@ -1,0 +1,45 @@
+@import '../../../../assets/scss/variables.scss';
+
+nav {
+    background-color: $black;
+    color: #fff;
+    height: 45px;
+    
+    ul {
+        margin: 0;
+        padding: 0;
+        list-style-type: none;
+
+        li {
+            display: inline-block;
+            overflow: hidden;
+            
+            a {
+                padding: 10px 15px;
+                display: block;
+
+                &:hover{
+                    cursor: pointer;
+                }
+
+                &.active{
+                    color: green;
+                }
+            }
+
+        }
+    }
+
+    &.fixed {
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+    }
+}
+
+#about,#my-work,#skills,#skills2,#home{
+    height: 100vh;
+    background-color: green;
+    
+}

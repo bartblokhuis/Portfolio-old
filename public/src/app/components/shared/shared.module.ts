@@ -4,9 +4,10 @@ import { FooterComponent } from './footer/footer.component';
 import { RouterModule } from '@angular/router';
 import { ContactMeComponent } from './contact-me/contact-me.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { NavbarComponent } from './navbar/navbar.component';
 
 @NgModule({
-  declarations: [ FooterComponent, ContactMeComponent ],
+  declarations: [ FooterComponent, ContactMeComponent, NavbarComponent ],
   imports: [
     CommonModule,
     RouterModule,
@@ -15,7 +16,8 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
   ],
   exports: [
     FooterComponent,
-    ContactMeComponent
+    ContactMeComponent,
+    NavbarComponent
   ]
 })
 export class SharedModule { }

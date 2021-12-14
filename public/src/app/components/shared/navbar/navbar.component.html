@@ -1,0 +1,23 @@
+
+<div id="home">Home</div>
+<div class="container">
+    <nav id="navbar">
+        <ul>
+            <li *ngFor="let menuItem of menuItems;"><a [ngClass]="menuItem.active ? 'nav-item active' : 'nav-item'" (click)='navigate(menuItem)'>{{menuItem.friendlyName}}</a></li>
+        </ul>
+    </nav>  
+</div>
+
+
+<div id="about">
+    about
+</div>
+<div id="my-work">
+    work
+</div>
+<div id="skills">
+    skills
+</div>
+<div id="contact">
+    contact
+</div>
