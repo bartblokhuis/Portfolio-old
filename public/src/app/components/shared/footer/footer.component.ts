@@ -8,7 +8,7 @@ import { GeneralSettings } from 'src/app/data/GeneralSettings';
 })
 export class FooterComponent implements OnInit {
 
-  @Input() generalSettings: GeneralSettings | null = null;
+  // @Input() generalSettings: GeneralSettings | null = null;
 
   //Get the current year
   year: number = new Date().getFullYear();

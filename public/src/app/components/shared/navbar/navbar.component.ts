@@ -1,13 +1,15 @@
-import { AfterViewInit, Component, OnInit } from '@angular/core';
+import { AfterViewInit, Component, OnInit, ViewEncapsulation } from '@angular/core';
 
 @Component({
   selector: 'app-navbar',
   templateUrl: './navbar.component.html',
-  styleUrls: ['./navbar.component.scss']
+  styleUrls: ['./navbar.component.scss'],
+  encapsulation: ViewEncapsulation.None
 })
 export class NavbarComponent implements OnInit, AfterViewInit {
 
-  menuItems: MenuItem[]  = [ {friendlyName: 'HOME', active: false, containerId: 'home', element: null}, { friendlyName: "ABOUT", active: false, containerId: 'about', element: null}, { friendlyName: "MY WORK", active: false, containerId: 'my-work', element: null}, { friendlyName: "SKILLS", active: false, containerId: 'skills', element: null} ];
+  menuItems: MenuItem[]  = [ {friendlyName: 'HOME', active: false, containerId: 'home', element: null}, { friendlyName: "ABOUT", active: false, containerId: 'about', element: null}, { friendlyName: "MY WORK", active: false, containerId: 'my-work', element: null}, { friendlyName: "SKILLS", active: false, containerId: 'skills', element: null},
+  { friendlyName: "CONTACT", active: false, containerId: 'contact', element: null} ];
   navBar: HTMLElement | null = null;
   ignoreScrollEvent: boolean = false;
 

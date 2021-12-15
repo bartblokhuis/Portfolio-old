@@ -1,10 +1,10 @@
-@import '../../../../assets/scss/variables.scss';
+@import '../../../../assets/scss/_variables.scss';
 
 nav {
     background-color: $black;
     color: #fff;
     height: 45px;
-    
+
     ul {
         margin: 0;
         padding: 0;
@@ -23,7 +23,7 @@ nav {
                 }
 
                 &.active{
-                    color: green;
+                    color: $active-color;
                 }
             }
 
@@ -36,10 +36,4 @@ nav {
         left: 0;
         right: 0;
     }
-}
-
-#about,#my-work,#skills,#skills2,#home{
-    height: 100vh;
-    background-color: green;
-    
 }

@@ -1,8 +1,8 @@
-@import "../../../../assets/scss/variables.scss";
+@import "../../../../assets/scss/_variables.scss";
 
 footer{
-    padding: 0 20px 20px;
+    padding: 20px;
     text-align: center;
-    background-color: $dark-blue;
+    background-color: $black;
     color: #fff;
 }
