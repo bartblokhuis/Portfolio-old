@@ -1,3 +1,62 @@
 #my-work {
     background-color: #F5F5F5;
+    overflow: hidden;
+
+    .projects {
+        display: flex;
+        justify-content: center;
+        overflow: hidden;
+
+        .project {
+            position: relative;
+            width: 50%;
+            transition: opacity 0.2s ease-in-out;
+
+            .project-details-bottom,
+            .project-details-top{
+                position: absolute;
+                opacity: 0;
+                left: 0;
+                right: 0;
+                width:100%;    
+                transition: .5s ease;
+            }
+
+            .project-details-top {
+                top: 0;
+            }
+
+            .project-details-bottom {
+                bottom: 0;
+            }
+
+            img {
+                max-width: 100%;
+                transition: opacity 500ms ease-in-out;;
+                opacity: 1;
+            }
+
+            
+
+            &:hover {
+
+                .project-details-top,
+                .project-details-bottom {
+                    opacity: 1;
+                }
+
+                .project-details-top {
+                    top: 24%;  
+                }
+
+                .project-details-bottom {
+                    bottom: 24%;  
+                }
+                
+                img {
+                    opacity: 0.3;
+                }
+            }
+        }
+    }
 }

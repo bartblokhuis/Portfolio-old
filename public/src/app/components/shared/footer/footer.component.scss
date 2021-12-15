@@ -1,8 +1,38 @@
 @import "../../../../assets/scss/_variables.scss";
 
+#footer{
+    padding: 0
+}
+
 footer{
-    padding: 20px;
+    padding: 50px;
     text-align: center;
     background-color: $black;
     color: #fff;
+
+    .social-icons {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+
+
+    .social-icon {
+        height: 50px;
+        width: 50px;
+        overflow: hidden;
+        font-size: 0;
+        background-color: $primary-black-color;
+        padding: 12.5px;
+        margin: 0 10px;
+        box-sizing: border-box;
+
+        svg{
+            height: 100%;
+        }
+    }
+
+    .footer-text {
+        margin-top: 50px;
+    }
 }

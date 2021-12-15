@@ -75,7 +75,7 @@ export class NavbarComponent implements OnInit, AfterViewInit {
       top: scrollToX,
       left: 0,
       behavior : "smooth"
-  })
+    });
     
     var scrollTimeout: any;
     document.addEventListener('scroll', function(e) {

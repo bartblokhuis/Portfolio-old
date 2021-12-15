@@ -94,15 +94,33 @@ section {
             left: 0;
             right: 0;
             color: #000;
-            height: 1px;
+            height: 2px;
             background-color: #000;
             max-width: 2.5em;
-            margin: 0 auto
+            margin: 0 auto;
+            border-radius: 6px;
         }
     }
 
     .section-body {
         margin-top: 50px;
         text-align: center;
+    }
+}
+
+.btn {
+    background-color: transparent;
+    color: $primary-color;
+    border: none;
+    outline: none;
+    padding: 12px 24px;
+    border: 1px solid $black;
+    transition: all 200ms ease-in-out;
+
+    &:hover {
+        cursor: pointer;
+        background-color: $black;
+        border-color: $black;
+        color:  $active-color;
     }
 }
