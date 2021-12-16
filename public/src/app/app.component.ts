@@ -39,7 +39,11 @@ export class AppComponent implements OnInit {
     //   this.finishedLoading = true;
     // })
 
-    AOS.init();
+    this.settingsService.get<SeoSettings>('SeoSettings').subscribe((result) => {
+      this.title.setTitle(result.title);
+    });
+
+    if(AOS) AOS.init();
   }
 
 }

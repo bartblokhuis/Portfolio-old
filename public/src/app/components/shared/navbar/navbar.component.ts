@@ -1,4 +1,5 @@
-import { AfterViewInit, Component, OnInit, ViewEncapsulation } from '@angular/core';
+import { DOCUMENT } from '@angular/common';
+import { AfterViewInit, Component, HostListener, Inject, OnInit, ViewEncapsulation } from '@angular/core';
 
 @Component({
   selector: 'app-navbar',
@@ -13,50 +14,64 @@ export class NavbarComponent implements OnInit, AfterViewInit {
   navBar: HTMLElement | null = null;
   ignoreScrollEvent: boolean = false;
 
-  constructor() { }
+  constructor(@Inject(DOCUMENT) private document: Document) { }
+
+  @HostListener("window:scroll", []) onWindowScroll() {
+
+
+    const verticalOffset =
+      window.pageYOffset ||
+      document.documentElement.scrollTop ||
+      document.body.scrollTop ||
+      0;
+
+      this.scrollEvent(verticalOffset);
+
+    // do some stuff here when the window is scrolled
+    //this.scrollEvent();
+    this.document.body.style.setProperty("--calc-height", "auto");
+    this.resize();
+  }
+
+  @HostListener("window:load", []) onWindowLoad() {
+    this.resize();
+  }
+
+  calcTargets: any = this.document.getElementsByClassName("navbarContent");
+  resize = () => {
+    for (let target of this.calcTargets) {
+      let size = target.firstElementChild.clientHeight + "px";
+      if (target.style.getPropertyValue("--calc-height") !== size) {
+        target.style.setProperty("--calc-height", size);
+      }
+    }
+  };
+
+  
 
   ngAfterViewInit(): void {
 
-    this.navBar = document.getElementById("navbar");
+    this.navBar = this.document.getElementById("navbar");
 
     this.menuItems.forEach((x) => {
-      const element: HTMLElement | null = document.getElementById(x.containerId);
+      const element: HTMLElement | null = this.document.getElementById(x.containerId);
       if(element) x.element = element;
     });
-
-    document.body.style.setProperty("--calc-height", "auto");
-
-    const calcTargets: any = document.getElementsByClassName("navbarContent"),
-    resize = () => {
-      for (let target of calcTargets) {
-        let size = target.firstElementChild.clientHeight + "px";
-        console.log(size);
-        if (target.style.getPropertyValue("--calc-height") !== size) {
-          target.style.setProperty("--calc-height", size);
-        }
-      }
-    };
-    window.addEventListener("resize", resize);
-    window.addEventListener("load", resize);
   }
 
   ngOnInit(): void {
-    window.addEventListener('scroll', this.scrollEvent, true);
   }
 
-  scrollEvent = (event: any): void => {
-
+  scrollEvent = (verticalOffset: number): void => {
     if(this.ignoreScrollEvent) {
-      this.stickyNavBar(event);
+      this.stickyNavBar(verticalOffset);
       return;
     };
-    this.checkActiveMenuItem(event);
-    this.stickyNavBar(event);
+    this.checkActiveMenuItem(verticalOffset);
+    this.stickyNavBar(verticalOffset);
   }
 
-  stickyNavBar(event: any){
-    const scrollTopVal: number | undefined = parseInt(event.target?.scrollingElement.scrollTop);
-
+  stickyNavBar(verticalOffset: number){
     const home = this.menuItems[0];
     if(!this.navBar || !home || !home.element) return;
 
@@ -64,11 +79,11 @@ export class NavbarComponent implements OnInit, AfterViewInit {
     const homeEnd = home.element.offsetTop + home.element.offsetHeight;
     const navBarHeight = this.getNavBarHeight();
 
-    if(this.navBar.offsetTop - 1 <= scrollTopVal && !this.navBar.classList.contains('fixed')){
+    if(this.navBar.offsetTop - 1 <= verticalOffset && !this.navBar.classList.contains('fixed')){
       this.navBar.classList.add('fixed');
     }
 
-    else if(homeEnd > scrollTopVal + navBarHeight && this.navBar.classList.contains('fixed')){
+    else if(homeEnd > verticalOffset + navBarHeight && this.navBar.classList.contains('fixed')){
       this.navBar.classList.remove('fixed');
     }
   }
@@ -110,11 +125,8 @@ export class NavbarComponent implements OnInit, AfterViewInit {
     return homeEnd <= scrollToX;
   }
 
-  checkActiveMenuItem(event: any) {
-
-    const scrollTopVal: number | undefined = parseInt(event.target?.scrollingElement.scrollTop);
+  checkActiveMenuItem(verticalOffset: number) {
     const home = this.menuItems[0];
-    if (!scrollTopVal) return;
     if(!this.navBar || !home || !home.element) return;
 
     const navBarHeight = this.getFixedNavBarHeight();
@@ -127,7 +139,7 @@ export class NavbarComponent implements OnInit, AfterViewInit {
       if(foundActive){ 
         item.active = false;
       }
-      else if(item.element.offsetTop <= scrollTopVal + navBarHeight && !foundActive){
+      else if(item.element.offsetTop <= verticalOffset + navBarHeight && !foundActive){
         foundActive = true;
         item.active = true;
       }else{

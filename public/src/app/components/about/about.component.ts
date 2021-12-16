@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { AboutMe } from 'src/app/data/AboutMe';
+import { AboutMeService } from 'src/app/services/about-me/about-me.service';
 
 @Component({
   selector: 'app-about',
@@ -7,9 +9,14 @@ import { Component, OnInit } from '@angular/core';
 })
 export class AboutComponent implements OnInit {
 
-  constructor() { }
+  aboutMe: AboutMe | null = null;
+
+  constructor(private aboutMeService: AboutMeService) { }
 
   ngOnInit(): void {
+    this.aboutMeService.get().subscribe((result) => {
+      this.aboutMe = result;
+    })
   }
 
 }
