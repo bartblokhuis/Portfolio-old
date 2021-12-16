@@ -12,4 +12,17 @@ export class HomeComponent implements OnInit {
   ngOnInit(): void {
   }
 
+  scrollToAboutMe(): void {
+    const home = document.getElementById("home");
+    if(!home ) return;
+
+    var homeEndsAt = home.clientHeight;
+
+    window.scrollTo({
+      top: homeEndsAt + 45,
+      left: 0,
+      behavior : "smooth"
+    });
+  }
+
 }

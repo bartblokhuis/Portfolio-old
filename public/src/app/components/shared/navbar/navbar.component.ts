@@ -23,13 +23,26 @@ export class NavbarComponent implements OnInit, AfterViewInit {
       const element: HTMLElement | null = document.getElementById(x.containerId);
       if(element) x.element = element;
     });
+
+    document.body.style.setProperty("--calc-height", "auto");
+
+    const calcTargets: any = document.getElementsByClassName("navbarContent"),
+    resize = () => {
+      for (let target of calcTargets) {
+        let size = target.firstElementChild.clientHeight + "px";
+        console.log(size);
+        if (target.style.getPropertyValue("--calc-height") !== size) {
+          target.style.setProperty("--calc-height", size);
+        }
+      }
+    };
+    window.addEventListener("resize", resize);
+    window.addEventListener("load", resize);
   }
 
   ngOnInit(): void {
     window.addEventListener('scroll', this.scrollEvent, true);
   }
-
-
 
   scrollEvent = (event: any): void => {
 
@@ -51,7 +64,6 @@ export class NavbarComponent implements OnInit, AfterViewInit {
     const homeEnd = home.element.offsetTop + home.element.offsetHeight;
     const navBarHeight = this.getNavBarHeight();
 
-    console.log(this.navBar.offsetTop, scrollTopVal)
     if(this.navBar.offsetTop - 1 <= scrollTopVal && !this.navBar.classList.contains('fixed')){
       this.navBar.classList.add('fixed');
     }
@@ -98,7 +110,6 @@ export class NavbarComponent implements OnInit, AfterViewInit {
     return homeEnd <= scrollToX;
   }
 
-
   checkActiveMenuItem(event: any) {
 
     const scrollTopVal: number | undefined = parseInt(event.target?.scrollingElement.scrollTop);
@@ -134,6 +145,28 @@ export class NavbarComponent implements OnInit, AfterViewInit {
   getNavBarHeight(): number {
     if(!this.navBar) return 0;
     return this.navBar.offsetHeight;
+  }
+
+  toggleNavBar(): void {
+    const ul = document.getElementById("toggleNavBar");
+    if(!ul) return;
+
+    if(!ul.classList.contains("open")) {
+      ul.classList.add("open");
+      ul.classList.remove("collapsed");
+    }
+    else if (!ul.classList.contains("collapsed")) {
+
+      ul.classList.add("collapsing");
+      setTimeout(() => {
+        ul.classList.add("collapsed");
+        ul.classList.remove("open");
+        ul.classList.remove("collapsing");
+      }, 350)
+
+     
+      
+    }
   }
 }
 

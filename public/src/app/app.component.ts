@@ -4,6 +4,9 @@ import { GeneralSettings } from './data/GeneralSettings';
 import { SeoSettings } from './data/SeoSettings';
 import { SettingsService } from './services/settings/settings.service';
 
+declare var AOS: any;
+
+
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
@@ -35,6 +38,8 @@ export class AppComponent implements OnInit {
 
       this.finishedLoading = true;
     })
+
+    AOS.init();
   }
 
 }

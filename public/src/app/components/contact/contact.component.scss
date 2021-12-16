@@ -16,9 +16,12 @@
     position: relative;
 
     .section-header {
-        color: #fff;
 
-        &::after{
+        h1 {
+            color: #fff;
+        } 
+
+        .section-header-line{
             background-color: #fff;
         }
     }

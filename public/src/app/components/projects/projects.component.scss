@@ -5,11 +5,11 @@
     .projects {
         display: flex;
         justify-content: center;
-        overflow: hidden;
+        flex-wrap: wrap;
 
         .project {
             position: relative;
-            width: 50%;
+            width: 100%;
             transition: opacity 0.2s ease-in-out;
 
             .project-details-bottom,
@@ -36,8 +36,6 @@
                 opacity: 1;
             }
 
-            
-
             &:hover {
 
                 .project-details-top,
@@ -56,6 +54,14 @@
                 img {
                     opacity: 0.3;
                 }
+            }
+        }
+
+        @media (min-width: 576px) {
+            flex-wrap: nowrap;    
+            
+            .project{
+                width: 50%;
             }
         }
     }
