@@ -4,7 +4,6 @@ import { BrowserModule } from '@angular/platform-browser';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import { LandingModule } from './modules/landing/landing.module';
 import { SharedModule } from './components/shared/shared.module';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HomeComponent } from './components/home/home.component';
@@ -24,7 +23,6 @@ import { ContactComponent } from './components/contact/contact.component';
   ],
   imports: [
     HttpClientModule,
-    LandingModule,
     BrowserModule,
     AppRoutingModule,
     SharedModule,

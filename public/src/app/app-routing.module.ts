@@ -1,18 +1,12 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
+import { AppComponent } from './app.component';
 
 const routes: Routes = [
     {
     path: '',
     pathMatch: 'full',
-    children: [
-      { 
-        path: '', 
-        loadChildren: () => import('./modules/landing/landing.module').then(
-          module => module.LandingModule
-        )
-      }
-    ]
+    component: AppComponent
   },
 ];
 

@@ -20,24 +20,24 @@ export class AppComponent implements OnInit {
   constructor(private settingsService: SettingsService, private title: Title, private meta: Meta) { }
 
   ngOnInit(): void {
-    this.settingsService.get<SeoSettings>('SeoSettings').toPromise().then(result => {
-      this.seoSettings = result;
+    // this.settingsService.get<SeoSettings>('SeoSettings').toPromise().then(result => {
+    //   this.seoSettings = result;
 
-     this.title.setTitle(this.seoSettings.title);
-     this.meta.addTag({ name: 'description', content: this.seoSettings.defaultMetaDescription});
+    //  this.title.setTitle(this.seoSettings.title);
+    //  this.meta.addTag({ name: 'description', content: this.seoSettings.defaultMetaDescription});
      
-     if(this.seoSettings.useTwitterMetaTags){
-      this.meta.addTag({ name: 'twitter:title', content: this.seoSettings.title});
-      this.meta.addTag({ name: 'twitter:description', content: this.seoSettings.defaultMetaDescription});
+    //  if(this.seoSettings.useTwitterMetaTags){
+    //   this.meta.addTag({ name: 'twitter:title', content: this.seoSettings.title});
+    //   this.meta.addTag({ name: 'twitter:description', content: this.seoSettings.defaultMetaDescription});
 
-     }
-     if(this.seoSettings.useOpenGraphMetaTags){
-      this.meta.addTag({ name: 'og:title', content: this.seoSettings.title});
-      this.meta.addTag({ name: 'og:description', content: this.seoSettings.defaultMetaDescription});
-     }
+    //  }
+    //  if(this.seoSettings.useOpenGraphMetaTags){
+    //   this.meta.addTag({ name: 'og:title', content: this.seoSettings.title});
+    //   this.meta.addTag({ name: 'og:description', content: this.seoSettings.defaultMetaDescription});
+    //  }
 
-      this.finishedLoading = true;
-    })
+    //   this.finishedLoading = true;
+    // })
 
     AOS.init();
   }
