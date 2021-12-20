@@ -34,7 +34,7 @@ namespace Portfolio.Core.Interfaces.Common;
             return message;
         }
 
-        public async Task<IEnumerable<Message>> Get()
+        public async Task<IQueryable<Message>> Get()
         {
             var messages = await _messageRepository.GetAsync((message) => message.IsDeleted == false);
             return messages.OrderByDescending(x => x.CreatedAtUTC);

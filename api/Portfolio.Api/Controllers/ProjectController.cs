@@ -11,6 +11,7 @@ using Portfolio.Core.Interfaces;
 using Portfolio.Core.Interfaces.Common;
 using Portfolio.Domain.Dtos.Projects;
 using Portfolio.Domain.Models;
+using Portfolio.Domain.Wrapper;
 
 namespace Portfolio.Controllers;
 
@@ -48,22 +49,26 @@ public class ProjectController : ControllerBase
     [HttpGet]
     public async Task<IActionResult> Get()
     {
-        var projects = await _projectService.Get();
+        var projects = await (await _projectService.Get()).ToListResultAsync();
 
         //Prevent infinit loop issues with the json serializer.
-        foreach (var skill in projects.SelectMany(x => x.Skills))
-            skill.Projects = null;
+        if(projects.Data != null)
+            foreach (var skill in projects.Data.SelectMany(x => x.Skills))
+                skill.Projects = null;
 
-        return Ok(_mapper.Map<IEnumerable<ProjectDto>>(projects));
+        var result = _mapper.Map<ListResult<ProjectDto>>(projects);
+        result.Succeeded = true;
+        return Ok(result);
     }
 
     [HttpPost]
     public async Task<IActionResult> Create(CreateUpdateProject model)
     {
         var project = _mapper.Map<Project>(model);
-
         await _projectService.Create(project);
-        return Ok(_mapper.Map<ProjectDto>(project));
+
+        var result = await Result<ProjectDto>.SuccessAsync(_mapper.Map<ProjectDto>(project));
+        return Ok(result);
     }
 
     [HttpPut]
@@ -76,7 +81,8 @@ public class ProjectController : ControllerBase
             foreach (var skill in project.Skills)
                 skill.Projects = null;
 
-        return Ok(_mapper.Map<ProjectDto>(project));
+        var result = await Result<ProjectDto>.SuccessAsync(_mapper.Map<ProjectDto>(project));
+        return Ok(result);
     }
 
     [HttpPut("UpdateSkills")]
@@ -91,7 +97,8 @@ public class ProjectController : ControllerBase
         foreach (var skill in project.Skills)
             skill.Projects = null;
 
-        return Ok(_mapper.Map<ProjectDto>(project));
+        var result = await Result<ProjectDto>.SuccessAsync(_mapper.Map<ProjectDto>(project));
+        return Ok(result);
     }
 
     [HttpPut("UpdateDemoImage/{projectId}")]
@@ -108,14 +115,16 @@ public class ProjectController : ControllerBase
         project.ImagePath = await _uploadImageHelper.UploadImage(icon);
         project = await _projectService.Update(project);
 
-        return Ok(_mapper.Map<ProjectDto>(project));
+        var result = await Result<ProjectDto>.SuccessAsync(_mapper.Map<ProjectDto>(project));
+        return Ok(result);
     }
 
     [HttpDelete]
     public async Task<IActionResult> Delete(int id)
     {
         await _projectService.Delete(id);
-        return Ok();
+
+        return Ok(await Result.SuccessAsync("Removed project"));
     }
 
     #endregion

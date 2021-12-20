@@ -39,12 +39,12 @@ public class SkillService : ISkillService
         return _skillRepository.GetByIdAsync(id);
     }
 
-    public Task<IEnumerable<Skill>> GetAll()
+    public Task<IQueryable<Skill>> GetAll()
     {
         return _skillRepository.GetAsync(orderBy: (s) => s.OrderBy(skill => skill.SkillGroupId).ThenBy(skill => skill.DisplayNumber));
     }
 
-    public Task<IEnumerable<Skill>> GetBySkillGroupId(int skillGroupId)
+    public Task<IQueryable<Skill>> GetBySkillGroupId(int skillGroupId)
     {
         return _skillRepository.GetAsync(filter: (s) => s.SkillGroupId == skillGroupId, orderBy: (s) => s.OrderBy(skill => skill.DisplayNumber));
     }
@@ -59,7 +59,7 @@ public class SkillService : ISkillService
         return _skillRepository.UpdateAsync(skillDto);
     }
 
-    public Task<IEnumerable<Skill>> GetSkillsByIds(IEnumerable<int> ids)
+    public Task<IQueryable<Skill>> GetSkillsByIds(IEnumerable<int> ids)
     {
         return _skillRepository.GetAsync(filter: (s) => ids.Contains(s.Id));
     }

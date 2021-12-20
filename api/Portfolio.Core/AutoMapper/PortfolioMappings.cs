@@ -4,6 +4,7 @@ using Portfolio.Domain.Dtos.Projects;
 using Portfolio.Domain.Dtos.SkillGroup;
 using Portfolio.Domain.Dtos.Skills;
 using Portfolio.Domain.Models;
+using Portfolio.Domain.Wrapper;
 
 namespace Portfolio.Core.AutoMapper;
 
@@ -36,6 +37,11 @@ public class PortfolioMappings : Profile
         CreateMap<CreateUpdateSkillGroupDto, SkillGroup>();
         CreateMap<SkillGroup, SkillGroupDto>();
         CreateMap<SkillGroupDto, SkillGroup>();
+
+        CreateMap<ListResult<SkillGroup>, ListResult<SkillGroupDto>>();
+        CreateMap<ListResult<Message>, ListResult<MessageDto>>();
+        CreateMap<ListResult<Project>, ListResult<ProjectDto>>();
+        CreateMap<ListResult<Skill>, ListResult<SkillDto>>();
     }
 }
 

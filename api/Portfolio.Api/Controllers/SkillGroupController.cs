@@ -10,6 +10,7 @@ using Portfolio.Core.Interfaces;
 using Portfolio.Domain.Dtos;
 using Portfolio.Domain.Dtos.SkillGroup;
 using Portfolio.Domain.Models;
+using Portfolio.Domain.Wrapper;
 
 namespace Portfolio.Controllers;
 
@@ -43,11 +44,15 @@ public class SkillGroupController : ControllerBase
     [HttpGet]
     public async Task<IActionResult> Get()
     {
-        var skillGroups = await _skillGroupService.GetAll();
-        foreach (var skill in skillGroups.SelectMany(x => x.Skills))
-            skill.SkillGroup = null;
+        var skillGroups = await (await _skillGroupService.GetAll()).ToListResultAsync();
 
-        return Ok(_mapper.Map<IEnumerable<SkillGroupDto>>(skillGroups));
+        if(skillGroups.Data != null)
+            foreach (var skill in skillGroups.Data.SelectMany(x => x.Skills))
+                skill.SkillGroup = null;
+
+        var result = _mapper.Map<ListResult<SkillGroupDto>>(skillGroups);
+        result.Succeeded = true;
+        return Ok(result);
     }
  
     [HttpPost]
@@ -57,12 +62,13 @@ public class SkillGroupController : ControllerBase
             throw new Exception("Invalid model");
 
         if (await _skillGroupService.IsExistingTitle(model.Title))
-            throw new Exception("There is already a skill group with the same title");
+            return Ok(await Result.FailAsync("There is already a skill group with the same title"));
 
         var skillGroup = _mapper.Map<SkillGroup>(model);
         await _skillGroupService.Insert(skillGroup);
 
-        return Ok(_mapper.Map<SkillGroupDto>(skillGroup));
+        var result = await Result<SkillGroupDto>.SuccessAsync(_mapper.Map<SkillGroupDto>(skillGroup));
+        return Ok(result);
     }
 
     [HttpPut]
@@ -72,29 +78,29 @@ public class SkillGroupController : ControllerBase
             throw new Exception("Invalid model");
 
         if (!await _skillGroupService.Exists(model.Id))
-                throw new Exception($"No skill group for id: {model.Id} found");
+            return Ok(await Result.FailAsync($"No skill group for id: {model.Id} found"));
 
         if (await _skillGroupService.IsExistingTitle(model.Title, model.Id))
-            throw new Exception("There is already a skill group with the same title");
+            return Ok(await Result.FailAsync("There is already a skill group with the same title"));
 
         var skillGroup = _mapper.Map<SkillGroup>(model);
         await _skillGroupService.Update(skillGroup);
 
-        return Ok(_mapper.Map<SkillGroupDto>(skillGroup));
+        var result = await Result<SkillGroupDto>.SuccessAsync(_mapper.Map<SkillGroupDto>(skillGroup));
+        return Ok(result);
     }
         
     [HttpDelete]
     public async Task<IActionResult> Delete(int id)
     {
-        if (!ModelState.IsValid)
-            return BadRequest(ModelState);
-
         var skillGroup = await _skillGroupService.GetById(id);
         if (skillGroup == null)
-            return BadRequest($"No skill group for id: {id} found");
+            return Ok(await Result.FailAsync("Skill group not found"));
 
         await _skillGroupService.Delete(skillGroup);
-        return Ok();
+
+        var result = await Result.SuccessAsync("Removed the skill group");
+        return Ok(result);
     }
 
     #endregion

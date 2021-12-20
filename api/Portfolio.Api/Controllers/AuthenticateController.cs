@@ -6,6 +6,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.IdentityModel.Tokens;
 using Portfolio.Domain.Dtos.Authentication;
 using Portfolio.Domain.Models.Authentication;
+using Portfolio.Domain.Wrapper;
 using System;
 using System.Collections.Generic;
 using System.IdentityModel.Tokens.Jwt;
@@ -47,19 +48,13 @@ public class AuthenticateController : ControllerBase
     {
         var user = await _userManager.FindByNameAsync(model.Username);
         if (user == null || !await _userManager.CheckPasswordAsync(user, model.Password))
-            return Ok(new
-                {
-                    error = "Invalid username or password."
-                });
+            return Ok(await Result.FailAsync("Invalid username or password."));
             
 
         var token = await GetJwtSecurityToken(user, model.RememberMe);
-        return Ok(new
-        {
-            token = new JwtSecurityTokenHandler().WriteToken(token),
-            expiration = token.ValidTo,
-            userId = user.Id
-        });
+        var response = new Response(new JwtSecurityTokenHandler().WriteToken(token), token.ValidTo, user.Id);
+        
+        return Ok(await Result<Response>.SuccessAsync(response));
     }
 
     private async Task<JwtSecurityToken> GetJwtSecurityToken(ApplicationUser user, bool rememberMe)
@@ -93,7 +88,7 @@ public class AuthenticateController : ControllerBase
     [HttpGet]
     [Route("user/details")]
     [Authorize()]
-    public async Task<ApplicationUserDto> GetUserDetails()
+    public async Task<IActionResult> GetUserDetails()
     {
         var currentUserName = _httpContextAccessor.HttpContext.User.FindFirst(ClaimTypes.Name)?.Value;
 
@@ -105,11 +100,11 @@ public class AuthenticateController : ControllerBase
         if (user == null)
             throw new ApplicationException("No logged in user found");
 
-        return new ApplicationUserDto
+        return Ok(await Result<ApplicationUserDto>.SuccessAsync(new ApplicationUserDto
         {
             Email = user.Email,
             Username = user.UserName
-        };
+        }));
     }
 
     [HttpPut]
@@ -118,14 +113,11 @@ public class AuthenticateController : ControllerBase
     public async Task<IActionResult> UpdateUserDetails([FromBody] UpdateUserDetailsDto model)
     {
         if (!ModelState.IsValid)
-            throw new Exception("Invalid model");
+            return Ok(await Result.FailAsync("Invalid model"));
 
         var user = await GetUserFromContext();
         if (user == null || !await _userManager.CheckPasswordAsync(user, model.Password))
-            return Ok(new
-            {
-                error = "Invalid username or password."
-            });
+            return Ok(await Result.FailAsync("Invalid username or password."));
 
         user.UserName = model.Username;
         user.NormalizedUserName = model.Username.ToUpper();
@@ -134,7 +126,7 @@ public class AuthenticateController : ControllerBase
         user.NormalizedEmail = model.Email.ToUpper();
 
         await _userManager.UpdateAsync(user);
-        return Ok();
+        return Ok(await Result.SuccessAsync("User updated"));
     }
 
     [HttpPut]
@@ -144,24 +136,19 @@ public class AuthenticateController : ControllerBase
     {
         if (!ModelState.IsValid)
         {
-            return StatusCode(500);
+            return Ok(await Result.FailAsync("Invalid model"));
         }
 
         var user = await GetUserFromContext();
         if (user == null || !await _userManager.CheckPasswordAsync(user, model.OldPassword))
-            return Ok(new
-            {
-                error = "Invalid username or password."
-            });
+            return Ok(await Result.FailAsync("Invalid username or password."));
 
         var result = await _userManager.ChangePasswordAsync(user, model.OldPassword, model.Password);
         if (!result.Succeeded)
-            return Ok(new
-            {
-                errors = result.Errors.Select(x => x.Description)
-            });
+            return Ok(await Result.FailAsync(result.Errors.Select(x => x.Description).ToList()));
+        
 
-        return Ok();
+        return Ok(await Result.SuccessAsync("Updated the password"));
     }
 
     #endregion

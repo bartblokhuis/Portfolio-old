@@ -5,6 +5,7 @@ using Microsoft.Extensions.Logging;
 using Portfolio.Core.Interfaces.Common;
 using Portfolio.Domain.Dtos;
 using Portfolio.Domain.Models;
+using Portfolio.Domain.Wrapper;
 using System.Threading.Tasks;
 
 namespace Portfolio.Controllers;
@@ -50,7 +51,8 @@ public class SettingsController : Controller
         var dto = _mapper.Map<GeneralSettingsDto>(settings);
         dto ??= new GeneralSettingsDto();
 
-        return Ok(dto);
+        var result = await Result<GeneralSettingsDto>.SuccessAsync(dto);
+        return Ok(result);
     }
 
     [HttpPost("GeneralSettings")]
@@ -63,7 +65,8 @@ public class SettingsController : Controller
 
         await _generalSettings.Save(originalSettings);
 
-        return Ok(_mapper.Map<GeneralSettingsDto>(originalSettings));
+        var result = await Result<GeneralSettingsDto>.SuccessAsync(_mapper.Map<GeneralSettingsDto>(originalSettings));
+        return Ok(result);
     }
 
     #endregion
@@ -82,7 +85,8 @@ public class SettingsController : Controller
         var dto = _mapper.Map<EmailSettingsDto>(settings);
         dto ??= new EmailSettingsDto();
 
-        return Ok(dto);
+        var result = await Result<EmailSettingsDto>.SuccessAsync(dto);
+        return Ok(result);
     }
 
     [HttpPost("EmailSettings")]
@@ -95,7 +99,8 @@ public class SettingsController : Controller
 
         await _emailSettingsService.Save(originalSettings);
 
-        return Ok(_mapper.Map<EmailSettingsDto>(originalSettings));
+        var result = await Result<EmailSettingsDto>.SuccessAsync(_mapper.Map<EmailSettingsDto>(originalSettings));
+        return Ok(result);
     }
 
     #endregion
@@ -111,7 +116,8 @@ public class SettingsController : Controller
         var dto = _mapper.Map<SeoSettingsDto>(settings);
         dto ??= new SeoSettingsDto();
 
-        return Ok(dto);
+        var result = await Result<SeoSettingsDto>.SuccessAsync(dto);
+        return Ok(result);
     }
 
     [HttpPost("SeoSettings")]
@@ -124,7 +130,8 @@ public class SettingsController : Controller
 
         await _seoSettings.Save(originalSettings);
 
-        return Ok(_mapper.Map<SeoSettingsDto>(originalSettings));
+        var result = await Result<SeoSettingsDto>.SuccessAsync(_mapper.Map<SeoSettingsDto>(originalSettings));
+        return Ok(result);
     }
 
     #endregion

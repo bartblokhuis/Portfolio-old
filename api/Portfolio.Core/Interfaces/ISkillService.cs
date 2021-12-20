@@ -1,13 +1,14 @@
 ﻿using Portfolio.Domain.Models;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace Portfolio.Core.Interfaces;
 public interface ISkillService
 {
-    Task<IEnumerable<Skill>> GetAll();
+    Task<IQueryable<Skill>> GetAll();
 
-    Task<IEnumerable<Skill>> GetBySkillGroupId(int skillGroupId);
+    Task<IQueryable<Skill>> GetBySkillGroupId(int skillGroupId);
 
     Task Insert(Skill skillDto);
 
@@ -21,5 +22,5 @@ public interface ISkillService
 
     Task<bool> IsExistingSkill(string name, int skillGroup, Skill skillToIgnor = null);
 
-    Task<IEnumerable<Skill>> GetSkillsByIds(IEnumerable<int> ids);
+    Task<IQueryable<Skill>> GetSkillsByIds(IEnumerable<int> ids);
 }
