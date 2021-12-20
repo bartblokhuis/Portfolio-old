@@ -8,6 +8,7 @@ using Microsoft.Extensions.Logging;
 using Portfolio.Core.Interfaces;
 using Portfolio.Core.Interfaces.Common;
 using Portfolio.Domain.Dtos;
+using Portfolio.Domain.Dtos.Common;
 using Portfolio.Domain.Dtos.Messages;
 using Portfolio.Domain.Models;
 
@@ -58,7 +59,7 @@ namespace Portfolio.Controllers
             var ipAddress = _webHelper.GetCurrentIpAddress();
 
             if (!await _messageService.IsAllowed(ipAddress))
-                return BadRequest("Please wait 2 minuted between requests");
+                return Ok(new Result().FromFail("Please wait 2 minuted between messages"));
 
             var message = new Message
             {
@@ -75,8 +76,7 @@ namespace Portfolio.Controllers
             };
 
             await _messageService.Create(message);
-
-            return Ok(_mapper.Map<MessageDto>(message));
+            return Ok(new Result().FromSuccess());
         }
 
         [HttpPut]

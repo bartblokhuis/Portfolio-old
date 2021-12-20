@@ -1,22 +1,17 @@
-import { Component, Input, OnInit } from '@angular/core';
-import { isObservable } from 'rxjs';
+import { Component, OnInit } from '@angular/core';
+import { isObservable, Observable } from 'rxjs';
 import { GeneralSettings } from 'src/app/data/GeneralSettings';
-import { ApiService } from 'src/app/services/common/api.service';
 import { SettingsService } from 'src/app/services/settings/settings.service';
 
 @Component({
-  selector: 'app-footer',
-  templateUrl: './footer.component.html',
-  styleUrls: ['./footer.component.scss']
+  selector: 'app-home',
+  templateUrl: './home.component.html',
+  styleUrls: ['./home.component.scss']
 })
-export class FooterComponent implements OnInit {
+export class HomeComponent implements OnInit {
 
-  // @Input() generalSettings: GeneralSettings | null = null;
-
-  //Get the current year
-  year: number = new Date().getFullYear();
   generalSettings: GeneralSettings | null = null;
-
+  
   constructor(private settingService: SettingsService) { }
 
   ngOnInit(): void {
@@ -29,6 +24,19 @@ export class FooterComponent implements OnInit {
     response.subscribe((result) => {
       this.generalSettings = result;
     })
+  }
+
+  scrollToAboutMe(): void {
+    const home = document.getElementById("home");
+    if(!home ) return;
+
+    var homeEndsAt = home.clientHeight;
+
+    window.scrollTo({
+      top: homeEndsAt + 45,
+      left: 0,
+      behavior : "smooth"
+    });
   }
 
 }

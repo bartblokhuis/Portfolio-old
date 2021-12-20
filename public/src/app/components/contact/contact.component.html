@@ -1,0 +1,57 @@
+<section id="contact">
+    <div class="custom-shape-divider-top">
+        <svg data-name="Layer 1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 120" preserveAspectRatio="none">
+            <path d="M321.39,56.44c58-10.79,114.16-30.13,172-41.86,82.39-16.72,168.19-17.73,250.45-.39C823.78,31,906.67,72,985.66,92.83c70.05,18.48,146.53,26.09,214.34,3V0H0V27.35A600.21,600.21,0,0,0,321.39,56.44Z" class="shape-fill"></path>
+        </svg>
+    </div>
+    <div class="section-header">
+        <h1 data-aos="fade-right">CONTACT</h1>
+        <div class="section-header-line" data-aos="fade-left" data-aos-delay="300"></div>
+    </div>
+    <div class="section-body">
+        <div class="container">
+            <div class="contact-message" data-aos="fade-up" data-aos-delay="300">
+                Got a question? I'd love to hear from you. Send me a message and I'll respond as soon as possible.
+            </div>
+            <form data-aos="fade-right" data-aos-delay="300">
+                <div class="form-group">
+                    <label>Name</label>
+                    <input type="text" autocomplete="name" required="required" name="firstName" [(ngModel)]="model.firstName" 
+                        minlength="3" maxlength="128" #firstName="ngModel">
+
+                    <div *ngIf="firstNameError" class="alert">
+                        <span class="input-error">{{ firstNameError }}</span>
+                    </div>
+
+                </div>
+                <div class="form-group">
+                    <label>Email address</label>
+                    <input type="email" autocomplete="email" required="required" name="email" [(ngModel)]="model.email" [email]="true">
+                    <div *ngIf="emailError" class="alert">
+                        <span class="input-error">{{ emailError }}</span>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label>Message</label>
+                    <textarea name="messageContent" [(ngModel)]="model.messageContent" maxlength="512"></textarea>
+                    <div *ngIf="messageError" class="alert">
+                        <span class="input-error">{{ messageError }}</span>
+                    </div>
+                </div>
+                <div class="error-container" *ngIf="error">
+                    <span class="custom-error">
+                      {{ error }}
+                    </span>
+                </div>
+                <div class="form-group">
+                    <button class="btn btn-primary" (click)="sendMessage()">Send Message</button>
+                </div>
+                <div class="success-container" *ngIf="success">
+                    <span class="custom-success">
+                      {{ success }}
+                    </span>
+                </div>
+            </form>
+        </div>
+    </div>
+</section>

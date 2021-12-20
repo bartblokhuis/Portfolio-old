@@ -1,6 +1,23 @@
 
-<footer>
+<!-- <footer>
     <ng-container *ngIf="generalSettings?.showCopyRightInFooter">&copy;</ng-container>
     {{generalSettings?.footerText}}
     {{year}}
-</footer>
+</footer> -->
+
+
+
+<section id="footer">
+    <footer>
+        <div class="social-icons">
+            <a [href]="generalSettings?.linkedInUrl" target="_blank" class="social-icon link"> Go to linked in page <div class="icon linkedin"></div></a>
+            <a [href]="generalSettings?.githubUrl" target="_blank"  class="social-icon link"> Go to my github page <div class="icon github"></div></a>
+            <a [href]="generalSettings?.stackOverFlowUrl" target="_blank"  class="social-icon link"> Go to my stack overflow page <div class="icon stack-overflow"></div></a>
+        </div>
+        <div class="footer-text">
+            <ng-container *ngIf="generalSettings?.showCopyRightInFooter">&copy;</ng-container>
+            {{generalSettings?.footerText}}
+            {{year}}
+        </div>
+    </footer>
+</section>

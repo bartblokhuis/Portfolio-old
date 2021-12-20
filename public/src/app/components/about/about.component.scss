@@ -1,0 +1,13 @@
+#about{
+    background-color: #fff;
+
+    .about-me-content{
+        margin: 0 20px;
+    }
+
+    @media (min-width: 576px) {
+        .about-me-content{
+            margin: 0;
+        }
+    }
+}

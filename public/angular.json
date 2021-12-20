@@ -20,7 +20,7 @@
         "build": {
           "builder": "@angular-devkit/build-angular:browser",
           "options": {
-            "outputPath": "dist/public",
+            "outputPath": "dist/public/browser",
             "index": "src/index.html",
             "main": "src/main.ts",
             "polyfills": "src/polyfills.ts",
@@ -31,11 +31,12 @@
               "src/assets"
             ],
             "styles": [
-              "src/styles.scss",
-              "./node_modules/tippy.js/dist/tippy.css"
+              "./node_modules/tippy.js/dist/tippy.css",
+              "./node_modules/aos/dist/aos.css",
+              "src/styles.scss"
             ],
             "scripts": [
-              "src/assets/scripts/particles.js"
+              "./node_modules/aos/dist/aos.js"
             ]
           },
           "configurations": {
@@ -105,9 +106,67 @@
               "src/styles.scss"
             ],
             "scripts": [
-              "src/assets/scripts/particles.js"
             ]
           }
+        },
+        "server": {
+          "builder": "@angular-devkit/build-angular:server",
+          "options": {
+            "outputPath": "dist/public/server",
+            "main": "server.ts",
+            "tsConfig": "tsconfig.server.json",
+            "inlineStyleLanguage": "scss"
+          },
+          "configurations": {
+            "production": {
+              "outputHashing": "media",
+              "fileReplacements": [
+                {
+                  "replace": "src/environments/environment.ts",
+                  "with": "src/environments/environment.prod.ts"
+                }
+              ]
+            },
+            "development": {
+              "optimization": false,
+              "sourceMap": true,
+              "extractLicenses": false
+            }
+          },
+          "defaultConfiguration": "production"
+        },
+        "serve-ssr": {
+          "builder": "@nguniversal/builders:ssr-dev-server",
+          "configurations": {
+            "development": {
+              "browserTarget": "public:build:development",
+              "serverTarget": "public:server:development"
+            },
+            "production": {
+              "browserTarget": "public:build:production",
+              "serverTarget": "public:server:production"
+            }
+          },
+          "defaultConfiguration": "development"
+        },
+        "prerender": {
+          "builder": "@nguniversal/builders:prerender",
+          "options": {
+            "routes": [
+              "/"
+            ]
+          },
+          "configurations": {
+            "production": {
+              "browserTarget": "public:build:production",
+              "serverTarget": "public:server:production"
+            },
+            "development": {
+              "browserTarget": "public:build:development",
+              "serverTarget": "public:server:development"
+            }
+          },
+          "defaultConfiguration": "production"
         }
       }
     }
