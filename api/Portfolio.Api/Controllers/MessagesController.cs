@@ -11,6 +11,7 @@ using Portfolio.Domain.Dtos;
 using Portfolio.Domain.Dtos.Common;
 using Portfolio.Domain.Dtos.Messages;
 using Portfolio.Domain.Models;
+using Portfolio.Domain.Wrapper;
 
 namespace Portfolio.Controllers;
 
@@ -59,7 +60,7 @@ public class MessagesController : ControllerBase
         var ipAddress = _webHelper.GetCurrentIpAddress();
 
         if (!await _messageService.IsAllowed(ipAddress))
-            return Ok(new Result().FromFail("Please wait 2 minuted between messages"));
+            return Ok(Result.Fail("Please wait 2 minuted between messages"));
 
         var message = new Message
         {
@@ -76,7 +77,7 @@ public class MessagesController : ControllerBase
         };
 
         await _messageService.Create(message);
-        return Ok(new Result().FromSuccess());
+        return Ok(Result.Success("Created the message"));
     }
 
     [HttpPut]
