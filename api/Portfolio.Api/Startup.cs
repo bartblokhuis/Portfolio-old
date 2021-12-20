@@ -7,51 +7,50 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Portfolio.Microsoft.Extensions;
 
-namespace Portfolio
+namespace Portfolio;
+
+public class Startup
 {
-    public class Startup
+    public Startup(IConfiguration configuration)
     {
-        public Startup(IConfiguration configuration)
+        Configuration = configuration;
+    }
+
+    public IConfiguration Configuration { get; set; }
+
+    public void ConfigureServices(IServiceCollection services)
+    {
+        services.AddPortfolioServices(Configuration);
+    }
+
+
+    public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
+    {
+        app.UseStatusCodePagesWithReExecute("/Error", "?status={0}");
+        app.UsePortfolio(env);
+
+
+        app.UseExceptionHandler(a => a.Run(async context =>
         {
-            Configuration = configuration;
-        }
+            var exceptionHandlerPathFeature = context.Features.Get<IExceptionHandlerPathFeature>();
+            var exception = exceptionHandlerPathFeature.Error;
 
-        public IConfiguration Configuration { get; set; }
+            await context.Response.WriteAsJsonAsync(new { error = exception.Message });
+        }));
 
-        public void ConfigureServices(IServiceCollection services)
-        {
-            services.AddPortfolioServices(Configuration);
-        }
+        app.UseHttpsRedirection();
 
+        app.UseRouting();
 
-        public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
-        {
-            app.UseStatusCodePagesWithReExecute("/Error", "?status={0}");
-            app.UsePortfolio(env);
+        app.UseAuthentication();
+        app.UseAuthorization();
 
+        app.UseCors(x => x
+            .AllowAnyMethod()
+            .AllowAnyHeader()
+            .SetIsOriginAllowed(origin => true) // allow any origin
+            .AllowCredentials()); // allow credentials
 
-            app.UseExceptionHandler(a => a.Run(async context =>
-            {
-                var exceptionHandlerPathFeature = context.Features.Get<IExceptionHandlerPathFeature>();
-                var exception = exceptionHandlerPathFeature.Error;
-
-                await context.Response.WriteAsJsonAsync(new { error = exception.Message });
-            }));
-
-            app.UseHttpsRedirection();
-
-            app.UseRouting();
-
-            app.UseAuthentication();
-            app.UseAuthorization();
-
-            app.UseCors(x => x
-                .AllowAnyMethod()
-                .AllowAnyHeader()
-                .SetIsOriginAllowed(origin => true) // allow any origin
-                .AllowCredentials()); // allow credentials
-
-            app.UseEndpoints(endpoints => endpoints.MapControllers());
-        }
+        app.UseEndpoints(endpoints => endpoints.MapControllers());
     }
 }

@@ -1,9 +1,8 @@
-﻿namespace Portfolio.Domain.Models.Authentication
-{
-    public class Response
-    {
-        public string Status { get; set; }
+﻿namespace Portfolio.Domain.Models.Authentication;
 
-        public string Message { get; set; }
-    }
+public class Response
+{
+    public string Status { get; set; }
+
+    public string Message { get; set; }
 }

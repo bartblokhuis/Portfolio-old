@@ -1,17 +1,16 @@
-﻿namespace Portfolio.Domain.Dtos.Messages
+﻿namespace Portfolio.Domain.Dtos.Messages;
+
+public class CreateMessageDto
 {
-    public class CreateMessageDto
-    {
-        #region Properties
+    #region Properties
 
-        public string FirstName { get; set; }
+    public string FirstName { get; set; }
 
-        public string LastName { get; set; }
+    public string LastName { get; set; }
 
-        public string Email { get; set; }
+    public string Email { get; set; }
 
-        public string MessageContent { get; set; }
+    public string MessageContent { get; set; }
 
-        #endregion
-    }
+    #endregion
 }

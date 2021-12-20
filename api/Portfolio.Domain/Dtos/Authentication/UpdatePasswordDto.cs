@@ -1,17 +1,16 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace Portfolio.Domain.Dtos.Authentication
+namespace Portfolio.Domain.Dtos.Authentication;
+
+public class UpdatePasswordDto
 {
-    public class UpdatePasswordDto
-    {
-        #region Properties
+    #region Properties
 
-        [Required]
-        public string Password { get; set; }
+    [Required]
+    public string Password { get; set; }
 
-        [Required]
-        public string OldPassword { get; set; }
+    [Required]
+    public string OldPassword { get; set; }
 
-        #endregion
-    }
+    #endregion
 }

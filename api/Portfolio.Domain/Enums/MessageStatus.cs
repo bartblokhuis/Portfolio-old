@@ -1,10 +1,9 @@
-﻿namespace Portfolio.Domain.Enums
+﻿namespace Portfolio.Domain.Enums;
+
+public enum MessageStatus
 {
-    public enum MessageStatus
-    {
-        Unread,
-        Closed,
-        Read,
-        AwaitingResponse
-    }
+    Unread,
+    Closed,
+    Read,
+    AwaitingResponse
 }

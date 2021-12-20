@@ -1,12 +1,11 @@
 ﻿using Microsoft.AspNetCore.Http;
 using System.Threading.Tasks;
 
-namespace Portfolio.Core.Interfaces.Common
-{
-    public interface IUploadImageHelper
-    {
-        string ValidateImage(IFormFile image);
+namespace Portfolio.Core.Interfaces.Common;
 
-        Task<string> UploadImage(IFormFile image);
-    }
+public interface IUploadImageHelper
+{
+    string ValidateImage(IFormFile image);
+
+    Task<string> UploadImage(IFormFile image);
 }

@@ -1,15 +1,14 @@
-﻿namespace Portfolio.Domain.Dtos.Common
+﻿namespace Portfolio.Domain.Dtos.Common;
+
+public interface IBaseDto<TKEy>
 {
-    public interface IBaseDto<TKEy>
-    {
-        #region Properties
+    #region Properties
 
-        public TKEy Id { get; set; }
+    public TKEy Id { get; set; }
 
-        #endregion
-    }
+    #endregion
+}
 
-    public interface IBaseDto : IBaseDto<int>
-    {
-    }
+public interface IBaseDto : IBaseDto<int>
+{
 }

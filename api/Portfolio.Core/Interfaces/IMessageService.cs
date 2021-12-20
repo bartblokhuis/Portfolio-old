@@ -1,23 +1,21 @@
-﻿using Portfolio.Domain.Dtos;
-using Portfolio.Domain.Enums;
+﻿using Portfolio.Domain.Enums;
 using Portfolio.Domain.Models;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
-namespace Portfolio.Core.Interfaces
+namespace Portfolio.Core.Interfaces;
+
+public interface IMessageService
 {
-    public interface IMessageService
-    {
-        Task<IEnumerable<Message>> Get();
+    Task<IEnumerable<Message>> Get();
 
-        Task<Message> Create(Message model);
+    Task<Message> Create(Message model);
 
-        Task<bool> IsAllowed(string ipAddress);
+    Task<bool> IsAllowed(string ipAddress);
 
-        Task<Message> GetById(int messageId);
+    Task<Message> GetById(int messageId);
 
-        Task UpdateMessageStatus(Message message, MessageStatus status);
+    Task UpdateMessageStatus(Message message, MessageStatus status);
 
-        Task Delete(Message message);
-    }
+    Task Delete(Message message);
 }

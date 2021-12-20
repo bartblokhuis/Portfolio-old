@@ -1,12 +1,12 @@
 ﻿using Portfolio.Domain.Models;
 using System.Threading.Tasks;
 
-namespace Portfolio.Core.Interfaces
-{
-    public interface IAboutMeService
-    {
-        Task<AboutMe> GetAboutMe();
+namespace Portfolio.Core.Interfaces;
 
-        Task SaveAboutMe(AboutMe model);
-    }
+public interface IAboutMeService
+{
+    Task<AboutMe> GetAboutMe();
+
+    Task SaveAboutMe(AboutMe model);
 }
+

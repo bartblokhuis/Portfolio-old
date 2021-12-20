@@ -1,16 +1,16 @@
-﻿namespace Portfolio.Domain.Dtos.Common
+﻿namespace Portfolio.Domain.Dtos.Common;
+
+public abstract class BaseDto<TKey> : IBaseDto<TKey>
 {
-    public abstract class BaseDto<TKey> : IBaseDto<TKey>
-    {
-        #region Properties
+    #region Properties
 
-        public virtual TKey Id { get; set; }
+    public virtual TKey Id { get; set; }
 
-        #endregion
-    }
-
-    public abstract class BaseDto: BaseDto<int>
-    {
-
-    }
+    #endregion
 }
+
+public abstract class BaseDto: BaseDto<int>
+{
+
+}
+

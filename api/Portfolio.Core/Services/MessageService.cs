@@ -7,8 +7,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace Portfolio.Core.Interfaces.Common
-{
+namespace Portfolio.Core.Interfaces.Common;
+
     public class MessageService : IMessageService
     {
         #region Fields
@@ -68,4 +68,3 @@ namespace Portfolio.Core.Interfaces.Common
 
         #endregion
     }
-}

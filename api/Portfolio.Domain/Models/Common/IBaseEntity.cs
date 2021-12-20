@@ -1,10 +1,9 @@
-﻿namespace Portfolio.Domain.Models.Common
-{
-    public interface IBaseEntity<TKey>
-    {
-    }
+﻿namespace Portfolio.Domain.Models.Common;
 
-    public interface IBaseEntity: IBaseEntity<int>
-    {
-    }
+public interface IBaseEntity<TKey>
+{
+}
+
+public interface IBaseEntity: IBaseEntity<int>
+{
 }

@@ -1,6 +1,5 @@
-﻿namespace Portfolio.Domain.Models.Common
+﻿namespace Portfolio.Domain.Models.Common;
+
+public interface ISetting
 {
-    public interface ISetting
-    {
-    }
 }

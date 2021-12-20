@@ -1,19 +1,17 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using Portfolio.Domain.Models.Common;
 
-namespace Portfolio.Domain.Models
+namespace Portfolio.Domain.Models;
+
+public class SkillGroup : BaseEntity, IHasDisplayNumber
 {
-    public class SkillGroup : BaseEntity, IHasDisplayNumber
-    {
-        #region Properties
+    #region Properties
 
-        public string Title { get; set; }
+    public string Title { get; set; }
 
-        public int DisplayNumber { get; set; }
+    public int DisplayNumber { get; set; }
 
-        public IEnumerable<Skill> Skills { get; set; }
+    public IEnumerable<Skill> Skills { get; set; }
 
-        #endregion
-    }
+    #endregion
 }

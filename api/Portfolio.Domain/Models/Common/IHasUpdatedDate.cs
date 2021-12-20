@@ -1,13 +1,13 @@
 ﻿using System;
 
-namespace Portfolio.Domain.Models.Common
+namespace Portfolio.Domain.Models.Common;
+
+public interface IHasUpdatedDate
 {
-    public interface IHasUpdatedDate
-    {
-        #region Properties
+    #region Properties
 
-        public DateTime UpdatedAtUtc { get; set; }
+    public DateTime UpdatedAtUtc { get; set; }
 
-        #endregion
-    }
+    #endregion
 }
+
