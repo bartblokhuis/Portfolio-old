@@ -1,4 +1,7 @@
 import { Component, OnInit } from '@angular/core';
+import { isObservable, Observable } from 'rxjs';
+import { GeneralSettings } from 'src/app/data/GeneralSettings';
+import { SettingsService } from 'src/app/services/settings/settings.service';
 
 @Component({
   selector: 'app-home',
@@ -7,9 +10,20 @@ import { Component, OnInit } from '@angular/core';
 })
 export class HomeComponent implements OnInit {
 
-  constructor() { }
+  generalSettings: GeneralSettings | null = null;
+  
+  constructor(private settingService: SettingsService) { }
 
   ngOnInit(): void {
+    var response = this.settingService.get<GeneralSettings>("GeneralSettings");
+    if(!isObservable(response)){
+      this.generalSettings = response;
+      return;
+    }
+    
+    response.subscribe((result) => {
+      this.generalSettings = result;
+    })
   }
 
   scrollToAboutMe(): void {

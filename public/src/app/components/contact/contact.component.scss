@@ -59,5 +59,19 @@
         textarea {
             min-height: 150px;
         }
+        
+        .alert {
+            margin-top: 10px;
+        }
+    }
+
+    .success-container,
+    .error-container {
+          text-align: left;  
+          margin-top: 20px;
+    }
+
+    .success-container{
+        color: #28a745;
     }
 }

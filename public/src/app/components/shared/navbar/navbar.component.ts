@@ -17,23 +17,15 @@ export class NavbarComponent implements OnInit, AfterViewInit {
   constructor(@Inject(DOCUMENT) private document: Document) { }
 
   @HostListener("window:scroll", []) onWindowScroll() {
-
-
-    const verticalOffset =
-      window.pageYOffset ||
-      document.documentElement.scrollTop ||
-      document.body.scrollTop ||
-      0;
-
-      this.scrollEvent(verticalOffset);
-
-    // do some stuff here when the window is scrolled
-    //this.scrollEvent();
+    this.scrollEvent(this.getVirticalOffset());
     this.document.body.style.setProperty("--calc-height", "auto");
-    this.resize();
   }
 
   @HostListener("window:load", []) onWindowLoad() {
+    this.resize();
+  }
+
+  @HostListener("window:resize", []) onWindowResize() {
     this.resize();
   }
 
@@ -46,8 +38,6 @@ export class NavbarComponent implements OnInit, AfterViewInit {
       }
     }
   };
-
-  
 
   ngAfterViewInit(): void {
 
@@ -83,7 +73,7 @@ export class NavbarComponent implements OnInit, AfterViewInit {
       this.navBar.classList.add('fixed');
     }
 
-    else if(homeEnd > verticalOffset + navBarHeight && this.navBar.classList.contains('fixed')){
+    else if(homeEnd > verticalOffset && this.navBar.classList.contains('fixed')){
       this.navBar.classList.remove('fixed');
     }
   }
@@ -91,7 +81,7 @@ export class NavbarComponent implements OnInit, AfterViewInit {
   navigate(menuItem: MenuItem){
     if(!menuItem.element || !this.navBar) return;
 
-    this.ignoreScrollEvent = true;
+    //this.ignoreScrollEvent = true;
     let scrollToX = menuItem.element.offsetTop;
 
     if(this.shouldNavBarBeFixed(scrollToX)) {
@@ -113,7 +103,7 @@ export class NavbarComponent implements OnInit, AfterViewInit {
     });
 
     const doneScrolling = (e: any) => {
-      this.checkActiveMenuItem(e);
+      this.checkActiveMenuItem(this.getVirticalOffset());
       this.ignoreScrollEvent = false;
     }
   }
@@ -139,14 +129,13 @@ export class NavbarComponent implements OnInit, AfterViewInit {
       if(foundActive){ 
         item.active = false;
       }
-      else if(item.element.offsetTop <= verticalOffset + navBarHeight && !foundActive){
+      else if(item.element.offsetTop <= verticalOffset + navBarHeight && !foundActive) {
         foundActive = true;
         item.active = true;
       }else{
         item.active = false;
       }
     }
-    foundActive = false;
   }
 
   getFixedNavBarHeight(){
@@ -179,6 +168,13 @@ export class NavbarComponent implements OnInit, AfterViewInit {
      
       
     }
+  }
+
+  getVirticalOffset() : number {
+    return window.pageYOffset ||
+      document.documentElement.scrollTop ||
+      document.body.scrollTop ||
+      0;
   }
 }
 

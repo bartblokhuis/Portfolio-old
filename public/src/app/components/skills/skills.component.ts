@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Skill } from 'src/app/data/Skill';
 import { SkillGroup } from 'src/app/data/SkillGroup';
 import { SkillsService } from 'src/app/services/skills/skills.service';
 import { environment } from 'src/environments/environment';
@@ -18,11 +19,12 @@ export class SkillsComponent implements OnInit {
   ngOnInit(): void {
     this.skillGroupService.getSkillGroups().subscribe((result) => {
       this.skillGroups = result;
-    })
+    });
+
+
   }
 
   calcDelay(index: number): number {
     return index * 50;
   }
-
 }

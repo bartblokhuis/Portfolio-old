@@ -1,5 +1,5 @@
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
-import { NgModule } from '@angular/core';
+import { APP_INITIALIZER, NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 
 import { AppRoutingModule } from './app-routing.module';
@@ -11,8 +11,8 @@ import { AboutComponent } from './components/about/about.component';
 import { ProjectsComponent } from './components/projects/projects.component';
 import { SkillsComponent } from './components/skills/skills.component';
 import { ContactComponent } from './components/contact/contact.component';
-import { SEOResolver } from './resolvers/SEOResolver';
 import { TransferHttpCacheModule } from '@nguniversal/common';
+import { GlobalDirectivesModule } from './modules/directives/global-directives/global-directives.module';
 
 @NgModule({
   declarations: [
@@ -30,9 +30,10 @@ import { TransferHttpCacheModule } from '@nguniversal/common';
     SharedModule,
     FormsModule,
     ReactiveFormsModule,
-    TransferHttpCacheModule
+    TransferHttpCacheModule,
+    GlobalDirectivesModule
   ],
-  providers: [ SEOResolver ],
-  bootstrap: [AppComponent]
+  providers: [],
+  bootstrap: [AppComponent],
 })
 export class AppModule { }

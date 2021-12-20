@@ -1,9 +1,9 @@
 <section id="home">
     
     <div class="center-container">
-        <h1>Bart Blokhuis</h1>
-        <h2>I'm a full-stack developer.</h2>
-        <button class="btn btn-primary" (click)="scrollToAboutMe()">About Me</button>
+        <h1>{{generalSettings?.landingTitle}}</h1>
+        <h2>{{generalSettings?.landingDescription}}</h2>
+        <button class="btn btn-primary" (click)="scrollToAboutMe()">{{generalSettings?.callToActionText}}</button>
     </div>
 
 </section>

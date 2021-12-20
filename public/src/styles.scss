@@ -70,6 +70,7 @@ section {
     padding: 12px 24px;
     border: 1px solid $active-color;
     transition: all 200ms ease-in-out;
+    -webkit-appearance: none;
 
     &:hover {
         cursor: pointer;
@@ -79,16 +80,62 @@ section {
 }
 
 .btn.btn-secondary {
-    background-color: transparent;
+    background-color: $active-color;
     color: $primary-color;
     border: none;
     outline: none;
-    padding: 12px 24px;
+    padding: 6px 12px;
     border: 1px solid $active-color;
     transition: all 200ms ease-in-out;
+    text-decoration: none;
+    -webkit-appearance: none;
 
     &:hover {
         cursor: pointer;
-        background-color: $active-color;
+    }
+}
+
+.input-error,
+.custom-error {
+    color: #dc3545;
+}
+body {
+    .swal2-popup {
+        width: 50em;
+
+        .swal2-html-container{
+            margin: 0;
+            overflow: initial;
+
+            img {
+                border-top-left-radius: 5px;
+                border-top-right-radius: 5px;
+                width: 100%;
+            }
+
+            .modal-title {
+                font-size: 2.5em;
+            }
+
+            .project-skills {
+                margin-top: 20px;
+                color: $active-color;
+            }
+
+            .modal-content {
+                margin: 20px 0;
+                padding: 20px;
+            }
+
+            .modal-footer {
+                padding: 20px;
+                text-align: left;
+
+                .btn {
+                    margin: 0 5px;
+                    font-size: 0.7em;
+                }
+            }
+        }
     }
 }

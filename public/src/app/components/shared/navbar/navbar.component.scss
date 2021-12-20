@@ -57,7 +57,7 @@ nav {
                 li a{
                     display: block;
                     padding: 5px 0;
-                    transition: color 300ms ease-in-out;
+                    transition: color 300ms ease-in;
 
                     &:hover{
                         cursor: pointer;
@@ -118,7 +118,7 @@ nav {
                         margin: 10px;
                         padding: 10px 15px;
                         display: block;
-                        transition: color 300ms ease-in-out;
+                        transition: color 300ms ease-in;
 
                         &:hover{
                             cursor: pointer;
@@ -127,10 +127,10 @@ nav {
                         &.active{
                             color: $active-color;
                         }
+                    }
 
-                        &:first-child{
-                            margin-left: 0;
-                        }
+                    &:first-child a{
+                        margin-left: 0;
                     }
         
                 }
