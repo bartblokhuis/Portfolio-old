@@ -18,7 +18,7 @@ export class SkillsComponent implements OnInit {
 
   ngOnInit(): void {
     this.skillGroupService.getSkillGroups().subscribe((result) => {
-      this.skillGroups = result;
+      if(result.succeeded) this.skillGroups = result.data;
     });
 
 

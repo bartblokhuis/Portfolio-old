@@ -42,14 +42,14 @@ public class Startup
 
         app.UseRouting();
 
-        app.UseAuthentication();
-        app.UseAuthorization();
-
         app.UseCors(x => x
             .AllowAnyMethod()
             .AllowAnyHeader()
             .SetIsOriginAllowed(origin => true) // allow any origin
             .AllowCredentials()); // allow credentials
+
+        app.UseAuthentication();
+        app.UseAuthorization();
 
         app.UseEndpoints(endpoints => endpoints.MapControllers());
     }

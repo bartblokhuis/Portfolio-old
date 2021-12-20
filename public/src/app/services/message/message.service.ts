@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
+import { Result } from 'src/app/data/common/result';
 import { Message } from 'src/app/data/Message';
-import { Result } from 'src/app/data/Result';
 import { ApiService } from '../common/api.service';
 
 @Injectable({
@@ -11,7 +11,7 @@ export class MessageService {
 
   constructor(private apiService: ApiService) { }
 
-  sendMessage(message: Message): Observable<Result> {
-    return this.apiService.post<Result>(`Messages`, message);
+  sendMessage(message: Message): Observable<Result<any>> {
+    return this.apiService.post<any>(`Messages`, message);
   }
 }

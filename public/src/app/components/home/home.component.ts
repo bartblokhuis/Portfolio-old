@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { isObservable, Observable } from 'rxjs';
-import { GeneralSettings } from 'src/app/data/GeneralSettings';
+import { GeneralSettings } from 'src/app/data/settings/GeneralSettings';
 import { SettingsService } from 'src/app/services/settings/settings.service';
 
 @Component({
