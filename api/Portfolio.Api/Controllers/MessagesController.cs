@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using AutoMapper;
 using Microsoft.AspNetCore.Authorization;
@@ -8,9 +9,9 @@ using Microsoft.Extensions.Logging;
 using Portfolio.Core.Interfaces;
 using Portfolio.Core.Interfaces.Common;
 using Portfolio.Domain.Dtos;
-using Portfolio.Domain.Dtos.Common;
 using Portfolio.Domain.Dtos.Messages;
 using Portfolio.Domain.Models;
+using Portfolio.Domain.Wrapper;
 
 namespace Portfolio.Controllers;
 
@@ -45,10 +46,10 @@ public class MessagesController : ControllerBase
     [HttpGet]
     public async Task<IActionResult> Get()
     {
-        var messages = await _messageService.Get();
+        var messages = await (await _messageService.Get()).ToListResultAsync();
 
-        var result = _mapper.Map<IEnumerable<MessageDto>>(messages);
-
+        var result = _mapper.Map<ListResult<MessageDto>>(messages);
+        result.Succeeded = true;
         return Ok(result);
     }
 
@@ -59,7 +60,7 @@ public class MessagesController : ControllerBase
         var ipAddress = _webHelper.GetCurrentIpAddress();
 
         if (!await _messageService.IsAllowed(ipAddress))
-            return Ok(new Result().FromFail("Please wait 2 minuted between messages"));
+            return Ok(Result.Fail("Please wait 2 minuted between messages"));
 
         var message = new Message
         {
@@ -76,7 +77,7 @@ public class MessagesController : ControllerBase
         };
 
         await _messageService.Create(message);
-        return Ok(new Result().FromSuccess());
+        return Ok(Result.Success("Created the message"));
     }
 
     [HttpPut]
@@ -84,10 +85,13 @@ public class MessagesController : ControllerBase
     {
         var message = await _messageService.GetById(model.Id);
         if (message == null)
-            return BadRequest("Message not found");
+            return Ok(await Result.FailAsync("Message not found"));
+        
 
         await _messageService.UpdateMessageStatus(message, model.MessageStatus);
-        return Ok(_mapper.Map<MessageDto>(message));
+
+        var result = await Result<MessageDto>.SuccessAsync(_mapper.Map<MessageDto>(message));
+        return Ok(result);
     }
 
     [HttpDelete]
@@ -95,10 +99,10 @@ public class MessagesController : ControllerBase
     {
         var message = await _messageService.GetById(id);
         if (message == null)
-            return BadRequest("Message not found");
+            return Ok(await Result.FailAsync("Message not found"));
 
         await _messageService.Delete(message);
-        return Ok();
+        return Ok(await Result.SuccessAsync("Message removed"));
     }
 
     #endregion

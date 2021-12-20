@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { Result } from 'src/app/data/common/Result';
 import { CreateUpdateSkillGroup } from 'src/app/data/skill-groups/create-update-skill-group';
 import { CreateSkillGroupCreatedEvent } from 'src/app/data/skill-groups/events/create-skill-group-created-event';
 import { ListSkillGroup, SkillGroup } from 'src/app/data/skill-groups/skill-group';
@@ -27,8 +28,8 @@ export class ListSkillGroupsComponent implements OnInit {
   }
 
   loadSkillGroups(): void {
-    this.apiService.get<SkillGroup[]>('SkillGroup').subscribe((result: SkillGroup[]) => {
-      this.skillGroups = result.map(s => ({ title: s.title, displayNumber: s.displayNumber, id: s.id, skills: s.skills, inEditMode: false }));
+    this.apiService.get<SkillGroup[]>('SkillGroup').subscribe((result: Result<SkillGroup[]>) => {
+      if(result.succeeded) this.skillGroups = result.data.map(s => ({ title: s.title, displayNumber: s.displayNumber, id: s.id, skills: s.skills, inEditMode: false }));
     })
   }
   
@@ -81,12 +82,11 @@ export class ListSkillGroupsComponent implements OnInit {
 
     const editSkillGroup: CreateUpdateSkillGroup = { displayNumber: 0, id: skillGroupId, title: editTitle.value };
     this.apiService.put<SkillGroup>('SkillGroup', editSkillGroup).subscribe((result) => {
-      if(!this.skillGroups) return;
-      const skillGroupIndex = this.skillGroups.findIndex((skillGroup => skillGroup.id == skillGroupId));
-      this.skillGroups[skillGroupIndex] = new ListSkillGroup(result);
-    });
+      if(!this.skillGroups || !result.succeeded) return;
 
-    console.log(editTitle.value)
+      const skillGroupIndex = this.skillGroups.findIndex((skillGroup => skillGroup.id == skillGroupId));
+      this.skillGroups[skillGroupIndex] = new ListSkillGroup(result.data);
+    });
   }
 
   editValidaitonRules(form: any): void{

@@ -28,10 +28,11 @@ public class SkillGroupService : ISkillGroupService
 
     #region Methods
 
-    public async Task<IEnumerable<SkillGroup>> GetAll()
+    public async Task<IQueryable<SkillGroup>> GetAll(bool includeSkills = true)
     {
-        var skillGroups = await _skillGroupRepository.GetAsync(orderBy: (s) => s.OrderBy(x => x.DisplayNumber), includeProperties: "Skills");
-        return skillGroups;
+        return (includeSkills) ?
+            await _skillGroupRepository.GetAsync(orderBy: (s) => s.OrderBy(x => x.DisplayNumber), includeProperties: "Skills"):
+            await _skillGroupRepository.GetAsync(orderBy: (s) => s.OrderBy(x => x.DisplayNumber));
     }
 
     public Task<SkillGroup> GetById(int id)
@@ -50,7 +51,7 @@ public class SkillGroupService : ISkillGroupService
 
     }
 
-    public Task Update(IEnumerable<SkillGroup> skillGroupsDto)
+    public Task Update(IQueryable<SkillGroup> skillGroupsDto)
     {
         return _skillGroupRepository.UpdateRangeAsync(skillGroupsDto);
     }

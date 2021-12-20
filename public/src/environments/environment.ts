@@ -4,7 +4,7 @@
 
 export const environment = {
   production: false,
-  baseApiUrl: "https://api.bartblokhuis.com/"
+  baseApiUrl: "https://localhost:44379/"
 };
 
 /*

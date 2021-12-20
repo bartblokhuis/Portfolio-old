@@ -1,7 +1,6 @@
 import { Injectable } from '@angular/core';
-import { Observable, ReplaySubject } from 'rxjs';
+import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
-import { environment } from 'src/environments/environment';
 import { ApiService } from '../common/api.service';
 
 @Injectable({
@@ -13,7 +12,7 @@ export class SettingsService {
 
   constructor(private apiService: ApiService) { }
 
-  get<T>(url: string, ): Observable<T> | T {
+  get<T>(url: string): Observable<T> | T | Observable<T> {
 
     let setting = this.cachedSettings.find(x => x.key === url);
     if(setting) {
@@ -21,9 +20,9 @@ export class SettingsService {
     }
 
     return this.apiService.get<T>(`Settings/${url}`).pipe(map(result => {
-      const cachedItem: CachedItem<T> = { key: url, data: result  };
+      const cachedItem: CachedItem<T> = { key: url, data: result.data  };
       this.cachedSettings.push(cachedItem);
-      return result;
+      return result.data;
     }));
   }
 }

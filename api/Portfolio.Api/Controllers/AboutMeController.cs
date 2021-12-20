@@ -6,6 +6,7 @@ using Microsoft.Extensions.Logging;
 using Portfolio.Core.Interfaces;
 using Portfolio.Domain.Dtos;
 using Portfolio.Domain.Models;
+using Portfolio.Domain.Wrapper;
 
 namespace Portfolio.Controllers;
 
@@ -41,7 +42,8 @@ public class AboutMeController : ControllerBase
         if (aboutMe == null)
             aboutMe = new AboutMe();
 
-        return Ok(_mapper.Map<AboutMeDto>(aboutMe));
+        var result = await Result<AboutMeDto>.SuccessAsync(_mapper.Map<AboutMeDto>(aboutMe));
+        return Ok(result);
     }
 
     [Authorize]
@@ -51,7 +53,8 @@ public class AboutMeController : ControllerBase
         var aboutMe = _mapper.Map<AboutMe>(model);
         await _aboutMeService.SaveAboutMe(aboutMe);
 
-        return Ok(_mapper.Map<AboutMeDto>(aboutMe));
+        var result = await Result<AboutMeDto>.SuccessAsync(_mapper.Map<AboutMeDto>(aboutMe));
+        return Ok(result);
     }
 
     #endregion

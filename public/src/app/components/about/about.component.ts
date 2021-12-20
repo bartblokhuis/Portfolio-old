@@ -15,7 +15,7 @@ export class AboutComponent implements OnInit {
 
   ngOnInit(): void {
     this.aboutMeService.get().subscribe((result) => {
-      this.aboutMe = result;
+      if(result.succeeded) this.aboutMe = result.data;
     })
   }
 

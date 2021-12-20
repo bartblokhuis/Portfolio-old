@@ -3,6 +3,8 @@ import { map } from 'rxjs/operators';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { ApiService } from '../api/api.service';
 import { User } from 'src/app/data/user/user';
+import { Result } from 'src/app/data/common/Result';
+import { LoginResponse } from 'src/app/data/user/response';
 
 @Injectable({
   providedIn: 'root'
@@ -25,14 +27,14 @@ export class AuthenticationService {
     return this.currentUserSubject?.value;
   }
 
-  login(username: string, password: string, rememberMe: boolean): Observable<any> {
+  login(username: string, password: string, rememberMe: boolean): Observable<Result<LoginResponse>> {
     return this.apiService.post<any>('login', {username, password, rememberMe})
       .pipe(map(result => {
 
         //If we dont have a token it means the login request failed.
-        if(!result.token) return result;
+        if(!result.succeeded || !result.data.token) return result;
 
-        const user: User = { username: username, expiration: result.expiration, id: result.userId, token: result.token }
+        const user: User = { username: username, expiration: result.data.expiration, id: result.data.userId, token: result.data.token }
         localStorage.setItem('currentUser', JSON.stringify(user));
 
         console.log(this.currentUserSubject);

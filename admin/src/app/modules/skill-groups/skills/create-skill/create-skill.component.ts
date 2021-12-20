@@ -1,5 +1,6 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
+import { Result } from 'src/app/data/common/Result';
 import { SkillGroup } from 'src/app/data/skill-groups/skill-group';
 import { CreateSkill } from 'src/app/data/skills/create-skill';
 import { Skill } from 'src/app/data/skills/skill';
@@ -47,15 +48,16 @@ export class CreateSkillComponent implements OnInit {
   submit() : void {
     if(!this.form.valid()) return;
 
-    this.apiService.post<Skill>("Skill", this.model).subscribe((result: Skill) => {
+    this.apiService.post<Skill>("Skill", this.model).subscribe((result: Result<Skill>) => {
 
       if(this.formData) {
-        this.apiService.put<Skill>(`Skill/SaveSkillImage/${result.id}`, this.formData).subscribe((resultWithImage: Skill) => {
-          this.modalRef?.close(resultWithImage);
+        this.apiService.put<Skill>(`Skill/SaveSkillImage/${result.data.id}`, this.formData).subscribe((resultWithImage: Result<Skill>) => {
+          console.log(resultWithImage)
+          this.modalRef?.close(resultWithImage.data);
         });
       }
       else {
-        this.modalRef?.close(result);
+        this.modalRef?.close(result.data);
       }
     }, error => this.error = error);
   }

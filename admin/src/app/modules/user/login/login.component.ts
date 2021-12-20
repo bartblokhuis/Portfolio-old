@@ -74,14 +74,12 @@ export class LoginComponent implements OnInit {
     this.authenticationService.login(this.model.username, this.model.password, this.model.rememberMe)
       .pipe(first())
       .subscribe((result) => {
-        if(result.error) {
-          this.error = result.error;
-          console.log(this.error)
+        if(!result.succeeded) {
+          this.error = result.messages[0];
           this.model.password = '';
       }
       else {
         location.reload();
-
         //Don't navigate to a return url because this breaks admin lte.
         //this.router.navigate([this.returnUrl]);
       }

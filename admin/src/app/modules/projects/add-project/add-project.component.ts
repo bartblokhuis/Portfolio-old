@@ -1,6 +1,7 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
 import { combineLatest, Observable } from 'rxjs';
+import { Result } from 'src/app/data/common/Result';
 import { AddUpdateProject } from 'src/app/data/projects/add-update-project';
 import { Project } from 'src/app/data/projects/project';
 import { UpdateProjectSkills } from 'src/app/data/projects/update-project-skills';
@@ -38,8 +39,8 @@ export class AddProjectComponent implements OnInit {
     this.addProjectForm = $("#addProjectForm");
     validateProjectForm(this.addProjectForm);
 
-    this.apiService.get<SkillGroup[]>('SkillGroup').subscribe((result: SkillGroup[]) => {
-      this.skillGroups = result;
+    this.apiService.get<SkillGroup[]>('SkillGroup').subscribe((result: Result<SkillGroup[]>) => {
+      if(result.succeeded) this.skillGroups = result.data;
     })
   }
 
@@ -59,32 +60,39 @@ export class AddProjectComponent implements OnInit {
   submit(): void {
     if(!this.addProjectForm.valid()) return;
 
-    this.apiService.post<Project>("Project", this.model).subscribe((result: Project) => {
+    this.apiService.post<Project>("Project", this.model).subscribe((result: Result<Project>) => {
 
-        let observables: Observable<any>[] = [];
+      if(!result.succeeded) {
+        this.modalRef?.close();
+        return;
+      }
 
-        if(this.skillModel.skillIds && this.skillModel.skillIds.length !== 0){
-          this.skillModel.projectId = result.id;
-          observables.push(this.apiService.put("Project/UpdateSkills", this.skillModel));
-        }
+      const project = result.data;
 
-        if(this.formData) {
-          observables.push(this.apiService.put(`Project/UpdateDemoImage/${result.id}`, this.formData));
-        }
+      let observables: Observable<any>[] = [];
 
-        if(observables.length !== 0){
-          combineLatest(observables).subscribe(() => {
-            this.notify();
-            this.modalRef?.close();
-            return;
-          });
-        }
-        else {
+      if(this.skillModel.skillIds && this.skillModel.skillIds.length !== 0){
+        this.skillModel.projectId = project.id;
+        observables.push(this.apiService.put("Project/UpdateSkills", this.skillModel));
+      }
+
+      if(this.formData) {
+        observables.push(this.apiService.put(`Project/UpdateDemoImage/${project.id}`, this.formData));
+      }
+
+      if(observables.length !== 0){
+        combineLatest(observables).subscribe(() => {
           this.notify();
           this.modalRef?.close();
           return;
-        }
-      });
+        });
+      }
+      else {
+        this.notify();
+        this.modalRef?.close();
+        return;
+      }
+    });
   }
 
   notify(): void {

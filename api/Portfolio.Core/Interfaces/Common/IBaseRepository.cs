@@ -25,7 +25,7 @@ public interface IBaseRepository<TEntity, TKey, TDbContext>
 {
     public DbSet<TEntity> Table { get; }
 
-    Task<IEnumerable<TEntity>> GetAsync(Expression<Func<TEntity, bool>> filter = null,
+    Task<IQueryable<TEntity>> GetAsync(Expression<Func<TEntity, bool>> filter = null,
         Func<IQueryable<TEntity>, IOrderedQueryable<TEntity>> orderBy = null,
         string includeProperties = "");
 

@@ -27,9 +27,9 @@ public class ProjectService : IProjectService
 
     #region Methods
 
-    public Task<List<Project>> Get()
+    public Task<IQueryable<Project>> Get()
     {
-        return _projectRepository.Table.AsQueryable().AsNoTracking().Include(x => x.Skills).ToListAsync();
+        return _projectRepository.GetAsync(includeProperties: "Skills");
     }
 
     public Task<Project> GetById(int id)

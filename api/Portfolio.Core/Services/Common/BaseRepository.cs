@@ -62,7 +62,7 @@ public class BaseRepository<TEntity, TKey, TDbContext> : IBaseRepository<TEntity
         return await _dbSet.FindAsync(id);
     }
 
-    public async Task<IEnumerable<TEntity>> GetAsync(
+    public async Task<IQueryable<TEntity>> GetAsync(
         Expression<Func<TEntity, bool>> filter = null,
         Func<IQueryable<TEntity>, IOrderedQueryable<TEntity>> orderBy = null,
         string includeProperties = "")
@@ -76,11 +76,10 @@ public class BaseRepository<TEntity, TKey, TDbContext> : IBaseRepository<TEntity
             query = includeProperties.Split(new[] { ',' }, StringSplitOptions.RemoveEmptyEntries).Aggregate(query, (current, includeProperty) => current.Include(includeProperty));
 
         if (orderBy != null)
-        {
-            return await orderBy(query).ToListAsync();
-        }
+            return orderBy(query);
+        
 
-        return await query.ToListAsync();
+        return query;
     }
 
     public Task<List<TEntity>> GetAllAsync()

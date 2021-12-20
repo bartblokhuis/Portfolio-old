@@ -17,7 +17,9 @@ export class ListMessagesComponent implements OnInit {
   messages: Message[] = [];
 
   ngOnInit(): void {
-    this.messagesService.getMessages().subscribe(result => this.messages = result);
+    this.messagesService.getMessages().subscribe(result => {
+      if(result.succeeded) this.messages = result.data;
+    });
   }
 
   edit(message: Message): void {

@@ -67,8 +67,8 @@ export class ContactComponent implements OnInit {
     }
 
     this.messageService.sendMessage(this.model).subscribe((result) => {
-      if(!result.success) {
-        this.error = result.message;
+      if(!result.succeeded) {
+        this.error = result.messages[0];
         this.sendingMessage = false;
         return;
       }
