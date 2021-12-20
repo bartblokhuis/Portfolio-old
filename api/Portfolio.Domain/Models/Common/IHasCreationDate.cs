@@ -1,13 +1,12 @@
 ﻿using System;
 
-namespace Portfolio.Domain.Models.Common
+namespace Portfolio.Domain.Models.Common;
+
+public interface IHasCreationDate
 {
-    public interface IHasCreationDate
-    {
-        #region Properties
+    #region Properties
 
-        public DateTime CreatedAtUTC { get; set; }
+    public DateTime CreatedAtUTC { get; set; }
 
-        #endregion
-    }
+    #endregion
 }

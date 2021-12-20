@@ -1,13 +1,12 @@
-﻿namespace Portfolio.Domain.Dtos
+﻿namespace Portfolio.Domain.Dtos;
+
+public class AboutMeDto
 {
-    public class AboutMeDto
-    {
-        #region Properties
+    #region Properties
 
-        public string Title { get; set; }
+    public string Title { get; set; }
 
-        public string Content { get; set; }
+    public string Content { get; set; }
 
-        #endregion
-    }
+    #endregion
 }

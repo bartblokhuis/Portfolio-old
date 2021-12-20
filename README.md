@@ -10,7 +10,7 @@ A portfolio where you can easily change the content using an admin panel build u
 	
 ## Technologies
 Project is created with:
-* .NET Core 5.0
+* .NET Core 6.0
 * Angular 12
 * AdminLTE 3
 	

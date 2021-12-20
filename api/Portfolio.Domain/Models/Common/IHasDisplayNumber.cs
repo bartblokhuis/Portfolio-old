@@ -1,11 +1,10 @@
-﻿namespace Portfolio.Domain.Models.Common
+﻿namespace Portfolio.Domain.Models.Common;
+
+public interface IHasDisplayNumber
 {
-    public interface IHasDisplayNumber
-    {
-        #region Properties
+    #region Properties
 
-        int DisplayNumber { get; set; }
+    int DisplayNumber { get; set; }
 
-        #endregion
-    }
+    #endregion
 }

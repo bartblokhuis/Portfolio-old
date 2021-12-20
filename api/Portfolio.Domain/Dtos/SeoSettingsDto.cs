@@ -1,19 +1,18 @@
-﻿namespace Portfolio.Domain.Dtos
+﻿namespace Portfolio.Domain.Dtos;
+
+public class SeoSettingsDto
 {
-    public class SeoSettingsDto
-    {
-        #region Properties
+    #region Properties
 
-        public string Title { get; set; }
+    public string Title { get; set; }
 
-        public string DefaultMetaKeywords { get; set; }
+    public string DefaultMetaKeywords { get; set; }
 
-        public string DefaultMetaDescription { get; set; }
+    public string DefaultMetaDescription { get; set; }
 
-        public bool UseTwitterMetaTags { get; set; }
+    public bool UseTwitterMetaTags { get; set; }
 
-        public bool UseOpenGraphMetaTags { get; set; }
+    public bool UseOpenGraphMetaTags { get; set; }
 
-        #endregion
-    }
+    #endregion
 }

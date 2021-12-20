@@ -1,11 +1,10 @@
-﻿namespace Portfolio.Domain.Models.Common
+﻿namespace Portfolio.Domain.Models.Common;
+
+public interface ISoftDelete
 {
-    public interface ISoftDelete
-    {
-        #region Properties
+    #region Properties
 
-        public bool IsDeleted { get; set; }
+    public bool IsDeleted { get; set; }
 
-        #endregion
-    }
+    #endregion
 }

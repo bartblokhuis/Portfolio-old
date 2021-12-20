@@ -3,19 +3,18 @@ using Portfolio.Domain.Models;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 
-namespace Portfolio.Domain.Dtos
+namespace Portfolio.Domain.Dtos;
+
+public class SkillGroupDto : BaseDto
 {
-    public class SkillGroupDto : BaseDto
-    {
-        #region Properties
+    #region Properties
 
-        [Required(AllowEmptyStrings = false)]
-        public string Title { get; set; }
+    [Required(AllowEmptyStrings = false)]
+    public string Title { get; set; }
 
-        public int DisplayNumber { get; set; }
+    public int DisplayNumber { get; set; }
 
-        public IEnumerable<Skill> Skills { get; set; }
+    public IEnumerable<Skill> Skills { get; set; }
 
-        #endregion
-    }
+    #endregion
 }

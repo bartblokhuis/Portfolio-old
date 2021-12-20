@@ -1,7 +1,7 @@
-﻿namespace Portfolio.Core.Interfaces.Common
+﻿namespace Portfolio.Core.Interfaces.Common;
+
+public interface IWebHelper
 {
-    public interface IWebHelper
-    {
-        string GetCurrentIpAddress();
-    }
+    string GetCurrentIpAddress();
 }
+

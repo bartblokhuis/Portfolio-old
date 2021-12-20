@@ -1,28 +1,25 @@
-﻿using Portfolio.Domain.Dtos;
-using Portfolio.Domain.Models;
+﻿using Portfolio.Domain.Models;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
-namespace Portfolio.Core.Interfaces
+namespace Portfolio.Core.Interfaces;
+public interface ISkillService
 {
-    public interface ISkillService
-    {
-        Task<IEnumerable<Skill>> GetAll();
+    Task<IEnumerable<Skill>> GetAll();
 
-        Task<IEnumerable<Skill>> GetBySkillGroupId(int skillGroupId);
+    Task<IEnumerable<Skill>> GetBySkillGroupId(int skillGroupId);
 
-        Task Insert(Skill skillDto);
+    Task Insert(Skill skillDto);
 
-        Task Update(Skill skillDto);
+    Task Update(Skill skillDto);
 
-        Task Delete(int id);
+    Task Delete(int id);
 
-        Task<bool> Exists(int id);
+    Task<bool> Exists(int id);
 
-        Task<Skill> GetById(int id);
+    Task<Skill> GetById(int id);
 
-        Task<bool> IsExistingSkill(string name, int skillGroup, Skill skillToIgnor = null);
+    Task<bool> IsExistingSkill(string name, int skillGroup, Skill skillToIgnor = null);
 
-        Task<IEnumerable<Skill>> GetSkillsByIds(IEnumerable<int> ids);
-    }
+    Task<IEnumerable<Skill>> GetSkillsByIds(IEnumerable<int> ids);
 }

@@ -1,13 +1,12 @@
-﻿namespace Portfolio.Domain.Dtos.Projects
+﻿namespace Portfolio.Domain.Dtos.Projects;
+
+public class UpdateProjectSkills
 {
-    public class UpdateProjectSkills
-    {
-        #region Properties
+    #region Properties
 
-        public int ProjectId { get; set; }
+    public int ProjectId { get; set; }
 
-        public int[] SkillIds { get; set; }
+    public int[] SkillIds { get; set; }
 
-        #endregion
-    }
+    #endregion
 }

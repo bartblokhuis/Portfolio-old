@@ -2,21 +2,20 @@ using Portfolio.Domain.Models;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
-namespace Portfolio.Core.Interfaces
+namespace Portfolio.Core.Interfaces;
+
+public interface IProjectService
 {
-    public interface IProjectService
-    {
-        Task<List<Project>> Get();
+    Task<List<Project>> Get();
 
-        Task<Project> GetById(int id);
+    Task<Project> GetById(int id);
 
-        Task Create(Project model);
+    Task Create(Project model);
 
-        Task<Project> Update(Project model);
+    Task<Project> Update(Project model);
 
-        Task<Project> UpdateSkills(int projectId, IEnumerable<Skill> skills);
+    Task<Project> UpdateSkills(int projectId, IEnumerable<Skill> skills);
 
-        Task Delete(int id);
+    Task Delete(int id);
 
-    }
 }

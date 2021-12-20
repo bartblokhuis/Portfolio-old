@@ -1,6 +1,5 @@
-﻿namespace Portfolio.Domain.Dtos.Skills
+﻿namespace Portfolio.Domain.Dtos.Skills;
+
+public class CreateSkillDto : CreateUpdateSkill
 {
-    public class CreateSkillDto : CreateUpdateSkill
-    {
-    }
 }

@@ -1,19 +1,18 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
 namespace Portfolio.Domain.Models.Common
+
+public abstract class BaseEntity<TKey> : IBaseEntity<TKey>
 {
-    public abstract class BaseEntity<TKey> : IBaseEntity<TKey>
-    {
-        #region Properties
+    #region Properties
 
-        [Key]
-        public virtual TKey Id { get; set; }
+    [Key]
+    public virtual TKey Id { get; set; }
 
-        #endregion
+    #endregion
 
-    }
+}
 
-    public abstract class BaseEntity : BaseEntity<int>, IBaseEntity
-    {
-    }
+public abstract class BaseEntity : BaseEntity<int>, IBaseEntity
+{
 }

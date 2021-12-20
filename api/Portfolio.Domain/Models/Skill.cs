@@ -1,24 +1,23 @@
 ﻿using Portfolio.Domain.Models.Common;
 using System.Collections.Generic;
 
-namespace Portfolio.Domain.Models
+namespace Portfolio.Domain.Models;
+
+public class Skill : BaseEntity, IHasDisplayNumber
 {
-    public class Skill : BaseEntity, IHasDisplayNumber
-    {
-        #region Properties
+    #region Properties
 
-        public string Name { get; set; }
+    public string Name { get; set; }
 
-        public string IconPath { get; set; }
+    public string IconPath { get; set; }
 
-        public int DisplayNumber { get; set; }
+    public int DisplayNumber { get; set; }
 
-        public int SkillGroupId { get; set; }
+    public int SkillGroupId { get; set; }
 
-        public SkillGroup SkillGroup { get; set; }
+    public SkillGroup SkillGroup { get; set; }
 
-        public ICollection<Project> Projects { get; set; }
+    public ICollection<Project> Projects { get; set; }
 
-        #endregion
-    }
+    #endregion
 }
