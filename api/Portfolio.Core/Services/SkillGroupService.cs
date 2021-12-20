@@ -7,7 +7,7 @@ using Portfolio.Core.Interfaces.Common;
 using Portfolio.Domain.Dtos;
 using Portfolio.Domain.Models;
 
-namespace Portfolio.Core.Services'
+namespace Portfolio.Core.Services;
 
 public class SkillGroupService : ISkillGroupService
 {

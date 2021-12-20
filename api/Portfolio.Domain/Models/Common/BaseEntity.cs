@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace Portfolio.Domain.Models.Common
+namespace Portfolio.Domain.Models.Common;
 
 public abstract class BaseEntity<TKey> : IBaseEntity<TKey>
 {
