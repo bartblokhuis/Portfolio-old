@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { AboutMe } from 'src/app/data/about-me';
+import { Result } from 'src/app/data/common/Result';
 import { ApiService } from 'src/app/services/api/api.service';
 import { NotificationService } from 'src/app/services/notification/notification.service';
 
@@ -20,8 +21,8 @@ export class AboutMeComponent implements OnInit {
     this.aboutMeForm = $('#aboutMeForm');
     this.validateAboutMe();
 
-    this.apiService.get<AboutMe>('AboutMe').subscribe((result: AboutMe) => {
-      this.aboutMe = result;
+    this.apiService.get<AboutMe>('AboutMe').subscribe((result: Result<AboutMe>) => {
+      if(result.succeeded) this.aboutMe = result.data;
     });
   }
 

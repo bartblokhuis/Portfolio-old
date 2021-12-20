@@ -1,5 +1,6 @@
 import { Component, ComponentFactoryResolver, OnInit, ViewEncapsulation } from '@angular/core';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { Result } from 'src/app/data/common/Result';
 import { Project } from 'src/app/data/projects/project';
 import { ApiService } from 'src/app/services/api/api.service';
 import { AddProjectComponent } from '../add-project/add-project.component';
@@ -50,8 +51,8 @@ export class ListProjectsComponent implements OnInit {
   }
 
   loadProjects() {
-    this.apiService.get<Project[]>('Project').subscribe((result: Project[]) => {
-      this.projects = result;
+    this.apiService.get<Project[]>('Project').subscribe((result: Result<Project[]>) => {
+      if(result.succeeded) this.projects = result.data;
     })
   }
 

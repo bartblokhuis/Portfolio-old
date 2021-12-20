@@ -1,5 +1,6 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
+import { Result } from 'src/app/data/common/Result';
 import { EditSkill } from 'src/app/data/skills/edit-skill';
 import { Skill } from 'src/app/data/skills/skill';
 import { ApiService } from 'src/app/services/api/api.service';
@@ -39,15 +40,15 @@ export class EditSkillComponent implements OnInit {
   submit() : void {
     if(!this.form.valid()) return;
 
-    this.apiService.put<Skill>("Skill", this.model).subscribe((result: Skill) => {
+    this.apiService.put<Skill>("Skill", this.model).subscribe((result: Result<Skill>) => {
 
       if(this.formData) {
-        this.apiService.put<Skill>(`Skill/SaveSkillImage/${result.id}`, this.formData).subscribe((resultWithImage: Skill) => {
-          this.modal?.close(resultWithImage);
+        this.apiService.put<Skill>(`Skill/SaveSkillImage/${result.data.id}`, this.formData).subscribe((resultWithImage: Result<Skill>) => {
+          this.modal?.close(resultWithImage.data);
         });
       }
       else {
-        this.modal?.close(result);
+        this.modal?.close(result.data);
       }
     }, error => this.error = error);
   }

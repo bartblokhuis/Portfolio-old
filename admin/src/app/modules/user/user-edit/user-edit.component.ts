@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Result } from 'src/app/data/common/Result';
 import { ChangeUserPassword } from 'src/app/data/user/change-password';
 import { UserDetails } from 'src/app/data/user/user-details';
 import { ApiService } from 'src/app/services/api/api.service';
@@ -50,8 +51,8 @@ export class UserEditComponent implements OnInit {
 
     this.contentTitleService.title.next("User Details");
 
-    this.apiService.get<UserDetails>(this.detailsUrl).subscribe((result: UserDetails) => {
-      this.userDetails = result;
+    this.apiService.get<UserDetails>(this.detailsUrl).subscribe((result: Result<UserDetails>) => {
+      if(result.succeeded) this.userDetails = result.data;
     })
   }
 
@@ -132,9 +133,9 @@ export class UserEditComponent implements OnInit {
 
   submit(): void {
     if(!this.userDetailsForm.valid()) return;
-    this.apiService.put(this.detailsUrl, this.userDetails).subscribe((result: any) => {
-      if(result.error){
-        this.userDetailsError = result.error;
+    this.apiService.put(this.detailsUrl, this.userDetails).subscribe((result: Result<any>) => {
+      if(!result.succeeded){
+        this.userDetailsError = result.messages[0];
         this.notificationService.warning("Couldn't save the settings")
         return;
       }
@@ -144,16 +145,9 @@ export class UserEditComponent implements OnInit {
 
   submitChangePassword(): void {
     if(!this.changePasswordForm.valid()) return;
-    this.apiService.put('user/updatePassword', this.changePassword).subscribe((result: any) => {
-      if(result.error || result.errors){
-
-        if(result.errors){
-          this.changePasswordErrors = result.errors;
-        }
-        else {
-          this.changePasswordErrors = [result.error];
-        }
-        console.log(this.changePasswordErrors)
+    this.apiService.put('user/updatePassword', this.changePassword).subscribe((result: Result<any>) => {
+      if(!result.succeeded){
+        this.changePasswordErrors = result.messages;
         this.notificationService.warning("Couldn't save the settings")
         return;
       }

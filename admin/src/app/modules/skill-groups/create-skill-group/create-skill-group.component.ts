@@ -60,7 +60,7 @@ export class CreateSkillGroupComponent implements OnInit {
     if(!this.form.valid()) return;
     
     this.apiService.post<SkillGroup>('SkillGroup', this.model).subscribe((result) => {
-      const event: CreateSkillGroupCreatedEvent = { skillGroup: result, openNewSkillModal: openNewSkillModal};
+      const event: CreateSkillGroupCreatedEvent = { skillGroup: result.data, openNewSkillModal: openNewSkillModal};
       this.onCreated.emit(event);
     }, error => this.error = error);
   }

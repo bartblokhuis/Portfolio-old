@@ -23,16 +23,18 @@ public class SkillGroupController : ControllerBase
 
     private ILogger<SkillGroupController> _logger;
     private readonly ISkillGroupService _skillGroupService;
+    private readonly ISkillService _skillService;
     private readonly IMapper _mapper;
 
     #endregion
 
     #region Constructor
 
-    public SkillGroupController(ILogger<SkillGroupController> logger, ISkillGroupService skillGroupService, IMapper mapper)
+    public SkillGroupController(ILogger<SkillGroupController> logger, ISkillGroupService skillGroupService, ISkillService skillService, IMapper mapper)
     {
         _logger = logger;
         _skillGroupService = skillGroupService;
+        _skillService = skillService;
         _mapper = mapper;
     }
 
@@ -85,6 +87,8 @@ public class SkillGroupController : ControllerBase
 
         var skillGroup = _mapper.Map<SkillGroup>(model);
         await _skillGroupService.Update(skillGroup);
+        
+        skillGroup.Skills = (await _skillService.GetBySkillGroupId(skillGroup.Id)).ToList();
 
         var result = await Result<SkillGroupDto>.SuccessAsync(_mapper.Map<SkillGroupDto>(skillGroup));
         return Ok(result);

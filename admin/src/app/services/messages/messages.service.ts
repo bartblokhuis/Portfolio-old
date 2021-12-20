@@ -1,8 +1,9 @@
 import { Injectable } from '@angular/core';
-import { BehaviorSubject, Observable, observable } from 'rxjs';
+import { BehaviorSubject, Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
+import { Result } from 'src/app/data/common/Result';
 import { Message } from 'src/app/data/messages/message';
-import { MessageStatus, MessageStatusToLabelMapping } from 'src/app/data/messages/message-status';
+import { MessageStatus } from 'src/app/data/messages/message-status';
 import { UpdateMessage } from 'src/app/data/messages/update-message';
 import { ApiService } from '../api/api.service';
 
@@ -17,11 +18,11 @@ export class MessagesService {
     
   }
 
-  getMessages() : Observable<Message[]> {
+  getMessages() : Observable<Result<Message[]>> {
 
     return this.apiService.get<Message[]>("Messages").pipe(
       map(res => {
-        this.messages.next(res);
+        this.messages.next(res.data);
         return res;
       })
     );

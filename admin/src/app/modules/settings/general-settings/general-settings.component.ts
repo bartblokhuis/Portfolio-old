@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Result } from 'src/app/data/common/Result';
 import { GeneralSettings } from 'src/app/data/settings/general-settings';
 import { ApiService } from 'src/app/services/api/api.service';
 import { BreadcrumbsService } from 'src/app/services/breadcrumbs/breadcrumbs.service';
@@ -31,8 +32,8 @@ export class GeneralSettingsComponent implements OnInit {
       }
     ]);
 
-    this.apiService.get<GeneralSettings>(this.url).subscribe((result: GeneralSettings) => {
-      this.model = result;
+    this.apiService.get<GeneralSettings>(this.url).subscribe((result: Result<GeneralSettings>) => {
+      if(result.succeeded) this.model = result.data;
     })
   }
 

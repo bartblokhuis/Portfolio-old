@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Result } from 'src/app/data/common/Result';
 import { SeoSettings } from 'src/app/data/settings/seo-settings';
 import { ApiService } from 'src/app/services/api/api.service';
 import { BreadcrumbsService } from 'src/app/services/breadcrumbs/breadcrumbs.service';
@@ -33,8 +34,8 @@ export class SeoSettingsComponent implements OnInit {
 
     this.contentTitleService.title.next("SEO Settings");
 
-    this.apiService.get<SeoSettings>(this.url).subscribe((result: SeoSettings) => {
-      this.model = result;
+    this.apiService.get<SeoSettings>(this.url).subscribe((result: Result<SeoSettings>) => {
+      if(result.succeeded) this.model = result.data;
     })
   }
 

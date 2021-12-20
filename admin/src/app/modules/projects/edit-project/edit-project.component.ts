@@ -1,6 +1,7 @@
 import { AfterViewInit, Component, Input, OnInit, QueryList, ViewChildren } from '@angular/core';
 import { NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
 import { combineLatest, observable, Observable } from 'rxjs';
+import { Result } from 'src/app/data/common/Result';
 import { AddUpdateProject } from 'src/app/data/projects/add-update-project';
 import { Project } from 'src/app/data/projects/project';
 import { UpdateProjectSkills } from 'src/app/data/projects/update-project-skills';
@@ -52,14 +53,12 @@ export class EditProjectComponent implements OnInit, AfterViewInit {
     $('.select2').select2({closeOnSelect: false, templateResult: formatProjectSkillsSelect, tags: true});
     $('.select2').on('change', (e: any) => this.skillModel.skillIds = $('.select2').val().map((x: string) => parseInt(x)));
 
-    
-
     this.model = this.project;
     this.editProjectForm = $("#editProjectForm");
     validateProjectForm(this.editProjectForm);
 
-    this.apiService.get<SkillGroup[]>('SkillGroup').subscribe((result: SkillGroup[]) => {
-      this.skillGroups = result;
+    this.apiService.get<SkillGroup[]>('SkillGroup').subscribe((result: Result<SkillGroup[]>) => {
+      if(result.succeeded) this.skillGroups = result.data;
     });
   }
 
@@ -88,7 +87,7 @@ export class EditProjectComponent implements OnInit, AfterViewInit {
     let observables: Observable<any>[] = [];
     observables.push(this.apiService.put<Project>("Project", this.model));
 
-    if(this.skillModel.skillIds && this.skillModel.skillIds.length !== 0){
+    if(this.skillModel.skillIds){
       this.skillModel.projectId = this.project.id;
       observables.push(this.apiService.put("Project/UpdateSkills", this.skillModel));
     }

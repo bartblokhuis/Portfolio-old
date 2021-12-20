@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Result } from 'src/app/data/common/Result';
 import { EmailSettings } from 'src/app/data/settings/email-settings';
 import { ApiService } from 'src/app/services/api/api.service';
 import { BreadcrumbsService } from 'src/app/services/breadcrumbs/breadcrumbs.service';
@@ -34,8 +35,8 @@ export class EmailSettingsComponent implements OnInit {
       }
     ]);
 
-    this.apiService.get<EmailSettings>(this.url).subscribe((result: EmailSettings) => {
-      this.model = result;
+    this.apiService.get<EmailSettings>(this.url).subscribe((result: Result<EmailSettings>) => {
+      if(result.succeeded) this.model = result.data;
     })
   }
 
