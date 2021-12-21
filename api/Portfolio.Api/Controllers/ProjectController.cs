@@ -49,7 +49,7 @@ public class ProjectController : ControllerBase
     [HttpGet]
     public async Task<IActionResult> Get()
     {
-        var projects = await (await _projectService.Get()).ToListResultAsync();
+        var projects = (await _projectService.Get()).ToListResult();
 
         //Prevent infinit loop issues with the json serializer.
         if(projects.Data != null)
