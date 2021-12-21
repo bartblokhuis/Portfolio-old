@@ -7,7 +7,7 @@ namespace Portfolio.Core.Interfaces;
 
 public interface ISkillGroupService
 {
-    Task<IQueryable<SkillGroup>> GetAll(bool includeSkills = true);
+    Task<IEnumerable<SkillGroup>> GetAll(bool includeSkills = true);
 
     Task Insert(SkillGroup skillGroupDto);
 
