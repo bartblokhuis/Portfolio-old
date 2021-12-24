@@ -46,7 +46,7 @@ public class SkillGroupController : ControllerBase
     [HttpGet]
     public async Task<IActionResult> Get()
     {
-        var skillGroups = await (await _skillGroupService.GetAll()).ToListResultAsync();
+        var skillGroups = (await _skillGroupService.GetAll()).ToListResult();
 
         if(skillGroups.Data != null)
             foreach (var skill in skillGroups.Data.SelectMany(x => x.Skills))

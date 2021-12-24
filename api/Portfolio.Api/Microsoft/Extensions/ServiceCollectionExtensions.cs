@@ -26,56 +26,69 @@ public static class ServiceCollectionExtensions
         services.AddControllers();
         services.AddHttpContextAccessor();
 
-        services.AddSettings(configuration);
-        services.AddDatabases(configuration);
-
-        services.AddRepository();
-        services.AddAppServices();
-
-        services.AddAuthentication(configuration);
-
-        services.AddOpenApi();
-
-        services.AddAutoMapper(typeof(PortfolioMappings));
-        services.AddCors((options => { options.AddPolicy("AllowAllOrigins", builder => builder.AllowAnyOrigin()); }));
+        services.AddSettings(configuration)
+            .AddDatabases(configuration)
+            .AddRepository()
+            .AddCache()
+            .AddAppServices()
+            .AddAuthentication(configuration)
+            .AddOpenApi()
+            .AddAutoMapper(typeof(PortfolioMappings))
+            .AddCors((options => { options.AddPolicy("AllowAllOrigins", builder => builder.AllowAnyOrigin()); }));
 
     }
 
-    private static void AddRepository(this IServiceCollection services)
+    private static IServiceCollection AddCache(this IServiceCollection services)
     {
-        services.AddScoped(typeof(IBaseRepository<,,>), typeof(BaseRepository<,,>));
-        services.AddScoped(typeof(IBaseRepository<,>), typeof(BaseRepository<,>));
-        services.AddScoped(typeof(IBaseRepository<>), typeof(BaseRepository<>));
-        services.AddScoped(typeof(ISettingService<>), typeof(SettingsService<>));
+        services.AddMemoryCache();
+        services.AddSingleton<CacheService>();
+        return services;
     }
 
-    private static void AddAppServices(this IServiceCollection services)
+    private static IServiceCollection AddRepository(this IServiceCollection services)
     {
-        services.AddSingleton<IUploadImageHelper, UploadImageHelper>();
-        services.AddScoped<IMessageService, MessageService>();
-        services.AddScoped<ISkillGroupService, SkillGroupService>();
-        services.AddScoped<ISkillService, SkillService>();
-        services.AddScoped<IAboutMeService, AboutMeService>();
-        services.AddScoped<IProjectService, ProjectService>();
-        services.AddSingleton(new HostingConfig());
-        services.AddScoped<IWebHelper, WebHelper>();
-        services.AddScoped<IEmailService, EmailService>();
+        services.AddScoped(typeof(IBaseRepository<,,>), typeof(BaseRepository<,,>))
+            .AddScoped(typeof(IBaseRepository<,>), typeof(BaseRepository<,>))
+            .AddScoped(typeof(IBaseRepository<>), typeof(BaseRepository<>))
+            .AddScoped(typeof(ISettingService<>), typeof(SettingsService<>));
+
+        return services;
     }
 
-    private static void AddSettings(this IServiceCollection services, IConfiguration configuration)
+    private static IServiceCollection AddAppServices(this IServiceCollection services)
+    {
+        services.AddSingleton<IUploadImageHelper, UploadImageHelper>()
+            .AddScoped<IMessageService, MessageService>()
+            .AddScoped<ISkillGroupService, SkillGroupService>()
+            .AddScoped<ISkillService, SkillService>()
+            .AddScoped<IAboutMeService, AboutMeService>()
+            .AddScoped<IProjectService, ProjectService>()
+            .AddSingleton(new HostingConfig())
+            .AddScoped<IWebHelper, WebHelper>();
+            .AddScoped<IEmailService, EmailService>();
+
+        return services;
+    }
+
+    private static IServiceCollection AddSettings(this IServiceCollection services, IConfiguration configuration)
     {
         var appSettings = new AppSettings();
         configuration.Bind(appSettings);
         services.AddSingleton(appSettings);
+
+        return services;
     }
 
-    private static void AddDatabases(this IServiceCollection services, IConfiguration configuration)
+    private static IServiceCollection AddDatabases(this IServiceCollection services, IConfiguration configuration)
     {
-        services.AddDatabase<PortfolioContext>(configuration["ConnectionString:DefaultConnection"]);
-        services.AddDatabase<AuthenticationDbContext>(configuration["ConnectionString:DefaultConnection"]);
+        services
+            .AddDatabase<PortfolioContext>(configuration["ConnectionString:DefaultConnection"])
+            .AddDatabase<AuthenticationDbContext>(configuration["ConnectionString:DefaultConnection"]);
+
+        return services;
     }
 
-    private static void AddAuthentication(this IServiceCollection services, IConfiguration configuration)
+    private static IServiceCollection AddAuthentication(this IServiceCollection services, IConfiguration configuration)
     {
         // For Identity  
         services.AddIdentity<ApplicationUser, IdentityRole>()
@@ -103,9 +116,11 @@ public static class ServiceCollectionExtensions
                 IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(configuration["JWT:Secret"]))
             };
         });
+
+        return services;
     }
 
-    private static void AddOpenApi(this IServiceCollection services)
+    private static IServiceCollection AddOpenApi(this IServiceCollection services)
     {
         services.AddSwaggerGen(options =>
         {
@@ -132,13 +147,15 @@ public static class ServiceCollectionExtensions
                 {securityScheme, new string[] { }}
             });
         });
+
+        return services;
     }
 
     #endregion
 
     #region Utils
 
-    private static void AddDatabase<TContext>(this IServiceCollection services, string connectionString) where TContext : DbContext
+    private static IServiceCollection AddDatabase<TContext>(this IServiceCollection services, string connectionString) where TContext : DbContext
     {
         services.AddDbContext<TContext>(options =>
         {
@@ -149,6 +166,8 @@ public static class ServiceCollectionExtensions
         using var scope = services.BuildServiceProvider().CreateScope();
         var dbContext = scope.ServiceProvider.GetRequiredService<TContext>();
         dbContext.Database.Migrate();
+
+        return services;
     }
 
     #endregion
