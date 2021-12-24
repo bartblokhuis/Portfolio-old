@@ -16,6 +16,7 @@ export class EmailSettingsComponent implements OnInit {
   model: EmailSettings = { displayName: '', email: '', enableSsl: false, host: '', password: '', port: 0, sendTestEmailTo: '', useDefaultCredentials: false, username: ''}
   private url = "Settings/EmailSettings";
   private form: any;
+  error: string | undefined;
 
   constructor(private readonly BreadcrumbService: BreadcrumbsService, private apiService: ApiService, private notificationService: NotificationService) { }
 
@@ -50,7 +51,14 @@ export class EmailSettingsComponent implements OnInit {
         displayName: {
           required: true
         },
+        host: {
+          required: true
+        },
+        port: {
+          required: true
+        },
         sendTestEmailTo: {
+          required: true,
           email: true,
         }
       },
@@ -62,7 +70,14 @@ export class EmailSettingsComponent implements OnInit {
         displayName: {
           required: "Please enter a display name"
         },
+        host: {
+          required: "Please enter the email server host"
+        },
+        port: {
+          required: "Please enter the email server port"
+        },
         sendTestEmailTo: {
+          required: "Please enter a test email address",
           email: "Please enter a valid email address"
         },
       },
@@ -81,9 +96,17 @@ export class EmailSettingsComponent implements OnInit {
   }
 
   submit() : void {
+    this.error = undefined;
     if(!this.form.valid()) return;
     this.apiService.post(this.url, this.model).subscribe((result) => {
-      this.notificationService.success('Saved the changes')
+      if(!result.succeeded){
+        this.error = result.messages[0];
+        this.notificationService.warning("Could not update the settings")
+      }
+      else {
+        this.notificationService.success('Saved the changes');
+      }
+      
     });
   }
 

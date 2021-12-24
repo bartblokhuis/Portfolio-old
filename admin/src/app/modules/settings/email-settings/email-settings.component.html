@@ -42,6 +42,9 @@
                         <input type="checkbox" class="form-check-input" [(ngModel)]="model.useDefaultCredentials" name="useDefaultCredentials" id="useDefaultCredentials">
                         <label class="form-check-label" for="useDefaultCredentials">Use default credentials</label>
                     </div>
+                    <div class="custom-error" *ngIf="error">
+                        <label>{{error}}</label>
+                    </div>
                 </form>
             </div>
             <div class="card-footer">

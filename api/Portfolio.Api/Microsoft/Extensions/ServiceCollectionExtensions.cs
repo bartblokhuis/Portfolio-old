@@ -59,6 +59,7 @@ public static class ServiceCollectionExtensions
         services.AddScoped<IProjectService, ProjectService>();
         services.AddSingleton(new HostingConfig());
         services.AddScoped<IWebHelper, WebHelper>();
+        services.AddScoped<IEmailService, EmailService>();
     }
 
     private static void AddSettings(this IServiceCollection services, IConfiguration configuration)
