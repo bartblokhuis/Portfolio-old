@@ -98,7 +98,8 @@ public class SettingsController : Controller
         //Test the new configuration before saving it.
         if (!await _emailService.SendEmail(
             new MailboxAddress(model.DisplayName, model.SendTestEmailTo), 
-            new TextPart("plain") { Text = "Hello World!" }, 
+            "Test email",
+            new TextPart("plain") { Text = "Test email" }, 
             _mapper.Map<EmailSettings>(model)))
         {
             return Ok(await Result.FailAsync("Test email failed"));

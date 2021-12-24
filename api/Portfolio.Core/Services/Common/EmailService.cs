@@ -27,7 +27,7 @@ public class EmailService : IEmailService
 
     #region Methods
 
-    public async Task<bool> SendEmail(MailboxAddress toAddress, MimeEntity body, EmailSettings emailSettings = null)
+    public async Task<bool> SendEmail(MailboxAddress toAddress, string subject, MimeEntity body, EmailSettings emailSettings = null)
     {
         if(emailSettings == null)
             emailSettings = await _emailSettingsService.Get();
@@ -36,7 +36,7 @@ public class EmailService : IEmailService
 
         message.From.Add(new MailboxAddress(emailSettings.DisplayName, emailSettings.Email));
         message.To.Add(toAddress);
-        message.Subject = "Test";
+        message.Subject = subject;
 
         message.Body = body;
 
@@ -48,9 +48,10 @@ public class EmailService : IEmailService
             if (!string.IsNullOrEmpty(emailSettings.Username) && !string.IsNullOrEmpty(emailSettings.Password))
             {
                 await client.AuthenticateAsync(emailSettings.Username, emailSettings.Password);
-                await client.SendAsync(message);
-                await client.DisconnectAsync(true);
             }
+
+            await client.SendAsync(message);
+            await client.DisconnectAsync(true);
         }
         catch (Exception ex)
         {
