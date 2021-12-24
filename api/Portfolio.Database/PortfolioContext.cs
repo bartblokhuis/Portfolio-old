@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 using Portfolio.Domain.Models;
 using Portfolio.Domain.Models.Common;
+using Portfolio.Domain.Models.Settings;
 
 namespace Portfolio.Database;
 

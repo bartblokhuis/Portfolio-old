@@ -27,6 +27,8 @@ public class EmailSettingsDto
 
     public string SendTestEmailTo { get; set; }
 
+    public string SiteOwnerEmailAddress { get; set; }
+
     #endregion
 }
 

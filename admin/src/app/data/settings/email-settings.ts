@@ -8,4 +8,5 @@ export interface EmailSettings {
     enableSsl: boolean;
     useDefaultCredentials: boolean;
     sendTestEmailTo: string;
+    siteOwnerEmailAddress: string;
 }
