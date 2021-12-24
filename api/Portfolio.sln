@@ -11,6 +11,12 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Portfolio.Database", "Portf
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Portfolio.Domain", "Portfolio.Domain\Portfolio.Domain.csproj", "{35098228-178F-4CBB-A292-CC2B1FC569AB}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{8187763A-459B-4398-8952-6D2A09261CE9}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "tests", "tests", "{B12CCC1A-D6DA-4540-BD65-5C29F6074DFE}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Portfolio.Core.Tests", "Tests\Portfolio.Core.Tests\Portfolio.Core.Tests.csproj", "{5FA20496-B873-48B9-AFEA-D21CD20523D9}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -33,9 +39,20 @@ Global
 		{35098228-178F-4CBB-A292-CC2B1FC569AB}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{35098228-178F-4CBB-A292-CC2B1FC569AB}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{35098228-178F-4CBB-A292-CC2B1FC569AB}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5FA20496-B873-48B9-AFEA-D21CD20523D9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5FA20496-B873-48B9-AFEA-D21CD20523D9}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5FA20496-B873-48B9-AFEA-D21CD20523D9}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5FA20496-B873-48B9-AFEA-D21CD20523D9}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{4D8F57A1-4A09-4A55-B6FD-8A85254B9E6B} = {8187763A-459B-4398-8952-6D2A09261CE9}
+		{28F3D91B-BDF4-4C19-965A-F0497C3D971B} = {8187763A-459B-4398-8952-6D2A09261CE9}
+		{BFC0A9F3-4AA1-4829-A165-D077F5844CBD} = {8187763A-459B-4398-8952-6D2A09261CE9}
+		{35098228-178F-4CBB-A292-CC2B1FC569AB} = {8187763A-459B-4398-8952-6D2A09261CE9}
+		{5FA20496-B873-48B9-AFEA-D21CD20523D9} = {B12CCC1A-D6DA-4540-BD65-5C29F6074DFE}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {6DFDA676-DA78-495E-9267-37F0BD225487}

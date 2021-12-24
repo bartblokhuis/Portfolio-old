@@ -1,0 +1,36 @@
+{
+  "valid": [
+    {
+      "data": {
+        "Id": ,
+        "Email": "",
+        "DisplayName": "",
+        "Host": "",
+        "Port": ,
+        "Username": "",
+        "Password": "",
+        "EnableSsl": ,
+        "UseDefaultCredentials": ,
+        "SendTestEmailTo": ""
+      },
+      "result": true
+    }
+  ],
+  "invalid": [
+    {
+      "data": {
+        "Id": ,
+        "Email": "",
+        "DisplayName": "",
+        "Host": "",
+        "Port": ,
+        "Username": "",
+        "Password": "",
+        "EnableSsl": ,
+        "UseDefaultCredentials": ,
+        "SendTestEmailTo": ""
+      },
+      "result": false
+    }
+  ]
+}
