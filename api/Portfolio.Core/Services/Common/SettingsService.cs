@@ -8,31 +8,53 @@ public class SettingsService<T> : ISettingService<T> where T: BaseEntity, ISetti
     #region Fields
 
     private readonly IBaseRepository<T> _repository;
+    private readonly CacheService _cacheService;
+    private const string CACHE_KEY = "SETTINGS.{0}";
 
     #endregion
 
     #region Constructor
 
-    public SettingsService(IBaseRepository<T> repository)
+    public SettingsService(IBaseRepository<T> repository, CacheService cacheService)
     {
         _repository = repository;
+        _cacheService = cacheService;
     }
 
     #endregion
 
     #region Methods
 
-    public Task<T> Get()
+    public async Task<T> Get()
     {
-        return _repository.FirstAsync();
+        var cacheKey = GetSettingCacheKey<T>();
+        var setting = _cacheService.Get<T>(cacheKey);
+        if (setting != null)
+            return setting;
+
+        setting = await _repository.FirstAsync();
+        if(setting != null)
+            _cacheService.Set(cacheKey, setting);
+
+        return setting;
     }
 
-    public Task Save(T settings)
+    public async Task Save(T setting)
     {
-        return (settings.Id == 0) ?
-            _repository.InsertAsync(settings) :
-            _repository.UpdateAsync(settings);
+        if (setting.Id == 0)
+            await _repository.InsertAsync(setting);
+        else
+            await _repository.UpdateAsync(setting);
+
+        _cacheService.Set(GetSettingCacheKey<T>(), setting);
     }
+
+    #endregion
+
+    #region Utils
+
+    private string GetSettingCacheKey<T>() => string.Format(CACHE_KEY, typeof(T).Name);
+    
 
     #endregion
 
