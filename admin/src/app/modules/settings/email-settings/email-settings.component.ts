@@ -13,7 +13,7 @@ declare var $: any;
 })
 export class EmailSettingsComponent implements OnInit {
 
-  model: EmailSettings = { displayName: '', email: '', enableSsl: false, host: '', password: '', port: 0, sendTestEmailTo: '', useDefaultCredentials: false, username: ''}
+  model: EmailSettings = { displayName: '', email: '', enableSsl: false, host: '', password: '', port: 0, sendTestEmailTo: '', useDefaultCredentials: false, username: '', siteOwnerEmailAddress: ''}
   private url = "Settings/EmailSettings";
   private form: any;
   error: string | undefined;
@@ -60,6 +60,10 @@ export class EmailSettingsComponent implements OnInit {
         sendTestEmailTo: {
           required: true,
           email: true,
+        },
+        siteOwnerEmailAddress: {
+          required: true,
+          email: true
         }
       },
       messages: {
@@ -80,6 +84,10 @@ export class EmailSettingsComponent implements OnInit {
           required: "Please enter a test email address",
           email: "Please enter a valid email address"
         },
+        siteOwnerEmailAddress: {
+          required: "Please enter your email address",
+          email: "Please enter a valid email address"
+        }
       },
       errorElement: 'span',
       errorPlacement: function (error: any, element: any) {

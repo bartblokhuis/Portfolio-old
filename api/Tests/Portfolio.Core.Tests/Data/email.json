@@ -2,16 +2,17 @@
   "valid": [
     {
       "data": {
-        "Id": ,
+        "Id":,
         "Email": "",
         "DisplayName": "",
         "Host": "",
-        "Port": ,
+        "Port":,
         "Username": "",
         "Password": "",
-        "EnableSsl": ,
-        "UseDefaultCredentials": ,
-        "SendTestEmailTo": ""
+        "EnableSsl":,
+        "UseDefaultCredentials":,
+        "SendTestEmailTo": "",
+        "SiteOwnerEmailAddress": ""
       },
       "result": true
     }
@@ -28,7 +29,8 @@
         "Password": "",
         "EnableSsl": ,
         "UseDefaultCredentials": ,
-        "SendTestEmailTo": ""
+        "SendTestEmailTo": "",
+        "SiteOwnerEmailAddress": ""
       },
       "result": false
     }

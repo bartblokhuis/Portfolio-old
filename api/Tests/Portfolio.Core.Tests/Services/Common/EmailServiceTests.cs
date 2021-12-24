@@ -6,6 +6,7 @@ using Portfolio.Core.Interfaces.Common;
 using Portfolio.Core.Services.Common;
 using Portfolio.Core.Tests.Attributes;
 using Portfolio.Domain.Models;
+using Portfolio.Domain.Models.Settings;
 using System;
 using System.Collections.Generic;
 using System.Linq;
