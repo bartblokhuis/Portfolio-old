@@ -42,6 +42,12 @@ const routes: Routes = [
         loadChildren: () => import('./modules/settings/settings.module').then(
           module => module.SettingsModule
         ),
+      },
+      {
+        path: '',
+        loadChildren: () => import('./modules/blog/blog.module').then(
+          module => module.BlogModule
+        ),
       }
     ],
     canActivate: [AuthGuard]
