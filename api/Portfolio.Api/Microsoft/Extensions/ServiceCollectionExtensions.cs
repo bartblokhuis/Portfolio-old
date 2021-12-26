@@ -34,6 +34,7 @@ public static class ServiceCollectionExtensions
             .AddAuthentication(configuration)
             .AddOpenApi()
             .AddAutoMapper(typeof(PortfolioMappings))
+            .AddAutoMapper(typeof(BlogProfile))
             .AddCors((options => { options.AddPolicy("AllowAllOrigins", builder => builder.AllowAnyOrigin()); }));
 
     }
@@ -63,6 +64,7 @@ public static class ServiceCollectionExtensions
             .AddScoped<ISkillService, SkillService>()
             .AddScoped<IAboutMeService, AboutMeService>()
             .AddScoped<IProjectService, ProjectService>()
+            .AddScoped<IBlogService, BlogService>()
             .AddSingleton(new HostingConfig())
             .AddScoped<IWebHelper, WebHelper>();
 
