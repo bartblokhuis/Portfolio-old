@@ -74,7 +74,7 @@ namespace Portfolio.Database.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Blogs");
-                });
+                }));
 
             modelBuilder.Entity("Portfolio.Domain.Models.EmailSettings", b =>
                 {
