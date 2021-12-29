@@ -2,9 +2,10 @@
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
+using MimeKit;
 using Portfolio.Core.Interfaces.Common;
 using Portfolio.Domain.Dtos;
-using Portfolio.Domain.Models;
+using Portfolio.Domain.Models.Settings;
 using Portfolio.Domain.Wrapper;
 using System.Threading.Tasks;
 
@@ -21,18 +22,20 @@ public class SettingsController : Controller
     private readonly ISettingService<EmailSettings> _emailSettingsService;
     private readonly ISettingService<GeneralSettings> _generalSettings;
     private readonly ISettingService<SeoSettings> _seoSettings;
+    private readonly IEmailService _emailService;
     private readonly IMapper _mapper;
 
     #endregion
 
     #region Constructor
 
-    public SettingsController(ILogger<SettingsController> logger, ISettingService<EmailSettings> emailSettingsService, ISettingService<GeneralSettings> generalSettings, ISettingService<SeoSettings> seoSettings, IMapper mapper)
+    public SettingsController(ILogger<SettingsController> logger, ISettingService<EmailSettings> emailSettingsService, ISettingService<GeneralSettings> generalSettings, ISettingService<SeoSettings> seoSettings, IEmailService emailService, IMapper mapper)
     {
         _logger = logger;
         _emailSettingsService = emailSettingsService;
         _generalSettings = generalSettings;
         _seoSettings = seoSettings;
+        _emailService = emailService;
         _mapper = mapper;
     }
 
@@ -92,6 +95,17 @@ public class SettingsController : Controller
     [HttpPost("EmailSettings")]
     public async Task<IActionResult> SaveEmailSettings(EmailSettingsDto model)
     {
+        //Test the new configuration before saving it.
+        if (!await _emailService.SendEmail(
+            new MailboxAddress(model.DisplayName, model.SendTestEmailTo), 
+            "Test email",
+            new TextPart("plain") { Text = "Test email" }, 
+            _mapper.Map<EmailSettings>(model)))
+        {
+            return Ok(await Result.FailAsync("Test email failed"));
+        }
+
+
         var originalSettings = await _emailSettingsService.Get();
 
         originalSettings ??= new EmailSettings();

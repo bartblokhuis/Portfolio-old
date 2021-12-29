@@ -1,6 +1,6 @@
 ﻿using Portfolio.Domain.Models.Common;
 
-namespace Portfolio.Domain.Models;
+namespace Portfolio.Domain.Models.Settings;
 
 public class EmailSettings : BaseEntity, ISetting
 {
@@ -23,6 +23,8 @@ public class EmailSettings : BaseEntity, ISetting
     public bool UseDefaultCredentials { get; set; }
 
     public string SendTestEmailTo { get; set; }
+
+    public string SiteOwnerEmailAddress { get; set; }
 
     #endregion
 }

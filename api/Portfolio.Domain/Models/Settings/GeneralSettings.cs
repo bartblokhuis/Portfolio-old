@@ -1,6 +1,6 @@
 ﻿using Portfolio.Domain.Models.Common;
 
-namespace Portfolio.Domain.Models;
+namespace Portfolio.Domain.Models.Settings;
 
 public class GeneralSettings : BaseEntity, ISetting
 {
