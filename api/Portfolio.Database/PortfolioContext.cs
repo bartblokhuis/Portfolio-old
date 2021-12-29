@@ -38,6 +38,8 @@ public class PortfolioContext : DbContext
 
     public DbSet<GeneralSettings> GeneralSettings { get; set; }
 
+    public DbSet<Blog> Blogs { get; set; }
+
     #endregion
 
     #region Methods
