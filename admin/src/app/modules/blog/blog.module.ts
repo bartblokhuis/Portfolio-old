@@ -4,15 +4,21 @@ import { ListBlogComponent } from './list-blog/list-blog.component';
 import { SharedComponentsModule } from 'src/app/components/shared/shared-components.module';
 import { BlogRoutes } from './blog.routes';
 import { RouterModule } from '@angular/router';
+import { AddBlogComponent } from './add-blog/add-blog.component';
+import { QuillModule } from 'ngx-quill';
+import { FormsModule } from '@angular/forms';
 
 
 
 @NgModule({
   declarations: [
-    ListBlogComponent
+    ListBlogComponent,
+    AddBlogComponent
   ],
   imports: [
     CommonModule,
+    QuillModule,
+    FormsModule,
     SharedComponentsModule,
     RouterModule.forChild(BlogRoutes),
   ]

@@ -21,7 +21,7 @@
                       <tbody>
                         <tr *ngFor="let post of blogPosts">
                           <td>{{post.title}}</td>
-                          <td>{{post.description}}</td>
+                          <td [innerHtml]="post.description"></td>
                           <td>
                             <ng-container *ngIf="post.isPublished; else unpublished">
                                 <i class="fas fa-check"></i>
@@ -51,7 +51,7 @@
                 </table>
             </div>
             <div class="card-footer">
-              <button class="btn btn-primary">Add new post</button>
+              <a routerLink="/blog/new" class="btn btn-primary">Add new post</a>
             </div>
         </div>
     </div>
