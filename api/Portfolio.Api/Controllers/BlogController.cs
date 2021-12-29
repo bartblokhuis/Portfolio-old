@@ -90,7 +90,7 @@ namespace Portfolio.Controllers
             if (!ModelState.IsValid)
                 throw new Exception("Invalid model");
 
-            var blog = await _blogService.GetById(dto.Id);
+            var blog = await _blogService.GetById(dto.Id, true);
             if (blog == null)
                 return Ok(await Result.FailAsync($"No blog post with id: {dto.Id} found"));
 

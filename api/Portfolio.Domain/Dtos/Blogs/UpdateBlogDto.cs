@@ -8,10 +8,6 @@ public  class UpdateBlogDto : BaseBlogDto
 
     public int Id { get; set; }
 
-    public DateTime CreatedAtUTC { get; set; }
-
-    public DateTime UpdatedAtUtc { get; set; }
-
     public string Content { get; set; }
 
     #endregion

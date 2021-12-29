@@ -5,6 +5,7 @@ import { CreateBlog } from 'src/app/data/blog/create-blog';
 import { Result } from 'src/app/data/common/Result';
 import { ApiService } from 'src/app/services/api/api.service';
 import { ContentTitleService } from 'src/app/services/content-title/content-title.service';
+import { validateBlogForm } from '../helpers/blog-helper';
 
 declare var $:any;
 
@@ -24,33 +25,7 @@ export class AddBlogComponent implements OnInit {
     this.contentTitleService.title.next("Add blog post");
 
     this.form = $("#addBlogForm");
-    if(this.form) this.validateCreateBlog(this.form);
-  }
-
-  validateCreateBlog(form: any) {
-    form.validate({
-      rules: {
-        title: {
-          required: true,
-        }
-      },
-      messages: {
-        title: {
-          required: "Please enter a title",
-        }
-      },
-      errorElement: 'span',
-      errorPlacement: function (error: any, element: any) {
-        error.addClass('invalid-feedback');
-        element.closest('.form-group').append(error);
-      },
-      highlight: function (element: any, errorClass: any, validClass: any) {
-        $(element).addClass('is-invalid');
-      },
-      unhighlight: function (element: any, errorClass: any, validClass: any) {
-        $(element).removeClass('is-invalid');
-      }
-    });
+    if(this.form) validateBlogForm(this.form);
   }
 
   createBlog() {

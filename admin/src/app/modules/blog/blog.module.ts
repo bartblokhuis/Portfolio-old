@@ -7,13 +7,15 @@ import { RouterModule } from '@angular/router';
 import { AddBlogComponent } from './add-blog/add-blog.component';
 import { QuillModule } from 'ngx-quill';
 import { FormsModule } from '@angular/forms';
+import { EditBlogComponent } from './edit-blog/edit-blog.component';
 
 
 
 @NgModule({
   declarations: [
     ListBlogComponent,
-    AddBlogComponent
+    AddBlogComponent,
+    EditBlogComponent
   ],
   imports: [
     CommonModule,

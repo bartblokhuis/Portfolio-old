@@ -3,6 +3,7 @@ using Portfolio.Core.Interfaces;
 using Portfolio.Core.Interfaces.Common;
 using Portfolio.Domain.Models;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace Portfolio.Core.Services;
@@ -79,8 +80,8 @@ public class BlogService : IBlogService
 
     public Task<bool> IsExistingTitle(string title, int idToIgnore = 0)
     {
-        return _blogRepository.Table.AsNoTracking().AnyAsync(blog => blog.Title.ToLower() == title.ToLower()
-                && (idToIgnore == 0 || blog.Id == idToIgnore));
+        return _blogRepository.Table.AnyAsync(blogPost => blogPost.Title.ToLower() == title.ToLower()
+                && (idToIgnore == 0 || blogPost.Id != idToIgnore));
     }
 
     private void ClearListCache()
