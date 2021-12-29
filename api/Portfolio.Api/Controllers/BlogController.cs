@@ -107,7 +107,7 @@ namespace Portfolio.Controllers
         [HttpDelete]
         public async Task<IActionResult> Delete(int id)
         {
-            var blog = await _blogService.GetById(id);
+            var blog = await _blogService.GetById(id, true);
             if (blog == null)
                 return Ok(await Result.FailAsync("Blog post not found"));
 

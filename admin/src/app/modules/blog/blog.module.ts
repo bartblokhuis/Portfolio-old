@@ -8,6 +8,7 @@ import { AddBlogComponent } from './add-blog/add-blog.component';
 import { QuillModule } from 'ngx-quill';
 import { FormsModule } from '@angular/forms';
 import { EditBlogComponent } from './edit-blog/edit-blog.component';
+import { DeleteBlogComponent } from './delete-blog/delete-blog.component';
 
 
 
@@ -15,7 +16,8 @@ import { EditBlogComponent } from './edit-blog/edit-blog.component';
   declarations: [
     ListBlogComponent,
     AddBlogComponent,
-    EditBlogComponent
+    EditBlogComponent,
+    DeleteBlogComponent
   ],
   imports: [
     CommonModule,
