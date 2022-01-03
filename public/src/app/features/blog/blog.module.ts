@@ -3,6 +3,7 @@ import { CommonModule } from '@angular/common';
 import { BlogListComponent } from './blog-list/blog-list.component';
 import { BlogRoutes } from './bog.routes';
 import { RouterModule } from '@angular/router';
+import { SharedModule } from 'src/app/components/shared/shared.module';
 
 
 
@@ -12,6 +13,7 @@ import { RouterModule } from '@angular/router';
   ],
   imports: [
     CommonModule,
+    SharedModule,
     RouterModule.forChild(BlogRoutes),
   ]
 })

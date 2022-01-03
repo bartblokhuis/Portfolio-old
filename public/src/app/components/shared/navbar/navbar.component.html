@@ -1,0 +1,31 @@
+<nav id="navbar" class="fixed">
+    <div class="container">
+        <div class="button-container">
+            <button type="button" class="navbar-toggler" (click)="toggleNavBar()"><span class="navbar-toggler-icon"></span></button>
+        </div>
+        <div id="toggleNavBar" class="navbarContent">
+            <ul>
+                <ng-container *ngFor="let menuItem of menuItems"
+                [ngTemplateOutlet]="menuItem.path ? navLink : navLanding" 
+                [ngTemplateOutletContext]="{menuItem:menuItem}">
+                </ng-container>
+            </ul>
+        </div>
+        
+    </div>
+</nav>
+
+<ng-template #navLink let-menuItem='menuItem'>
+
+    <li>
+        <a [routerLink]="menuItem.path" routerLinkActive="active">{{menuItem.friendlyName}}</a>
+    </li>
+  </ng-template>
+
+  <ng-template #navLanding let-menuItem='menuItem'>
+
+    <li>
+        <a [ngClass]="menuItem.active ? 'nav-item active' : 'nav-item'" (click)="navigateLandingComponent(menuItem)">{{menuItem.friendlyName}}</a>
+    </li>
+
+  </ng-template>

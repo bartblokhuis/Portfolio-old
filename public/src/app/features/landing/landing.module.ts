@@ -6,7 +6,6 @@ import { LandingRoutes } from './landing.routes';
 import { HomeComponent } from './home/home.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { SharedModule } from 'src/app/components/shared/shared.module';
-import { NavbarComponent } from './navbar/navbar.component';
 import { AboutComponent } from './about/about.component';
 import { SkillsComponent } from './skills/skills.component';
 import { ProjectsComponent } from './projects/projects.component';
@@ -19,7 +18,6 @@ import { GlobalDirectivesModule } from 'src/app/modules/directives/global-direct
   declarations: [
     LandingComponent,
     HomeComponent,
-    NavbarComponent,
     AboutComponent,
     SkillsComponent,
     ProjectsComponent,
