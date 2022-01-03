@@ -12,6 +12,12 @@ const routes: Routes = [
           loadChildren: () => import('./features/landing/landing.module').then(
             module => module.LandingModule
           )
+        },
+        {
+          path: 'blog',
+          loadChildren: () => import('./features/blog/blog.module').then(
+            module => module.BlogModule
+          )
         }
       ]
     }
