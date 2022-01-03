@@ -4,10 +4,17 @@ import { AppComponent } from './app.component';
 
 const routes: Routes = [
     {
-    path: '',
-    pathMatch: 'full',
-    component: AppComponent
-  },
+      path: '',
+      component: AppComponent,
+      children: [
+        {
+          path: '',
+          loadChildren: () => import('./features/landing/landing.module').then(
+            module => module.LandingModule
+          )
+        }
+      ]
+    }
 ];
 
 @NgModule({

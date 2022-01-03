@@ -24,7 +24,6 @@ export class ContactComponent implements OnInit {
 
   sendMessage(): void {
     if(this.sendingMessage) {
-      console.log('not sending')
       return;
     }
     this.sendingMessage = true;

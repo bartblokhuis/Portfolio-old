@@ -6,8 +6,6 @@ import { GeneralSettings } from './data/settings/GeneralSettings';
 import { SeoSettings } from './data/settings/SeoSettings';
 import { SettingsService } from './services/settings/settings.service';
 
-declare var AOS: any;
-
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
@@ -16,10 +14,6 @@ declare var AOS: any;
 export class AppComponent implements OnInit {
   finishedLoading: boolean = false;
   seoSettings: SeoSettings | null = null;
-
-  @HostListener("window:load", []) onWindowLoad() {
-    if(AOS) AOS.init();
-  }
 
   constructor(private settingsService: SettingsService, private title: Title, private meta: Meta) { }
 
@@ -36,7 +30,6 @@ export class AppComponent implements OnInit {
     if(isObservable(generalSettings)) observables.push(generalSettings);
 
     combineLatest(observables).subscribe((result) => {
-      console.log(result);
       this.seoSettings = result[0];
       if(this.seoSettings) {
 
