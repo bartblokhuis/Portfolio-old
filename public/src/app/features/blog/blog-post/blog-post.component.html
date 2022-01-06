@@ -1,4 +1,13 @@
 <app-navbar></app-navbar>
 
+<div class="container blog-post" *ngIf="blogPost">
+    <div class="blog-post-header">
+        <h1>{{blogPost.title}}</h1>
+        <div [innerHtml]="blogPost.description"></div>
+    </div>
+    <div class="blog-post-body">
+        <div [innerHtml]="blogPost.content"></div>
+    </div>
+</div>
 
 <app-footer></app-footer>
