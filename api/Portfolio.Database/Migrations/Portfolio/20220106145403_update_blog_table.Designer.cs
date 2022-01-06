@@ -3,17 +3,19 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Portfolio.Database;
 
 #nullable disable
 
-namespace Portfolio.Database.Migrations
+namespace Portfolio.Database.Migrations.Portfolio
 {
     [DbContext(typeof(PortfolioContext))]
-    partial class PortfolioContextModelSnapshot : ModelSnapshot
+    [Migration("20220106145403_update_blog_table")]
+    partial class update_blog_table
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -49,8 +51,8 @@ namespace Portfolio.Database.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
 
-                    b.Property<int?>("BannerPictureId")
-                        .HasColumnType("int");
+                    b.Property<string>("BannedImagePath")
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Content")
                         .HasColumnType("nvarchar(max)");
@@ -73,8 +75,8 @@ namespace Portfolio.Database.Migrations
                     b.Property<string>("MetaTitle")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int?>("ThumbnailId")
-                        .HasColumnType("int");
+                    b.Property<string>("ThumbnailImagePath")
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Title")
                         .HasColumnType("nvarchar(max)");
@@ -83,10 +85,6 @@ namespace Portfolio.Database.Migrations
                         .HasColumnType("datetime2");
 
                     b.HasKey("Id");
-
-                    b.HasIndex("BannerPictureId");
-
-                    b.HasIndex("ThumbnailId");
 
                     b.ToTable("Blogs");
                 });
@@ -132,31 +130,6 @@ namespace Portfolio.Database.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Messages");
-                });
-
-            modelBuilder.Entity("Portfolio.Domain.Models.Picture", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
-
-                    b.Property<string>("AltAttribute")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("MimeType")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Path")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("TitleAttribute")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("Pictures");
                 });
 
             modelBuilder.Entity("Portfolio.Domain.Models.Project", b =>
@@ -366,21 +339,6 @@ namespace Portfolio.Database.Migrations
                     b.HasIndex("SkillsId");
 
                     b.ToTable("ProjectSkill");
-                });
-
-            modelBuilder.Entity("Portfolio.Domain.Models.Blog", b =>
-                {
-                    b.HasOne("Portfolio.Domain.Models.Picture", "BannerPicture")
-                        .WithMany()
-                        .HasForeignKey("BannerPictureId");
-
-                    b.HasOne("Portfolio.Domain.Models.Picture", "Thumbnail")
-                        .WithMany()
-                        .HasForeignKey("ThumbnailId");
-
-                    b.Navigation("BannerPicture");
-
-                    b.Navigation("Thumbnail");
                 });
 
             modelBuilder.Entity("Portfolio.Domain.Models.Skill", b =>
