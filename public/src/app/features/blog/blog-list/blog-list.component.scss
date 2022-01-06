@@ -1,4 +1,12 @@
-p {
-    height: 300vh;
-    padding: 50px;
+.blog-posts {
+    padding-top: 200px;
+    padding-bottom: 200px;
+
+    .post-title {
+        padding: 5px 0;
+    }
+
+    .post-description {
+        padding: 0 0 5px;
+    }
 }
