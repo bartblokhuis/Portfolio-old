@@ -4,6 +4,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { Blog } from 'src/app/data/blog/blog';
 import { Result } from 'src/app/data/common/result';
 import { ApiService } from 'src/app/services/common/api.service';
+import { environment } from 'src/environments/environment';
 
 @Component({
   selector: 'app-blog-post',
@@ -12,6 +13,7 @@ import { ApiService } from 'src/app/services/common/api.service';
 })
 export class BlogPostComponent implements OnInit {
 
+  baseUrl = environment.baseApiUrl;
   blogPost: Blog | null = null;
   id: number | null = null;
 

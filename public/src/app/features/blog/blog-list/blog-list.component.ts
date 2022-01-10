@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { ListBlog } from 'src/app/data/blog/list-blog';
 import { Result } from 'src/app/data/common/result';
 import { ApiService } from 'src/app/services/common/api.service';
+import { environment } from 'src/environments/environment';
 
 @Component({
   selector: 'app-blog-list',
@@ -10,6 +11,7 @@ import { ApiService } from 'src/app/services/common/api.service';
 })
 export class BlogListComponent implements OnInit {
 
+  baseUrl = environment.baseApiUrl;
   blogPosts: ListBlog[] = [];
 
   constructor(private apiService: ApiService) { }

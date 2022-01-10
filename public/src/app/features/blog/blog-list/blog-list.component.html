@@ -2,6 +2,9 @@
 
 <div class="container blog-posts">
     <div class="post" *ngFor="let blogPost of blogPosts">
+        <div class="post-thumbnail" *ngIf="blogPost.thumbnail">
+            <img [src]="baseUrl + blogPost.thumbnail.path" [alt]="blogPost.thumbnail.altAttribute ?? ''" [title]="blogPost.thumbnail.titleAttribute ?? ''">
+        </div>
         <h1 class="post-title">{{blogPost.title}}</h1>
         <div class="post-description" [innerHtml]="blogPost.description"></div>
         <a class="btn btn-secondary" [routerLink]="['/blog', '1']">Read More</a>

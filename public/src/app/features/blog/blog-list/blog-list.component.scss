@@ -2,11 +2,15 @@
     padding-top: 200px;
     padding-bottom: 200px;
 
+    .post-thumbnail{
+        overflow: hidden;
+    }
+
     .post-title {
         padding: 5px 0;
     }
 
     .post-description {
-        padding: 0 0 5px;
+        margin: 5px 0 20px 0;
     }
 }
