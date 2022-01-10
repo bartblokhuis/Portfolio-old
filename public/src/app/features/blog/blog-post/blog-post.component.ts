@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Meta, Title } from '@angular/platform-browser';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Blog } from 'src/app/data/blog/blog';
 import { Result } from 'src/app/data/common/result';
@@ -14,7 +15,7 @@ export class BlogPostComponent implements OnInit {
   blogPost: Blog | null = null;
   id: number | null = null;
 
-  constructor(private activatedRoute: ActivatedRoute, private router: Router, private apiService: ApiService) { }
+  constructor(private activatedRoute: ActivatedRoute, private router: Router, private apiService: ApiService, private metaService: Meta, private titleService: Title) { }
 
   ngOnInit(): void {
     const idParam = this.activatedRoute.snapshot.paramMap.get("id");
@@ -35,7 +36,16 @@ export class BlogPostComponent implements OnInit {
 
       this.blogPost = result.data;
 
-      console.log(this.blogPost, result)
+      if(this.blogPost.metaTitle){
+        this.titleService.setTitle(this.blogPost.metaTitle);
+        this.metaService.addTag({ name: 'twitter:title', content: this.blogPost.metaTitle});
+      }
+      if(this.blogPost.metaDescription){
+        this.metaService.addTag({ name:'description', content: this.blogPost.metaDescription});
+        this.metaService.addTag({ name: 'og:title', content: this.blogPost.metaDescription});
+        this.metaService.addTag({ name: 'twitter:description', content: this.blogPost.metaDescription});
+      }
+
     }, error => this.router.navigate([`blog`]));
   }
 
