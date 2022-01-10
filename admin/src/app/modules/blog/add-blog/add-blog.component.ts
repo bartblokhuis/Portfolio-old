@@ -16,7 +16,7 @@ declare var $:any;
 })
 export class AddBlogComponent implements OnInit {
 
-  model: CreateBlog = { title: '', content: '', description: '', displayNumber: 0, isPublished: false };
+  model: CreateBlog = { title: '', content: '', description: '', displayNumber: 0, isPublished: false, metaDescription: '', metaTitle: '' };
   form: any;
 
   constructor(private contentTitleService: ContentTitleService, private apiService: ApiService, private router: Router) { }

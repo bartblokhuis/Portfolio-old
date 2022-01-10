@@ -1,39 +1,86 @@
-<div class="row">
-    <div class="col-12">
-        <div class="card">
-            <div class="card-header">
-                <h3 class="card-title">
-                    Edit blog post
-                </h3>
+<form id="editBlogForm">
+    <div class="row">
+        <div class="col-12">
+            <div class="card">
+                <div class="card-header">
+                    <h3 class="card-title">
+                        General
+                    </h3>
+                    <div class="card-tools">
+                        <button type="button" class="btn btn-tool" data-card-widget="collapse">
+                        <i class="fas fa-minus"></i>
+                        </button>
+                    </div>
+                </div>
+                <div class="card-body">
+                        <div class="form-group">
+                            <label>Title</label>
+                            <input class="form-control" type="text" [(ngModel)]="model.title" name="title"/>
+                            <span class="custom-error" *ngIf="titleError">{{titleError}}</span>
+                        </div>
+                        <div class="form-group">
+                            <label>Description</label>
+                            <quill-editor [(ngModel)]="model.description" name="description"></quill-editor>
+                        </div>
+                        <div class="form-group">
+                            <label>Content</label>
+                            <quill-editor [(ngModel)]="model.content" name="content"></quill-editor>
+                        </div>
+                        <div class="form-group">
+                            <label>Display number</label>
+                            <input class="form-control" type="number" [(ngModel)]="model.displayNumber" name="displayNumber"/>
+                        </div>
+                        <div class="form-check">
+                            <input class="form-check-input" type="checkbox" id="new-blog-published" [(ngModel)]="model.isPublished" name="isPublished"/>
+                            <label class="form-check-label" for="new-blog-published" >Published</label>
+                        </div>
+                </div>
             </div>
-            <form id="editBlogForm">
+
+            <div class="card">
+                <div class="card-header">
+                    <h3 class="card-title">
+                        SEO
+                    </h3>
+                    <div class="card-tools">
+                        <button type="button" class="btn btn-tool" data-card-widget="collapse">
+                        <i class="fas fa-minus"></i>
+                        </button>
+                    </div>
+                </div>
                 <div class="card-body">
                     <div class="form-group">
-                        <label>Title</label>
-                        <input class="form-control" type="text" [(ngModel)]="model.title" name="title"/>
-                        <span class="custom-error" *ngIf="titleError">{{titleError}}</span>
+                        <label>Meta title</label>
+                        <input class="form-control" type="text" [(ngModel)]="model.metaTitle" name="metaTitle"/>
                     </div>
                     <div class="form-group">
-                        <label>Description</label>
-                        <quill-editor [(ngModel)]="model.description" name="description"></quill-editor>
-                    </div>
-                    <div class="form-group">
-                        <label>Content</label>
-                        <quill-editor [(ngModel)]="model.content" name="content"></quill-editor>
-                    </div>
-                    <div class="form-group">
-                        <label>Display number</label>
-                        <input class="form-control" type="number" [(ngModel)]="model.displayNumber" name="displayNumber"/>
-                    </div>
-                    <div class="form-check">
-                        <input class="form-check-input" type="checkbox" id="new-blog-published" [(ngModel)]="model.isPublished" name="isPublished"/>
-                        <label class="form-check-label" for="new-blog-published" >Published</label>
+                        <label>Meta description</label>
+                        <input class="form-control" type="text" [(ngModel)]="model.metaDescription" name="metaDescription"/>
                     </div>
                 </div>
-                <div class="card-footer">
-                    <button class="btn btn-primary" (click)="editBlogPost()">Edit blog post</button>
+            </div>
+
+            <div class="card">
+                <div class="card-header">
+                    <h3 class="card-title">
+                        Pictures
+                    </h3>
+                    <div class="card-tools">
+                        <button type="button" class="btn btn-tool" data-card-widget="collapse">
+                        <i class="fas fa-minus"></i>
+                        </button>
+                    </div>
                 </div>
-            </form>
+                <div class="card-body">
+                    <div class="picture-form">
+                        <app-picture label="Thumbnail" [picture]="thumbnailPicture" (updatedPicture)="updateThumbnailPicture($event)"></app-picture>
+                    </div>
+                    <div class="picture-form">
+                        <app-picture class="picture-form" label="Banner" [picture]="bannerPicture" (updatedPicture)="updateBannerPicture($event)"></app-picture>
+                    </div>
+                </div>
+            </div>       
+            <button class="btn btn-primary" (click)="editBlogPost()">Edit blog post</button>
         </div>
     </div>
-</div>
+</form>

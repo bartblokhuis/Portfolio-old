@@ -22,21 +22,25 @@ namespace Portfolio.Controllers
         private readonly IBlogService _blogService;
         private readonly IMapper _mapper;
         private readonly IHttpContextAccessor _httpContextAccessor;
+        private readonly IPictureService _pictureService;
 
         #endregion
 
         #region Constructor
 
-        public BlogController(IBlogService blogService, IMapper mapper, IHttpContextAccessor httpContextAccessor)
+        public BlogController(IBlogService blogService, IMapper mapper, IHttpContextAccessor httpContextAccessor, IPictureService pictureService)
         {
             _blogService = blogService;
             _mapper = mapper;
             _httpContextAccessor = httpContextAccessor;
+            _pictureService = pictureService;
         }
 
         #endregion
 
         #region Methods
+
+        #region Get
 
         [HttpGet]
         [AllowAnonymous]
@@ -61,12 +65,16 @@ namespace Portfolio.Controllers
 
             var post = (await _blogService.GetById(id, includeUnPublished));
 
-            if(post == null)
+            if (post == null)
                 return Ok(await Result.FailAsync("Blog post not found"));
 
             var result = await Result<BlogDto>.SuccessAsync(_mapper.Map<BlogDto>(post));
             return Ok(result);
         }
+
+        #endregion
+
+        #region Post
 
         [HttpPost]
         public async Task<IActionResult> Create(CreateBlogDto dto)
@@ -83,6 +91,10 @@ namespace Portfolio.Controllers
             var result = await Result<ListBlogDto>.SuccessAsync(_mapper.Map<ListBlogDto>(blog));
             return Ok(result);
         }
+
+        #endregion
+
+        #region Put
 
         [HttpPut]
         public async Task<IActionResult> Update(UpdateBlogDto dto)
@@ -104,6 +116,56 @@ namespace Portfolio.Controllers
             return Ok(result);
         }
 
+        [HttpPut("UpdateBannerPicture")]
+        public async Task<IActionResult> UpdateBannerPicture(UpdateBlogPictureDto dto)
+        {
+            if (!ModelState.IsValid)
+                throw new Exception("Invalid model");
+
+            var blog = await _blogService.GetById(dto.BlogPostId, true);
+            if (blog == null)
+                return Ok(await Result.FailAsync($"No blog post with id: {dto.BlogPostId} found"));
+
+            var picture = await _pictureService.GetById(dto.PictureId);
+            if (picture == null)
+                return Ok(await Result.FailAsync($"No picture with id: {dto.PictureId} found"));
+
+            blog.BannerPicture = picture;
+            blog.BannerPictureId = dto.PictureId;
+
+            await _blogService.Update(blog);
+
+            var result = await Result<BlogDto>.SuccessAsync(_mapper.Map<BlogDto>(blog));
+            return Ok(result);
+        }
+
+        [HttpPut("UpdateThumbnailPicture")]
+        public async Task<IActionResult> UpdateThumbnailPicture(UpdateBlogPictureDto dto)
+        {
+            if (!ModelState.IsValid)
+                throw new Exception("Invalid model");
+
+            var blog = await _blogService.GetById(dto.BlogPostId, true);
+            if (blog == null)
+                return Ok(await Result.FailAsync($"No blog post with id: {dto.BlogPostId} found"));
+
+            var picture = await _pictureService.GetById(dto.PictureId);
+            if (picture == null)
+                return Ok(await Result.FailAsync($"No picture with id: {dto.PictureId} found"));
+
+            blog.Thumbnail = picture;
+            blog.ThumbnailId = dto.PictureId;
+
+            await _blogService.Update(blog);
+
+            var result = await Result<BlogDto>.SuccessAsync(_mapper.Map<BlogDto>(blog));
+            return Ok(result);
+        }
+
+        #endregion
+
+        #region Delete
+
         [HttpDelete]
         public async Task<IActionResult> Delete(int id)
         {
@@ -116,6 +178,8 @@ namespace Portfolio.Controllers
             var result = await Result.SuccessAsync("Removed the blog post");
             return Ok(result);
         }
+
+        #endregion
 
         #endregion
 

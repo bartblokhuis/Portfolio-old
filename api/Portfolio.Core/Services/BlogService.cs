@@ -33,8 +33,8 @@ public class BlogService : IBlogService
     public async Task<IEnumerable<Blog>> Get(bool includeUnPublished)
     {
         return includeUnPublished ?
-            await _blogRepository.GetAsync():
-            await _blogRepository.GetAsync(filter: (x) => x.IsPublished);
+            await _blogRepository.GetAsync(includeProperties: "BannerPicture,Thumbnail"):
+            await _blogRepository.GetAsync(filter: (x) => x.IsPublished, includeProperties: "BannerPicture,Thumbnail");
     }
 
     public async Task Create(Blog model)
@@ -58,8 +58,8 @@ public class BlogService : IBlogService
             return blog;
 
         blog = includeUnPublished ?
-            await (await _blogRepository.GetAsync(filter: (x) => x.Id == id))?.FirstOrDefaultAsync() :
-            await (await _blogRepository.GetAsync(filter: (x) => x.Id == id && x.IsPublished))?.FirstOrDefaultAsync();
+            await (await _blogRepository.GetAsync(filter: (x) => x.Id == id, includeProperties: "BannerPicture,Thumbnail"))?.FirstOrDefaultAsync() :
+            await (await _blogRepository.GetAsync(filter: (x) => x.Id == id && x.IsPublished, includeProperties: "BannerPicture,Thumbnail"))?.FirstOrDefaultAsync();
 
         if (blog != null)
             _cacheService.Set(CACHE_KEY + id, blog);

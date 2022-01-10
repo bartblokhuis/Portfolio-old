@@ -67,7 +67,8 @@ public static class ServiceCollectionExtensions
             .AddScoped<IBlogService, BlogService>()
             .AddSingleton(new HostingConfig())
             .AddScoped<IWebHelper, WebHelper>()
-            .AddScoped<IEmailService, EmailService>();
+            .AddScoped<IEmailService, EmailService>()
+            .AddScoped<IPictureService, PictureService>();
 
         return services;
     }

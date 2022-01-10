@@ -2,9 +2,12 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { EditBlog } from 'src/app/data/blog/edit-blog';
 import { Result } from 'src/app/data/common/Result';
+import { Picture } from 'src/app/data/common/picture';
 import { ApiService } from 'src/app/services/api/api.service';
 import { ContentTitleService } from 'src/app/services/content-title/content-title.service';
 import { validateBlogForm } from '../helpers/blog-helper';
+import { UpdateBlogPicture } from 'src/app/data/blog/update-blog-picture';
+import { NotificationService } from 'src/app/services/notification/notification.service';
 
 declare var $: any;
 
@@ -15,11 +18,13 @@ declare var $: any;
 })
 export class EditBlogComponent implements OnInit{
 
-  model: EditBlog = { content: '', description: '', displayNumber: 0, id: 0, isPublished: true, title: '' };
+  model: EditBlog = { content: '', description: '', displayNumber: 0, id: 0, isPublished: true, title: '', metaDescription: '', metaTitle: '', thumbnail: null, thumbnailId: null, bannerPicture: null, bannerPictureId: null };
+  bannerPicture: Picture = { altAttribute: '', id: null, mimeTpye: '', path: '', titleAttribute: '' };
+  thumbnailPicture: Picture = { altAttribute: '', id: null, mimeTpye: '', path: '', titleAttribute: '' };
   form: any;
   titleError: string | null = null;
 
-  constructor(private route: ActivatedRoute, private apiService: ApiService, private contentTitleService: ContentTitleService, private router: Router) { }
+  constructor(private route: ActivatedRoute, private apiService: ApiService, private contentTitleService: ContentTitleService, private router: Router, private notificationService: NotificationService) { }
 
   ngOnInit(): void {
 
@@ -36,6 +41,10 @@ export class EditBlogComponent implements OnInit{
       if(!result.succeeded) this.router.navigate(['blog']);
 
       this.model = result.data;
+
+      if(this.model.bannerPicture) this.bannerPicture = this.model.bannerPicture;
+      if(this.model.thumbnail) this.thumbnailPicture = this.model.thumbnail;
+
     }, () => this.router.navigate(['blog']));
 
     this.form = $("#editBlogForm");
@@ -54,4 +63,21 @@ export class EditBlogComponent implements OnInit{
     });
   }
 
+  updateThumbnailPicture(picture: Picture): void {
+    this.thumbnailPicture = picture;
+    const model: UpdateBlogPicture = { blogPostId: this.model.id, pictureId: picture.id ?? 0 };
+
+    this.apiService.put("Blog/UpdateThumbnailPicture", model).subscribe((result) => {
+      this.notificationService.success("Updated the banner picture")
+    })
+  }
+
+  updateBannerPicture(picture: Picture): void {
+    this.bannerPicture = picture;
+    const model: UpdateBlogPicture = { blogPostId: this.model.id, pictureId: picture.id ?? 0 };
+
+    this.apiService.put("Blog/UpdateBannerPicture", model).subscribe((result) => {
+      this.notificationService.success("Updated the banner picture")
+    })
+  }
 }
