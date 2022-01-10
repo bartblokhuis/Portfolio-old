@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { BaseBlog } from 'src/app/data/blog/base-blog';
 import { CreateBlog } from 'src/app/data/blog/create-blog';
+import { ListBlog } from 'src/app/data/blog/list-blog';
 import { Result } from 'src/app/data/common/Result';
 import { ApiService } from 'src/app/services/api/api.service';
 import { ContentTitleService } from 'src/app/services/content-title/content-title.service';
@@ -32,8 +33,8 @@ export class AddBlogComponent implements OnInit {
 
     if(!this.form.valid()) return;
 
-    this.apiService.post<CreateBlog>("Blog", this.model).subscribe((result: Result<CreateBlog>) => {
-      this.router.navigate(['blog']);
+    this.apiService.post<ListBlog>("Blog", this.model).subscribe((result: Result<ListBlog>) => {
+      this.router.navigate([`blog/edit/${result.data.id}`]);
     });
 
   }
