@@ -25,7 +25,6 @@ export class EditBlogComponent implements OnInit{
   thumbnailPicture: Picture = { altAttribute: '', id: null, mimeType: '', path: '', titleAttribute: '' };
   form: any;
   titleError: string | null = null;
-  blogContent: string | null = "";
 
   constructor(private route: ActivatedRoute, private apiService: ApiService, private contentTitleService: ContentTitleService, private router: Router, private notificationService: NotificationService) { }
 
@@ -42,10 +41,6 @@ export class EditBlogComponent implements OnInit{
     this.apiService.get<EditBlog>(`Blog/GetById/?id=${id}&includeUnPublished=true`).subscribe((result) => {
 
       if(!result.succeeded) this.router.navigate(['blog']);
-
-      this.blogContent = result.data.content;
-      console.log(this.blogContent);
-     // result.data.content = "";
       this.model = result.data;
 
       if(this.model.bannerPicture) this.bannerPicture = this.model.bannerPicture;
@@ -55,10 +50,6 @@ export class EditBlogComponent implements OnInit{
 
     this.form = $("#editBlogForm");
     if(this.form) validateBlogForm(this.form);
-  }
-
-  blogContentQuillLoadad(quill: QuillType): void {
-    //if(this.blogContent) quill.clipboard.dangerouslyPasteHTML(this.blogContent);
   }
 
   editBlogPost() {
