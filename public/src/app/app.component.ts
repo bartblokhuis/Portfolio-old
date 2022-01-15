@@ -1,6 +1,7 @@
 import { HttpErrorResponse } from '@angular/common/http';
 import { Component, HostListener, OnInit } from '@angular/core';
 import { Meta, Title } from '@angular/platform-browser';
+import { Router, NavigationStart, Event as NavigationEvent } from '@angular/router';
 import { combineLatest, isObservable, Observable } from 'rxjs';
 import { GeneralSettings } from './data/settings/GeneralSettings';
 import { SeoSettings } from './data/settings/SeoSettings';
@@ -15,7 +16,7 @@ export class AppComponent implements OnInit {
   finishedLoading: boolean = false;
   seoSettings: SeoSettings | null = null;
 
-  constructor(private settingsService: SettingsService, private title: Title, private meta: Meta) { }
+  constructor(private settingsService: SettingsService, private title: Title, private meta: Meta, private router:Router) { }
 
   ngOnInit(): void {
 
@@ -29,11 +30,14 @@ export class AppComponent implements OnInit {
     const generalSettings = this.settingsService.get<GeneralSettings>("GeneralSettings");
     if(isObservable(generalSettings)) observables.push(generalSettings);
 
+    let title: string = "";
     combineLatest(observables).subscribe((result) => {
       this.seoSettings = result[0];
       if(this.seoSettings) {
 
         if(this.seoSettings.title) {
+          title = this.seoSettings.title;
+
           this.title.setTitle(this.seoSettings.title);
 
           if(this.seoSettings.useOpenGraphMetaTags) {
@@ -61,6 +65,12 @@ export class AppComponent implements OnInit {
     }, (error: any) => {
       console.log(error);
     });
+    this.router.events.subscribe((event: NavigationEvent) => {
+      if(event instanceof NavigationStart) {
+        this.title.setTitle(title);
+      }
+    });
+
   }
 
 }
