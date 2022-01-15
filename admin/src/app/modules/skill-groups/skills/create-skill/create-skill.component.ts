@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
 import { Result } from 'src/app/data/common/Result';
 import { SkillGroup } from 'src/app/data/skill-groups/skill-group';

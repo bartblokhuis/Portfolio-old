@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { BaseBlog } from 'src/app/data/blog/base-blog';
 import { CreateBlog } from 'src/app/data/blog/create-blog';
 import { ListBlog } from 'src/app/data/blog/list-blog';
 import { Result } from 'src/app/data/common/Result';

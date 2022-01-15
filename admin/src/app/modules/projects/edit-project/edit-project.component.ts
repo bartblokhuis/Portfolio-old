@@ -1,6 +1,6 @@
 import { AfterViewInit, Component, Input, OnInit, QueryList, ViewChildren } from '@angular/core';
 import { NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
-import { combineLatest, observable, Observable } from 'rxjs';
+import { combineLatest, Observable } from 'rxjs';
 import { Result } from 'src/app/data/common/Result';
 import { AddUpdateProject } from 'src/app/data/projects/add-update-project';
 import { Project } from 'src/app/data/projects/project';

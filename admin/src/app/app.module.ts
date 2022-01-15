@@ -38,7 +38,7 @@ import { UserModule } from './modules/user/user.module';
     PicturesModule,
     BlogModule,
     SharedComponentsModule,
-    QuillModule.forRoot() //<-- Updated Quill Module
+    QuillModule.forRoot()
   ],
   providers: [
     {

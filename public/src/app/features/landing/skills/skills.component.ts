@@ -1,5 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-import { Skill } from 'src/app/data/Skill';
 import { SkillGroup } from 'src/app/data/SkillGroup';
 import { SkillsService } from 'src/app/services/skills/skills.service';
 import { environment } from 'src/environments/environment';
@@ -20,8 +19,6 @@ export class SkillsComponent implements OnInit {
     this.skillGroupService.getSkillGroups().subscribe((result) => {
       if(result.succeeded) this.skillGroups = result.data;
     });
-
-
   }
 
   calcDelay(index: number): number {

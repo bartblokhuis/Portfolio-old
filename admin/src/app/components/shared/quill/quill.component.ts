@@ -1,12 +1,10 @@
-import { Component, EventEmitter, forwardRef, Injector, Input, NgZone, OnInit, Output, ViewEncapsulation } from '@angular/core';
+import { Component, EventEmitter, forwardRef, Injector, NgZone, OnInit, Output, ViewEncapsulation } from '@angular/core';
 import { NG_VALUE_ACCESSOR } from '@angular/forms';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
-import { Blur, ContentChange, CustomModule, CustomOption, EditorChangeContent, EditorChangeSelection, Focus, QuillModules, SelectionChange } from 'ngx-quill';
-import QuillType, { Delta, DeltaStatic } from 'quill'
-import { Picture } from 'src/app/data/common/picture';
+import { QuillModules } from 'ngx-quill';
+import QuillType from 'quill';
 import { GridPictureComponent } from 'src/app/modules/pictures/grid-picture/grid-picture.component';
 import { environment } from 'src/environments/environment';
-import { FooterComponent } from '../footer/footer.component';
 
 @Component({
   selector: 'app-quill',

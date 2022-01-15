@@ -9,8 +9,6 @@ import { DeletePictureComponent } from './delete-picture/delete-picture.componen
 import { SharedComponentsModule } from 'src/app/components/shared/shared-components.module';
 import { GridPictureComponent } from './grid-picture/grid-picture.component';
 
-
-
 @NgModule({
   declarations: [
     ListPictureComponent,

@@ -1,4 +1,4 @@
-import { Component, ComponentFactoryResolver, OnInit, ViewEncapsulation } from '@angular/core';
+import { Component, OnInit, ViewEncapsulation } from '@angular/core';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { Result } from 'src/app/data/common/Result';
 import { Project } from 'src/app/data/projects/project';

@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
-import { BehaviorSubject, Observable } from 'rxjs';
 import { ListBlog } from 'src/app/data/blog/list-blog';
 import { Result } from 'src/app/data/common/Result';
 import { ApiService } from 'src/app/services/api/api.service';
@@ -43,5 +42,4 @@ export class ListBlogComponent implements OnInit {
       this.loadBlog();
     });
   }
-
 }

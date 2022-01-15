@@ -1,14 +1,14 @@
 import { Component, OnInit, ViewEncapsulation } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
+import QuillType from 'quill';
 import { EditBlog } from 'src/app/data/blog/edit-blog';
-import { Result } from 'src/app/data/common/Result';
+import { UpdateBlogPicture } from 'src/app/data/blog/update-blog-picture';
 import { Picture } from 'src/app/data/common/picture';
+import { Result } from 'src/app/data/common/Result';
 import { ApiService } from 'src/app/services/api/api.service';
 import { ContentTitleService } from 'src/app/services/content-title/content-title.service';
-import { validateBlogForm } from '../helpers/blog-helper';
-import { UpdateBlogPicture } from 'src/app/data/blog/update-blog-picture';
 import { NotificationService } from 'src/app/services/notification/notification.service';
-import QuillType, { Delta } from 'quill'
+import { validateBlogForm } from '../helpers/blog-helper';
 
 declare var $: any;
 

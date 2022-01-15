@@ -1,7 +1,6 @@
-import { HttpErrorResponse } from '@angular/common/http';
-import { Component, HostListener, OnInit } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { Meta, Title } from '@angular/platform-browser';
-import { Router, NavigationStart, Event as NavigationEvent } from '@angular/router';
+import { Event as NavigationEvent, NavigationStart, Router } from '@angular/router';
 import { combineLatest, isObservable, Observable } from 'rxjs';
 import { GeneralSettings } from './data/settings/GeneralSettings';
 import { SeoSettings } from './data/settings/SeoSettings';
