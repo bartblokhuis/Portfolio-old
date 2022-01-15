@@ -1,6 +1,6 @@
 export interface Picture {
     id: number | null,
-    mimeTpye: string,
+    mimeType: string,
     path: string,
     altAttribute: string,
     titleAttribute: string

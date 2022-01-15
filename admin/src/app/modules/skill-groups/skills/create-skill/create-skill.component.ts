@@ -52,7 +52,6 @@ export class CreateSkillComponent implements OnInit {
 
       if(this.formData) {
         this.apiService.put<Skill>(`Skill/SaveSkillImage/${result.data.id}`, this.formData).subscribe((resultWithImage: Result<Skill>) => {
-          console.log(resultWithImage)
           this.modalRef?.close(resultWithImage.data);
         });
       }

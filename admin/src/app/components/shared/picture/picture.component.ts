@@ -13,7 +13,7 @@ declare var $: any;
 export class PictureComponent implements OnInit, AfterViewInit {
 
   @Input() label: string = "Picture"
-  @Input() picture: Picture = { altAttribute: '', id: null, mimeTpye: '', path: '', titleAttribute: '' }
+  @Input() picture: Picture = { altAttribute: '', id: null, mimeType: '', path: '', titleAttribute: '' }
   @Output() updatedPicture = new EventEmitter<Picture>();
   imageRequiredError: string | null = null;
 
@@ -132,7 +132,6 @@ export class PictureComponent implements OnInit, AfterViewInit {
       configurable: true
     });
 
-    console.log(validation);
     form.validate(validation);
   }
 

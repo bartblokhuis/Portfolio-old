@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Mvc;
 using Portfolio.Core.Interfaces;
 using Portfolio.Domain.Models;
 using Portfolio.Domain.Wrapper;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 
 namespace Portfolio.Controllers
@@ -31,6 +32,14 @@ namespace Portfolio.Controllers
         #region Methods
 
         #region Get
+
+        [HttpGet]
+        public async Task<IActionResult> GetAll()
+        {
+            var pictures = await _pictureService.GetAll();
+            var result = await Result<IEnumerable<Picture>>.SuccessAsync(pictures);
+            return Ok(result);
+        }
 
         #endregion
 
@@ -67,6 +76,21 @@ namespace Portfolio.Controllers
         #endregion
 
         #region Delete
+
+        [HttpDelete()]
+        public async Task<IActionResult> Delete(int pictureId)
+        {
+            var picture = await _pictureService.GetById(pictureId);
+
+            if (picture == null)
+                return Ok(await Result.FailAsync($"There is no picture with the id: ${pictureId}"));
+
+            var error = await _pictureService.Delete(picture);
+
+            return string.IsNullOrEmpty(error) ?
+                Ok(await Result.SuccessAsync("Removed the picture")) : 
+                Ok(await Result.FailAsync(error));
+        }
 
         #endregion
 

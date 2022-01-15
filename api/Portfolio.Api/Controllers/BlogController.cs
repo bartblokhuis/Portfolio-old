@@ -72,6 +72,22 @@ namespace Portfolio.Controllers
             return Ok(result);
         }
 
+        [HttpGet("GetByTitle")]
+        [AllowAnonymous]
+        public async Task<IActionResult> GetByTitle(string title, bool includeUnPublished = false)
+        {
+            if (includeUnPublished && !_httpContextAccessor.HttpContext.User.Identity.IsAuthenticated)
+                return Ok(await Result.FailAsync("Unauthorized"));
+
+            var post = (await _blogService.GetByTitle(title, includeUnPublished));
+
+            if (post == null)
+                return Ok(await Result.FailAsync("Blog post not found"));
+
+            var result = await Result<BlogDto>.SuccessAsync(_mapper.Map<BlogDto>(post));
+            return Ok(result);
+        }
+
         #endregion
 
         #region Post

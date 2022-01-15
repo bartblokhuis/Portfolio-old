@@ -67,6 +67,18 @@ public class BlogService : IBlogService
         return blog;
     }
 
+    public async Task<Blog> GetByTitle(string title, bool includeUnPublished = false)
+    {
+        var blog = includeUnPublished ?
+            await (await _blogRepository.GetAsync(filter: (x) => x.Title.ToLower() == title.ToLower(), includeProperties: "BannerPicture,Thumbnail"))?.FirstOrDefaultAsync() :
+            await (await _blogRepository.GetAsync(filter: (x) => x.Title.ToLower() == title.ToLower() && x.IsPublished, includeProperties: "BannerPicture,Thumbnail"))?.FirstOrDefaultAsync();
+
+        if (blog != null)
+            _cacheService.Set(CACHE_KEY + blog.Id, blog);
+
+        return blog;
+    }
+
     public async Task Delete(Blog blog)
     {
         await _blogRepository.DeleteAsync(blog);

@@ -1,0 +1,47 @@
+<div class="row">
+    <div class="col-12">
+        <div class="card">
+            <div class="card-header">
+                <h3 class="card-title">
+                    Pictures
+                </h3>
+            </div>
+            <div class="card-body table-responsive p-0">
+                <table class="table table-hover text-nowrap">
+                    <thead>
+                        <tr>
+                          <th>Picture</th>
+                          <th>Title attribute</th>
+                          <th>Alt attribute</th>
+                          <th>Mime Type</th>
+                          <th>Path</th>
+                          <th>Actions</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        <tr *ngFor="let picture of pictures">
+                          <td><img [src]="baseUrl + picture.path"></td>
+                          <td>{{ picture.titleAttribute }}</td>
+                          <td>{{ picture.altAttribute }}</td>
+                          <td>{{ picture.mimeType }}</td>
+                          <td>{{ picture.path }}</td>
+                          <td> 
+                            <div class="actions">
+                              <div (click)="editPicture(picture)" class="action">
+                                <i class="fas fa-pen-alt"></i>
+                              </div>
+                              <div (click)="deletePicture(picture)" class="action">
+                                <i class="fas fa-trash-alt danger"></i>
+                              </div>
+                            </div>
+                          </td>
+                        </tr>
+                      </tbody>
+                </table>
+            </div>
+            <div class="card-footer">
+              <button class="btn btn-primary" (click)="uploadPicture()">Upload new picture</button>
+            </div>
+        </div>
+    </div>
+</div>

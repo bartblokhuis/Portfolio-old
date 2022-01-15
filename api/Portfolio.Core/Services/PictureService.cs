@@ -1,9 +1,12 @@
 ﻿using Microsoft.AspNetCore.Http;
+using Microsoft.Data.SqlClient;
+using Microsoft.EntityFrameworkCore;
 using Portfolio.Core.Interfaces;
 using Portfolio.Core.Interfaces.Common;
 using Portfolio.Domain.Models;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -33,6 +36,21 @@ namespace Portfolio.Core.Services
 
         #region Methods
 
+        public async Task<IEnumerable<Picture>> GetAll()
+        {
+            //First try getting from cache.
+            var cachedResult = _cacheService.Get<IEnumerable<Picture>>(CACHE_KEY);
+            if (cachedResult != null)
+                return cachedResult;
+
+            //If there was nothing in the cache get the pictures from the database and add them to the cache.
+            var pictures = await _pictureRepository.GetAllAsync();
+            if (pictures != null)
+                _cacheService.Set(CACHE_KEY, pictures);
+
+            return pictures;
+        }
+
         public async Task<Picture> GetById(int pictureId)
         {
             var cachedResult = _cacheService.Get<IEnumerable<Picture>>(CACHE_KEY);
@@ -48,12 +66,11 @@ namespace Portfolio.Core.Services
             if (picture == null)
                 return null;
 
-            if (cachedResult == null)
-                cachedResult = new List<Picture>() { picture };
-            else
-                cachedResult.Append(picture);
-
-            _cacheService.Set(CACHE_KEY, cachedResult);
+            if (cachedResult != null)
+            {
+                cachedResult = cachedResult.Add(picture);
+                _cacheService.Set(CACHE_KEY, cachedResult);
+            }
             return picture;
         }
 
@@ -80,7 +97,7 @@ namespace Portfolio.Core.Services
             if (cache == null)
                 cache = new List<Picture>() { picture };
             else
-                cache.Append(picture);
+                cache = cache.Add(picture);
             _cacheService.Set(CACHE_KEY, cache);
 
             return picture;
@@ -113,11 +130,45 @@ namespace Portfolio.Core.Services
             else
             {
                 cache = cache.Where(x => x.Id != picture.Id);
-                cache.Append(picture);
+                cache = cache.Add(picture);
             }
             _cacheService.Set(CACHE_KEY, cache);
 
             return picture;
+        }
+
+        public async Task<string> Delete(Picture picture)
+        {
+            if (picture == null)
+                throw new ArgumentNullException(nameof(picture));
+
+            try
+            {
+                await _pictureRepository.DeleteAsync(picture);
+                _uploadImageHelper.DeleteImage(picture.Path);
+
+                //Update cache
+                var cache = _cacheService.Get<IEnumerable<Picture>>(CACHE_KEY);
+                if (cache != null)
+                    cache = cache.Where(x => x.Id != picture.Id);
+                
+                _cacheService.Set(CACHE_KEY, cache);
+            }
+            catch (DbUpdateException ex)
+            {
+                var sqlException = ex.GetBaseException() as SqlException;
+
+                if (sqlException == null)
+                    return "An unknown database issue occurred, please try again.";
+                else if (sqlException.Number == 547)
+                    return "This image is still being used for something in the portfolio and can therefor not be removed.";
+            }
+            catch (Exception ex)
+            {
+                return "Unkown error occurred, please try again.";
+            }
+
+            return "";
         }
 
         #endregion

@@ -1,8 +1,29 @@
 .blog-post {
-    padding-top: 100px;
+    margin-top: 100px;
 }
 
 .image-banner{
     overflow: hidden;
     max-height: 25rem;
+}
+
+.ql-syntax {
+    background-color: #23241f;
+    color: #f8f8f2;
+    overflow: visible;
+    white-space: pre-wrap;
+    margin-bottom: 5px;
+    margin-top: 5px;
+    padding: 5px 10px;
+    border-radius: 3px;
+    margin: 0;
+    counter-reset: list-1 list-2 list-3 list-4 list-5 list-6 list-7 list-8 list-9;
+}
+
+body {
+    background-color: #F5F5F5;
+}
+
+img {
+    max-width: 100%;
 }

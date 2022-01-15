@@ -14,6 +14,8 @@ public interface IBlogService
 
     Task<Blog> GetById(int id, bool includeUnPublished = false);
 
+    Task<Blog> GetByTitle(string title, bool includeUnPublished = false);
+
     Task<bool> IsExistingTitle(string title, int idToIgnore = 0);
 
     Task Delete(Blog blog);

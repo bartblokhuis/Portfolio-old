@@ -13,6 +13,7 @@ import { AuthComponent } from './layouts/auth/auth.component';
 import { AboutMeModule } from './modules/about-me/about-me.module';
 import { BlogModule } from './modules/blog/blog.module';
 import { MessagesModule } from './modules/messages/messages.module';
+import { PicturesModule } from './modules/pictures/pictures.module';
 import { ProjectsModule } from './modules/projects/projects.module';
 import { SettingsModule } from './modules/settings/settings.module';
 import { SkillGroupsModule } from './modules/skill-groups/skill-groups.module';
@@ -34,6 +35,7 @@ import { UserModule } from './modules/user/user.module';
     ProjectsModule,
     UserModule,
     SettingsModule,
+    PicturesModule,
     BlogModule,
     SharedComponentsModule,
     QuillModule.forRoot() //<-- Updated Quill Module

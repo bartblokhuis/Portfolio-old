@@ -20,11 +20,11 @@
                         </div>
                         <div class="form-group">
                             <label>Description</label>
-                            <quill-editor [(ngModel)]="model.description" name="description"></quill-editor>
+                            <app-quill [(ngModel)]="model.description" name="description"></app-quill>
                         </div>
                         <div class="form-group">
                             <label>Content</label>
-                            <quill-editor [(ngModel)]="model.content" name="content"></quill-editor>
+                            <app-quill [(ngModel)]="model.content" name="content" (onEditorCreated)="blogContentQuillLoadad($event)"></app-quill>
                         </div>
                         <div class="form-group">
                             <label>Display number</label>
