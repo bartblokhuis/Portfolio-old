@@ -1,7 +1,4 @@
-﻿using System;
-using System.Linq;
-using System.Threading.Tasks;
-using AutoMapper;
+﻿using AutoMapper;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
@@ -13,6 +10,9 @@ using Portfolio.Domain.Dtos.Messages;
 using Portfolio.Domain.Models;
 using Portfolio.Domain.Models.Settings;
 using Portfolio.Domain.Wrapper;
+using System;
+using System.Linq;
+using System.Threading.Tasks;
 
 namespace Portfolio.Controllers;
 

@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace Portfolio.Domain.Dtos.Blogs;
+﻿namespace Portfolio.Domain.Dtos.Blogs;
 
 public  class UpdateBlogDto : BaseBlogDto
 {

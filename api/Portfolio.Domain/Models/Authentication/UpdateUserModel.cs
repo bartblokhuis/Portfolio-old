@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace Portfolio.Domain.Models.Authentication;
+﻿namespace Portfolio.Domain.Models.Authentication;
 
 public class UpdateUserModel
 {

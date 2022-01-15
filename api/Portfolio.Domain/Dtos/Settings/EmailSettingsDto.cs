@@ -1,5 +1,4 @@
-﻿using Portfolio.Domain.Dtos.Common;
-using System.ComponentModel.DataAnnotations;
+﻿using System.ComponentModel.DataAnnotations;
 
 namespace Portfolio.Domain.Dtos;
 

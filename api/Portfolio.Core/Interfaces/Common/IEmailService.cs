@@ -1,5 +1,4 @@
 ﻿using MimeKit;
-using Portfolio.Domain.Models;
 using Portfolio.Domain.Models.Settings;
 using System.Threading.Tasks;
 

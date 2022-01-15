@@ -1,7 +1,7 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Portfolio.Domain.Models;
-using System.Threading.Tasks;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace Portfolio.Core.Interfaces;
 

@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace Portfolio.Domain.Dtos;
+﻿namespace Portfolio.Domain.Dtos;
 
 public class GeneralSettingsDto
 {

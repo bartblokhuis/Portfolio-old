@@ -1,5 +1,4 @@
-﻿using AutoMapper;
-using Portfolio.Core.Interfaces;
+﻿using Portfolio.Core.Interfaces;
 using Portfolio.Core.Interfaces.Common;
 using Portfolio.Domain.Models;
 using System.Threading.Tasks;
