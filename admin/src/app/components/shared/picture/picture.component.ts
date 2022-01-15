@@ -71,13 +71,13 @@ export class PictureComponent implements OnInit, AfterViewInit {
 
     let url = "Picture";
 
-    if(this.picture.altAttribute.length > 0 && this.picture.titleAttribute.length > 0) {
+    if(this.picture.altAttribute && this.picture.altAttribute.length > 0 && this.picture.titleAttribute && this.picture.titleAttribute.length > 0) {
       url += `?titleAttribute=${this.picture.titleAttribute}&altAttribute=${this.picture.altAttribute}`
     }
-    else if(this.picture.titleAttribute.length > 0){
+    else if(this.picture.titleAttribute && this.picture.titleAttribute.length > 0){
       url += `&titleAttribute=${this.picture.titleAttribute}`;
     }
-    else if(this.picture.altAttribute.length > 0){
+    else if(this.picture.altAttribute && this.picture.altAttribute.length > 0){
       url += `&altAttribute=${this.picture.altAttribute}`;
     }
 
