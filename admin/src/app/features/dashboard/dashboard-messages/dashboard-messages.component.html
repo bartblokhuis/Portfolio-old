@@ -1,0 +1,56 @@
+<div class="card">
+    <div class="card-header">
+        <h3 class="card-title">
+            <i class="ion ion-clipboard mr-1"></i>
+            Recent Messages
+        </h3>
+    </div>
+    <ng-container *ngIf="messages.length > 0 else no_messages">
+        <div class="card-body table-responsive p-0">
+            <table class="table table-hover text-nowrap">
+                <thead>
+                    <tr>
+                      <th>Name</th>
+                      <th>Email</th>
+                      <th>Message</th>
+                      <th>Status</th>
+                      <th>Last updated date</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr *ngFor="let message of messages;">
+                        <td> {{ message.firstName }} {{ message.lastName }} </td>
+                        <td> {{ message.email }} </td>
+                        <td [innerHtml]="message.messageContent"></td>
+                        <td> 
+                          <ng-template [ngIf]="message.messageStatus == 0">
+                            <span class="badge bg-danger">Unread</span>
+                          </ng-template>
+                          <ng-template [ngIf]="message.messageStatus == 1">
+                            <span class="badge bg-warning">Read</span>
+                          </ng-template>
+                          <ng-template [ngIf]="message.messageStatus == 2">
+                            <span class="badge bg-primary">Awaiting response</span>
+                          </ng-template>
+                          <ng-template [ngIf]="message.messageStatus == 3">
+                            <span class="badge bg-success">Closed</span>
+                          </ng-template>
+                        </td>
+                        <td> 
+                          <date-printer [date]="message.updatedAtUtc"></date-printer>
+                         </td>
+                      </tr>
+                  </tbody>
+            </table>
+        </div>
+    </ng-container>
+    <div class="card-footer">
+        <button type="button" class="btn btn-primary float-right"><i class="fas fa-redo"></i></button>
+    </div>
+</div>
+
+<ng-template #no_messages>
+    <div class="card-body">
+        <label>You don't have any messages yet.</label>
+    </div>
+</ng-template>
