@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Result } from 'src/app/data/common/Result';
 import { ChangeUserPassword } from 'src/app/data/user/change-password';
 import { UserDetails } from 'src/app/data/user/user-details';
-import { ApiService } from 'src/app/services/api/api.service';
+import { AuthenticationService } from 'src/app/services/api/authentication/authentication.service';
 import { BreadcrumbsService } from 'src/app/services/breadcrumbs/breadcrumbs.service';
 import { ContentTitleService } from 'src/app/services/content-title/content-title.service';
 import { NotificationService } from 'src/app/services/notification/notification.service';
@@ -26,7 +26,7 @@ export class UserEditComponent implements OnInit {
 
   private detailsUrl = "user/details";
 
-  constructor(private readonly BreadcrumbService: BreadcrumbsService, private readonly contentTitleService: ContentTitleService, private apiService: ApiService, private notificationService: NotificationService) { }
+  constructor(private readonly BreadcrumbService: BreadcrumbsService, private readonly contentTitleService: ContentTitleService, private authenticationService: AuthenticationService, private notificationService: NotificationService) { }
 
   ngOnInit(): void {
 
@@ -51,7 +51,7 @@ export class UserEditComponent implements OnInit {
 
     this.contentTitleService.title.next("User Details");
 
-    this.apiService.get<UserDetails>(this.detailsUrl).subscribe((result: Result<UserDetails>) => {
+    this.authenticationService.getUserDetails().subscribe((result: Result<UserDetails>) => {
       if(result.succeeded) this.userDetails = result.data;
     })
   }
@@ -133,7 +133,7 @@ export class UserEditComponent implements OnInit {
 
   submit(): void {
     if(!this.userDetailsForm.valid()) return;
-    this.apiService.put(this.detailsUrl, this.userDetails).subscribe((result: Result<any>) => {
+    this.authenticationService.updateUserDetails(this.userDetails).subscribe((result: Result<any>) => {
       if(!result.succeeded){
         this.userDetailsError = result.messages[0];
         this.notificationService.warning("Couldn't save the settings")
@@ -145,7 +145,7 @@ export class UserEditComponent implements OnInit {
 
   submitChangePassword(): void {
     if(!this.changePasswordForm.valid()) return;
-    this.apiService.put('user/updatePassword', this.changePassword).subscribe((result: Result<any>) => {
+    this.authenticationService.updatePassword(this.changePassword).subscribe((result: Result<any>) => {
       if(!result.succeeded){
         this.changePasswordErrors = result.messages;
         this.notificationService.warning("Couldn't save the settings")

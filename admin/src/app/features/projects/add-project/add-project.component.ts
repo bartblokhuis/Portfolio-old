@@ -6,7 +6,8 @@ import { AddUpdateProject } from 'src/app/data/projects/add-update-project';
 import { Project } from 'src/app/data/projects/project';
 import { UpdateProjectSkills } from 'src/app/data/projects/update-project-skills';
 import { SkillGroup } from 'src/app/data/skill-groups/skill-group';
-import { ApiService } from 'src/app/services/api/api.service';
+import { ProjectsService } from 'src/app/services/api/projects/projects.service';
+import { SkillGroupsService } from 'src/app/services/api/skill-groups/skill-groups.service';
 import { NotificationService } from 'src/app/services/notification/notification.service';
 import { formatProjectSkillsSelect, validateProjectForm } from '../helpers/project-helpers';
 
@@ -29,7 +30,7 @@ export class AddProjectComponent implements OnInit {
 
   @Input() modalRef: NgbModalRef | undefined;
 
-  constructor(private apiService: ApiService, private notificationService: NotificationService) { }
+  constructor(private projectsService: ProjectsService, private skillGroupsService: SkillGroupsService, private notificationService: NotificationService) { }
 
   ngOnInit(): void {
     //Initialize Select2 Elements
@@ -39,7 +40,7 @@ export class AddProjectComponent implements OnInit {
     this.addProjectForm = $("#addProjectForm");
     validateProjectForm(this.addProjectForm);
 
-    this.apiService.get<SkillGroup[]>('SkillGroup').subscribe((result: Result<SkillGroup[]>) => {
+    this.skillGroupsService.getAll().subscribe((result: Result<SkillGroup[]>) => {
       if(result.succeeded) this.skillGroups = result.data;
     })
   }
@@ -60,7 +61,7 @@ export class AddProjectComponent implements OnInit {
   submit(): void {
     if(!this.addProjectForm.valid()) return;
 
-    this.apiService.post<Project>("Project", this.model).subscribe((result: Result<Project>) => {
+    this.projectsService.createProject(this.model).subscribe((result: Result<Project>) => {
 
       if(!result.succeeded) {
         this.modalRef?.close();
@@ -68,16 +69,15 @@ export class AddProjectComponent implements OnInit {
       }
 
       const project = result.data;
-
       let observables: Observable<any>[] = [];
 
       if(this.skillModel.skillIds && this.skillModel.skillIds.length !== 0){
         this.skillModel.projectId = project.id;
-        observables.push(this.apiService.put("Project/UpdateSkills", this.skillModel));
+        observables.push(this.projectsService.updateProjectSkills(this.skillModel));
       }
 
       if(this.formData) {
-        observables.push(this.apiService.put(`Project/UpdateDemoImage/${project.id}`, this.formData));
+        observables.push(this.projectsService.updateDemoImage(project.id, this.formData));
       }
 
       if(observables.length !== 0){

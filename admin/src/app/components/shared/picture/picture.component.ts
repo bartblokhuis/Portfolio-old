@@ -2,7 +2,7 @@ import { AfterViewInit, Component, EventEmitter, Input, OnInit, Output } from '@
 import { Observable } from 'rxjs';
 import { Picture } from 'src/app/data/common/picture';
 import { Result } from 'src/app/data/common/Result';
-import { ApiService } from 'src/app/services/api/api.service';
+import { PicturesService } from 'src/app/services/api/pictures/pictures.service';
 
 declare var $: any;
 @Component({
@@ -20,7 +20,7 @@ export class PictureComponent implements OnInit, AfterViewInit {
   formData: FormData | null = null;
   form: any;
 
-  constructor(private apiService: ApiService) { }
+  constructor(private picturesService: PicturesService) { }
   
   ngOnInit(): void {
     
@@ -81,7 +81,7 @@ export class PictureComponent implements OnInit, AfterViewInit {
       url += `&altAttribute=${this.picture.altAttribute}`;
     }
 
-    return this.apiService.post<Picture>(url, this.formData);
+    return this.picturesService.create(url, this.formData);
   }
 
   updatePicture(): Observable<Result<Picture>> {
@@ -95,7 +95,7 @@ export class PictureComponent implements OnInit, AfterViewInit {
 
     if(!this.formData) this.formData = new FormData();
 
-    return this.apiService.put<Picture>(url, this.formData);
+    return this.picturesService.edit(url, this.formData);
   }
 
   validatePictureForm(form: any): void {

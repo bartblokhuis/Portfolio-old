@@ -1,6 +1,6 @@
 import { Component, OnInit, ViewEncapsulation } from '@angular/core';
 import { first } from 'rxjs/operators';
-import { AuthenticationService } from 'src/app/services/authentication/authentication.service';
+import { AuthenticationService } from 'src/app/services/api/authentication/authentication.service';
 import { BodyService } from 'src/app/services/theming/body.service';
 
 declare var $: any;

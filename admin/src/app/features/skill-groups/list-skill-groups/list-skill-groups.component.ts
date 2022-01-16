@@ -5,7 +5,7 @@ import { CreateUpdateSkillGroup } from 'src/app/data/skill-groups/create-update-
 import { CreateSkillGroupCreatedEvent } from 'src/app/data/skill-groups/events/create-skill-group-created-event';
 import { ListSkillGroup, SkillGroup } from 'src/app/data/skill-groups/skill-group';
 import { Skill } from 'src/app/data/skills/skill';
-import { ApiService } from 'src/app/services/api/api.service';
+import { SkillGroupsService } from 'src/app/services/api/skill-groups/skill-groups.service';
 import { DeleteSkillGroupComponent } from '../delete-skill-group/delete-skill-group.component';
 import { CreateSkillComponent } from '../skills/create-skill/create-skill.component';
 
@@ -21,14 +21,14 @@ export class ListSkillGroupsComponent implements OnInit {
   skillGroups: ListSkillGroup[] | undefined;
   showCreateSkillGroup: boolean = false;
 
-  constructor(private apiService: ApiService, private modalService: NgbModal) { }
+  constructor(private skillGroupsService: SkillGroupsService, private modalService: NgbModal) { }
 
   ngOnInit(): void {
     this.loadSkillGroups();
   }
 
   loadSkillGroups(): void {
-    this.apiService.get<SkillGroup[]>('SkillGroup').subscribe((result: Result<SkillGroup[]>) => {
+    this.skillGroupsService.getAll().subscribe((result: Result<SkillGroup[]>) => {
       if(result.succeeded) this.skillGroups = result.data.map(s => ({ title: s.title, displayNumber: s.displayNumber, id: s.id, skills: s.skills, inEditMode: false }));
     })
   }
@@ -81,7 +81,7 @@ export class ListSkillGroupsComponent implements OnInit {
     if(!editForm.valid()) return;
 
     const editSkillGroup: CreateUpdateSkillGroup = { displayNumber: 0, id: skillGroupId, title: editTitle.value };
-    this.apiService.put<SkillGroup>('SkillGroup', editSkillGroup).subscribe((result) => {
+    this.skillGroupsService.edit(editSkillGroup).subscribe((result) => {
       if(!this.skillGroups || !result.succeeded) return;
 
       const skillGroupIndex = this.skillGroups.findIndex((skillGroup => skillGroup.id == skillGroupId));

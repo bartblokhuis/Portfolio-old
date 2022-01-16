@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Result } from 'src/app/data/common/Result';
 import { EmailSettings } from 'src/app/data/settings/email-settings';
-import { ApiService } from 'src/app/services/api/api.service';
+import { SettingsService } from 'src/app/services/api/settings/settings.service';
 import { BreadcrumbsService } from 'src/app/services/breadcrumbs/breadcrumbs.service';
 import { NotificationService } from 'src/app/services/notification/notification.service';
 
@@ -14,11 +14,10 @@ declare var $: any;
 export class EmailSettingsComponent implements OnInit {
 
   model: EmailSettings = { displayName: '', email: '', enableSsl: false, host: '', password: '', port: 0, sendTestEmailTo: '', useDefaultCredentials: false, username: '', siteOwnerEmailAddress: ''}
-  private url = "Settings/EmailSettings";
   private form: any;
   error: string | undefined;
 
-  constructor(private readonly BreadcrumbService: BreadcrumbsService, private apiService: ApiService, private notificationService: NotificationService) { }
+  constructor(private readonly BreadcrumbService: BreadcrumbsService, private settingsService: SettingsService, private notificationService: NotificationService) { }
 
   ngOnInit(): void {
     this.form = $("#email-settings-form");
@@ -36,7 +35,7 @@ export class EmailSettingsComponent implements OnInit {
       }
     ]);
 
-    this.apiService.get<EmailSettings>(this.url).subscribe((result: Result<EmailSettings>) => {
+    this.settingsService.getEmailSettings().subscribe((result: Result<EmailSettings>) => {
       if(result.succeeded) this.model = result.data;
     })
   }
@@ -106,7 +105,7 @@ export class EmailSettingsComponent implements OnInit {
   submit() : void {
     this.error = undefined;
     if(!this.form.valid()) return;
-    this.apiService.post(this.url, this.model).subscribe((result) => {
+    this.settingsService.saveEmailSettings(this.model).subscribe((result) => {
       if(!result.succeeded){
         this.error = result.messages[0];
         this.notificationService.warning("Could not update the settings")
