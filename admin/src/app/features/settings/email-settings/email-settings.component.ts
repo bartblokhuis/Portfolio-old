@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Result } from 'src/app/data/common/Result';
 import { EmailSettings } from 'src/app/data/settings/email-settings';
-import { ApiService } from 'src/app/services/api/api.service';
 import { SettingsService } from 'src/app/services/api/settings/settings.service';
 import { BreadcrumbsService } from 'src/app/services/breadcrumbs/breadcrumbs.service';
 import { NotificationService } from 'src/app/services/notification/notification.service';

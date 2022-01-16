@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Result } from 'src/app/data/common/Result';
 import { SeoSettings } from 'src/app/data/settings/seo-settings';
-import { ApiService } from 'src/app/services/api/api.service';
 import { SettingsService } from 'src/app/services/api/settings/settings.service';
 import { BreadcrumbsService } from 'src/app/services/breadcrumbs/breadcrumbs.service';
 import { ContentTitleService } from 'src/app/services/content-title/content-title.service';
