@@ -15,6 +15,14 @@ export class PicturesService {
     return this.apiService.get<Picture[]>("Picture");
   }
 
+  create(url: string, formData: FormData): Observable<Result<Picture>> {
+    return this.apiService.post<Picture>(url, formData)
+  }
+
+  edit(url: string, formData: FormData): Observable<Result<Picture>> {
+    return this.apiService.put<Picture>(url, formData)
+  }
+
   delete(pictureId: number): Observable<Result> {
     return this.apiService.delete(`Picture?pictureId=${pictureId}`)
   }
