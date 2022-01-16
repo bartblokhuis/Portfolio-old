@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { AboutMe } from 'src/app/data/about-me';
 import { Result } from 'src/app/data/common/Result';
+import { AboutMeService } from 'src/app/services/api/about-me/about-me.service';
 import { ApiService } from 'src/app/services/api/api.service';
 import { NotificationService } from 'src/app/services/notification/notification.service';
 
@@ -15,13 +16,13 @@ export class AboutMeComponent implements OnInit {
   aboutMe : AboutMe = { title: '', content: '' }
   aboutMeForm: any;
 
-  constructor(private apiService: ApiService, private notificationService: NotificationService) { }
+  constructor(private aboutMeService: AboutMeService, private notificationService: NotificationService) { }
 
   ngOnInit(): void {
     this.aboutMeForm = $('#aboutMeForm');
     this.validateAboutMe();
 
-    this.apiService.get<AboutMe>('AboutMe').subscribe((result: Result<AboutMe>) => {
+    this.aboutMeService.get().subscribe((result: Result<AboutMe>) => {
       if(result.succeeded) this.aboutMe = result.data;
     });
   }
@@ -36,7 +37,7 @@ export class AboutMeComponent implements OnInit {
   submit(){
     if (!this.aboutMeForm.valid()) return;
 
-    this.apiService.post('AboutMe', this.aboutMe).subscribe((result) => {
+    this.aboutMeService.save(this.aboutMe).subscribe((result) => {
       this.notificationService.success('Saved the changes')
     })
   }
