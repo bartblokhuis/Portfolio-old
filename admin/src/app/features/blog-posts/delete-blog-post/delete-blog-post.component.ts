@@ -2,7 +2,7 @@ import { Component, Input, OnInit } from '@angular/core';
 import { NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
 import { ListBlog } from 'src/app/data/blog/list-blog';
 import { Result } from 'src/app/data/common/Result';
-import { ApiService } from 'src/app/services/api/api.service';
+import { BlogPostsService } from 'src/app/services/api/blog-posts/blog-posts.service';
 import { NotificationService } from 'src/app/services/notification/notification.service';
 
 @Component({
@@ -15,7 +15,7 @@ export class DeleteBlogPostComponent implements OnInit {
   @Input() modal: NgbModalRef | null = null;
   @Input() blogPost: ListBlog | null = null;
 
-  constructor(private apiService: ApiService, private notificationService: NotificationService) { }
+  constructor(private blogPostsService: BlogPostsService, private notificationService: NotificationService) { }
 
   ngOnInit(): void {
   }
@@ -24,7 +24,7 @@ export class DeleteBlogPostComponent implements OnInit {
 
     if(!this.blogPost) return;
 
-    this.apiService.delete(`BlogPost?id=${this.blogPost.id}`).subscribe((result: Result<any>) => {
+    this.blogPostsService.deleteBlogPost(this.blogPost.id).subscribe((result: Result<any>) => {
       if(!result.succeeded) this.notificationService.success(`Failed to remove the blog post`)
       else this.notificationService.success(`Removed blog post: ${this.blogPost?.title}`)
       this.modal?.close("removed");

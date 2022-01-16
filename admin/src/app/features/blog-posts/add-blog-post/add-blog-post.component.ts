@@ -3,7 +3,7 @@ import { Router } from '@angular/router';
 import { CreateBlog } from 'src/app/data/blog/create-blog';
 import { ListBlog } from 'src/app/data/blog/list-blog';
 import { Result } from 'src/app/data/common/Result';
-import { ApiService } from 'src/app/services/api/api.service';
+import { BlogPostsService } from 'src/app/services/api/blog-posts/blog-posts.service';
 import { ContentTitleService } from 'src/app/services/content-title/content-title.service';
 import { validateBlogForm } from '../helpers/blog-helper';
 
@@ -19,7 +19,7 @@ export class AddBlogPostComponent implements OnInit {
   model: CreateBlog = { title: '', content: '', description: '', displayNumber: 0, isPublished: false, metaDescription: '', metaTitle: '' };
   form: any;
 
-  constructor(private contentTitleService: ContentTitleService, private apiService: ApiService, private router: Router) { }
+  constructor(private contentTitleService: ContentTitleService, private blogPostsService: BlogPostsService, private router: Router) { }
 
   ngOnInit(): void {
     this.contentTitleService.title.next("Add blog post");
@@ -32,7 +32,7 @@ export class AddBlogPostComponent implements OnInit {
 
     if(!this.form.valid()) return;
 
-    this.apiService.post<ListBlog>("BlogPost", this.model).subscribe((result: Result<ListBlog>) => {
+    this.blogPostsService.createBlogPost(this.model).subscribe((result: Result<ListBlog>) => {
       this.router.navigate([`blog/edit/${result.data.id}`]);
     });
 

@@ -3,7 +3,7 @@ import { Router } from '@angular/router';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { ListBlog } from 'src/app/data/blog/list-blog';
 import { Result } from 'src/app/data/common/Result';
-import { ApiService } from 'src/app/services/api/api.service';
+import { BlogPostsService } from 'src/app/services/api/blog-posts/blog-posts.service';
 import { DeleteBlogPostComponent } from '../delete-blog-post/delete-blog-post.component';
 
 @Component({
@@ -15,14 +15,14 @@ export class ListBlogPostComponent implements OnInit {
 
   blogPosts: ListBlog[] = [];
 
-  constructor(private apiService: ApiService, private router: Router,private modalService: NgbModal) { }
+  constructor(private blogPostsService: BlogPostsService, private router: Router,private modalService: NgbModal) { }
 
   ngOnInit(): void {
     this.loadBlog();
   }
 
   loadBlog() : void {
-    this.apiService.get<ListBlog[]>('BlogPost?includeUnPublished=true').subscribe((result: Result<ListBlog[]>) => {
+    this.blogPostsService.getAll().subscribe((result: Result<ListBlog[]>) => {
       this.blogPosts = result.data;
     })
   }

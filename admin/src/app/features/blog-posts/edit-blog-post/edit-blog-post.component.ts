@@ -1,11 +1,10 @@
 import { Component, OnInit, ViewEncapsulation } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import QuillType from 'quill';
 import { EditBlog } from 'src/app/data/blog/edit-blog';
 import { UpdateBlogPicture } from 'src/app/data/blog/update-blog-picture';
 import { Picture } from 'src/app/data/common/picture';
 import { Result } from 'src/app/data/common/Result';
-import { ApiService } from 'src/app/services/api/api.service';
+import { BlogPostsService } from 'src/app/services/api/blog-posts/blog-posts.service';
 import { ContentTitleService } from 'src/app/services/content-title/content-title.service';
 import { NotificationService } from 'src/app/services/notification/notification.service';
 import { validateBlogForm } from '../helpers/blog-helper';
@@ -26,7 +25,7 @@ export class EditBlogPostComponent implements OnInit{
   form: any;
   titleError: string | null = null;
 
-  constructor(private route: ActivatedRoute, private apiService: ApiService, private contentTitleService: ContentTitleService, private router: Router, private notificationService: NotificationService) { }
+  constructor(private route: ActivatedRoute, private blogPostsService: BlogPostsService, private contentTitleService: ContentTitleService, private router: Router, private notificationService: NotificationService) { }
 
   ngOnInit(): void {
 
@@ -38,7 +37,7 @@ export class EditBlogPostComponent implements OnInit{
     const id = parseInt(idParam);
     this.model.id = id;
 
-    this.apiService.get<EditBlog>(`BlogPost/GetById/?id=${id}&includeUnPublished=true`).subscribe((result) => {
+    this.blogPostsService.getById(id).subscribe((result) => {
 
       if(!result.succeeded) this.router.navigate(['blog']);
       this.model = result.data;
@@ -57,7 +56,7 @@ export class EditBlogPostComponent implements OnInit{
 
     if(!this.form.valid()) return;
 
-    this.apiService.put<EditBlog>("BlogPost", this.model).subscribe((result: Result<EditBlog>) => {
+    this.blogPostsService.editBlogPost(this.model).subscribe((result: Result<EditBlog>) => {
       if(result.succeeded) this.router.navigate(['blog']);
 
       this.titleError = result.messages[0];
@@ -68,7 +67,7 @@ export class EditBlogPostComponent implements OnInit{
     this.thumbnailPicture = picture;
     const model: UpdateBlogPicture = { blogPostId: this.model.id, pictureId: picture.id ?? 0 };
 
-    this.apiService.put("BlogPost/UpdateThumbnailPicture", model).subscribe((result) => {
+    this.blogPostsService.updateThumbnail(model).subscribe((result) => {
       this.notificationService.success("Updated the banner picture")
     })
   }
@@ -77,7 +76,7 @@ export class EditBlogPostComponent implements OnInit{
     this.bannerPicture = picture;
     const model: UpdateBlogPicture = { blogPostId: this.model.id, pictureId: picture.id ?? 0 };
 
-    this.apiService.put("BlogPost/UpdateBannerPicture", model).subscribe((result) => {
+    this.blogPostsService.updateBanner(model).subscribe((result) => {
       this.notificationService.success("Updated the banner picture")
     })
   }
