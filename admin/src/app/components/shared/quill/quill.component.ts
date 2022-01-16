@@ -3,7 +3,7 @@ import { NG_VALUE_ACCESSOR } from '@angular/forms';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { QuillModules } from 'ngx-quill';
 import QuillType from 'quill';
-import { GridPictureComponent } from 'src/app/modules/pictures/grid-picture/grid-picture.component';
+import { GridPictureComponent } from 'src/app/features/pictures/grid-picture/grid-picture.component';
 import { environment } from 'src/environments/environment';
 
 @Component({
