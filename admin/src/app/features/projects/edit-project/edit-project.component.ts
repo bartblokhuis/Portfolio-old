@@ -6,7 +6,8 @@ import { AddUpdateProject } from 'src/app/data/projects/add-update-project';
 import { Project } from 'src/app/data/projects/project';
 import { UpdateProjectSkills } from 'src/app/data/projects/update-project-skills';
 import { SkillGroup } from 'src/app/data/skill-groups/skill-group';
-import { ApiService } from 'src/app/services/api/api.service';
+import { ProjectsService } from 'src/app/services/api/projects/projects.service';
+import { SkillGroupsService } from 'src/app/services/api/skill-groups/skill-groups.service';
 import { NotificationService } from 'src/app/services/notification/notification.service';
 import { formatProjectSkillsSelect, validateProjectForm } from '../helpers/project-helpers';
 
@@ -32,7 +33,7 @@ export class EditProjectComponent implements OnInit, AfterViewInit {
   editProjectForm: any;
   projectTitle: string = '';
   
-  constructor(private apiService: ApiService, private notificationService: NotificationService) { }
+  constructor(private projectsService: ProjectsService, private skillGroupsService: SkillGroupsService, private notificationService: NotificationService) { }
   
 
   ngOnInit(): void {
@@ -57,7 +58,7 @@ export class EditProjectComponent implements OnInit, AfterViewInit {
     this.editProjectForm = $("#editProjectForm");
     validateProjectForm(this.editProjectForm);
 
-    this.apiService.get<SkillGroup[]>('SkillGroup').subscribe((result: Result<SkillGroup[]>) => {
+    this.skillGroupsService.getAll().subscribe((result: Result<SkillGroup[]>) => {
       if(result.succeeded) this.skillGroups = result.data;
     });
   }
@@ -85,15 +86,15 @@ export class EditProjectComponent implements OnInit, AfterViewInit {
     if(!this.editProjectForm.valid() || !this.project) return;
 
     let observables: Observable<any>[] = [];
-    observables.push(this.apiService.put<Project>("Project", this.model));
+    observables.push(this.projectsService.updateProject(this.model));
 
     if(this.skillModel.skillIds){
       this.skillModel.projectId = this.project.id;
-      observables.push(this.apiService.put("Project/UpdateSkills", this.skillModel));
+      observables.push(this.projectsService.updateProjectSkills(this.skillModel));
     }
 
     if(this.formData) {
-      observables.push(this.apiService.put(`Project/UpdateDemoImage/${this.project.id}`, this.formData));
+      observables.push(this.projectsService.updateDemoImage(this.project.id, this.formData));
     }
 
     combineLatest(observables).subscribe(() => {
