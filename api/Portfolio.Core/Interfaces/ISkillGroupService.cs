@@ -1,7 +1,7 @@
-﻿using System.Collections.Generic;
+﻿using Portfolio.Domain.Models;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using Portfolio.Domain.Models;
 
 namespace Portfolio.Core.Interfaces;
 

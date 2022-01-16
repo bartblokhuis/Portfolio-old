@@ -9,8 +9,6 @@ import { FormsModule } from '@angular/forms';
 import { EditProjectComponent } from './edit-project/edit-project.component';
 import { DeleteProjectComponent } from './delete-project/delete-project.component';
 
-
-
 @NgModule({
   declarations: [
     ListProjectsComponent,

@@ -58,6 +58,17 @@ public class UploadImageHelper : IUploadImageHelper
         return path;
     }
 
+    public void DeleteImage(string path)
+    {
+        var uploadPath = Path.Combine(_hostingEnvironment.ContentRootPath, string.Format("wwwroot{0}", Path.DirectorySeparatorChar));
+        var fullPath = Path.Combine(uploadPath, path);
+
+        if (File.Exists(fullPath))
+        {
+            File.Delete(fullPath);
+        }
+    }
+
     #region Utils
 
     private static string GetAllwedFileExtensions()

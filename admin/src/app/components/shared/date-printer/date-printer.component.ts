@@ -30,7 +30,7 @@ export class DatePrinterComponent implements OnInit {
     
     //If the year is not the same as the current year print it.
     if(this.formatedDate.getFullYear() !== this.currentDate.getFullYear()) {
-      this.displayDate = this.formatedDate.getFullYear() + "-" + monthNames[this.formatedDate.getMonth()] + "-" + this.formatedDate.getDate();
+      this.displayDate = this.formatedDate.getFullYear() + " " + monthNames[this.formatedDate.getMonth()] + " " + this.formatedDate.getDate();
     }
     else if(this.formatedDate.getMonth() !== this.currentDate.getMonth() || this.getWeekNumber(this.formatedDate) !== this.getWeekNumber(this.currentDate)) {
       this.displayDate = monthNames[this.formatedDate.getMonth()] + " " + this.formatedDate.getDate();

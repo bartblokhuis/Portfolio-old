@@ -1,9 +1,7 @@
 import { Component, OnInit, ViewEncapsulation } from '@angular/core';
+import { first } from 'rxjs/operators';
 import { AuthenticationService } from 'src/app/services/authentication/authentication.service';
 import { BodyService } from 'src/app/services/theming/body.service';
-import { first } from 'rxjs/operators';
-import { ApiService } from 'src/app/services/api/api.service';
-import { ActivatedRoute, Router } from '@angular/router';
 
 declare var $: any;
 

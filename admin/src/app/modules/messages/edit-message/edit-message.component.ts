@@ -2,7 +2,6 @@ import { AfterViewInit, Component, Input, OnInit, QueryList, ViewChildren } from
 import { NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
 import { Message } from 'src/app/data/messages/message';
 import { MessageStatus, MessageStatusToLabelMapping } from 'src/app/data/messages/message-status';
-import { UpdateMessage } from 'src/app/data/messages/update-message';
 import { MessagesService } from 'src/app/services/messages/messages.service';
 
 

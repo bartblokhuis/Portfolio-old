@@ -8,4 +8,6 @@ public interface IUploadImageHelper
     string ValidateImage(IFormFile image);
 
     Task<string> UploadImage(IFormFile image);
+
+    void DeleteImage(string path);
 }

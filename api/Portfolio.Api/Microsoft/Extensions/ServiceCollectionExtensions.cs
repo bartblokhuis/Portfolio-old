@@ -64,10 +64,11 @@ public static class ServiceCollectionExtensions
             .AddScoped<ISkillService, SkillService>()
             .AddScoped<IAboutMeService, AboutMeService>()
             .AddScoped<IProjectService, ProjectService>()
-            .AddScoped<IBlogService, BlogService>()
+            .AddScoped<IBlogPostService, BlogPostService>()
             .AddSingleton(new HostingConfig())
-            .AddScoped<IWebHelper, WebHelper>();
-            .AddScoped<IEmailService, EmailService>();
+            .AddScoped<IWebHelper, WebHelper>()
+            .AddScoped<IEmailService, EmailService>()
+            .AddScoped<IPictureService, PictureService>();
 
         return services;
     }

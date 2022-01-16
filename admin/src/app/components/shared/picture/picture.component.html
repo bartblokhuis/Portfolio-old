@@ -1,0 +1,29 @@
+<form [id]="'picture-' + label">
+    <div class="row">
+        <div class="col-4">
+            <div class="form-group">
+                <label>{{ label }}</label>
+                <div class="custom-file">
+                <input type="file" class="form-control" [id]="label" [name]="label" (change)="onFileChange($event)" />
+                <label class="custom-file-label" [for]="label"> {{ picture.path }} </label>
+                </div>
+                <label *ngIf="imageRequiredError" class="error invalid-feedback" style="display: inline;">{{imageRequiredError}}</label>
+            </div>  
+        </div>
+        <div class="col-4">
+            <div class="form-group">
+                <label>{{ label }} title attribute</label>
+                <input class="form-control" type="text" [(ngModel)]="picture.titleAttribute" name="titleAttribute"/>
+            </div>
+        </div>
+        <div class="col-4">
+            <div class="form-group">
+                <label>{{ label }} alt attribute</label>
+                <input class="form-control" type="text" [(ngModel)]="picture.altAttribute" name="altAttribute"/>
+            </div>
+        </div>
+        <div class="col-12">
+            <button class="btn btn-primary" (click)="savePicture()">Save changes</button>
+        </div>
+    </div>
+</form>

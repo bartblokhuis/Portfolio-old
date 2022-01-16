@@ -37,7 +37,6 @@ export class AuthenticationService {
         const user: User = { username: username, expiration: result.data.expiration, id: result.data.userId, token: result.data.token }
         localStorage.setItem('currentUser', JSON.stringify(user));
 
-        console.log(this.currentUserSubject);
         if(!this.currentUserSubject) this.currentUserSubject = new BehaviorSubject<User>(user);
         else this.currentUserSubject?.next(user)
         

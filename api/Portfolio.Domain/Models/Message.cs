@@ -1,6 +1,6 @@
-﻿using System;
-using Portfolio.Domain.Enums;
+﻿using Portfolio.Domain.Enums;
 using Portfolio.Domain.Models.Common;
+using System;
 
 namespace Portfolio.Domain.Models;
 

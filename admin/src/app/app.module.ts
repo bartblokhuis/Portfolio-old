@@ -11,8 +11,9 @@ import { JwtInterceptor } from './helpers/jwt-interceptor';
 import { AdminComponent } from './layouts/admin/admin.component';
 import { AuthComponent } from './layouts/auth/auth.component';
 import { AboutMeModule } from './modules/about-me/about-me.module';
-import { BlogModule } from './modules/blog/blog.module';
+import { BlogPostsModule } from './modules/blog-posts/blog-posts.module';
 import { MessagesModule } from './modules/messages/messages.module';
+import { PicturesModule } from './modules/pictures/pictures.module';
 import { ProjectsModule } from './modules/projects/projects.module';
 import { SettingsModule } from './modules/settings/settings.module';
 import { SkillGroupsModule } from './modules/skill-groups/skill-groups.module';
@@ -34,9 +35,10 @@ import { UserModule } from './modules/user/user.module';
     ProjectsModule,
     UserModule,
     SettingsModule,
-    BlogModule,
+    PicturesModule,
+    BlogPostsModule,
     SharedComponentsModule,
-    QuillModule.forRoot() //<-- Updated Quill Module
+    QuillModule.forRoot()
   ],
   providers: [
     {

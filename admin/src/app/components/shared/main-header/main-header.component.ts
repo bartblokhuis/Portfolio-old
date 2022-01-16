@@ -40,7 +40,6 @@ export class MainHeaderComponent implements OnInit {
   toggleTheme(): void {
     
     if(this.themingService.theme.value === 'dark-mode') {
-      console.log('test')
       this.themingService.theme.next('light-mode');
     }
     else {

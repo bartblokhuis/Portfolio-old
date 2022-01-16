@@ -1,5 +1,5 @@
-﻿using System.Collections.Generic;
-using Portfolio.Domain.Models.Common;
+﻿using Portfolio.Domain.Models.Common;
+using System.Collections.Generic;
 
 namespace Portfolio.Domain.Models;
 
