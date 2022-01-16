@@ -13,6 +13,7 @@ export class SidebarComponent {
   hasNewMessages: boolean = false;
 
   menuItems : MenuItem[] = [ 
+    { name: "Dashboard", path: "/dashboard", icon: "nav-icon fas fa-home" }, 
     { name: "About me", path: "/about-me", icon: "nav-icon fas fa-male" }, 
     { name: "Skills", path: "/skills", icon: "nav-icon fas fa-trophy" }, 
     { name: "Projects", path: "/projects", icon: "nav-icon fas fa-tasks" },

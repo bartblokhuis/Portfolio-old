@@ -6,13 +6,19 @@ import { AdminComponent } from './layouts/admin/admin.component';
 const routes: Routes = [
   {
     path: '',
-    redirectTo: 'about-me',
+    redirectTo: 'dashboard',
     pathMatch: 'full'
   },
   {
     path: '',
     component: AdminComponent,
     children: [
+      {
+        path: '',
+        loadChildren: () => import('./features/dashboard/dashboard.module').then(
+          module => module.DashboardModule
+        ),
+      },
       {
         path: '',
         loadChildren: () => import('./features/about-me/about-me.module').then(
