@@ -17,7 +17,7 @@ export class BlogListComponent implements OnInit {
   constructor(private apiService: ApiService) { }
 
   ngOnInit(): void {
-    this.apiService.get<ListBlog[]>('Blog?includeUnPublished=false').subscribe((result: Result<ListBlog[]>) => {
+    this.apiService.get<ListBlog[]>('BlogPost?includeUnPublished=false').subscribe((result: Result<ListBlog[]>) => {
       this.blogPosts = result.data;
     })
   }

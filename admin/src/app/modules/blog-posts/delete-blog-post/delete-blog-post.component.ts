@@ -7,10 +7,10 @@ import { NotificationService } from 'src/app/services/notification/notification.
 
 @Component({
   selector: 'app-delete-blog',
-  templateUrl: './delete-blog.component.html',
-  styleUrls: ['./delete-blog.component.scss']
+  templateUrl: './delete-blog-post.component.html',
+  styleUrls: ['./delete-blog-post.component.scss']
 })
-export class DeleteBlogComponent implements OnInit {
+export class DeleteBlogPostComponent implements OnInit {
   
   @Input() modal: NgbModalRef | null = null;
   @Input() blogPost: ListBlog | null = null;
@@ -24,7 +24,7 @@ export class DeleteBlogComponent implements OnInit {
 
     if(!this.blogPost) return;
 
-    this.apiService.delete(`Blog?id=${this.blogPost.id}`).subscribe((result: Result<any>) => {
+    this.apiService.delete(`BlogPost?id=${this.blogPost.id}`).subscribe((result: Result<any>) => {
       if(!result.succeeded) this.notificationService.success(`Failed to remove the blog post`)
       else this.notificationService.success(`Removed blog post: ${this.blogPost?.title}`)
       this.modal?.close("removed");

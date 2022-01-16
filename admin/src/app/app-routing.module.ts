@@ -45,8 +45,8 @@ const routes: Routes = [
       },
       {
         path: '',
-        loadChildren: () => import('./modules/blog/blog.module').then(
-          module => module.BlogModule
+        loadChildren: () => import('./modules/blog-posts/blog-posts.module').then(
+          module => module.BlogPostsModule
         ),
       },
       {

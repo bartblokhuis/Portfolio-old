@@ -1,15 +1,21 @@
-﻿using Portfolio.Domain.Models;
+﻿using Portfolio.Domain.Models.Common;
 using System;
 
-namespace Portfolio.Domain.Dtos.Blogs;
+namespace Portfolio.Domain.Models;
 
-public class BlogDto : BaseBlogDto
+public class BlogPost : BaseEntity, IHasDisplayNumber, IFullyAudited
 {
     #region Properties
 
+    public string Title { get; set; }
+
+    public string Description { get; set; }
+
     public string Content { get; set; }
 
-    public int Id { get; set; }
+    public bool IsPublished { get; set; }
+
+    public int DisplayNumber { get; set; }
 
     public string MetaTitle { get; set; }
 

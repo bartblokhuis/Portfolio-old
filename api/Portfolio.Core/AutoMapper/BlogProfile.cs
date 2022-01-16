@@ -1,5 +1,5 @@
 ﻿using AutoMapper;
-using Portfolio.Domain.Dtos.Blogs;
+using Portfolio.Domain.Dtos.BlogPosts;
 using Portfolio.Domain.Models;
 using Portfolio.Domain.Wrapper;
 
@@ -9,12 +9,12 @@ public class BlogProfile : Profile
 {
     public BlogProfile()
     {
-        CreateMap<Blog, ListBlogDto>().ReverseMap();
-        CreateMap<Blog, BlogDto>();
+        CreateMap<BlogPost, ListBlogPostDto>().ReverseMap();
+        CreateMap<BlogPost, BlogPostDto>();
 
-        CreateMap<CreateBlogDto, Blog>();
-        CreateMap<UpdateBlogDto, Blog>();
+        CreateMap<CreateBlogPostDto, BlogPost>();
+        CreateMap<UpdateBlogPostDto, BlogPost>();
 
-        CreateMap<ListResult<Blog>, ListResult<ListBlogDto>>();
+        CreateMap<ListResult<BlogPost>, ListResult<ListBlogPostDto>>();
     }
 }

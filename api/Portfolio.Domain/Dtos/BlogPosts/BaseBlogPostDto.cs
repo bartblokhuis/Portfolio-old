@@ -1,6 +1,6 @@
-﻿namespace Portfolio.Domain.Dtos.Blogs;
+﻿namespace Portfolio.Domain.Dtos.BlogPosts;
 
-public abstract class BaseBlogDto
+public abstract class BaseBlogPostDto
 {
     #region Properties
 

@@ -14,11 +14,11 @@ declare var $: any;
 
 @Component({
   selector: 'app-edit-blog',
-  templateUrl: './edit-blog.component.html',
-  styleUrls: ['./edit-blog.component.scss'],
+  templateUrl: './edit-blog-post.component.html',
+  styleUrls: ['./edit-blog-post.component.scss'],
   encapsulation: ViewEncapsulation.None
 })
-export class EditBlogComponent implements OnInit{
+export class EditBlogPostComponent implements OnInit{
 
   model: EditBlog = { content: '', description: '', displayNumber: 0, id: 0, isPublished: true, title: '', metaDescription: '', metaTitle: '', thumbnail: null, thumbnailId: null, bannerPicture: null, bannerPictureId: null };
   bannerPicture: Picture = { altAttribute: '', id: null, mimeType: '', path: '', titleAttribute: '' };
@@ -38,7 +38,7 @@ export class EditBlogComponent implements OnInit{
     const id = parseInt(idParam);
     this.model.id = id;
 
-    this.apiService.get<EditBlog>(`Blog/GetById/?id=${id}&includeUnPublished=true`).subscribe((result) => {
+    this.apiService.get<EditBlog>(`BlogPost/GetById/?id=${id}&includeUnPublished=true`).subscribe((result) => {
 
       if(!result.succeeded) this.router.navigate(['blog']);
       this.model = result.data;
@@ -57,7 +57,7 @@ export class EditBlogComponent implements OnInit{
 
     if(!this.form.valid()) return;
 
-    this.apiService.put<EditBlog>("Blog", this.model).subscribe((result: Result<EditBlog>) => {
+    this.apiService.put<EditBlog>("BlogPost", this.model).subscribe((result: Result<EditBlog>) => {
       if(result.succeeded) this.router.navigate(['blog']);
 
       this.titleError = result.messages[0];
@@ -68,7 +68,7 @@ export class EditBlogComponent implements OnInit{
     this.thumbnailPicture = picture;
     const model: UpdateBlogPicture = { blogPostId: this.model.id, pictureId: picture.id ?? 0 };
 
-    this.apiService.put("Blog/UpdateThumbnailPicture", model).subscribe((result) => {
+    this.apiService.put("BlogPost/UpdateThumbnailPicture", model).subscribe((result) => {
       this.notificationService.success("Updated the banner picture")
     })
   }
@@ -77,7 +77,7 @@ export class EditBlogComponent implements OnInit{
     this.bannerPicture = picture;
     const model: UpdateBlogPicture = { blogPostId: this.model.id, pictureId: picture.id ?? 0 };
 
-    this.apiService.put("Blog/UpdateBannerPicture", model).subscribe((result) => {
+    this.apiService.put("BlogPost/UpdateBannerPicture", model).subscribe((result) => {
       this.notificationService.success("Updated the banner picture")
     })
   }

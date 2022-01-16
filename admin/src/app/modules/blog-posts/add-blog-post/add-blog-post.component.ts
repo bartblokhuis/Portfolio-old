@@ -11,10 +11,10 @@ declare var $:any;
 
 @Component({
   selector: 'app-add-blog',
-  templateUrl: './add-blog.component.html',
-  styleUrls: ['./add-blog.component.scss']
+  templateUrl: './add-blog-post.component.html',
+  styleUrls: ['./add-blog-post.component.scss']
 })
-export class AddBlogComponent implements OnInit {
+export class AddBlogPostComponent implements OnInit {
 
   model: CreateBlog = { title: '', content: '', description: '', displayNumber: 0, isPublished: false, metaDescription: '', metaTitle: '' };
   form: any;
@@ -32,7 +32,7 @@ export class AddBlogComponent implements OnInit {
 
     if(!this.form.valid()) return;
 
-    this.apiService.post<ListBlog>("Blog", this.model).subscribe((result: Result<ListBlog>) => {
+    this.apiService.post<ListBlog>("BlogPost", this.model).subscribe((result: Result<ListBlog>) => {
       this.router.navigate([`blog/edit/${result.data.id}`]);
     });
 

@@ -38,7 +38,7 @@ public class PortfolioContext : DbContext
 
     public DbSet<GeneralSettings> GeneralSettings { get; set; }
 
-    public DbSet<Blog> Blogs { get; set; }
+    public DbSet<BlogPost> BlogPosts { get; set; }
 
     public DbSet<Picture> Pictures { get; set; }
 

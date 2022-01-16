@@ -1,9 +1,9 @@
 ﻿using Portfolio.Domain.Models;
 using System;
 
-namespace Portfolio.Domain.Dtos.Blogs;
+namespace Portfolio.Domain.Dtos.BlogPosts;
 
-public  class ListBlogDto : BaseBlogDto
+public  class ListBlogPostDto : BaseBlogPostDto
 {
     #region Properties
 

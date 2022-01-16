@@ -1,6 +1,6 @@
-﻿namespace Portfolio.Domain.Dtos.Blogs;
+﻿namespace Portfolio.Domain.Dtos.BlogPosts;
 
-public class UpdateBlogPictureDto
+public class UpdateBlogPostPictureDto
 {
     public int BlogPostId { get; set; }
 

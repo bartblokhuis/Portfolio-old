@@ -16,7 +16,7 @@ export class SidebarComponent {
     { name: "About me", path: "/about-me", icon: "nav-icon fas fa-male" }, 
     { name: "Skills", path: "/skills", icon: "nav-icon fas fa-trophy" }, 
     { name: "Projects", path: "/projects", icon: "nav-icon fas fa-tasks" },
-    { name: "Blog", path: "/blog", icon: "nav-icon fas fa-book" },
+    { name: "Blog posts", path: "/blog", icon: "nav-icon fas fa-book" },
     { name: "Messages", path: "/messages", icon: "nav-icon fas fa-inbox" },
     { name: "Pictures", path: "/pictures", icon: "nav-icon fas fa-image" },
     { name: 'Settings', path: '', icon: 'nav-icon fas fa-cog', menuItems: [

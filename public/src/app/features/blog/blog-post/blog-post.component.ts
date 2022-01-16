@@ -31,7 +31,7 @@ export class BlogPostComponent implements OnInit {
       title = title.replace("+", "%2B");
     }
 
-    this.apiService.get<Blog>(`Blog/GetByTitle?title=${title}&includeUnPublished=false`).subscribe((result: Result<Blog>) => {
+    this.apiService.get<Blog>(`BlogPost/GetByTitle?title=${title}&includeUnPublished=false`).subscribe((result: Result<Blog>) => {
 
       if(!result.succeeded) this.router.navigate([`blog`]);
 

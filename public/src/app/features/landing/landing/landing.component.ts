@@ -1,5 +1,5 @@
 import { DOCUMENT } from '@angular/common';
-import { Component, HostListener, Inject, OnInit, ViewEncapsulation } from '@angular/core';
+import { AfterViewInit, Component, HostListener, Inject, OnInit, ViewEncapsulation } from '@angular/core';
 import { NavigationEnd, Router } from '@angular/router';
 
 declare var AOS: any;
@@ -10,13 +10,16 @@ declare var AOS: any;
   styleUrls: ['./landing.component.scss'],
   encapsulation: ViewEncapsulation.None
 })
-export class LandingComponent implements OnInit {
+export class LandingComponent implements OnInit, AfterViewInit {
 
   constructor(private router: Router, @Inject(DOCUMENT) private document: Document) { }
-
-  @HostListener("window:load", []) onWindowLoad() {
+  ngAfterViewInit(): void {
     if(AOS) AOS.init();
   }
+
+  // @HostListener("window:load", []) onWindowLoad() {
+  //   if(AOS) AOS.init();
+  // }
 
   ngOnInit(): void {
     this.router.events.subscribe(val => {
