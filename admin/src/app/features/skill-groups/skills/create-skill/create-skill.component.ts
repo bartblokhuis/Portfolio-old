@@ -4,7 +4,7 @@ import { Result } from 'src/app/data/common/Result';
 import { SkillGroup } from 'src/app/data/skill-groups/skill-group';
 import { CreateSkill } from 'src/app/data/skills/create-skill';
 import { Skill } from 'src/app/data/skills/skill';
-import { ApiService } from 'src/app/services/api/api.service';
+import { SkillsService } from 'src/app/services/api/skills/skills.service';
 import { NotificationService } from 'src/app/services/notification/notification.service';
 import { validateSkillForm } from '../helpers/skill-helpers';
 
@@ -25,7 +25,7 @@ export class CreateSkillComponent implements OnInit {
   form: any;
   error: string | undefined;
 
-  constructor(private apiService: ApiService, private notificationService: NotificationService) {
+  constructor(private skillsService: SkillsService, private notificationService: NotificationService) {
   }
 
   ngOnInit(): void {
@@ -48,10 +48,10 @@ export class CreateSkillComponent implements OnInit {
   submit() : void {
     if(!this.form.valid()) return;
 
-    this.apiService.post<Skill>("Skill", this.model).subscribe((result: Result<Skill>) => {
+    this.skillsService.create(this.model).subscribe((result: Result<Skill>) => {
 
       if(this.formData) {
-        this.apiService.put<Skill>(`Skill/SaveSkillImage/${result.data.id}`, this.formData).subscribe((resultWithImage: Result<Skill>) => {
+        this.skillsService.saveSkillImage(result.data.id, this.formData).subscribe((resultWithImage: Result<Skill>) => {
           this.modalRef?.close(resultWithImage.data);
         });
       }

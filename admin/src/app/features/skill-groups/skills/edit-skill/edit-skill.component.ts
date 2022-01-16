@@ -3,7 +3,7 @@ import { NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
 import { Result } from 'src/app/data/common/Result';
 import { EditSkill } from 'src/app/data/skills/edit-skill';
 import { Skill } from 'src/app/data/skills/skill';
-import { ApiService } from 'src/app/services/api/api.service';
+import { SkillsService } from 'src/app/services/api/skills/skills.service';
 import { validateSkillForm } from '../helpers/skill-helpers';
 
 declare var $: any;
@@ -24,7 +24,7 @@ export class EditSkillComponent implements OnInit {
   formData: FormData | undefined;
   error: string | undefined;
 
-  constructor(private apiService: ApiService) { }
+  constructor(private skillsService: SkillsService) { }
 
   ngOnInit(): void {
     this.currentFileName = this.skill?.iconPath ?? "";
@@ -40,10 +40,10 @@ export class EditSkillComponent implements OnInit {
   submit() : void {
     if(!this.form.valid()) return;
 
-    this.apiService.put<Skill>("Skill", this.model).subscribe((result: Result<Skill>) => {
+    this.skillsService.edit(this.model).subscribe((result: Result<Skill>) => {
 
       if(this.formData) {
-        this.apiService.put<Skill>(`Skill/SaveSkillImage/${result.data.id}`, this.formData).subscribe((resultWithImage: Result<Skill>) => {
+        this.skillsService.saveSkillImage(result.data.id, this.formData).subscribe((resultWithImage: Result<Skill>) => {
           this.modal?.close(resultWithImage.data);
         });
       }
