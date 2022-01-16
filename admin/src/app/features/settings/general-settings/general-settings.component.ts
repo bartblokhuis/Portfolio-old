@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Result } from 'src/app/data/common/Result';
 import { GeneralSettings } from 'src/app/data/settings/general-settings';
 import { ApiService } from 'src/app/services/api/api.service';
+import { SettingsService } from 'src/app/services/api/settings/settings.service';
 import { BreadcrumbsService } from 'src/app/services/breadcrumbs/breadcrumbs.service';
 import { NotificationService } from 'src/app/services/notification/notification.service';
 
@@ -13,10 +14,9 @@ import { NotificationService } from 'src/app/services/notification/notification.
 export class GeneralSettingsComponent implements OnInit {
 
   model: GeneralSettings = { callToActionText: '', footerText: '', footerTextBetweenCopyRightAndYear: false, githubUrl: '', landingDescription: '', landingTitle: '', linkedInUrl: '', showContactMeForm: false, showCopyRightInFooter: false, stackOverFlowUrl: ''}
-  private url = "Settings/GeneralSettings";
   private form: any;
 
-  constructor(private readonly BreadcrumbService: BreadcrumbsService, private apiService: ApiService, private notificationService: NotificationService) { }
+  constructor(private readonly BreadcrumbService: BreadcrumbsService, private settingsService: SettingsService, private notificationService: NotificationService) { }
 
   ngOnInit(): void {
     this.BreadcrumbService.setBreadcrumb([
@@ -32,13 +32,13 @@ export class GeneralSettingsComponent implements OnInit {
       }
     ]);
 
-    this.apiService.get<GeneralSettings>(this.url).subscribe((result: Result<GeneralSettings>) => {
+    this.settingsService.getGeneralSettings().subscribe((result: Result<GeneralSettings>) => {
       if(result.succeeded) this.model = result.data;
     })
   }
 
   submit(): void {
-    this.apiService.post(this.url, this.model).subscribe((result) => {
+    this.settingsService.saveGeneralSettings(this.model).subscribe((result) => {
       this.notificationService.success('Saved the changes')
     });
   }
