@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
@@ -7,6 +8,9 @@ using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 using Portfolio.Core.AutoMapper;
 using Portfolio.Core.Configuration;
+using Portfolio.Core.Events;
+using Portfolio.Core.Helpers;
+using Portfolio.Core.Infrastructure;
 using Portfolio.Core.Interfaces;
 using Portfolio.Core.Interfaces.Common;
 using Portfolio.Core.Services;
@@ -21,10 +25,13 @@ public static class ServiceCollectionExtensions
 {
     #region Methods
 
-    public static void AddPortfolioServices(this IServiceCollection services, IConfiguration configuration)
+    public static void AddPortfolioServices(this IServiceCollection services, IConfiguration configuration, IWebHostEnvironment webHostEnvironment)
     {
+        CommonHelper.DefaultFileProvider = new PortfolioFileProvider(webHostEnvironment);
+
         services.AddControllers();
-        services.AddHttpContextAccessor();
+        services.AddHttpContextAccessor()
+            .AddFileProvider();
 
         services.AddSettings(configuration)
             .AddDatabases(configuration)
@@ -33,9 +40,12 @@ public static class ServiceCollectionExtensions
             .AddAppServices()
             .AddAuthentication(configuration)
             .AddOpenApi()
+            .AddEventPublisher()
             .AddAutoMapper(typeof(PortfolioMappings))
             .AddAutoMapper(typeof(BlogProfile))
             .AddCors((options => { options.AddPolicy("AllowAllOrigins", builder => builder.AllowAnyOrigin()); }));
+
+        services.AddEngine(configuration);
 
     }
 
@@ -43,6 +53,28 @@ public static class ServiceCollectionExtensions
     {
         services.AddMemoryCache();
         services.AddSingleton<CacheService>();
+        return services;
+    }
+
+    private static IServiceCollection AddEngine(this IServiceCollection services, IConfiguration configuration)
+    {
+        var engine = EngineContext.Create();
+        engine.ConfigureServices(services, configuration);
+
+        return services;
+    }
+
+    private static IServiceCollection AddFileProvider(this IServiceCollection services)
+    {
+        services.AddScoped<IPortfolioFileProvider, PortfolioFileProvider>();
+
+        return services;
+    }
+
+    private static IServiceCollection AddEventPublisher(this IServiceCollection services)
+    {
+        services.AddScoped<IEventPublisher, EventPublisher>();
+
         return services;
     }
 
