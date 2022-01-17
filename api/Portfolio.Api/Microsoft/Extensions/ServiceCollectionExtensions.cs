@@ -35,12 +35,10 @@ public static class ServiceCollectionExtensions
         services.AddHttpContextAccessor()
             .AddFileProvider();
 
-        services.AddSingleton<IStaticCacheManager, MemoryCacheManager>();
-
         services.AddSettings(configuration)
             .AddDatabases(configuration)
-            .AddRepository()
             .AddCache()
+            .AddRepository()
             .AddAppServices()
             .AddAuthentication(configuration)
             .AddOpenApi()
@@ -55,8 +53,8 @@ public static class ServiceCollectionExtensions
 
     private static IServiceCollection AddCache(this IServiceCollection services)
     {
-        services.AddMemoryCache();
-        services.AddSingleton<CacheService>();
+        services.AddMemoryCache()
+            .AddSingleton<IStaticCacheManager, MemoryCacheManager>();
         return services;
     }
 
