@@ -2,7 +2,7 @@
 using Portfolio.Domain.Models.Common;
 using System.Threading.Tasks;
 
-namespace Portfolio.Core.Services.Common;
+namespace Portfolio.Core.Services.Settings;
 public class SettingsService<T> : ISettingService<T> where T: BaseEntity, ISetting
 {
     #region Fields
@@ -24,7 +24,7 @@ public class SettingsService<T> : ISettingService<T> where T: BaseEntity, ISetti
 
     public async Task<T> Get()
     {
-        var setting = await _repository.FirstAsync();
+        var setting = await _repository.FirstAsync(cache => cache.PrepareKeyForDefaultCache(SettingsDefaults.SettingsCacheKey, typeof(T).Name));
         return setting;
     }
 
@@ -37,5 +37,4 @@ public class SettingsService<T> : ISettingService<T> where T: BaseEntity, ISetti
     }
 
     #endregion
-
 }

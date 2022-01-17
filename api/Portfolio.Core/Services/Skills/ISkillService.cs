@@ -3,12 +3,12 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace Portfolio.Core.Interfaces;
+namespace Portfolio.Core.Services.Skills;
 public interface ISkillService
 {
-    Task<IQueryable<Skill>> GetAll();
+    Task<IEnumerable<Skill>> GetAll();
 
-    Task<IQueryable<Skill>> GetBySkillGroupId(int skillGroupId);
+    Task<IEnumerable<Skill>> GetBySkillGroupId(int skillGroupId);
 
     Task Insert(Skill skillDto);
 
@@ -22,5 +22,5 @@ public interface ISkillService
 
     Task<bool> IsExistingSkill(string name, int skillGroup, Skill skillToIgnor = null);
 
-    Task<IQueryable<Skill>> GetSkillsByIds(IEnumerable<int> ids);
+    Task<IEnumerable<Skill>> GetSkillsByIds(IEnumerable<int> ids);
 }

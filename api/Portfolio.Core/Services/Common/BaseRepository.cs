@@ -153,9 +153,20 @@ public class BaseRepository<TEntity, TKey, TDbContext> : IBaseRepository<TEntity
         return _dbSet.ToListAsync();
     }
 
-    public Task<TEntity> FirstAsync()
+    public async Task<TEntity> FirstAsync(Func<IStaticCacheManager, CacheKey> getCacheKey = null, bool includeDeleted = true)
     {
-        return _dbSet.FirstOrDefaultAsync();
+        async Task<TEntity> getEntityAsync()
+        {
+            return await _dbSet.FirstAsync();
+        }
+
+        if (getCacheKey == null)
+            return await getEntityAsync();
+
+
+        //caching
+        var cacheKey = getCacheKey(_staticCacheManager);
+        return await _staticCacheManager.GetAsync(cacheKey, getEntityAsync);
     }
 
     public Task<TEntity> FirstOrDefaultAsync(Expression<Func<TEntity, bool>> predicate)

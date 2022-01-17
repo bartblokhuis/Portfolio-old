@@ -3,11 +3,11 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace Portfolio.Core.Interfaces;
+namespace Portfolio.Core.Services.SkillGroups;
 
 public interface ISkillGroupService
 {
-    Task<IEnumerable<SkillGroup>> GetAll(bool includeSkills = true);
+    Task<IEnumerable<SkillGroup>> GetAll();
 
     Task Insert(SkillGroup skillGroupDto);
 

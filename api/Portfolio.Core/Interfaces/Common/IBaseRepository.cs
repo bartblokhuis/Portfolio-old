@@ -26,14 +26,8 @@ public interface IBaseRepository<TEntity, TKey, TDbContext>
 {
     public DbSet<TEntity> Table { get; }
 
-    Task<IQueryable<TEntity>> GetAsync(Expression<Func<TEntity, bool>> filter = null,
-        Func<IQueryable<TEntity>, IOrderedQueryable<TEntity>> orderBy = null,
-        string includeProperties = "");
-
     Task<IList<TEntity>> GetAllAsync(Func<IQueryable<TEntity>, IQueryable<TEntity>> func = null,
             Func<IStaticCacheManager, CacheKey> getCacheKey = null, bool includeDeleted = true);
-
-    Task<List<TEntity>> GetAllAsync();
 
     Task InsertAsync(TEntity entuty);
 
@@ -53,7 +47,7 @@ public interface IBaseRepository<TEntity, TKey, TDbContext>
 
     int Count();
 
-    Task<TEntity> FirstAsync();
+    Task<TEntity> FirstAsync(Func<IStaticCacheManager, CacheKey> getCacheKey = null, bool includeDeleted = true);
 
     Task<TEntity> FirstOrDefaultAsync(Expression<Func<TEntity, bool>> predicate);
 }

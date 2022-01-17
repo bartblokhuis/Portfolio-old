@@ -6,14 +6,13 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace Portfolio.Core.Services;
+namespace Portfolio.Core.Services.SkillGroups;
 
 public class SkillGroupService : ISkillGroupService
 {
     #region Fields
 
     private readonly IBaseRepository<SkillGroup> _skillGroupRepository;
-    private const string CACHE_KEY = "SKILL.GROUPS.";
 
     #endregion
 
@@ -28,15 +27,12 @@ public class SkillGroupService : ISkillGroupService
 
     #region Methods
 
-    public async Task<IEnumerable<SkillGroup>> GetAll(bool includeSkills = true)
+    public async Task<IEnumerable<SkillGroup>> GetAll()
     {
-        var cacheKey = includeSkills ? CACHE_KEY + "LIST.INCLUDE.SKILLS" : CACHE_KEY + "LIST";
+        var skillGroups = await _skillGroupRepository.GetAllAsync(query => query.OrderByDescending(x => x.DisplayNumber).Include(x => x.Skills),
+            cache => cache.PrepareKeyForDefaultCache(SkillGroupDefaults.AllSkillGroupsCacheKey));
 
-        var queryableSkillGroups = includeSkills ?
-            await _skillGroupRepository.GetAsync(orderBy: (s) => s.OrderBy(x => x.DisplayNumber), includeProperties: "Skills"):
-            await _skillGroupRepository.GetAsync(orderBy: (s) => s.OrderBy(x => x.DisplayNumber));
-
-        return queryableSkillGroups;
+        return skillGroups;
     }
 
     public async Task<SkillGroup> GetById(int id)

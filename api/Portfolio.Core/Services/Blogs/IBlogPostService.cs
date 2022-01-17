@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
-namespace Portfolio.Core.Interfaces;
+namespace Portfolio.Core.Services.Blogs;
 
 public interface IBlogPostService
 {

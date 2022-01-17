@@ -1,13 +1,12 @@
 using AutoMapper;
 using Microsoft.EntityFrameworkCore;
-using Portfolio.Core.Interfaces;
 using Portfolio.Core.Interfaces.Common;
 using Portfolio.Domain.Models;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace Portfolio.Core.Services;
+namespace Portfolio.Core.Services.Skills;
 public class SkillService : ISkillService
 {
     #region Fields
@@ -39,14 +38,22 @@ public class SkillService : ISkillService
         return _skillRepository.GetByIdAsync(id);
     }
 
-    public Task<IQueryable<Skill>> GetAll()
+    public async Task<IEnumerable<Skill>> GetAll()
     {
-        return _skillRepository.GetAsync(orderBy: (s) => s.OrderBy(skill => skill.SkillGroupId).ThenBy(skill => skill.DisplayNumber));
+        var skills = await _skillRepository.GetAllAsync(query => query.OrderByDescending(skill => skill.SkillGroupId).ThenBy(skill => skill.DisplayNumber));
+        return skills;
     }
 
-    public Task<IQueryable<Skill>> GetBySkillGroupId(int skillGroupId)
+    public async Task<IEnumerable<Skill>> GetBySkillGroupId(int skillGroupId)
     {
-        return _skillRepository.GetAsync(filter: (s) => s.SkillGroupId == skillGroupId, orderBy: (s) => s.OrderBy(skill => skill.DisplayNumber));
+        var skills = await _skillRepository.GetAllAsync(query => query.Where(skill => skill.SkillGroupId == skillGroupId).OrderByDescending(skill => skill.SkillGroupId).ThenBy(skill => skill.DisplayNumber));
+        return skills;
+    }
+
+    public async Task<IEnumerable<Skill>> GetSkillsByIds(IEnumerable<int> ids)
+    {
+        var skills = await _skillRepository.GetAllAsync(query => query.Where(skill => ids.Contains(skill.Id)));
+        return skills;
     }
 
     public Task Insert(Skill skillDto)
@@ -57,11 +64,6 @@ public class SkillService : ISkillService
     public Task Update(Skill skillDto)
     {
         return _skillRepository.UpdateAsync(skillDto);
-    }
-
-    public Task<IQueryable<Skill>> GetSkillsByIds(IEnumerable<int> ids)
-    {
-        return _skillRepository.GetAsync(filter: (s) => ids.Contains(s.Id));
     }
 
     #region Utils

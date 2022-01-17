@@ -1,11 +1,13 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using Portfolio.Core.Interfaces.Common;
 using Portfolio.Domain.Enums;
 using Portfolio.Domain.Models;
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace Portfolio.Core.Interfaces.Common;
+namespace Portfolio.Core.Services.Messages;
 
 public class MessageService : IMessageService
     {
@@ -32,9 +34,9 @@ public class MessageService : IMessageService
             return message;
         }
 
-        public async Task<IQueryable<Message>> Get()
+        public async Task<IEnumerable<Message>> Get()
         {
-            var messages = await _messageRepository.GetAsync((message) => message.IsDeleted == false);
+            var messages = await _messageRepository.GetAllAsync(includeDeleted: false);
             return messages.OrderByDescending(x => x.CreatedAtUTC);
         }
 

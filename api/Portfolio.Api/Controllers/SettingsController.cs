@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using MimeKit;
 using Portfolio.Core.Interfaces.Common;
+using Portfolio.Core.Services.Settings;
 using Portfolio.Domain.Dtos;
 using Portfolio.Domain.Models.Settings;
 using Portfolio.Domain.Wrapper;

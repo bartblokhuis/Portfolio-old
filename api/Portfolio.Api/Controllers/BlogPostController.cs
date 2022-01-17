@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Portfolio.Core.Interfaces;
+using Portfolio.Core.Services.Blogs;
 using Portfolio.Domain.Dtos.BlogPosts;
 using Portfolio.Domain.Models;
 using Portfolio.Domain.Wrapper;

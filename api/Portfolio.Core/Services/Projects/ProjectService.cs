@@ -6,7 +6,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace Portfolio.Core.Services;
+namespace Portfolio.Core.Services.Projects;
 
 public class ProjectService : IProjectService
 {
@@ -29,8 +29,9 @@ public class ProjectService : IProjectService
 
     public async Task<IEnumerable<Project>> Get()
     {
-        var queryableProjects = await _projectRepository.GetAsync(includeProperties: "Skills");
-        return queryableProjects;
+        var projects = await _projectRepository.GetAllAsync(query => query.Include(x => x.Skills),
+            cache => cache.PrepareKeyForDefaultCache(ProjectDefaults.AllProjectsCacheKey));
+        return projects;
     }
 
     public async Task<Project> GetById(int id)

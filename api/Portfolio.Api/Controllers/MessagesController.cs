@@ -5,12 +5,15 @@ using Microsoft.Extensions.Logging;
 using MimeKit;
 using Portfolio.Core.Interfaces;
 using Portfolio.Core.Interfaces.Common;
+using Portfolio.Core.Services.Messages;
+using Portfolio.Core.Services.Settings;
 using Portfolio.Domain.Dtos;
 using Portfolio.Domain.Dtos.Messages;
 using Portfolio.Domain.Models;
 using Portfolio.Domain.Models.Settings;
 using Portfolio.Domain.Wrapper;
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -51,7 +54,7 @@ public class MessagesController : ControllerBase
     [HttpGet]
     public async Task<IActionResult> Get()
     {
-        var messages = await (await _messageService.Get()).ToListResultAsync();
+        var messages = (await _messageService.Get()).ToListResult();
 
         var result = _mapper.Map<ListResult<MessageDto>>(messages);
         result.Succeeded = true;
