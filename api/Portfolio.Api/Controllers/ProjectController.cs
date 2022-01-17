@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using AutoMapper;
+﻿using AutoMapper;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -12,6 +8,10 @@ using Portfolio.Core.Interfaces.Common;
 using Portfolio.Domain.Dtos.Projects;
 using Portfolio.Domain.Models;
 using Portfolio.Domain.Wrapper;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
 
 namespace Portfolio.Controllers;
 

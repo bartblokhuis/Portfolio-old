@@ -6,7 +6,7 @@ import { AdminComponent } from './layouts/admin/admin.component';
 const routes: Routes = [
   {
     path: '',
-    redirectTo: 'about-me',
+    redirectTo: 'dashboard',
     pathMatch: 'full'
   },
   {
@@ -15,32 +15,50 @@ const routes: Routes = [
     children: [
       {
         path: '',
-        loadChildren: () => import('./modules/about-me/about-me.module').then(
+        loadChildren: () => import('./features/dashboard/dashboard.module').then(
+          module => module.DashboardModule
+        ),
+      },
+      {
+        path: '',
+        loadChildren: () => import('./features/about-me/about-me.module').then(
           module => module.AboutMeModule
         ),
       },
       {
         path: '',
-        loadChildren: () => import('./modules/messages/messages.module').then(
+        loadChildren: () => import('./features/messages/messages.module').then(
           module => module.MessagesModule
         ),
       },
       {
         path: '',
-        loadChildren: () => import('./modules/projects/projects.module').then(
+        loadChildren: () => import('./features/projects/projects.module').then(
           module => module.ProjectsModule
         ),
       },
       {
         path: '',
-        loadChildren: () => import('./modules/skill-groups/skill-groups.module').then(
+        loadChildren: () => import('./features/skill-groups/skill-groups.module').then(
           module => module.SkillGroupsModule
         ),
       },
       {
         path: '',
-        loadChildren: () => import('./modules/settings/settings.module').then(
+        loadChildren: () => import('./features/settings/settings.module').then(
           module => module.SettingsModule
+        ),
+      },
+      {
+        path: '',
+        loadChildren: () => import('./features/blog-posts/blog-posts.module').then(
+          module => module.BlogPostsModule
+        ),
+      },
+      {
+        path: '',
+        loadChildren: () => import('./features/pictures/pictures.module').then(
+          module => module.PicturesModule
         ),
       }
     ],
@@ -48,7 +66,7 @@ const routes: Routes = [
   },
   {
     path: '',
-    loadChildren: () => import('./modules/user/user.module').then(
+    loadChildren: () => import('./features/user/user.module').then(
       module => module.UserModule
     )
   }

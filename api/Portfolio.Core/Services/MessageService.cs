@@ -2,13 +2,12 @@
 using Portfolio.Domain.Enums;
 using Portfolio.Domain.Models;
 using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
 namespace Portfolio.Core.Interfaces.Common;
 
-    public class MessageService : IMessageService
+public class MessageService : IMessageService
     {
         #region Fields
 

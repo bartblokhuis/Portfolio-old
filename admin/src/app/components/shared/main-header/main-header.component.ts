@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Message } from 'src/app/data/messages/message';
 import { MessageStatus } from "src/app/data/messages/message-status";
-import { AuthenticationService } from 'src/app/services/authentication/authentication.service';
+import { AuthenticationService } from 'src/app/services/api/authentication/authentication.service';
 import { MessagesService } from 'src/app/services/messages/messages.service';
 import { ThemingService } from 'src/app/services/theming/theming.service';
 
@@ -40,7 +40,6 @@ export class MainHeaderComponent implements OnInit {
   toggleTheme(): void {
     
     if(this.themingService.theme.value === 'dark-mode') {
-      console.log('test')
       this.themingService.theme.next('light-mode');
     }
     else {

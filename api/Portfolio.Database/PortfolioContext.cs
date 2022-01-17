@@ -1,10 +1,11 @@
-﻿using System;
+﻿using Microsoft.EntityFrameworkCore;
+using Portfolio.Domain.Models;
+using Portfolio.Domain.Models.Common;
+using Portfolio.Domain.Models.Settings;
+using System;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
-using Microsoft.EntityFrameworkCore;
-using Portfolio.Domain.Models;
-using Portfolio.Domain.Models.Common;
 
 namespace Portfolio.Database;
 
@@ -36,6 +37,10 @@ public class PortfolioContext : DbContext
     public DbSet<SeoSettings> SeoSettings { get; set; }
 
     public DbSet<GeneralSettings> GeneralSettings { get; set; }
+
+    public DbSet<BlogPost> BlogPosts { get; set; }
+
+    public DbSet<Picture> Pictures { get; set; }
 
     #endregion
 

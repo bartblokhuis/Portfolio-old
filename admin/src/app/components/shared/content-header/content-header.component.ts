@@ -1,5 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-import { NavigationEnd, Router } from '@angular/router';
 import { BreadcrumbItem } from 'src/app/data/breadcrumb-item';
 import { BreadcrumbsService } from 'src/app/services/breadcrumbs/breadcrumbs.service';
 import { ContentTitleService } from 'src/app/services/content-title/content-title.service';

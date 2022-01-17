@@ -2,26 +2,33 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
+using Portfolio.Database;
+
+#nullable disable
 
 namespace Portfolio.Database.Migrations
 {
-    [DbContext(typeof(Portfolio.Database.PortfolioContext))]
+    [DbContext(typeof(PortfolioContext))]
     partial class PortfolioContextModelSnapshot : ModelSnapshot
     {
         protected override void BuildModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .UseIdentityColumns()
-                .HasAnnotation("Relational:MaxIdentifierLength", 128)
-                .HasAnnotation("ProductVersion", "5.0.4");
+                .HasAnnotation("ProductVersion", "6.0.1")
+                .HasAnnotation("Relational:MaxIdentifierLength", 128);
+
+            SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder, 1L, 1);
 
             modelBuilder.Entity("Portfolio.Domain.Models.AboutMe", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .UseIdentityColumn();
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
 
                     b.Property<string>("Content")
                         .HasColumnType("nvarchar(max)");
@@ -34,93 +41,63 @@ namespace Portfolio.Database.Migrations
                     b.ToTable("AboutMes");
                 });
 
-            modelBuilder.Entity("Portfolio.Domain.Models.EmailSettings", b =>
+            modelBuilder.Entity("Portfolio.Domain.Models.Blog", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .UseIdentityColumn();
-
-                    b.Property<string>("DisplayName")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Email")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<bool>("EnableSsl")
-                        .HasColumnType("bit");
-
-                    b.Property<string>("Host")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Password")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<int>("Port")
                         .HasColumnType("int");
 
-                    b.Property<string>("SendTestEmailTo")
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+
+                    b.Property<int?>("BannerPictureId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Content")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<bool>("UseDefaultCredentials")
+                    b.Property<DateTime>("CreatedAtUTC")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Description")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("DisplayNumber")
+                        .HasColumnType("int");
+
+                    b.Property<bool>("IsPublished")
                         .HasColumnType("bit");
 
-                    b.Property<string>("Username")
+                    b.Property<string>("MetaDescription")
                         .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("MetaTitle")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int?>("ThumbnailId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Title")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("UpdatedAtUtc")
+                        .HasColumnType("datetime2");
 
                     b.HasKey("Id");
 
-                    b.ToTable("EmailSettings");
-                });
+                    b.HasIndex("BannerPictureId");
 
-            modelBuilder.Entity("Portfolio.Domain.Models.GeneralSettings", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .UseIdentityColumn();
+                    b.HasIndex("ThumbnailId");
 
-                    b.Property<string>("CallToActionText")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("FooterText")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<bool>("FooterTextBetweenCopyRightAndYear")
-                        .HasColumnType("bit");
-
-                    b.Property<string>("GithubUrl")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("LandingDescription")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("LandingTitle")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("LinkedInUrl")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<bool>("ShowContactMeForm")
-                        .HasColumnType("bit");
-
-                    b.Property<bool>("ShowCopyRightInFooter")
-                        .HasColumnType("bit");
-
-                    b.Property<string>("StackOverFlowUrl")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("GeneralSettings");
+                    b.ToTable("Blogs");
                 });
 
             modelBuilder.Entity("Portfolio.Domain.Models.Message", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .UseIdentityColumn();
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
 
                     b.Property<DateTime>("CreatedAtUTC")
                         .HasColumnType("datetime2");
@@ -157,12 +134,38 @@ namespace Portfolio.Database.Migrations
                     b.ToTable("Messages");
                 });
 
+            modelBuilder.Entity("Portfolio.Domain.Models.Picture", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+
+                    b.Property<string>("AltAttribute")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("MimeType")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Path")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("TitleAttribute")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Pictures");
+                });
+
             modelBuilder.Entity("Portfolio.Domain.Models.Project", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .UseIdentityColumn();
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
 
                     b.Property<string>("DemoUrl")
                         .HasColumnType("nvarchar(max)");
@@ -190,12 +193,99 @@ namespace Portfolio.Database.Migrations
                     b.ToTable("Projects");
                 });
 
-            modelBuilder.Entity("Portfolio.Domain.Models.SeoSettings", b =>
+            modelBuilder.Entity("Portfolio.Domain.Models.Settings.EmailSettings", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .UseIdentityColumn();
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+
+                    b.Property<string>("DisplayName")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Email")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<bool>("EnableSsl")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("Host")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Password")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("Port")
+                        .HasColumnType("int");
+
+                    b.Property<string>("SendTestEmailTo")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("SiteOwnerEmailAddress")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<bool>("UseDefaultCredentials")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("Username")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("EmailSettings");
+                });
+
+            modelBuilder.Entity("Portfolio.Domain.Models.Settings.GeneralSettings", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+
+                    b.Property<string>("CallToActionText")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("FooterText")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<bool>("FooterTextBetweenCopyRightAndYear")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("GithubUrl")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("LandingDescription")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("LandingTitle")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("LinkedInUrl")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<bool>("ShowContactMeForm")
+                        .HasColumnType("bit");
+
+                    b.Property<bool>("ShowCopyRightInFooter")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("StackOverFlowUrl")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("GeneralSettings");
+                });
+
+            modelBuilder.Entity("Portfolio.Domain.Models.Settings.SeoSettings", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
 
                     b.Property<string>("DefaultMetaDescription")
                         .HasColumnType("nvarchar(max)");
@@ -221,8 +311,9 @@ namespace Portfolio.Database.Migrations
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .UseIdentityColumn();
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
 
                     b.Property<int>("DisplayNumber")
                         .HasColumnType("int");
@@ -247,8 +338,9 @@ namespace Portfolio.Database.Migrations
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .UseIdentityColumn();
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
 
                     b.Property<int>("DisplayNumber")
                         .HasColumnType("int");
@@ -274,6 +366,21 @@ namespace Portfolio.Database.Migrations
                     b.HasIndex("SkillsId");
 
                     b.ToTable("ProjectSkill");
+                });
+
+            modelBuilder.Entity("Portfolio.Domain.Models.Blog", b =>
+                {
+                    b.HasOne("Portfolio.Domain.Models.Picture", "BannerPicture")
+                        .WithMany()
+                        .HasForeignKey("BannerPictureId");
+
+                    b.HasOne("Portfolio.Domain.Models.Picture", "Thumbnail")
+                        .WithMany()
+                        .HasForeignKey("ThumbnailId");
+
+                    b.Navigation("BannerPicture");
+
+                    b.Navigation("Thumbnail");
                 });
 
             modelBuilder.Entity("Portfolio.Domain.Models.Skill", b =>

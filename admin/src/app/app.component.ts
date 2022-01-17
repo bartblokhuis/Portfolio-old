@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 import { BodyService } from './services/theming/body.service';
-import { ThemingService } from './services/theming/theming.service';
 
 @Component({
   selector: 'app-root',
@@ -9,7 +8,6 @@ import { ThemingService } from './services/theming/theming.service';
 })
 export class AppComponent implements OnInit {
   title = 'admin';
-  private currentTheme: string = 'dark-mode';
 
   constructor(private bodyService: BodyService) {}
 

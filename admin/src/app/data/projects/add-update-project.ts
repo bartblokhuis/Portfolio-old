@@ -1,5 +1,3 @@
-import { Skill } from "../skills/skill";
-
 export interface AddUpdateProject {
     title: string,
     description: string,

@@ -1,0 +1,17 @@
+<app-navbar></app-navbar>
+
+<div class="image-banner" *ngIf="blogPost && blogPost.bannerPicture">
+    <img [src]="baseUrl + blogPost.bannerPicture.path" [alt]="blogPost.bannerPicture.altAttribute ?? ''" [title]="blogPost.bannerPicture.titleAttribute ?? ''">
+</div>
+
+
+<div class="container blog-post" *ngIf="blogPost">
+    <div class="blog-post-header">
+        <h1>{{blogPost.title}}</h1>
+    </div>
+    <div class="blog-post-body">
+        <div [innerHtml]="blogPost.content"></div>
+    </div>
+</div>
+
+<app-footer></app-footer>

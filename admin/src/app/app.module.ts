@@ -10,18 +10,21 @@ import { ErrorInterceptor } from './helpers/error-interceptor';
 import { JwtInterceptor } from './helpers/jwt-interceptor';
 import { AdminComponent } from './layouts/admin/admin.component';
 import { AuthComponent } from './layouts/auth/auth.component';
-import { AboutMeModule } from './modules/about-me/about-me.module';
-import { MessagesModule } from './modules/messages/messages.module';
-import { ProjectsModule } from './modules/projects/projects.module';
-import { SettingsModule } from './modules/settings/settings.module';
-import { SkillGroupsModule } from './modules/skill-groups/skill-groups.module';
-import { UserModule } from './modules/user/user.module';
+import { AboutMeModule } from './features/about-me/about-me.module';
+import { BlogPostsModule } from './features/blog-posts/blog-posts.module';
+import { MessagesModule } from './features/messages/messages.module';
+import { PicturesModule } from './features/pictures/pictures.module';
+import { ProjectsModule } from './features/projects/projects.module';
+import { SettingsModule } from './features/settings/settings.module';
+import { SkillGroupsModule } from './features/skill-groups/skill-groups.module';
+import { UserModule } from './features/user/user.module';
+import { RichTextEditorModule } from './components/rich-text-editor/rich-text-editor.module';
 
 @NgModule({
   declarations: [
     AppComponent,
     AdminComponent,
-    AuthComponent,
+    AuthComponent
   ],
   imports: [
     BrowserModule,
@@ -33,8 +36,10 @@ import { UserModule } from './modules/user/user.module';
     ProjectsModule,
     UserModule,
     SettingsModule,
+    PicturesModule,
+    BlogPostsModule,
     SharedComponentsModule,
-    QuillModule.forRoot() //<-- Updated Quill Module
+    RichTextEditorModule
   ],
   providers: [
     {
