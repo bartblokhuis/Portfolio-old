@@ -7,6 +7,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 using Portfolio.Core.AutoMapper;
+using Portfolio.Core.Caching;
 using Portfolio.Core.Configuration;
 using Portfolio.Core.Events;
 using Portfolio.Core.Helpers;
@@ -14,6 +15,7 @@ using Portfolio.Core.Infrastructure;
 using Portfolio.Core.Interfaces;
 using Portfolio.Core.Interfaces.Common;
 using Portfolio.Core.Services;
+using Portfolio.Core.Services.Blogs;
 using Portfolio.Core.Services.Common;
 using Portfolio.Database;
 using Portfolio.Domain.Models.Authentication;
@@ -32,6 +34,8 @@ public static class ServiceCollectionExtensions
         services.AddControllers();
         services.AddHttpContextAccessor()
             .AddFileProvider();
+
+        services.AddSingleton<IStaticCacheManager, MemoryCacheManager>();
 
         services.AddSettings(configuration)
             .AddDatabases(configuration)

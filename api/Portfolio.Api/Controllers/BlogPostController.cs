@@ -49,7 +49,12 @@ namespace Portfolio.Controllers
             if (includeUnPublished && !_httpContextAccessor.HttpContext.User.Identity.IsAuthenticated)
                 return Ok(await Result.FailAsync("Unauthorized"));
 
-            var posts = (await _blogPostService.Get(includeUnPublished)).ToListResult();
+            ListResult<BlogPost> posts = null;
+
+            if(includeUnPublished)
+                posts = (await _blogPostService.GetAllBlogPostsAsync()).ToListResult();
+            else
+                posts = (await _blogPostService.GetPublishedBlogPostsAsync()).ToListResult();
 
             var result = _mapper.Map<ListResult<ListBlogPostDto>>(posts);
             result.Succeeded = true;

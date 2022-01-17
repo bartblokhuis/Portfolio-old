@@ -1,4 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using Portfolio.Core.Caching;
 using Portfolio.Database;
 using System;
 using System.Collections.Generic;
@@ -29,6 +30,9 @@ public interface IBaseRepository<TEntity, TKey, TDbContext>
         Func<IQueryable<TEntity>, IOrderedQueryable<TEntity>> orderBy = null,
         string includeProperties = "");
 
+    Task<IList<TEntity>> GetAllAsync(Func<IQueryable<TEntity>, IQueryable<TEntity>> func = null,
+            Func<IStaticCacheManager, CacheKey> getCacheKey = null, bool includeDeleted = true);
+
     Task<List<TEntity>> GetAllAsync();
 
     Task InsertAsync(TEntity entuty);
@@ -45,7 +49,7 @@ public interface IBaseRepository<TEntity, TKey, TDbContext>
 
     Task DeleteAsync(TKey id);
 
-    Task<TEntity> GetByIdAsync(TKey id);
+    Task<TEntity> GetByIdAsync(TKey id, string includeProperties = "", Func<IStaticCacheManager, CacheKey> getCacheKey = null);
 
     int Count();
 
