@@ -8,11 +8,10 @@ import { ContentHeaderComponent } from './content-header/content-header.componen
 import { DatePrinterComponent } from './date-printer/date-printer.component';
 import { PictureComponent } from './picture/picture.component';
 import { FormsModule } from "@angular/forms";
-import { QuillComponent } from './quill/quill.component';
 import { QuillModule } from "ngx-quill";
 
 @NgModule({
-    declarations: [ FooterComponent, MainHeaderComponent, SidebarComponent, ContentHeaderComponent, DatePrinterComponent, PictureComponent, QuillComponent ],
+    declarations: [ FooterComponent, MainHeaderComponent, SidebarComponent, ContentHeaderComponent, DatePrinterComponent, PictureComponent ],
     imports: [
         CommonModule,
         FormsModule,
@@ -25,8 +24,7 @@ import { QuillModule } from "ngx-quill";
         SidebarComponent,
         ContentHeaderComponent,
         DatePrinterComponent,
-        PictureComponent,
-        QuillComponent
+        PictureComponent
     ]
 })
 export class SharedComponentsModule { }

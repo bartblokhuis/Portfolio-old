@@ -1,24 +1,24 @@
 import { Component, EventEmitter, forwardRef, Injector, NgZone, OnInit, Output, ViewEncapsulation } from '@angular/core';
-import { NG_VALUE_ACCESSOR } from '@angular/forms';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { QuillModules } from 'ngx-quill';
-import QuillType from 'quill';
 import { GridPictureComponent } from 'src/app/features/pictures/grid-picture/grid-picture.component';
 import { environment } from 'src/environments/environment';
+import QuillType, { Delta } from 'quill';
+import { NG_VALUE_ACCESSOR } from '@angular/forms';
 
 @Component({
-  selector: 'app-quill',
-  templateUrl: './quill.component.html',
-  styleUrls: ['./quill.component.scss'],
+  selector: 'app-rich-text-editor',
+  templateUrl: './rich-text-editor.component.html',
+  styleUrls: ['./rich-text-editor.component.scss'],
   encapsulation: ViewEncapsulation.None,
   providers: [{
     provide: NG_VALUE_ACCESSOR,
-        useExisting: forwardRef(() => QuillComponent),
+        useExisting: forwardRef(() => RichTextEditorComponent),
         multi: true
   }]
 })
-export class QuillComponent implements OnInit {
-  
+export class RichTextEditorComponent implements OnInit {
+
   @Output() onEditorCreated: EventEmitter<any> = new EventEmitter();
 
   content: any = "";
@@ -87,4 +87,9 @@ export class QuillComponent implements OnInit {
      this.content = event;
      this.propagateChange(event); // <- you export the value so the binded variable is updated
   }
+
+  registerOnTouched() {
+    
+  }
+
 }

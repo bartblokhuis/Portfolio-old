@@ -1,20 +1,20 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { QuillComponent } from './quill.component';
+import { RichTextEditorComponent } from './rich-text-editor.component';
 
-describe('QuillComponent', () => {
-  let component: QuillComponent;
-  let fixture: ComponentFixture<QuillComponent>;
+describe('RichTextEditorComponent', () => {
+  let component: RichTextEditorComponent;
+  let fixture: ComponentFixture<RichTextEditorComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ QuillComponent ]
+      declarations: [ RichTextEditorComponent ]
     })
     .compileComponents();
   });
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(QuillComponent);
+    fixture = TestBed.createComponent(RichTextEditorComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });
