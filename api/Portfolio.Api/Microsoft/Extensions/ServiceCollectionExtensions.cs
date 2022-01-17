@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
@@ -6,11 +7,21 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 using Portfolio.Core.AutoMapper;
+using Portfolio.Core.Caching;
 using Portfolio.Core.Configuration;
+using Portfolio.Core.Events;
+using Portfolio.Core.Helpers;
+using Portfolio.Core.Infrastructure;
 using Portfolio.Core.Interfaces;
 using Portfolio.Core.Interfaces.Common;
 using Portfolio.Core.Services;
+using Portfolio.Core.Services.Blogs;
 using Portfolio.Core.Services.Common;
+using Portfolio.Core.Services.Messages;
+using Portfolio.Core.Services.Projects;
+using Portfolio.Core.Services.Settings;
+using Portfolio.Core.Services.SkillGroups;
+using Portfolio.Core.Services.Skills;
 using Portfolio.Database;
 using Portfolio.Domain.Models.Authentication;
 using System.Text;
@@ -21,28 +32,56 @@ public static class ServiceCollectionExtensions
 {
     #region Methods
 
-    public static void AddPortfolioServices(this IServiceCollection services, IConfiguration configuration)
+    public static void AddPortfolioServices(this IServiceCollection services, IConfiguration configuration, IWebHostEnvironment webHostEnvironment)
     {
+        CommonHelper.DefaultFileProvider = new PortfolioFileProvider(webHostEnvironment);
+
         services.AddControllers();
-        services.AddHttpContextAccessor();
+        services.AddHttpContextAccessor()
+            .AddFileProvider();
 
         services.AddSettings(configuration)
             .AddDatabases(configuration)
-            .AddRepository()
             .AddCache()
+            .AddRepository()
             .AddAppServices()
             .AddAuthentication(configuration)
             .AddOpenApi()
+            .AddEventPublisher()
             .AddAutoMapper(typeof(PortfolioMappings))
             .AddAutoMapper(typeof(BlogProfile))
             .AddCors((options => { options.AddPolicy("AllowAllOrigins", builder => builder.AllowAnyOrigin()); }));
+
+        services.AddEngine(configuration);
 
     }
 
     private static IServiceCollection AddCache(this IServiceCollection services)
     {
-        services.AddMemoryCache();
-        services.AddSingleton<CacheService>();
+        services.AddMemoryCache()
+            .AddSingleton<IStaticCacheManager, MemoryCacheManager>();
+        return services;
+    }
+
+    private static IServiceCollection AddEngine(this IServiceCollection services, IConfiguration configuration)
+    {
+        var engine = EngineContext.Create();
+        engine.ConfigureServices(services, configuration);
+
+        return services;
+    }
+
+    private static IServiceCollection AddFileProvider(this IServiceCollection services)
+    {
+        services.AddScoped<IPortfolioFileProvider, PortfolioFileProvider>();
+
+        return services;
+    }
+
+    private static IServiceCollection AddEventPublisher(this IServiceCollection services)
+    {
+        services.AddScoped<IEventPublisher, EventPublisher>();
+
         return services;
     }
 

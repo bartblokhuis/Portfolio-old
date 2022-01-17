@@ -5,6 +5,8 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using Portfolio.Core.Interfaces;
 using Portfolio.Core.Interfaces.Common;
+using Portfolio.Core.Services.Projects;
+using Portfolio.Core.Services.Skills;
 using Portfolio.Domain.Dtos.Projects;
 using Portfolio.Domain.Models;
 using Portfolio.Domain.Wrapper;

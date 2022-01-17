@@ -1,4 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using Portfolio.Core.Caching;
 using Portfolio.Database;
 using System;
 using System.Collections.Generic;
@@ -25,11 +26,8 @@ public interface IBaseRepository<TEntity, TKey, TDbContext>
 {
     public DbSet<TEntity> Table { get; }
 
-    Task<IQueryable<TEntity>> GetAsync(Expression<Func<TEntity, bool>> filter = null,
-        Func<IQueryable<TEntity>, IOrderedQueryable<TEntity>> orderBy = null,
-        string includeProperties = "");
-
-    Task<List<TEntity>> GetAllAsync();
+    Task<IList<TEntity>> GetAllAsync(Func<IQueryable<TEntity>, IQueryable<TEntity>> func = null,
+            Func<IStaticCacheManager, CacheKey> getCacheKey = null, bool includeDeleted = true);
 
     Task InsertAsync(TEntity entuty);
 
@@ -45,11 +43,11 @@ public interface IBaseRepository<TEntity, TKey, TDbContext>
 
     Task DeleteAsync(TKey id);
 
-    Task<TEntity> GetByIdAsync(TKey id);
+    Task<TEntity> GetByIdAsync(TKey id, string includeProperties = "", Func<IStaticCacheManager, CacheKey> getCacheKey = null);
 
     int Count();
 
-    Task<TEntity> FirstAsync();
+    Task<TEntity> FirstAsync(Func<IStaticCacheManager, CacheKey> getCacheKey = null, bool includeDeleted = true);
 
     Task<TEntity> FirstOrDefaultAsync(Expression<Func<TEntity, bool>> predicate);
 }

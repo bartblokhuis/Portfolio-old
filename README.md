@@ -25,7 +25,7 @@ First, go to the src/environment/environment.ts file and ensure that the baseApi
 Now open a new terminal in the admin folder and run the following commands:
 ```
 $ npm i
-$ ng serve
+$ ng serve --port 4201
 ```
 You should now be able to access the admin panel with the url localhost:4200  
 
@@ -38,5 +38,5 @@ To start the public website first check again if the baseApiUrl in the environme
 Now open a new terminal in the public folder and run the following commands:
 ```
 $ npm i
-$ ng serve --port 4201
+$ npm run dev:ssr
 ```
