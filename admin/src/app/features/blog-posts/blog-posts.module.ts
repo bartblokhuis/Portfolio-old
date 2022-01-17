@@ -11,6 +11,7 @@ import { EditBlogPostComponent } from './edit-blog-post/edit-blog-post.component
 import { DeleteBlogPostComponent } from './delete-blog-post/delete-blog-post.component';
 import { RichTextEditorModule } from 'src/app/components/rich-text-editor/rich-text-editor.module';
 import { PictureModule } from 'src/app/components/picture/picture.module';
+import { PipesModule } from 'src/app/pipes/pipes.module';
 
 
 
@@ -28,6 +29,7 @@ import { PictureModule } from 'src/app/components/picture/picture.module';
     SharedComponentsModule,
     RichTextEditorModule,
     PictureModule,
+    PipesModule,
     RouterModule.forChild(BlogPostsRoutes),
   ]
 })

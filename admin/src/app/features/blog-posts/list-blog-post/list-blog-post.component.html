@@ -30,12 +30,8 @@
                                 <i class="fas fa-ban"></i> 
                               </ng-template>
                           </td>
-                          <td>
-                            <date-printer [date]="post.createdAtUTC"></date-printer>
-                          </td>
-                          <td>
-                            <date-printer [date]="post.updatedAtUtc"></date-printer>
-                          </td>
+                          <td> {{ post.createdAtUTC | datePrinter }} </td>
+                          <td> {{ post.updatedAtUtc | datePrinter }} </td>
                           <td>
                             <div class="actions">
                                 <div class="action" (click)="editBlogPost(post.id)">

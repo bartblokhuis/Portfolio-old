@@ -5,6 +5,7 @@ import { DashBoardRoutes } from './dashboard.routes';
 import { RouterModule } from '@angular/router';
 import { DashboardMessagesComponent } from './dashboard-messages/dashboard-messages.component';
 import { SharedComponentsModule } from 'src/app/components/shared/shared-components.module';
+import { PipesModule } from 'src/app/pipes/pipes.module';
 
 
 
@@ -16,6 +17,7 @@ import { SharedComponentsModule } from 'src/app/components/shared/shared-compone
   imports: [
     CommonModule,
     SharedComponentsModule,
+    PipesModule,
     RouterModule.forChild(DashBoardRoutes),
   ]
 })

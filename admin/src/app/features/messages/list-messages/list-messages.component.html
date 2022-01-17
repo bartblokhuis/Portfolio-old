@@ -39,10 +39,10 @@
                               </ng-template>
                             </td>
                             <td> 
-                              <date-printer [date]="message.createdAtUTC"></date-printer>
+                              {{ message.createdAtUTC | datePrinter }}
                             </td>
                             <td> 
-                              <date-printer [date]="message.updatedAtUtc"></date-printer>
+                              <ng-container *ngIf="message.updatedAtUtc">{{ message.updatedAtUtc | datePrinter }}</ng-container>
                              </td>
                             <td> 
                               <div class="actions">
