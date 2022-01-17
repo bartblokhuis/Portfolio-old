@@ -10,6 +10,7 @@ import { FormsModule } from '@angular/forms';
 import { EditBlogPostComponent } from './edit-blog-post/edit-blog-post.component';
 import { DeleteBlogPostComponent } from './delete-blog-post/delete-blog-post.component';
 import { RichTextEditorModule } from 'src/app/components/rich-text-editor/rich-text-editor.module';
+import { PictureModule } from 'src/app/components/picture/picture.module';
 
 
 
@@ -26,6 +27,7 @@ import { RichTextEditorModule } from 'src/app/components/rich-text-editor/rich-t
     FormsModule,
     SharedComponentsModule,
     RichTextEditorModule,
+    PictureModule,
     RouterModule.forChild(BlogPostsRoutes),
   ]
 })

@@ -6,12 +6,11 @@ import { MainHeaderComponent } from "./main-header/main-header.component";
 import { SidebarComponent } from "./sidebar/sidebar.component";
 import { ContentHeaderComponent } from './content-header/content-header.component';
 import { DatePrinterComponent } from './date-printer/date-printer.component';
-import { PictureComponent } from './picture/picture.component';
 import { FormsModule } from "@angular/forms";
 import { QuillModule } from "ngx-quill";
 
 @NgModule({
-    declarations: [ FooterComponent, MainHeaderComponent, SidebarComponent, ContentHeaderComponent, DatePrinterComponent, PictureComponent ],
+    declarations: [ FooterComponent, MainHeaderComponent, SidebarComponent, ContentHeaderComponent, DatePrinterComponent ],
     imports: [
         CommonModule,
         FormsModule,
@@ -23,8 +22,7 @@ import { QuillModule } from "ngx-quill";
         MainHeaderComponent,
         SidebarComponent,
         ContentHeaderComponent,
-        DatePrinterComponent,
-        PictureComponent
+        DatePrinterComponent
     ]
 })
 export class SharedComponentsModule { }
