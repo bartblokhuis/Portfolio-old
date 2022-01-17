@@ -6,24 +6,21 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace Portfolio.Core.Services;
+namespace Portfolio.Core.Services.Projects;
 
 public class ProjectService : IProjectService
 {
     #region Fields
 
     private readonly IBaseRepository<Project> _projectRepository;
-    private readonly CacheService _cacheService;
-    private const string CACHE_KEY = "PROJECT.";
 
     #endregion
 
     #region Constructor
 
-    public ProjectService(IBaseRepository<Project> projectRepository, CacheService cacheService)
+    public ProjectService(IBaseRepository<Project> projectRepository)
     {
         _projectRepository = projectRepository;
-        _cacheService = cacheService;
     }
 
     #endregion
@@ -32,44 +29,26 @@ public class ProjectService : IProjectService
 
     public async Task<IEnumerable<Project>> Get()
     {
-        var cacheKey = CACHE_KEY + "LIST";
-        var projects = _cacheService.Get<IEnumerable<Project>>(cacheKey);
-        if (projects != null)
-            return projects;
-
-        var queryableProjects = await _projectRepository.GetAsync(includeProperties: "Skills");
-        if (queryableProjects != null)
-            _cacheService.Set(cacheKey, await queryableProjects.ToListAsync());
-
-        return queryableProjects;
+        var projects = await _projectRepository.GetAllAsync(query => query.Include(x => x.Skills),
+            cache => cache.PrepareKeyForDefaultCache(ProjectDefaults.AllProjectsCacheKey));
+        return projects;
     }
 
     public async Task<Project> GetById(int id)
     {
-        var cacheKey = CACHE_KEY + id;
-        var project = _cacheService.Get<Project>(cacheKey);
-        if (project != null)
-            return project;
 
-        project = await _projectRepository.GetByIdAsync(id);
-        if (project != null)
-            _cacheService.Set(cacheKey, project);
-
+        var project = await _projectRepository.GetByIdAsync(id);
         return project;
     }
 
     public async Task Create(Project model)
     {
         await _projectRepository.InsertAsync(model);
-        _cacheService.Set(CACHE_KEY + model.Id, model);
-        ClearListCache();
     }
 
     public async Task<Project> Update(Project model)
     {
         await _projectRepository.UpdateAsync(model);
-        _cacheService.Set(CACHE_KEY + model.Id, model);
-        ClearListCache();
         return model;
     }
 
@@ -95,27 +74,13 @@ public class ProjectService : IProjectService
         }
 
         await _projectRepository.UpdateAsync(project);
-        _cacheService.Set(CACHE_KEY + project.Id, project);
-        ClearListCache();
         return project;
     }
 
     public async Task Delete(int id)
     {
         await _projectRepository.DeleteAsync(id);
-        _cacheService.Set<Project>(CACHE_KEY + id, null);
-        ClearListCache();
         return;
-    }
-
-    #endregion
-
-    #region Utils
-
-    private void ClearListCache()
-    {
-        var cacheKey = CACHE_KEY + "LIST";
-        _cacheService.Set<IEnumerable<Project>>(cacheKey, null);
     }
 
     #endregion

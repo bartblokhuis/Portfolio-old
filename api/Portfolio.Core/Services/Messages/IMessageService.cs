@@ -1,13 +1,13 @@
 ﻿using Portfolio.Domain.Enums;
 using Portfolio.Domain.Models;
-using System.Linq;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 
-namespace Portfolio.Core.Interfaces;
+namespace Portfolio.Core.Services.Messages;
 
 public interface IMessageService
 {
-    Task<IQueryable<Message>> Get();
+    Task<IEnumerable<Message>> Get();
 
     Task<Message> Create(Message model);
 

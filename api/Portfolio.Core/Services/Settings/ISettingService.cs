@@ -1,7 +1,7 @@
 ﻿using Portfolio.Domain.Models.Common;
 using System.Threading.Tasks;
 
-namespace Portfolio.Core.Interfaces.Common;
+namespace Portfolio.Core.Services.Settings;
 
 public interface ISettingService<T> where T : BaseEntity, ISetting
 {

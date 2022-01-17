@@ -2,11 +2,12 @@
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
-namespace Portfolio.Core.Interfaces;
+namespace Portfolio.Core.Services.Blogs;
 
 public interface IBlogPostService
 {
-    Task<IEnumerable<BlogPost>> Get(bool includeUnPublished);
+    Task<IEnumerable<BlogPost>> GetAllBlogPostsAsync();
+    Task<IEnumerable<BlogPost>> GetPublishedBlogPostsAsync();
 
     Task Create(BlogPost blogPost);
 

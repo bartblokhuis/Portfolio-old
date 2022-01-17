@@ -10,17 +10,14 @@ public class AboutMeService : IAboutMeService
     #region Fields
 
     private readonly IBaseRepository<AboutMe> _aboutMeRepository;
-    private readonly CacheService _cacheService;
-    private const string CACHE_KEY = "ABOUT.ME";
 
     #endregion
 
     #region Constructor
 
-    public AboutMeService(IBaseRepository<AboutMe> aboutMeRepository, CacheService cacheService)
+    public AboutMeService(IBaseRepository<AboutMe> aboutMeRepository)
     {
         _aboutMeRepository = aboutMeRepository;
-        _cacheService = cacheService;
     }
 
     #endregion
@@ -29,14 +26,7 @@ public class AboutMeService : IAboutMeService
 
     public async Task<AboutMe> GetAboutMe()
     {
-        var aboutMe = _cacheService.Get<AboutMe>(CACHE_KEY);
-        if (aboutMe != null)
-            return aboutMe;
-
-        aboutMe = await _aboutMeRepository.FirstAsync();
-        if(aboutMe != null)
-            _cacheService.Set<AboutMe>(CACHE_KEY, aboutMe);
-
+        var aboutMe = await _aboutMeRepository.FirstAsync();
         return aboutMe;
     }
 
@@ -47,8 +37,6 @@ public class AboutMeService : IAboutMeService
             await _aboutMeRepository.InsertAsync(model);
         else
             await Update(model, aboutMe);
-
-        _cacheService.Set<AboutMe>(CACHE_KEY, aboutMe);
     }
 
     #region Utils

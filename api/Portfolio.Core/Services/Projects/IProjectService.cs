@@ -2,7 +2,7 @@ using Portfolio.Domain.Models;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
-namespace Portfolio.Core.Interfaces;
+namespace Portfolio.Core.Services.Projects;
 
 public interface IProjectService
 {

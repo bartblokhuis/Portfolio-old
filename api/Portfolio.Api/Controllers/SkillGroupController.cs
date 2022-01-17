@@ -3,6 +3,8 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using Portfolio.Core.Interfaces;
+using Portfolio.Core.Services.SkillGroups;
+using Portfolio.Core.Services.Skills;
 using Portfolio.Domain.Dtos;
 using Portfolio.Domain.Dtos.SkillGroup;
 using Portfolio.Domain.Models;
