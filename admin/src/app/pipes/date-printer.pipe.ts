@@ -1,14 +1,10 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Pipe, PipeTransform } from '@angular/core';
 
-@Component({
-  selector: 'date-printer',
-  templateUrl: './date-printer.component.html',
-  styleUrls: ['./date-printer.component.scss']
+@Pipe({
+  name: 'datePrinter'
 })
-export class DatePrinterComponent implements OnInit {
-  
-  @Input() date: Date | undefined = new Date();
-  formatedDate: Date = new Date();
+export class DatePrinterPipe implements PipeTransform {
+
   currentDate: Date = new Date();
   displayDate: string = '';
 
@@ -19,29 +15,31 @@ export class DatePrinterComponent implements OnInit {
   printMinutes: boolean = true;
   printSeconds: boolean = false;
 
-  constructor() { }
+  monthNames = ["January", "February", "March", "April", "May", "June","July", "August", "September", "October", "November", "December"];
 
-  ngOnInit(): void {
-    if(!this.date) return;
-    
-    this.formatedDate = new Date(this.date);
 
-    const monthNames = ["January", "February", "March", "April", "May", "June","July", "August", "September", "October", "November", "December"];
-    
+
+  transform(date: Date): any {
+    console.log(date);
+    date = new Date(date);
     //If the year is not the same as the current year print it.
-    if(this.formatedDate.getFullYear() !== this.currentDate.getFullYear()) {
-      this.displayDate = this.formatedDate.getFullYear() + " " + monthNames[this.formatedDate.getMonth()] + " " + this.formatedDate.getDate();
+    if(date.getFullYear() !== this.currentDate.getFullYear()) {
+      this.displayDate = date.getFullYear() + " " + this.monthNames[date.getMonth()] + " " + date.getDate();
     }
-    else if(this.formatedDate.getMonth() !== this.currentDate.getMonth() || this.getWeekNumber(this.formatedDate) !== this.getWeekNumber(this.currentDate)) {
-      this.displayDate = monthNames[this.formatedDate.getMonth()] + " " + this.formatedDate.getDate();
+    else if(date.getMonth() !== this.currentDate.getMonth() || this.getWeekNumber(date) !== this.getWeekNumber(this.currentDate)) {
+      this.displayDate = this.monthNames[date.getMonth()] + " " + date.getDate();
     }
-    else if(this.formatedDate.getDate() !== this.currentDate.getDate()) {
-      this.displayDate = "Last " + this.formatedDate.toLocaleDateString("en-EN", { weekday: 'long' });
+    else if(date.getDate() !== this.currentDate.getDate()) {
+      this.displayDate = "Last " + date.toLocaleDateString("en-EN", { weekday: 'long' });
     }
     else {
       this.displayDate = "Today"
     }
+
+    console.log(date, this.displayDate);
+    return this.displayDate;
   }
+
 
   /* For a given date, get the ISO week number
   *
@@ -73,5 +71,4 @@ export class DatePrinterComponent implements OnInit {
     return weekNo;
     //display the calculated result
   }
-
 }

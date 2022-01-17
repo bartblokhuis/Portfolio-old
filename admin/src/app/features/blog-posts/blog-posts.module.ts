@@ -9,6 +9,9 @@ import { QuillModule } from 'ngx-quill';
 import { FormsModule } from '@angular/forms';
 import { EditBlogPostComponent } from './edit-blog-post/edit-blog-post.component';
 import { DeleteBlogPostComponent } from './delete-blog-post/delete-blog-post.component';
+import { RichTextEditorModule } from 'src/app/components/rich-text-editor/rich-text-editor.module';
+import { PictureModule } from 'src/app/components/picture/picture.module';
+import { PipesModule } from 'src/app/pipes/pipes.module';
 
 
 
@@ -24,6 +27,9 @@ import { DeleteBlogPostComponent } from './delete-blog-post/delete-blog-post.com
     QuillModule,
     FormsModule,
     SharedComponentsModule,
+    RichTextEditorModule,
+    PictureModule,
+    PipesModule,
     RouterModule.forChild(BlogPostsRoutes),
   ]
 })

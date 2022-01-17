@@ -8,6 +8,7 @@ import { EditPictureComponent } from './edit-picture/edit-picture.component';
 import { DeletePictureComponent } from './delete-picture/delete-picture.component';
 import { SharedComponentsModule } from 'src/app/components/shared/shared-components.module';
 import { GridPictureComponent } from './grid-picture/grid-picture.component';
+import { PictureModule } from 'src/app/components/picture/picture.module';
 
 @NgModule({
   declarations: [
@@ -20,6 +21,7 @@ import { GridPictureComponent } from './grid-picture/grid-picture.component';
   imports: [
     CommonModule,
     SharedComponentsModule,
+    PictureModule,
     RouterModule.forChild(PicturesRoutes),
   ]
 })

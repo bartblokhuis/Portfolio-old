@@ -37,7 +37,7 @@
                           </ng-template>
                         </td>
                         <td> 
-                          <date-printer [date]="message.updatedAtUtc"></date-printer>
+                          <ng-container *ngIf="message.updatedAtUtc">{{ message.updatedAtUtc | datePrinter }}</ng-container>
                          </td>
                       </tr>
                   </tbody>

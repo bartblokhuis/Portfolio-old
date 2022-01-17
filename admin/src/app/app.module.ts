@@ -18,12 +18,13 @@ import { ProjectsModule } from './features/projects/projects.module';
 import { SettingsModule } from './features/settings/settings.module';
 import { SkillGroupsModule } from './features/skill-groups/skill-groups.module';
 import { UserModule } from './features/user/user.module';
+import { RichTextEditorModule } from './components/rich-text-editor/rich-text-editor.module';
 
 @NgModule({
   declarations: [
     AppComponent,
     AdminComponent,
-    AuthComponent,
+    AuthComponent
   ],
   imports: [
     BrowserModule,
@@ -38,7 +39,7 @@ import { UserModule } from './features/user/user.module';
     PicturesModule,
     BlogPostsModule,
     SharedComponentsModule,
-    QuillModule.forRoot()
+    RichTextEditorModule
   ],
   providers: [
     {
