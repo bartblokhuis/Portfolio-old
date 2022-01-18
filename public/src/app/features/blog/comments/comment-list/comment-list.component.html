@@ -1,0 +1,48 @@
+<div class="" *ngIf="comments">
+    <ul class="comment-list">
+        <ng-container *ngFor="let comment of comments;" 
+            [ngTemplateOutlet]="firstComment" 
+            [ngTemplateOutletContext]="{comment:comment}">
+        </ng-container>
+    </ul>
+</div>
+
+<ng-template #firstComment let-comment='comment'>
+    <li>
+        <app-comment [comment]="comment"></app-comment>
+
+        <ng-container *ngIf="comment.comments">
+            <ul *ngFor="let childComment of comment.comments" class="reply-list">
+                <ng-container
+                    [ngTemplateOutlet]="commentWithChildComments"
+                    [ngTemplateOutletContext]="{comment:childComment}"
+                ></ng-container>
+            </ul>
+        </ng-container>
+    </li>
+</ng-template>
+
+<ng-template #commentWithChildComments let-comment='comment'>
+
+    <li>
+        <app-comment [comment]="comment"></app-comment>
+        
+        <ng-container *ngIf="comment">
+            <ul *ngFor="let childComment of comment.comments" class="comments-list reply-list">
+                <ng-container
+                  [ngTemplateOutlet]="childComment.comment ? commentWithChildComments : singleComment" 
+                  [ngTemplateOutletContext]="{comment:childComment}">
+                </ng-container>
+            </ul>
+        </ng-container>
+    </li>
+
+</ng-template>
+
+<ng-template #singleComment let-comment='comment'>
+
+    <li>
+        <app-comment [comment]="comment"></app-comment>
+    </li>
+
+</ng-template>

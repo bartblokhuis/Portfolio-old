@@ -12,6 +12,7 @@ using Portfolio.Domain.Models;
 using Portfolio.Domain.Wrapper;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace Portfolio.Controllers
@@ -133,11 +134,11 @@ namespace Portfolio.Controllers
             if(!string.IsNullOrEmpty(dto.Email) && !CommonHelper.IsValidEmail(dto.Email))
                 return Ok(await Result.FailAsync($"Please use a real email address"));
 
-            if(dto.Content == null)
+            if(string.IsNullOrEmpty(dto.Content))
                 return Ok(await Result.FailAsync($"Please enter your comment"));
 
-            if(dto.Content.Length > 256)
-                return Ok(await Result.FailAsync($"Please don't use more than 256 charachters in your comment"));
+            if(dto.Content.Length > 512)
+                return Ok(await Result.FailAsync($"Please don't use more than 512 charachters in your comment"));
 
             //Ensures that the comment doesn't create an unnecesary relation to the blog post.
             if (dto.BlogPostId != null && dto.ParentCommentId != null)
@@ -149,10 +150,8 @@ namespace Portfolio.Controllers
                 var blogPost = await _blogPostService.GetById((int)dto.BlogPostId, includeUnPublished);
                 if (blogPost == null)
                     return Ok(await Result.FailAsync($"No blog post with id: {dto.BlogPostId} found"));
-
             }
             
-
             //If the comment is a reply to a previous comment ensure that the first comment exists.
             if(dto.ParentCommentId != null)
             {

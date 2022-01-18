@@ -1,9 +1,10 @@
 ﻿using Portfolio.Domain.Models.Common;
+using System;
 using System.Collections.Generic;
 
 namespace Portfolio.Domain.Models;
 
-public class Comment : BaseEntity
+public class Comment : BaseEntity, IFullyAudited
 {
     public string Name { get; set; }
 
@@ -12,6 +13,10 @@ public class Comment : BaseEntity
     public string Content { get; set; }
 
     public bool IsAuthor { get; set; }
+
+    public DateTime CreatedAtUTC { get; set; }
+
+    public DateTime UpdatedAtUtc { get; set; }
 
     public BlogPost BlogPost { get; set; }
 
