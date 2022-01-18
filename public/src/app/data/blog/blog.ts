@@ -1,5 +1,6 @@
 import { Picture } from "../common/picture";
 import { BaseBlog } from "./base-blog";
+import { BlogComment } from "./comment";
 
 export interface Blog extends BaseBlog {
     content: string | null;
@@ -10,4 +11,5 @@ export interface Blog extends BaseBlog {
     metaDescription:  string | null;
     bannerPicture: Picture | null;
     thumbnail: Picture | null;
+    comments: BlogComment[] | null;
 }

@@ -12,6 +12,15 @@
     <div class="blog-post-body">
         <div [innerHtml]="blogPost.content"></div>
     </div>
+    <div class="blog-comments">
+        <h2>Comments</h2>
+        <div class="new-comment">
+            <app-comment-new [blogPost]="blogPost" (onCommentCreated)="onCommentCreated($event)"></app-comment-new>
+        </div>
+        <ng-container *ngIf="blogPost.comments">
+            <app-comment-list [comments]="blogPost.comments"></app-comment-list>
+        </ng-container>
+    </div>
 </div>
 
 <app-footer></app-footer>

@@ -30,7 +30,7 @@
         <ng-container *ngIf="comment">
             <ul *ngFor="let childComment of comment.comments" class="comments-list reply-list">
                 <ng-container
-                  [ngTemplateOutlet]="childComment.comment ? commentWithChildComments : singleComment" 
+                  [ngTemplateOutlet]="childComment.comments ? commentWithChildComments : singleComment" 
                   [ngTemplateOutletContext]="{comment:childComment}">
                 </ng-container>
             </ul>

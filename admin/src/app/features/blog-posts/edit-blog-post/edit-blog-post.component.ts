@@ -1,12 +1,18 @@
+import { IfStmt } from '@angular/compiler';
 import { Component, OnInit, ViewEncapsulation } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { BlogComment } from 'src/app/data/blog/comment';
 import { EditBlog } from 'src/app/data/blog/edit-blog';
 import { UpdateBlogPicture } from 'src/app/data/blog/update-blog-picture';
 import { Picture } from 'src/app/data/common/picture';
 import { Result } from 'src/app/data/common/Result';
 import { BlogPostsService } from 'src/app/services/api/blog-posts/blog-posts.service';
+import { CommentsService } from 'src/app/services/api/comments/comments.service';
 import { ContentTitleService } from 'src/app/services/content-title/content-title.service';
 import { NotificationService } from 'src/app/services/notification/notification.service';
+import { DeleteCommentComponent } from '../comments/delete-comment/delete-comment.component';
+import { ReplyCommentComponent } from '../comments/reply-comment/reply-comment.component';
 import { validateBlogForm } from '../helpers/blog-helper';
 
 declare var $: any;
@@ -19,13 +25,15 @@ declare var $: any;
 })
 export class EditBlogPostComponent implements OnInit{
 
-  model: EditBlog = { content: '', description: '', displayNumber: 0, id: 0, isPublished: true, title: '', metaDescription: '', metaTitle: '', thumbnail: null, thumbnailId: null, bannerPicture: null, bannerPictureId: null };
+  
+  model: EditBlog = { content: '', description: '', displayNumber: 0, id: 0, isPublished: true, title: '', metaDescription: '', metaTitle: '', thumbnail: null, thumbnailId: null, bannerPicture: null, bannerPictureId: null, comments: null };
   bannerPicture: Picture = { altAttribute: '', id: null, mimeType: '', path: '', titleAttribute: '' };
   thumbnailPicture: Picture = { altAttribute: '', id: null, mimeType: '', path: '', titleAttribute: '' };
   form: any;
   titleError: string | null = null;
 
-  constructor(private route: ActivatedRoute, private blogPostsService: BlogPostsService, private contentTitleService: ContentTitleService, private router: Router, private notificationService: NotificationService) { }
+  constructor(private route: ActivatedRoute, private blogPostsService: BlogPostsService, private contentTitleService: ContentTitleService, private router: Router, 
+    private notificationService: NotificationService, private modalService: NgbModal, private readonly commentsService: CommentsService) { }
 
   ngOnInit(): void {
 
@@ -78,6 +86,37 @@ export class EditBlogPostComponent implements OnInit{
 
     this.blogPostsService.updateBanner(model).subscribe((result) => {
       this.notificationService.success("Updated the banner picture")
+    })
+  }
+
+  deleteComment(comment: BlogComment) {
+    const modalRef = this.modalService.open(DeleteCommentComponent, { size: 'lg' });
+
+    //const editBlogPost: ListBlog = { createdAtUTC: blog.createdAtUTC, description: blog.description, displayNumber: blog.displayNumber, id: blog.id, isPublished: blog.isPublished, title: blog.title, updatedAtUtc: blog.updatedAtUtc };
+    modalRef.componentInstance.comment = comment
+    modalRef.componentInstance.modal = modalRef;
+    
+    modalRef.result.then(() => {
+      this.refreshComments();
+    });
+  }
+
+  replyToComment(comment: BlogComment) {
+    const modalRef = this.modalService.open(ReplyCommentComponent, { size: 'lg' });
+
+    //const editBlogPost: ListBlog = { createdAtUTC: blog.createdAtUTC, description: blog.description, displayNumber: blog.displayNumber, id: blog.id, isPublished: blog.isPublished, title: blog.title, updatedAtUtc: blog.updatedAtUtc };
+    modalRef.componentInstance.comment = comment;
+    modalRef.componentInstance.modal = modalRef;
+    
+    modalRef.result.then(() => {
+      this.refreshComments();
+    });
+  }
+
+  refreshComments(){
+    if(!this.model) return;
+    this.commentsService.getCommentsByBlogPostId(this.model.id).subscribe((result) => {
+      if(result.succeeded) this.model.comments = result.data;
     })
   }
 }

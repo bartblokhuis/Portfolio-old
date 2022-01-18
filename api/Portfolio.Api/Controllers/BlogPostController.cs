@@ -100,6 +100,23 @@ namespace Portfolio.Controllers
             return Ok(result);
         }
 
+        [HttpGet("Comments/GetByBlogPostId")]
+        public async Task<IActionResult> GetCommentsByBlogPostId(int blogPostId)
+        {
+            var post = (await _blogPostService.GetById(blogPostId, true));
+
+            if (post == null)
+                return Ok(await Result.FailAsync("Blog post not found"));
+
+            if(post.Comments == null)
+                post.Comments = new List<Comment>();
+
+            var comments = post.Comments.ToListResult();
+            var result = _mapper.Map<ListResult<ListCommentDto>>(comments);
+            result.Succeeded = true;
+            return Ok(result);
+        }
+
         #endregion
 
         #region Post

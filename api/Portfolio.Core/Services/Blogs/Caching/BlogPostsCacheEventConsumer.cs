@@ -8,8 +8,8 @@ public partial class BlogPostsCacheEventConsumer : CacheEventConsumer<BlogPost, 
 {
     protected override async Task ClearCacheAsync(BlogPost entity, EntityEventType entityEventType)
     {
-        await RemoveByPrefixAsync(BlogPostDefaults.PublishedBlogPostsPrefix, entity);
-        await RemoveByPrefixAsync(BlogPostDefaults.AllBlogPostsPrefix, entity);
+        await RemoveAsync(BlogPostDefaults.AllBlogPostsCacheKey);
+        await RemoveAsync(BlogPostDefaults.PublishedBlogPostsCacheKey);
 
         await base.ClearCacheAsync(entity, entityEventType);
     }

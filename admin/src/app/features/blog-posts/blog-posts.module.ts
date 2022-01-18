@@ -12,6 +12,8 @@ import { DeleteBlogPostComponent } from './delete-blog-post/delete-blog-post.com
 import { RichTextEditorModule } from 'src/app/components/rich-text-editor/rich-text-editor.module';
 import { PictureModule } from 'src/app/components/picture/picture.module';
 import { PipesModule } from 'src/app/pipes/pipes.module';
+import { DeleteCommentComponent } from './comments/delete-comment/delete-comment.component';
+import { ReplyCommentComponent } from './comments/reply-comment/reply-comment.component';
 
 
 
@@ -20,7 +22,9 @@ import { PipesModule } from 'src/app/pipes/pipes.module';
     ListBlogPostComponent,
     AddBlogPostComponent,
     EditBlogPostComponent,
-    DeleteBlogPostComponent
+    DeleteBlogPostComponent,
+    DeleteCommentComponent,
+    ReplyCommentComponent
   ],
   imports: [
     CommonModule,

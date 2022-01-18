@@ -1,3 +1,5 @@
+@import '../../../../assets/scss/table.scss';
+
 .card-body .row {
     margin-bottom: 5px;
 }
@@ -8,4 +10,13 @@
 
 .saveBlog{
     margin-bottom: 1rem;
+}
+
+.card-body {
+    overflow: hidden;
+    width: 100%;
+
+    table .comment {
+        max-width: 20%;
+    }
 }

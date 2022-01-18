@@ -1,5 +1,6 @@
 import { Picture } from "../common/picture";
 import { BaseBlog } from "./base-blog";
+import { BlogComment } from "./comment";
 
 export interface EditBlog extends BaseBlog {
     id: number;
@@ -10,4 +11,5 @@ export interface EditBlog extends BaseBlog {
     bannerPictureId: number | null;
     thumbnail: Picture | null;
     thumbnailId: number | null;
+    comments: BlogComment[] | null;
 }
