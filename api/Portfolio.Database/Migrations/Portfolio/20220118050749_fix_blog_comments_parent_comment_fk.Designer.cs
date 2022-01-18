@@ -3,17 +3,19 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Portfolio.Database;
 
 #nullable disable
 
-namespace Portfolio.Database.Migrations
+namespace Portfolio.Database.Migrations.Portfolio
 {
     [DbContext(typeof(PortfolioContext))]
-    partial class PortfolioContextModelSnapshot : ModelSnapshot
+    [Migration("20220118050749_fix_blog_comments_parent_comment_fk")]
+    partial class fix_blog_comments_parent_comment_fk
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -99,7 +101,7 @@ namespace Portfolio.Database.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
 
-                    b.Property<int?>("BlogPostId")
+                    b.Property<int>("BlogPostId")
                         .HasColumnType("int");
 
                     b.Property<string>("Content")
@@ -115,6 +117,12 @@ namespace Portfolio.Database.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<int?>("ParentCommentId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("ThumbsDown")
+                        .HasColumnType("int");
+
+                    b.Property<int>("ThumbsUp")
                         .HasColumnType("int");
 
                     b.HasKey("Id");
@@ -422,7 +430,9 @@ namespace Portfolio.Database.Migrations
                 {
                     b.HasOne("Portfolio.Domain.Models.BlogPost", "BlogPost")
                         .WithMany("Comments")
-                        .HasForeignKey("BlogPostId");
+                        .HasForeignKey("BlogPostId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.HasOne("Portfolio.Domain.Models.Comment", "ParentComment")
                         .WithMany("Comments")

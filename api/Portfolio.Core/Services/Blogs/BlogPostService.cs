@@ -29,7 +29,7 @@ public class BlogPostService : IBlogPostService
 
     public async Task<IEnumerable<BlogPost>> GetAllBlogPostsAsync()
     {
-        return await _blogPostRepository.GetAllAsync(query => query.Include(x => x.Thumbnail).Include(x => x.BannerPicture),
+        return await _blogPostRepository.GetAllAsync(query => query.Include(x => x.Thumbnail).Include(x => x.BannerPicture).Include(x => x.Comments),
             cache => cache.PrepareKeyForDefaultCache(BlogPostDefaults.AllBlogPostsCacheKey));
     }
 
@@ -41,7 +41,7 @@ public class BlogPostService : IBlogPostService
 
     public async Task<BlogPost> GetById(int id, bool includeUnPublished = false)
     {
-        var blogPost = await _blogPostRepository.GetByIdAsync(id, includeProperties: "BannerPicture,Thumbnail");
+        var blogPost = await _blogPostRepository.GetByIdAsync(id, includeProperties: "BannerPicture,Thumbnail,Comments");
 
         if (blogPost == null)
             return null;
@@ -54,7 +54,8 @@ public class BlogPostService : IBlogPostService
 
     public async Task<BlogPost> GetByTitle(string title, bool includeUnPublished = false)
     {
-        var blogPosts = await _blogPostRepository.GetAllAsync(query => query.Include(x => x.Thumbnail).Include(x => x.BannerPicture).Where(x => x.Title.ToLower() == title.ToLower()), cache => default);
+        //TODO: Add support for more child comments.
+        var blogPosts = await _blogPostRepository.GetAllAsync(query => query.Include(x => x.Thumbnail).Include(x => x.BannerPicture).Include(x => x.Comments).ThenInclude(x => x.Comments).ThenInclude(x => x.Comments).Where(x => x.Title.ToLower() == title.ToLower()), cache => default);
         if(blogPosts == null) 
             return null;
 
