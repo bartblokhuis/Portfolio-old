@@ -16,6 +16,7 @@ using Portfolio.Core.Interfaces;
 using Portfolio.Core.Interfaces.Common;
 using Portfolio.Core.Services;
 using Portfolio.Core.Services.Blogs;
+using Portfolio.Core.Services.Comments;
 using Portfolio.Core.Services.Common;
 using Portfolio.Core.Services.Messages;
 using Portfolio.Core.Services.Projects;
@@ -50,6 +51,7 @@ public static class ServiceCollectionExtensions
             .AddEventPublisher()
             .AddAutoMapper(typeof(PortfolioMappings))
             .AddAutoMapper(typeof(BlogProfile))
+            .AddAutoMapper(typeof(CommentProfile))
             .AddCors((options => { options.AddPolicy("AllowAllOrigins", builder => builder.AllowAnyOrigin()); }));
 
         services.AddEngine(configuration);
@@ -104,6 +106,7 @@ public static class ServiceCollectionExtensions
             .AddScoped<IAboutMeService, AboutMeService>()
             .AddScoped<IProjectService, ProjectService>()
             .AddScoped<IBlogPostService, BlogPostService>()
+            .AddScoped<IBlogPostCommentService, BlogPostCommentService>()
             .AddSingleton(new HostingConfig())
             .AddScoped<IWebHelper, WebHelper>()
             .AddScoped<IEmailService, EmailService>()

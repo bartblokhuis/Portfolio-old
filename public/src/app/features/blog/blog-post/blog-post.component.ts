@@ -2,6 +2,7 @@ import { Component, OnInit, ViewEncapsulation } from '@angular/core';
 import { Meta, Title } from '@angular/platform-browser';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Blog } from 'src/app/data/blog/blog';
+import { BlogComment } from 'src/app/data/blog/comment';
 import { Result } from 'src/app/data/common/result';
 import { ApiService } from 'src/app/services/common/api.service';
 import { environment } from 'src/environments/environment';
@@ -49,6 +50,10 @@ export class BlogPostComponent implements OnInit {
 
     }, //error => this.router.navigate([`blog`]));
     );
+  }
+
+  onCommentCreated($event: BlogComment) {
+    this.blogPost?.comments?.unshift($event);
   }
 
 }

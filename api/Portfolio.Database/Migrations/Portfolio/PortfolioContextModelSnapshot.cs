@@ -17,7 +17,7 @@ namespace Portfolio.Database.Migrations
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "6.0.1")
+                .HasAnnotation("ProductVersion", "7.0.0-alpha.1.22063.3")
                 .HasAnnotation("Relational:MaxIdentifierLength", 128);
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder, 1L, 1);
@@ -41,7 +41,7 @@ namespace Portfolio.Database.Migrations
                     b.ToTable("AboutMes");
                 });
 
-            modelBuilder.Entity("Portfolio.Domain.Models.Blog", b =>
+            modelBuilder.Entity("Portfolio.Domain.Models.BlogPost", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -88,7 +88,48 @@ namespace Portfolio.Database.Migrations
 
                     b.HasIndex("ThumbnailId");
 
-                    b.ToTable("Blogs");
+                    b.ToTable("BlogPosts");
+                });
+
+            modelBuilder.Entity("Portfolio.Domain.Models.Comment", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+
+                    b.Property<int?>("BlogPostId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Content")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("CreatedAtUTC")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Email")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<bool>("IsAuthor")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("Name")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int?>("ParentCommentId")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime>("UpdatedAtUtc")
+                        .HasColumnType("datetime2");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("BlogPostId");
+
+                    b.HasIndex("ParentCommentId");
+
+                    b.ToTable("Comments");
                 });
 
             modelBuilder.Entity("Portfolio.Domain.Models.Message", b =>
@@ -368,7 +409,7 @@ namespace Portfolio.Database.Migrations
                     b.ToTable("ProjectSkill");
                 });
 
-            modelBuilder.Entity("Portfolio.Domain.Models.Blog", b =>
+            modelBuilder.Entity("Portfolio.Domain.Models.BlogPost", b =>
                 {
                     b.HasOne("Portfolio.Domain.Models.Picture", "BannerPicture")
                         .WithMany()
@@ -381,6 +422,21 @@ namespace Portfolio.Database.Migrations
                     b.Navigation("BannerPicture");
 
                     b.Navigation("Thumbnail");
+                });
+
+            modelBuilder.Entity("Portfolio.Domain.Models.Comment", b =>
+                {
+                    b.HasOne("Portfolio.Domain.Models.BlogPost", "BlogPost")
+                        .WithMany("Comments")
+                        .HasForeignKey("BlogPostId");
+
+                    b.HasOne("Portfolio.Domain.Models.Comment", "ParentComment")
+                        .WithMany("Comments")
+                        .HasForeignKey("ParentCommentId");
+
+                    b.Navigation("BlogPost");
+
+                    b.Navigation("ParentComment");
                 });
 
             modelBuilder.Entity("Portfolio.Domain.Models.Skill", b =>
@@ -407,6 +463,16 @@ namespace Portfolio.Database.Migrations
                         .HasForeignKey("SkillsId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+                });
+
+            modelBuilder.Entity("Portfolio.Domain.Models.BlogPost", b =>
+                {
+                    b.Navigation("Comments");
+                });
+
+            modelBuilder.Entity("Portfolio.Domain.Models.Comment", b =>
+                {
+                    b.Navigation("Comments");
                 });
 
             modelBuilder.Entity("Portfolio.Domain.Models.SkillGroup", b =>

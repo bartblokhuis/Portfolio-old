@@ -1,5 +1,7 @@
-﻿using Portfolio.Domain.Models;
+﻿using Portfolio.Domain.Dtos.Comments;
+using Portfolio.Domain.Models;
 using System;
+using System.Collections.Generic;
 
 namespace Portfolio.Domain.Dtos.BlogPosts;
 
@@ -26,6 +28,8 @@ public class BlogPostDto : BaseBlogPostDto
     public Picture? BannerPicture { get; set; }
 
     public int? BannerPictureId { get; set; }
+
+    public ICollection<ListCommentDto> Comments { get; set; }
 
     #endregion
 }

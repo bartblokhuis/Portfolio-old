@@ -42,6 +42,8 @@ public class PortfolioContext : DbContext
 
     public DbSet<Picture> Pictures { get; set; }
 
+    public DbSet<Comment> Comments { get; set; }
+
     #endregion
 
     #region Methods

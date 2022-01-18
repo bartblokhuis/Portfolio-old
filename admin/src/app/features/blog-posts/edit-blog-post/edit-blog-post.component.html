@@ -79,8 +79,79 @@
                         <app-picture class="picture-form" label="Banner" [picture]="bannerPicture" (updatedPicture)="updateBannerPicture($event)"></app-picture>
                     </div>
                 </div>
-            </div>       
+            </div>
+            
+            <div class="card">
+                <div class="card-header">
+                    <h3 class="card-title">
+                        Comments
+                    </h3>
+                    <div class="card-tools">
+                        <button type="button" class="btn btn-tool" data-card-widget="collapse">
+                        <i class="fas fa-minus"></i>
+                        </button>
+                    </div>
+                </div>
+                <div class="card-body">
+                    <table class="table table-hover">
+                      <tbody>
+                        <ng-container *ngFor="let comment of model.comments;" 
+                        [ngTemplateOutlet]="comment.comments && comment.comments.length > 0 ? withChildren : noChildComments" 
+                        [ngTemplateOutletContext]="{comment:comment}"></ng-container>
+                      </tbody>
+                    </table>
+                  </div>
+            </div>
             <button class="btn btn-primary saveBlog" (click)="editBlogPost()">Edit blog post</button>
         </div>
     </div>
 </form>
+
+<ng-template let-comment='comment' #noChildComments>
+    <tr>
+        <td>{{comment.name}}
+            <div class="comment">
+                {{ comment.content }}
+            </div>
+            <div class="actions">
+                <div class="action" (click)="deleteComment(comment)">
+                    <i class="fas fa-trash-alt danger"></i>
+                </div>
+                <div class="action" (click)="replyToComment(comment)">
+                    <i class="fas fa-reply"></i>
+                </div>
+            </div>
+        </td>
+    </tr>
+</ng-template>
+
+<ng-template let-comment='comment' #withChildren>
+
+    <tr data-widget="expandable-table" aria-expanded="false">
+        <td>
+            <i class="expandable-table-caret fas fa-caret-right fa-fw"></i>
+            {{comment.name}}
+            <div class="comment">
+                {{ comment.content }}
+            </div>
+            <div class="action" (click)="replyToComment(comment)">
+                <i class="fas fa-reply"></i>
+            </div>
+          </td>
+    </tr>
+    <tr class="expandable-body expandable-body d-none">
+        <td>
+            <div class="p-0">
+                <table class="table table-hover">
+                    <tbody>
+                        <ng-container *ngFor="let childComment of comment.comments;" 
+                        [ngTemplateOutlet]="childComment.comments && childComment.comments.length > 0 ? withChildren : noChildComments" 
+                        [ngTemplateOutletContext]="{comment:childComment}"></ng-container>
+                    </tbody>
+                  </table>
+            </div>
+        </td>
+        
+      </tr>
+
+</ng-template>

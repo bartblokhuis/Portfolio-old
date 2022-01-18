@@ -29,23 +29,33 @@ public class BlogPostService : IBlogPostService
 
     public async Task<IEnumerable<BlogPost>> GetAllBlogPostsAsync()
     {
-        return await _blogPostRepository.GetAllAsync(query => query.Include(x => x.Thumbnail).Include(x => x.BannerPicture),
+        return await _blogPostRepository.GetAllAsync(query => query.Include(x => x.Thumbnail).Include(x => x.BannerPicture).Include(x => x.Comments)
+        .OrderByDescending(x => x.DisplayNumber).ThenBy(x => x.CreatedAtUTC),
             cache => cache.PrepareKeyForDefaultCache(BlogPostDefaults.AllBlogPostsCacheKey));
     }
 
     public async Task<IEnumerable<BlogPost>> GetPublishedBlogPostsAsync()
     {
-        return await _blogPostRepository.GetAllAsync(query => query.Where(x => x.IsPublished).Include(x => x.Thumbnail).Include(x => x.BannerPicture),
+        return await _blogPostRepository.GetAllAsync(query => query.Where(x => x.IsPublished).Include(x => x.Thumbnail).Include(x => x.BannerPicture).OrderByDescending(x => x.DisplayNumber).ThenBy(x => x.CreatedAtUTC),
             cache => cache.PrepareKeyForDefaultCache(BlogPostDefaults.PublishedBlogPostsCacheKey));
     }
 
     public async Task<BlogPost> GetById(int id, bool includeUnPublished = false)
     {
-        var blogPost = await _blogPostRepository.GetByIdAsync(id, includeProperties: "BannerPicture,Thumbnail");
-
-        if (blogPost == null)
+        var blogPosts = await _blogPostRepository.GetAllAsync(query => query
+        .Include(x => x.Thumbnail)
+        .Include(x => x.BannerPicture)
+        .Include(x => x.Comments.OrderByDescending(x => x.CreatedAtUTC))
+        .ThenInclude(x => x.Comments.OrderByDescending(x => x.CreatedAtUTC))
+        .ThenInclude(x => x.Comments.OrderByDescending(x => x.CreatedAtUTC))
+        .ThenInclude(x => x.Comments.OrderByDescending(x => x.CreatedAtUTC))
+        .ThenInclude(x => x.Comments.OrderByDescending(x => x.CreatedAtUTC))
+        .OrderByDescending(x => x.DisplayNumber).ThenBy(x => x.CreatedAtUTC)
+        .Where(x => x.Id == id));
+        if (blogPosts == null)
             return null;
 
+        var blogPost = blogPosts.FirstOrDefault();
         if (!blogPost.IsPublished && !includeUnPublished)
             return null;
 
@@ -54,7 +64,17 @@ public class BlogPostService : IBlogPostService
 
     public async Task<BlogPost> GetByTitle(string title, bool includeUnPublished = false)
     {
-        var blogPosts = await _blogPostRepository.GetAllAsync(query => query.Include(x => x.Thumbnail).Include(x => x.BannerPicture).Where(x => x.Title.ToLower() == title.ToLower()), cache => default);
+        //TODO: Add support for more child comments.
+        var blogPosts = await _blogPostRepository.GetAllAsync(query => query
+        .Include(x => x.Thumbnail)
+        .Include(x => x.BannerPicture)
+        .Include(x => x.Comments.OrderByDescending(x => x.CreatedAtUTC))
+        .ThenInclude(x => x.Comments.OrderByDescending(x => x.CreatedAtUTC))
+        .ThenInclude(x => x.Comments.OrderByDescending(x => x.CreatedAtUTC))
+        .ThenInclude(x => x.Comments.OrderByDescending(x => x.CreatedAtUTC))
+        .ThenInclude(x => x.Comments.OrderByDescending(x => x.CreatedAtUTC))
+        .OrderByDescending(x => x.DisplayNumber).ThenBy(x => x.CreatedAtUTC)
+        .Where(x => x.Title.ToLower() == title.ToLower()));
         if(blogPosts == null) 
             return null;
 

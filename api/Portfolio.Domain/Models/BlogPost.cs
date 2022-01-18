@@ -1,5 +1,6 @@
 ﻿using Portfolio.Domain.Models.Common;
 using System;
+using System.Collections.Generic;
 
 namespace Portfolio.Domain.Models;
 
@@ -32,6 +33,8 @@ public class BlogPost : BaseEntity, IHasDisplayNumber, IFullyAudited
     public Picture? BannerPicture { get; set; }
 
     public int? BannerPictureId { get; set; }
+
+    public ICollection<Comment> Comments { get; set; }
 
     #endregion
 }

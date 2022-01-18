@@ -2,6 +2,7 @@
 using Moq;
 using Portfolio.Core.Interfaces.Common;
 using Portfolio.Core.Services.Common;
+using Portfolio.Core.Services.Settings;
 using Portfolio.Core.Tests.Attributes;
 using Portfolio.Domain.Models.Settings;
 using System.Threading.Tasks;
