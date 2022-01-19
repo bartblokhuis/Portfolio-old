@@ -24,6 +24,7 @@ using Portfolio.Core.Services.Projects;
 using Portfolio.Core.Services.Settings;
 using Portfolio.Core.Services.SkillGroups;
 using Portfolio.Core.Services.Skills;
+using Portfolio.Core.Services.Urls;
 using Portfolio.Database;
 using Portfolio.Domain.Models.Authentication;
 using System;
@@ -112,6 +113,7 @@ public static class ServiceCollectionExtensions
             .AddScoped<ISkillService, SkillService>()
             .AddScoped<IAboutMeService, AboutMeService>()
             .AddScoped<IProjectService, ProjectService>()
+            .AddScoped<IUrlService, UrlService>()
             .AddScoped<IBlogPostService, BlogPostService>()
             .AddScoped<IBlogPostCommentService, BlogPostCommentService>()
             .AddSingleton(new HostingConfig())

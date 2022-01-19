@@ -17,6 +17,10 @@ export class ProjectsService {
     return this.apiService.get<Project[]>('Project');
   }
 
+  getById(id: number): Observable<Result<Project>> {
+    return this.apiService.get<Project>(`Project/GetById?id=${id}`)
+  }
+
   createProject(project: AddUpdateProject): Observable<Result<Project>> {
     return this.apiService.post<Project>("Project", project)
   }
@@ -35,5 +39,9 @@ export class ProjectsService {
 
   deleteProject(id: number): Observable<Result> {
     return this.apiService.delete(`Project?id=${id}`);
+  }
+
+  deleteProjectUrl(projectId: number, urlId: number): Observable<Result> {
+    return this.apiService.delete(`Project/Url/Delete?projectId=${projectId}&urlId=${urlId}`);
   }
 }

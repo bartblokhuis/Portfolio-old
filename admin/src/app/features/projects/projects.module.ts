@@ -8,13 +8,21 @@ import { QuillModule } from 'ngx-quill';
 import { FormsModule } from '@angular/forms';
 import { EditProjectComponent } from './edit-project/edit-project.component';
 import { DeleteProjectComponent } from './delete-project/delete-project.component';
+import { DeleteUrlComponent } from './urls/delete-url/delete-url.component';
+import { EditUrlComponent } from './urls/edit-url/edit-url.component';
+import { AddUrlComponent } from './urls/add-url/add-url.component';
+import { ListUrlComponent } from './urls/list-url/list-url.component';
 
 @NgModule({
   declarations: [
     ListProjectsComponent,
     AddProjectComponent,
     EditProjectComponent,
-    DeleteProjectComponent
+    DeleteProjectComponent,
+    DeleteUrlComponent,
+    EditUrlComponent,
+    AddUrlComponent,
+    ListUrlComponent
   ],
   imports: [
     CommonModule,

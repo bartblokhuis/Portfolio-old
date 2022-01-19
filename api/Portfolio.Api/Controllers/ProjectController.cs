@@ -47,6 +47,8 @@ public class ProjectController : ControllerBase
 
     #region Methods
 
+    #region Get
+
     [AllowAnonymous]
     [HttpGet]
     public async Task<IActionResult> Get()
@@ -63,6 +65,20 @@ public class ProjectController : ControllerBase
         return Ok(result);
     }
 
+    [HttpGet("GetById")]
+    public async Task<IActionResult> GetById(int id)
+    {
+        var project = (await _projectService.GetById(id));
+
+        var result = await Result<ProjectDto>.SuccessAsync(_mapper.Map<ProjectDto>(project));
+        result.Succeeded = true;
+        return Ok(result);
+    }
+
+    #endregion
+
+    #region Post
+
     [HttpPost]
     public async Task<IActionResult> Create(CreateUpdateProject model)
     {
@@ -73,13 +89,17 @@ public class ProjectController : ControllerBase
         return Ok(result);
     }
 
+    #endregion
+
+    #region Put
+
     [HttpPut]
     public async Task<IActionResult> Update(CreateUpdateProject model)
     {
         var project = _mapper.Map<Project>(model);
         project = await _projectService.Update(project);
 
-        if(project.Skills != null)
+        if (project.Skills != null)
             foreach (var skill in project.Skills)
                 skill.Projects = null;
 
@@ -121,6 +141,10 @@ public class ProjectController : ControllerBase
         return Ok(result);
     }
 
+    #endregion
+
+    #region Delete
+
     [HttpDelete]
     public async Task<IActionResult> Delete(int id)
     {
@@ -128,6 +152,19 @@ public class ProjectController : ControllerBase
 
         return Ok(await Result.SuccessAsync("Removed project"));
     }
+
+    [HttpDelete("Url/Delete")]
+    public async Task<IActionResult> DeleteURL(int projectId, int urlId)
+    {
+        var project = await _projectService.GetById(projectId);
+        if(project == null)
+            return Ok(await Result.FailAsync("Project not found"));
+
+        await _projectService.DeleteUrl(project, urlId);
+        return Ok(await Result.SuccessAsync("Removed project url"));
+    }
+
+    #endregion
 
     #endregion
 }

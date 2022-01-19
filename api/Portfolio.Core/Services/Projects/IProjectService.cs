@@ -18,4 +18,6 @@ public interface IProjectService
 
     Task Delete(int id);
 
+    Task DeleteUrl(Project project, int urlId);
+
 }

@@ -1,7 +1,9 @@
 using Microsoft.EntityFrameworkCore;
 using Portfolio.Core.Interfaces;
 using Portfolio.Core.Interfaces.Common;
+using Portfolio.Core.Services.Urls;
 using Portfolio.Domain.Models;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -13,14 +15,16 @@ public class ProjectService : IProjectService
     #region Fields
 
     private readonly IBaseRepository<Project> _projectRepository;
+    private readonly IUrlService _urlService;
 
     #endregion
 
     #region Constructor
 
-    public ProjectService(IBaseRepository<Project> projectRepository)
+    public ProjectService(IBaseRepository<Project> projectRepository, IUrlService urlService)
     {
         _projectRepository = projectRepository;
+        _urlService = urlService;
     }
 
     #endregion
@@ -79,6 +83,20 @@ public class ProjectService : IProjectService
     {
         await _projectRepository.DeleteAsync(id);
         return;
+    }
+
+    public async Task DeleteUrl(Project project, int urlId)
+    {
+        if (project == null)
+            throw new ArgumentNullException(nameof(project));
+
+        if (project.ProjectUrls == null)
+            return;
+
+        project.ProjectUrls = project.ProjectUrls.Where(x => x.UrlId != urlId).ToList();
+        await Update(project);
+
+        await _urlService.DeleteAsync(urlId);
     }
 
     #endregion
