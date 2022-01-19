@@ -29,16 +29,15 @@ public class ProjectService : IProjectService
 
     public async Task<IEnumerable<Project>> Get()
     {
-        var projects = await _projectRepository.GetAllAsync(query => query.Include(x => x.Skills),
+        var projects = await _projectRepository.GetAllAsync(query => query.Include(x => x.Skills).Include(x => x.ProjectUrls).ThenInclude(x => x.Url),
             cache => cache.PrepareKeyForDefaultCache(ProjectDefaults.AllProjectsCacheKey));
         return projects;
     }
 
     public async Task<Project> GetById(int id)
     {
-
-        var project = await _projectRepository.GetByIdAsync(id);
-        return project;
+        var projects = await _projectRepository.GetAllAsync(query => query.Include(x => x.Skills).Include(x => x.ProjectUrls).ThenInclude(x => x.Url).Where(x => x.Id == id));
+        return projects == null ? null : projects.First();
     }
 
     public async Task Create(Project model)
@@ -57,7 +56,6 @@ public class ProjectService : IProjectService
         var project = _projectRepository.Table.Include(x => x.Skills).FirstOrDefault(x => x.Id == projectId);
         if (project == null)
             return null;
-
 
         var skillIds = skills.Select(x => x.Id);
 
