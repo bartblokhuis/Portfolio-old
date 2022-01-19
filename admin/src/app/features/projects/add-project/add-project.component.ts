@@ -1,4 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import { NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
 import { combineLatest, Observable } from 'rxjs';
 import { Result } from 'src/app/data/common/Result';
@@ -8,6 +9,7 @@ import { UpdateProjectSkills } from 'src/app/data/projects/update-project-skills
 import { SkillGroup } from 'src/app/data/skill-groups/skill-group';
 import { ProjectsService } from 'src/app/services/api/projects/projects.service';
 import { SkillGroupsService } from 'src/app/services/api/skill-groups/skill-groups.service';
+import { ContentTitleService } from 'src/app/services/content-title/content-title.service';
 import { NotificationService } from 'src/app/services/notification/notification.service';
 import { formatProjectSkillsSelect, validateProjectForm } from '../helpers/project-helpers';
 
@@ -28,9 +30,8 @@ export class AddProjectComponent implements OnInit {
 
   addProjectForm: any;
 
-  @Input() modalRef: NgbModalRef | undefined;
-
-  constructor(private projectsService: ProjectsService, private skillGroupsService: SkillGroupsService, private notificationService: NotificationService) { }
+  constructor(private projectsService: ProjectsService, private skillGroupsService: SkillGroupsService, private notificationService: NotificationService, 
+    private readonly router: Router, private readonly contentTitleService: ContentTitleService) { }
 
   ngOnInit(): void {
     //Initialize Select2 Elements
@@ -43,10 +44,8 @@ export class AddProjectComponent implements OnInit {
     this.skillGroupsService.getAll().subscribe((result: Result<SkillGroup[]>) => {
       if(result.succeeded) this.skillGroups = result.data;
     })
-  }
 
-  close(){
-    this.modalRef?.close();
+    this.contentTitleService.title.next('Add new project')
   }
 
   onFileChange($event: any) {
@@ -64,7 +63,6 @@ export class AddProjectComponent implements OnInit {
     this.projectsService.createProject(this.model).subscribe((result: Result<Project>) => {
 
       if(!result.succeeded) {
-        this.modalRef?.close();
         return;
       }
 
@@ -83,15 +81,13 @@ export class AddProjectComponent implements OnInit {
       if(observables.length !== 0){
         combineLatest(observables).subscribe(() => {
           this.notify();
-          this.modalRef?.close();
-          return;
         });
       }
       else {
         this.notify();
-        this.modalRef?.close();
-        return;
       }
+
+      this.router.navigate([`projects/edit/${result.data.id}`]);
     });
   }
 
