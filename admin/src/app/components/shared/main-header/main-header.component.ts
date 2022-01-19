@@ -2,7 +2,9 @@ import { Component, OnInit } from '@angular/core';
 import { Message } from 'src/app/data/messages/message';
 import { MessageStatus } from "src/app/data/messages/message-status";
 import { AuthenticationService } from 'src/app/services/api/authentication/authentication.service';
+import { SystemService } from 'src/app/services/api/system/system.service';
 import { MessagesService } from 'src/app/services/messages/messages.service';
+import { NotificationService } from 'src/app/services/notification/notification.service';
 import { ThemingService } from 'src/app/services/theming/theming.service';
 
 @Component({
@@ -15,7 +17,8 @@ export class MainHeaderComponent implements OnInit {
   public currentTheme = 'navbar-dark';
   amountOfnewMessages: number = 0;
 
-  constructor(private themingService: ThemingService, private authenticationService: AuthenticationService, private messagesService: MessagesService) { }
+  constructor(private themingService: ThemingService, private authenticationService: AuthenticationService, private messagesService: MessagesService,
+    private readonly systemService: SystemService, private readonly notificationService: NotificationService) { }
 
   ngOnInit(): void {
     this.themingService.theme.subscribe((theme: string) => {
@@ -45,6 +48,14 @@ export class MainHeaderComponent implements OnInit {
     else {
       this.themingService.theme.next('dark-mode');
     }
+  }
+
+  clearApiCache(): void {
+    this.systemService.clearCache().subscribe((result) => {
+      if(result.succeeded) {
+        this.notificationService.success("Cleared the API's cache");
+      }
+    })
   }
 
 }
