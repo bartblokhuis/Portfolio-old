@@ -7,6 +7,11 @@
         width: 16px;
         box-sizing: content-box;
         position: relative;
+        color: #fff;
+
+        &:hover{
+          color: #fff !important;
+        }
         
         i{
             position: absolute;
