@@ -75,6 +75,15 @@ public class ProjectController : ControllerBase
         return Ok(result);
     }
 
+    [HttpGet("Url/GetByProjectId")]
+    public async Task<IActionResult> GetProjectUrlsById(int projectId)
+    {
+        var urls = (await _projectService.GetProjectUrlsByIdAsync(projectId)).ToListResult();
+        var result = _mapper.Map<ListResult<Url>>(urls);
+        result.Succeeded = true;
+        return Ok(result);
+    }
+
     #endregion
 
     #region Post

@@ -31,6 +31,8 @@ public class ProjectService : IProjectService
 
     #region Methods
 
+    #region Get
+
     public async Task<IEnumerable<Project>> Get()
     {
         var projects = await _projectRepository.GetAllAsync(query => query.Include(x => x.Skills).Include(x => x.ProjectUrls).ThenInclude(x => x.Url),
@@ -44,10 +46,26 @@ public class ProjectService : IProjectService
         return projects == null ? null : projects.First();
     }
 
+    public async Task<IEnumerable<Url>> GetProjectUrlsByIdAsync(int id)
+    {
+        var project = await GetById(id);
+
+        return project == null ? null : project.ProjectUrls.Select(x => x.Url);
+
+    }
+
+    #endregion
+
+    #region Create
+
     public async Task Create(Project model)
     {
         await _projectRepository.InsertAsync(model);
     }
+
+    #endregion
+
+    #region Update
 
     public async Task<Project> Update(Project model)
     {
@@ -65,7 +83,7 @@ public class ProjectService : IProjectService
 
         project.Skills ??= new List<Skill>();
 
-        foreach(var skill in project.Skills.Where(x => !skillIds.Contains(x.Id)))
+        foreach (var skill in project.Skills.Where(x => !skillIds.Contains(x.Id)))
         {
             project.Skills.Remove(skill);
         }
@@ -78,6 +96,10 @@ public class ProjectService : IProjectService
         await _projectRepository.UpdateAsync(project);
         return project;
     }
+
+    #endregion
+
+    #region Delete
 
     public async Task Delete(int id)
     {
@@ -98,6 +120,8 @@ public class ProjectService : IProjectService
 
         await _urlService.DeleteAsync(urlId);
     }
+
+    #endregion
 
     #endregion
 }

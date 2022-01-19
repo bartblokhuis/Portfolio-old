@@ -1,6 +1,7 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { Url } from 'src/app/data/url';
+import { ProjectsService } from 'src/app/services/api/projects/projects.service';
 import { DeleteUrlComponent } from '../delete-url/delete-url.component';
 
 @Component({
@@ -13,7 +14,7 @@ export class ListUrlComponent implements OnInit {
   @Input() urls: Url[] = [];
   @Input() projectId: number | null = null;
 
-  constructor(private readonly modalService: NgbModal) { }
+  constructor(private readonly modalService: NgbModal, private readonly projectsService: ProjectsService ) { }
 
   ngOnInit(): void {
   }
@@ -41,11 +42,14 @@ export class ListUrlComponent implements OnInit {
     modalRef.componentInstance.projectId = this.projectId;
     
     modalRef.result.then(() => {
-      this.refreshComments();
+      this.refreshUrls();
     });
   }
 
-  refreshComments() {
-
+  refreshUrls() {
+    if(!this.projectId) return;
+    this.projectsService.getProjectUrlsByProjectId(this.projectId).subscribe((result) => {
+      if(result.succeeded) this.urls = result.data;
+    })
   }
 }

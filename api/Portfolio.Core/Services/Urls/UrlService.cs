@@ -28,6 +28,11 @@ public class UrlService : IUrlService
         return _urlRepository.DeleteAsync(id);
     }
 
+    public Task UpdateAsync(Url url)
+    {
+        throw new System.NotImplementedException();
+    }
+
     #endregion
 }
 

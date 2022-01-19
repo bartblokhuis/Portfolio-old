@@ -10,6 +10,8 @@ public interface IProjectService
 
     Task<Project> GetById(int id);
 
+    Task<IEnumerable<Url>> GetProjectUrlsByIdAsync(int id);
+
     Task Create(Project model);
 
     Task<Project> Update(Project model);
