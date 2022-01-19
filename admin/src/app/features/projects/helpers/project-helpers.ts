@@ -8,12 +8,6 @@ export function validateProjectForm(form: any) {
           title: {
             required: true,
           },
-          demoUrl: {
-            url: true
-          },
-          githubUrl: {
-            url: true
-          },
           file: {
             accept: "image/jpeg, image/pjpeg, image/png, image/svg+xml, image/tiff, image/webp"
           }
@@ -21,12 +15,6 @@ export function validateProjectForm(form: any) {
         messages: {
           title: {
             required: "Please enter a title",
-          },
-          demoUrl: {
-            url: "Please enter a valid url"
-          },
-          githubUrl: {
-            url: "Please enter a valid url"
           },
           file: {
             accept: "Please enter an image"
