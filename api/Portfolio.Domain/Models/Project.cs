@@ -19,7 +19,7 @@ public class Project : BaseEntity, IHasDisplayNumber
 
     public ICollection<Skill> Skills { get; set; }
 
-    public ICollection<Url> Urls { get; set; }
+    public ICollection<ProjectUrls> ProjectUrls { get; set; }
 
     #endregion
 }

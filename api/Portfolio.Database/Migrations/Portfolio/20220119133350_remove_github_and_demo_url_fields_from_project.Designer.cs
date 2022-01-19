@@ -3,17 +3,19 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Portfolio.Database;
 
 #nullable disable
 
-namespace Portfolio.Database.Migrations
+namespace Portfolio.Database.Migrations.Portfolio
 {
     [DbContext(typeof(PortfolioContext))]
-    partial class PortfolioContextModelSnapshot : ModelSnapshot
+    [Migration("20220119133350_remove_github_and_demo_url_fields_from_project")]
+    partial class remove_github_and_demo_url_fields_from_project
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -228,29 +230,6 @@ namespace Portfolio.Database.Migrations
                     b.ToTable("Projects");
                 });
 
-            modelBuilder.Entity("Portfolio.Domain.Models.ProjectUrls", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
-
-                    b.Property<int>("ProjectId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("UrlId")
-                        .HasColumnType("int");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("ProjectId");
-
-                    b.HasIndex("UrlId");
-
-                    b.ToTable("ProjectUrls");
-                });
-
             modelBuilder.Entity("Portfolio.Domain.Models.Settings.EmailSettings", b =>
                 {
                     b.Property<int>("Id")
@@ -411,25 +390,6 @@ namespace Portfolio.Database.Migrations
                     b.ToTable("SkillGroups");
                 });
 
-            modelBuilder.Entity("Portfolio.Domain.Models.Url", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
-
-                    b.Property<string>("FriendlyName")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("FullUrl")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("Urls");
-                });
-
             modelBuilder.Entity("ProjectSkill", b =>
                 {
                     b.Property<int>("ProjectsId")
@@ -475,25 +435,6 @@ namespace Portfolio.Database.Migrations
                     b.Navigation("ParentComment");
                 });
 
-            modelBuilder.Entity("Portfolio.Domain.Models.ProjectUrls", b =>
-                {
-                    b.HasOne("Portfolio.Domain.Models.Project", "Project")
-                        .WithMany("ProjectUrls")
-                        .HasForeignKey("ProjectId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("Portfolio.Domain.Models.Url", "Url")
-                        .WithMany()
-                        .HasForeignKey("UrlId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Project");
-
-                    b.Navigation("Url");
-                });
-
             modelBuilder.Entity("Portfolio.Domain.Models.Skill", b =>
                 {
                     b.HasOne("Portfolio.Domain.Models.SkillGroup", "SkillGroup")
@@ -528,11 +469,6 @@ namespace Portfolio.Database.Migrations
             modelBuilder.Entity("Portfolio.Domain.Models.Comment", b =>
                 {
                     b.Navigation("Comments");
-                });
-
-            modelBuilder.Entity("Portfolio.Domain.Models.Project", b =>
-                {
-                    b.Navigation("ProjectUrls");
                 });
 
             modelBuilder.Entity("Portfolio.Domain.Models.SkillGroup", b =>
