@@ -24,6 +24,8 @@ public interface IProjectService
 
     Task<Project> UpdateSkills(int projectId, IEnumerable<Skill> skills);
 
+    Task UpdateProjectPictureAsync(ProjectPicture picture);
+
     Task Delete(int id);
 
     Task DeleteUrl(Project project, int urlId);

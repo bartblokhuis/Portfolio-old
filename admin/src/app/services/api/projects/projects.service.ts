@@ -6,6 +6,7 @@ import { CreateProjectUrl } from 'src/app/data/projects/add-project-url';
 import { AddUpdateProject } from 'src/app/data/projects/add-update-project';
 import { Project } from 'src/app/data/projects/project';
 import { ProjectPicture } from 'src/app/data/projects/project-picture';
+import { UpdateProjectPicture } from 'src/app/data/projects/update-project-picture';
 import { UpdateProjectSkills } from 'src/app/data/projects/update-project-skills';
 import { Url } from 'src/app/data/url';
 import { ApiService } from '../api.service';
@@ -53,8 +54,8 @@ export class ProjectsService {
     return this.apiService.put("Project/UpdateSkills", updateProjectSkills)
   }
 
-  updateDemoImage(projectId: number, formData: FormData): Observable<Result> {
-    return this.apiService.put(`Project/UpdateDemoImage/${projectId}`, formData);
+  updateProjectPicture(updateProjectPicture: UpdateProjectPicture): Observable<Result> {
+    return this.apiService.put(`Project/Pictures/`, updateProjectPicture);
   }
 
   deleteProject(id: number): Observable<Result> {

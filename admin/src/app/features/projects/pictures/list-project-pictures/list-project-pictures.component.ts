@@ -42,7 +42,7 @@ export class ListProjectPicturesComponent implements OnInit {
 
     if(projectPicture) {
       const editPicture: ProjectPicture = { altAttribute: projectPicture.altAttribute, titleAttribute: projectPicture.titleAttribute, displayNumber: projectPicture.displayNumber, mimeType: projectPicture.mimeType, path: projectPicture.path, pictureId: projectPicture.pictureId  };
-      modalRef.componentInstance.editPicture = editPicture
+      modalRef.componentInstance.projectPicture = editPicture
     }
     modalRef.componentInstance.modal = modalRef;
     modalRef.componentInstance.projectId = this.projectId;

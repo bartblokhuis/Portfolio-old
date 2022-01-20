@@ -118,6 +118,11 @@ public class ProjectService : IProjectService
         return project;
     }
 
+    public Task UpdateProjectPictureAsync(ProjectPicture picture)
+    {
+        return _projectPictureRepository.UpdateAsync(picture);
+    }
+
     #endregion
 
     #region Delete

@@ -134,6 +134,9 @@ public class ProjectController : ControllerBase
         if (project == null)
             return Ok(await Result.FailAsync("Project not found"));
 
+        if (project.ProjectPictures != null && project.ProjectPictures.Any(x => x.PictureId == model.PictureId))
+            return Ok(await Result.FailAsync("Picture has already been added to the project"));
+
         var picture = await _pictureService.GetById(model.PictureId);
         if (picture == null)
             return Ok(await Result.FailAsync("Picture not found"));
@@ -175,6 +178,39 @@ public class ProjectController : ControllerBase
 
         var result = await Result<ProjectDto>.SuccessAsync(_mapper.Map<ProjectDto>(project));
         return Ok(result);
+    }
+
+    [HttpPut("Pictures/")]
+    public async Task<IActionResult> UpdatePicture(UpdateProjectPictureDto model)
+    {
+        var project = await _projectService.GetById(model.ProjectId);
+        if (project == null)
+            return Ok(await Result.FailAsync("Project not found"));
+
+        if(project.ProjectPictures == null)
+            return Ok(await Result.FailAsync("Current picture not found"));
+        
+        var projectPicture = project.ProjectPictures.FirstOrDefault(x => x.PictureId == model.CurrentPictureId);
+        if (projectPicture == null)
+            return Ok(await Result.FailAsync("Current picture not found"));
+
+        if(model.CurrentPictureId != model.NewPictureId)
+        {
+            if (project.ProjectPictures != null && project.ProjectPictures.Any(x => x.PictureId == model.NewPictureId))
+                return Ok(await Result.FailAsync("Picture has already been added to the project"));
+
+            var picture = await _pictureService.GetById(model.NewPictureId);
+            if (picture == null)
+                return Ok(await Result.FailAsync("Picture not found"));
+
+            projectPicture.PictureId = model.NewPictureId;
+        }
+
+        projectPicture.DisplayNumber = model.DisplayNumber;
+      
+        await _projectService.UpdateProjectPictureAsync(projectPicture);
+
+        return Ok(await Result.SuccessAsync());
     }
 
     #endregion

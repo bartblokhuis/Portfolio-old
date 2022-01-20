@@ -27,7 +27,6 @@ export class AddProjectPictureComponent implements OnInit {
 
     this.form = $("#addPictureForm");
     this.model.projectId = this.projectId ?? 0;
-    console.log(this.form);
     validateProjectPictureForm(this.form);
   }
 
@@ -55,6 +54,10 @@ export class AddProjectPictureComponent implements OnInit {
 
     this.projectsService.createProjectPicture(this.model).subscribe((result) => {
       if(result.succeeded) this.modal?.close();
+      else{
+        this.error = result.messages[0];
+        return;
+      }
     })
 
     
