@@ -1,6 +1,6 @@
 import { DOCUMENT } from '@angular/common';
 import { Component, Inject, OnInit } from '@angular/core';
-import { Project } from 'src/app/data/Project';
+import { Project } from 'src/app/data/project/Project';
 import { Skill } from 'src/app/data/Skill';
 import { ProjectsService } from 'src/app/services/projects/projects.service';
 import { environment } from 'src/environments/environment';
@@ -33,7 +33,7 @@ export class ProjectsComponent implements OnInit {
       })
     }
 
-    const modalContent = `<div class="modal-image"><img src="${this.baseUrl}${project.imagePath}"/></div>
+    const modalContent = `<div class="modal-image"></div>
     <div class="modal-title">${project.title}</div> <div class="project-skills">${this.printSkill(project.skills)}</div> <div class="modal-content">${project.description}</div><div class="modal-footer">${buttons}</div>`;
 
     Swal.fire({

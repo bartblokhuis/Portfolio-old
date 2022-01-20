@@ -1,5 +1,5 @@
 import { AboutMe } from "./AboutMe";
-import { Project } from "./Project";
+import { Project } from "./project/Project";
 
 export interface LandingPortfolio {
     AboutMe: AboutMe,
