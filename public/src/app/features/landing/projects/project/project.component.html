@@ -1,1 +1,9 @@
-<p>project works!</p>
+<div class="pop-up" (click)="close()">
+    <div class="pop-up-container">
+        <div class="html-container">
+            <div class="modal-image">
+                <img *ngIf="project" [src]="baseUrl + project.pictures[0].path">
+            </div>
+        </div>
+    </div>
+</div>
