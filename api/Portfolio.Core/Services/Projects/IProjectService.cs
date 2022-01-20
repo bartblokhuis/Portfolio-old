@@ -30,4 +30,6 @@ public interface IProjectService
 
     Task DeleteUrl(Project project, int urlId);
 
+    Task DeleteProjectPictureAsync(ProjectPicture projectPicture);
+
 }

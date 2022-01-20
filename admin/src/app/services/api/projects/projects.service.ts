@@ -65,4 +65,8 @@ export class ProjectsService {
   deleteProjectUrl(projectId: number, urlId: number): Observable<Result> {
     return this.apiService.delete(`Project/Url/Delete?projectId=${projectId}&urlId=${urlId}`);
   }
+
+  deleteProjectPicture(projectId: number, pictureId: number): Observable<Result> {
+    return this.apiService.delete(`Project/Pictures?projectId=${projectId}&pictureId=${pictureId}`)
+  }
 }

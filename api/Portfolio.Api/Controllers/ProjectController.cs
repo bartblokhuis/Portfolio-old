@@ -236,6 +236,24 @@ public class ProjectController : ControllerBase
         return Ok(await Result.SuccessAsync("Removed project url"));
     }
 
+    [HttpDelete("Pictures/")]
+    public async Task<IActionResult> DeletePicture(int projectId, int pictureId)
+    {
+        var project = await _projectService.GetById(projectId);
+        if (project == null)
+            return Ok(await Result.FailAsync("Project not found"));
+
+        if(project.ProjectPictures == null)
+            return Ok(await Result.FailAsync("Project picture not found"));
+
+        var picture = project.ProjectPictures.FirstOrDefault(x => x.PictureId == pictureId);
+        if (picture == null)
+            return Ok(await Result.FailAsync("Project picture not found"));
+
+        await _projectService.DeleteProjectPictureAsync(picture);
+        return Ok(await Result.SuccessAsync("Removed project picture"));
+    }
+
     #endregion
 
     #endregion

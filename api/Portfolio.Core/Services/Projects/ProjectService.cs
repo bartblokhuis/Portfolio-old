@@ -147,6 +147,11 @@ public class ProjectService : IProjectService
         await _urlService.DeleteAsync(urlId);
     }
 
+    public Task DeleteProjectPictureAsync(ProjectPicture projectPicture)
+    {
+        return _projectPictureRepository.DeleteAsync(projectPicture);
+    }
+
     #endregion
 
     #endregion
