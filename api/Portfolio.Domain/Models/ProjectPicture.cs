@@ -13,7 +13,7 @@ public class ProjectPicture : BaseEntity, IHasDisplayNumber
 
     public Picture Picture { get; set; }
 
-    public int? PictureId { get; set; }
+    public int PictureId { get; set; }
 
     #endregion
 }
