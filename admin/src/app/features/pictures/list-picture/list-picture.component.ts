@@ -53,7 +53,7 @@ export class ListPictureComponent implements OnInit {
     });
   }
 
-  openModal(component: any, picture: Picture | null = null ) : Promise<any>{
+  openModal(component: any, picture: Picture | null = null ) : Promise<any> {
 
     const modalRef = this.modalService.open(component, { size: 'lg' });
 
