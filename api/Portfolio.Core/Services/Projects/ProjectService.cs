@@ -16,17 +16,19 @@ public class ProjectService : IProjectService
 
     private readonly IBaseRepository<Project> _projectRepository;
     private readonly IBaseRepository<ProjectUrls> _projectUrlsRepository;
+    private readonly IBaseRepository<ProjectPicture> _projectPictureRepository;
     private readonly IUrlService _urlService;
 
     #endregion
 
     #region Constructor
 
-    public ProjectService(IBaseRepository<Project> projectRepository, IUrlService urlService, IBaseRepository<ProjectUrls> projectUrlsRepository)
+    public ProjectService(IBaseRepository<Project> projectRepository, IUrlService urlService, IBaseRepository<ProjectUrls> projectUrlsRepository, IBaseRepository<ProjectPicture> projectPictureRepository)
     {
         _projectRepository = projectRepository;
         _urlService = urlService;
         _projectUrlsRepository = projectUrlsRepository;
+        _projectPictureRepository = projectPictureRepository;
     }
 
     #endregion
@@ -74,6 +76,12 @@ public class ProjectService : IProjectService
     {
         var projectUrl = new ProjectUrls(project, url);
         await _projectUrlsRepository.InsertAsync(projectUrl);
+    }
+
+    public async Task CreateProjectPictureAsync(Project project, Picture picture)
+    {
+        var projectPicture = new ProjectPicture(project, picture);
+        await _projectPictureRepository.InsertAsync(projectPicture);
     }
 
     #endregion

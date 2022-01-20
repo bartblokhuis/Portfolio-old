@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { Result } from 'src/app/data/common/Result';
+import { AddProjectPicture } from 'src/app/data/projects/add-project-picture';
 import { CreateProjectUrl } from 'src/app/data/projects/add-project-url';
 import { AddUpdateProject } from 'src/app/data/projects/add-update-project';
 import { Project } from 'src/app/data/projects/project';
@@ -38,6 +39,10 @@ export class ProjectsService {
 
   createProjectUrl(projectUrl: CreateProjectUrl): Observable<Result> {
     return this.apiService.post("Project/Url/Create", projectUrl)
+  }
+
+  createProjectPicture(createProjectPicture: AddProjectPicture): Observable<Result>{
+    return this.apiService.post("Project/Pictures", createProjectPicture);
   }
 
   updateProject(project: AddUpdateProject) {

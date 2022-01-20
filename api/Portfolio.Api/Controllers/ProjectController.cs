@@ -27,20 +27,20 @@ public class ProjectController : ControllerBase
     private readonly ILogger<ProjectController> _logger;
     private readonly IProjectService _projectService;
     private readonly ISkillService _skillService;
+    private readonly IPictureService _pictureService;
     private readonly IMapper _mapper;
-    private readonly IUploadImageHelper _uploadImageHelper;
 
     #endregion
 
     #region Constructor
 
-    public ProjectController(ILogger<ProjectController> logger, IProjectService projectService, IMapper mapper, ISkillService skillService, IUploadImageHelper uploadImageHelper)
+    public ProjectController(ILogger<ProjectController> logger, IProjectService projectService, IMapper mapper, ISkillService skillService, IPictureService pictureService)
     {
         _logger = logger;
         _projectService = projectService;
         _mapper = mapper;
         _skillService = skillService;
-        _uploadImageHelper = uploadImageHelper;
+        _pictureService = pictureService;
     }
 
     #endregion
@@ -120,6 +120,25 @@ public class ProjectController : ControllerBase
         var url = _mapper.Map<Url>(model);
         await _projectService.CreateProjectUrlAsync(project, url);
 
+        var result = await Result.SuccessAsync();
+        return Ok(result);
+    }
+
+    [HttpPost("Pictures/")]
+    public async Task<IActionResult> Create(CreateProjectPictureDto model)
+    {
+        if (model == null)
+            throw new ArgumentNullException(nameof(model));
+
+        var project = await _projectService.GetById(model.ProjectId);
+        if (project == null)
+            return Ok(await Result.FailAsync("Project not found"));
+
+        var picture = await _pictureService.GetById(model.PictureId);
+        if (picture == null)
+            return Ok(await Result.FailAsync("Picture not found"));
+
+        await _projectService.CreateProjectPictureAsync(project, picture);
         var result = await Result.SuccessAsync();
         return Ok(result);
     }

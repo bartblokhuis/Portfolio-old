@@ -3,6 +3,24 @@
 namespace Portfolio.Domain.Models;
 public class ProjectPicture : BaseEntity, IHasDisplayNumber
 {
+    #region Constructors
+
+    public ProjectPicture()
+    {
+
+    }
+
+    public ProjectPicture(Project project, Picture picture)
+    {
+        Project = project;
+        ProjectId = project.Id;
+
+        Picture = picture;
+        PictureId = picture.Id;
+    }
+
+    #endregion
+
     #region Properties
 
     public int DisplayNumber { get; set; }

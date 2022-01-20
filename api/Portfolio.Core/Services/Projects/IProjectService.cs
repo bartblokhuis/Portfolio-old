@@ -18,6 +18,8 @@ public interface IProjectService
 
     Task CreateProjectUrlAsync(Project project, Url url);
 
+    Task CreateProjectPictureAsync(Project project, Picture picture);
+
     Task<Project> Update(Project model);
 
     Task<Project> UpdateSkills(int projectId, IEnumerable<Skill> skills);
