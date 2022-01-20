@@ -9,6 +9,6 @@ export interface Project {
     isPublished: boolean,
     skills? : Skill[],
     urls: Url[] | null,
-    pictures: ProjectPicture[] | null,
+    pictures: ProjectPicture[],
     id: number
 }

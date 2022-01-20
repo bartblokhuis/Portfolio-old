@@ -41,7 +41,7 @@
                   </select>
                 </div>
               </div>
-              <div class="col-6">
+              <div class="col-12">
                 <div class="form-check">
                   <input class="form-check-input" type="checkbox" id="new-project-published"  [(ngModel)]="model.isPublished" name="published"/>
                   <label class="form-check-label" for="exampleCheck1" for="new-project-published" >Published</label>
@@ -52,6 +52,7 @@
       </div>
     </div>
   </div>
+  <app-list-project-pictures [pictures]="project?.pictures ?? []"></app-list-project-pictures>
   <app-list-url *ngIf="project && project.urls" [urls]="project.urls" [projectId]="project.id"></app-list-url>
   <button class="btn btn-primary" (click)="submit()">Add project</button>
 </form>
