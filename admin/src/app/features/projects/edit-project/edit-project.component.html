@@ -26,15 +26,6 @@
             <div class="row">
               <div class="col-6">
                 <div class="form-group">
-                  <label>Demo image</label>
-                  <div class="custom-file">
-                    <input type="file" class="form-control" id="file" name="file" (change)="onFileChange($event)"/>
-                    <label class="custom-file-label" for="file">{{ currentFileName }}</label>
-                  </div>
-                </div>   
-              </div>
-              <div class="col-6">
-                <div class="form-group">
                   <label>Skills</label>
                   <select class="select2 form-control" multiple="multiple" style="width: 100%;">
                     <optgroup #skillSelect *ngFor="let skillGroup of skillGroups" label="{{skillGroup.title}}" >

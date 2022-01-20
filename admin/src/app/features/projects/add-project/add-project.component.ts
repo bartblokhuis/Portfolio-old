@@ -22,7 +22,7 @@ declare var $:any;
 })
 export class AddProjectComponent implements OnInit {
 
-  model: AddUpdateProject = { description: '', displayNumber: 0, imagePath: '', isPublished: false, title: '', demoUrl: '',githubUrl: '' }
+  model: AddUpdateProject = { description: '', displayNumber: 0, isPublished: false, title: '', demoUrl: '',githubUrl: '' }
   skillModel: UpdateProjectSkills = {projectId: 0, skillIds: undefined }
   currentFileName: string = ''
   skillGroups: SkillGroup[] = [];
