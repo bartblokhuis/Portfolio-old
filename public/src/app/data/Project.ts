@@ -1,5 +1,6 @@
 import { BaseEntity } from './BaseEntity';
 import { Skill } from './Skill';
+import { Url } from './url';
 
 export interface Project extends BaseEntity {
     title: string,
@@ -8,6 +9,5 @@ export interface Project extends BaseEntity {
     displayNumber: number,
     isPublished: boolean,
     skills? : Skill[],
-    githubUrl? :string,
-    demoUrl?: string,
+    urls: Url[] | null
 }

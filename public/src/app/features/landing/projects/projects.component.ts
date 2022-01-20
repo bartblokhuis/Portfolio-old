@@ -25,18 +25,16 @@ export class ProjectsComponent implements OnInit {
   }
 
   readMore(project: Project) {
-    let demoButton = "", githubButton = ""
 
-    if(project.githubUrl){
-      githubButton = `<a class="btn btn-secondary" target="_blank" href="${project.githubUrl}">VIEW ON GITHUB</a>`
-    }
-
-    if(project.demoUrl){
-      demoButton = `<a class="btn btn-secondary" target="_blank" href="${project.demoUrl}">VIEW SITE</a>`
+    var buttons = "";
+    if(project.urls) {
+      project.urls.forEach(url => {
+        buttons += `<a class="btn btn-secondary" target="_blank" href="${url.fullUrl}">${url.friendlyName}</a>`
+      })
     }
 
     const modalContent = `<div class="modal-image"><img src="${this.baseUrl}${project.imagePath}"/></div>
-    <div class="modal-title">${project.title}</div> <div class="project-skills">${this.printSkill(project.skills)}</div> <div class="modal-content">${project.description}</div><div class="modal-footer">${demoButton}${githubButton}</div>`;
+    <div class="modal-title">${project.title}</div> <div class="project-skills">${this.printSkill(project.skills)}</div> <div class="modal-content">${project.description}</div><div class="modal-footer">${buttons}</div>`;
 
     Swal.fire({
       title: "",
