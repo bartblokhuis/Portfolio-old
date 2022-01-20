@@ -13,6 +13,7 @@
       <table class="table table-hover text-nowrap">
           <thead>
               <tr>
+                <th>Display Number</th>
                 <th>Picture</th>
                 <th>Title attribute</th>
                 <th>Alt attribute</th>
@@ -22,6 +23,7 @@
             </thead>
             <tbody>
               <tr *ngFor="let picture of pictures">
+                <td>{{ picture.displayNumber }}</td>
                 <td><img [src]="baseUrl + picture.path"></td>
                 <td>{{ picture.titleAttribute }}</td>
                 <td>{{ picture.altAttribute }}</td>

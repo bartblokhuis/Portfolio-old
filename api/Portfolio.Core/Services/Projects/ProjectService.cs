@@ -39,14 +39,14 @@ public class ProjectService : IProjectService
 
     public async Task<IEnumerable<Project>> Get()
     {
-        var projects = await _projectRepository.GetAllAsync(query => query.Include(x => x.Skills).Include(x => x.ProjectUrls).ThenInclude(x => x.Url).Include(x => x.ProjectPictures).ThenInclude(x => x.Picture),
+        var projects = await _projectRepository.GetAllAsync(query => query.Include(x => x.Skills).Include(x => x.ProjectUrls).ThenInclude(x => x.Url).Include(x => x.ProjectPictures.OrderBy(x => x.DisplayNumber)).ThenInclude(x => x.Picture),
             cache => cache.PrepareKeyForDefaultCache(ProjectDefaults.AllProjectsCacheKey));
         return projects;
     }
 
     public async Task<Project> GetById(int id)
     {
-        var projects = await _projectRepository.GetAllAsync(query => query.Include(x => x.Skills).Include(x => x.ProjectUrls).ThenInclude(x => x.Url).Include(x => x.ProjectPictures).ThenInclude(x => x.Picture).Where(x => x.Id == id));
+        var projects = await _projectRepository.GetAllAsync(query => query.Include(x => x.Skills).Include(x => x.ProjectUrls).ThenInclude(x => x.Url).Include(x => x.ProjectPictures.OrderBy(x => x.DisplayNumber)).ThenInclude(x => x.Picture).Where(x => x.Id == id));
         return projects == null ? null : projects.First();
     }
 
