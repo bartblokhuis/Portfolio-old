@@ -1,4 +1,5 @@
 import { AfterViewInit, Component, Input, OnInit, QueryList, ViewChildren } from '@angular/core';
+import { ActivatedRoute, Router } from '@angular/router';
 import { NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
 import { combineLatest, Observable } from 'rxjs';
 import { Result } from 'src/app/data/common/Result';
@@ -8,6 +9,7 @@ import { UpdateProjectSkills } from 'src/app/data/projects/update-project-skills
 import { SkillGroup } from 'src/app/data/skill-groups/skill-group';
 import { ProjectsService } from 'src/app/services/api/projects/projects.service';
 import { SkillGroupsService } from 'src/app/services/api/skill-groups/skill-groups.service';
+import { ContentTitleService } from 'src/app/services/content-title/content-title.service';
 import { NotificationService } from 'src/app/services/notification/notification.service';
 import { formatProjectSkillsSelect, validateProjectForm } from '../helpers/project-helpers';
 
@@ -20,10 +22,9 @@ declare var $:any;
 })
 export class EditProjectComponent implements OnInit, AfterViewInit {
 
-  @Input() modalRef: NgbModalRef | undefined;
-  @Input() project: Project | undefined;
-@ViewChildren('skillSelect') skills: QueryList<any> | undefined;
+  @ViewChildren('skillSelect') skills: QueryList<any> | undefined;
 
+  project: Project | null = null;
   skillIds: number[] = [];
   model: AddUpdateProject = { description: '', displayNumber: 0, imagePath: '', isPublished: false, title: '', demoUrl: '',githubUrl: '' }
   skillModel: UpdateProjectSkills = {projectId: 0, skillIds: undefined }
@@ -33,44 +34,61 @@ export class EditProjectComponent implements OnInit, AfterViewInit {
   editProjectForm: any;
   projectTitle: string = '';
   
-  constructor(private projectsService: ProjectsService, private skillGroupsService: SkillGroupsService, private notificationService: NotificationService) { }
+  constructor(private readonly route: ActivatedRoute, private projectsService: ProjectsService, private skillGroupsService: SkillGroupsService, private notificationService: NotificationService, 
+    private readonly router: Router, private readonly contentTitleService: ContentTitleService) { }
   
 
   ngOnInit(): void {
-    if(this.project === undefined) {
-      this.close();
-      return;
-    }
 
-    this.projectTitle = this.project.title;
+    const idParam = this.route.snapshot.paramMap.get('id');
+    if(!idParam) return;
 
-    if(this.project.skills){
-      this.skillIds = this.project.skills?.map(x => x.id);
-    }
+    const id = parseInt(idParam);
 
-    this.currentFileName = this.project.imagePath;
-    this.model.id = this.project.id;
+    this.projectsService.getById(id).subscribe((result) => {
+      if(!result.succeeded){
+        this.router.navigate(['Projects']);
+        return;
+      }
 
-    $('.select2').select2({closeOnSelect: false, templateResult: formatProjectSkillsSelect, tags: true});
-    $('.select2').on('change', (e: any) => this.skillModel.skillIds = $('.select2').val().map((x: string) => parseInt(x)));
+      this.project = result.data;
+      this.model = result.data;
 
-    this.model = this.project;
-    this.editProjectForm = $("#editProjectForm");
-    validateProjectForm(this.editProjectForm);
+      if(this.project.skills){
+        this.skillIds = this.project.skills?.map(x => x.id);
+      }
 
-    this.skillGroupsService.getAll().subscribe((result: Result<SkillGroup[]>) => {
-      if(result.succeeded) this.skillGroups = result.data;
-    });
+      this.projectTitle = this.model.title;
+      this.contentTitleService.title.next(`Edit project: ${this.project.title}`)
+      
+      this.currentFileName = this.project.imagePath;
+      this.model.id = this.project.id;
+  
+      $('.select2').select2({closeOnSelect: false, templateResult: formatProjectSkillsSelect, tags: true});
+      $('.select2').on('change', (e: any) => this.skillModel.skillIds = $('.select2').val().map((x: string) => parseInt(x)));
+  
+      this.model = this.project;
+      this.editProjectForm = $("#editProjectForm");
+      validateProjectForm(this.editProjectForm);
+  
+      this.skillGroupsService.getAll().subscribe((result: Result<SkillGroup[]>) => {
+        if(result.succeeded) this.skillGroups = result.data;
+
+        this.skills?.changes.subscribe(t => {
+          $('.select2').select2({closeOnSelect: false, templateResult: formatProjectSkillsSelect, tags: true});
+        });
+      });
+
+      console.log('done 1')
+
+      
+
+    }, () => this.router.navigate(['Projects']))
   }
 
   ngAfterViewInit(): void {
-    this.skills?.changes.subscribe(t => {
-      $('.select2').select2({closeOnSelect: false, templateResult: formatProjectSkillsSelect, tags: true});
-    });
-  }
-
-  close(){
-    this.modalRef?.close();
+    console.log('done 2')
+    
   }
 
   onFileChange($event: any) {
@@ -99,7 +117,6 @@ export class EditProjectComponent implements OnInit, AfterViewInit {
 
     combineLatest(observables).subscribe(() => {
       this.notify()
-      this.modalRef?.close();
       return;
     })
   }

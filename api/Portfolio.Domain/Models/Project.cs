@@ -15,13 +15,11 @@ public class Project : BaseEntity, IHasDisplayNumber
 
     public bool IsPublished { get; set; }
 
-    public string DemoUrl { get; set; }
-
-    public string GithubUrl { get; set; }
-
     public int DisplayNumber { get; set; }
 
     public ICollection<Skill> Skills { get; set; }
+
+    public ICollection<ProjectUrls> ProjectUrls { get; set; }
 
     #endregion
 }

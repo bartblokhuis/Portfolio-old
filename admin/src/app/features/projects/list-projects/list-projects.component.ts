@@ -40,7 +40,7 @@ export class ListProjectsComponent implements OnInit {
     const modalRef = this.modalService.open(component, { size: 'lg' });
 
     if(project) {
-      const editProject: Project = { description: project.description, displayNumber: project.displayNumber, id: project.id, imagePath: project.imagePath, isPublished: project.isPublished, title: project.title, demoUrl: project.demoUrl, githubUrl: project.githubUrl, skills: project.skills  };
+      const editProject: Project = { description: project.description, displayNumber: project.displayNumber, id: project.id, imagePath: project.imagePath, isPublished: project.isPublished, title: project.title, urls: [], skills: project.skills  };
       modalRef.componentInstance.project = editProject
     }
     modalRef.componentInstance.modalRef = modalRef;
@@ -53,8 +53,7 @@ export class ListProjectsComponent implements OnInit {
   loadProjects() {
     this.projectsService.getAll().subscribe((result: Result<Project[]>) => {
       if(result.succeeded) this.projects = result.data;
+      console.log(result)
     })
   }
-
-
 }

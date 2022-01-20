@@ -56,7 +56,7 @@ public class BlogPostService : IBlogPostService
             return null;
 
         var blogPost = blogPosts.FirstOrDefault();
-        if (!blogPost.IsPublished && !includeUnPublished)
+        if (blogPost == null || (!blogPost.IsPublished && !includeUnPublished))
             return null;
 
         return blogPost;

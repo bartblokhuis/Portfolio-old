@@ -10,12 +10,18 @@ public interface IProjectService
 
     Task<Project> GetById(int id);
 
+    Task<IEnumerable<Url>> GetProjectUrlsByIdAsync(int id);
+
     Task Create(Project model);
+
+    Task CreateProjectUrlAsync(Project project, Url url);
 
     Task<Project> Update(Project model);
 
     Task<Project> UpdateSkills(int projectId, IEnumerable<Skill> skills);
 
     Task Delete(int id);
+
+    Task DeleteUrl(Project project, int urlId);
 
 }

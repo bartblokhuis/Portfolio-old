@@ -1,4 +1,5 @@
 import { Skill } from "../skills/skill";
+import { Url } from "../url";
 
 export interface Project {
     title: string,
@@ -7,7 +8,6 @@ export interface Project {
     displayNumber: number,
     isPublished: boolean,
     skills? : Skill[],
-    githubUrl? :string,
-    demoUrl?: string,
+    urls: Url[] | null,
     id: number
 }

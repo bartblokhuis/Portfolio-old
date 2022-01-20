@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Authentication.JwtBearer;
+﻿using AutoMapper;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
@@ -23,8 +24,11 @@ using Portfolio.Core.Services.Projects;
 using Portfolio.Core.Services.Settings;
 using Portfolio.Core.Services.SkillGroups;
 using Portfolio.Core.Services.Skills;
+using Portfolio.Core.Services.Urls;
 using Portfolio.Database;
 using Portfolio.Domain.Models.Authentication;
+using System;
+using System.Linq;
 using System.Text;
 
 namespace Portfolio.Microsoft.Extensions;
@@ -49,13 +53,17 @@ public static class ServiceCollectionExtensions
             .AddAuthentication(configuration)
             .AddOpenApi()
             .AddEventPublisher()
-            .AddAutoMapper(typeof(PortfolioMappings))
-            .AddAutoMapper(typeof(BlogProfile))
-            .AddAutoMapper(typeof(CommentProfile))
+            .AddPortfolioAutoMapper()
             .AddCors((options => { options.AddPolicy("AllowAllOrigins", builder => builder.AllowAnyOrigin()); }));
 
         services.AddEngine(configuration);
 
+    }
+
+    private static IServiceCollection AddPortfolioAutoMapper(this IServiceCollection services)
+    {
+        services.AddAutoMapper(typeof(PortfolioMappings).Assembly);
+        return services;
     }
 
     private static IServiceCollection AddCache(this IServiceCollection services)
@@ -105,6 +113,7 @@ public static class ServiceCollectionExtensions
             .AddScoped<ISkillService, SkillService>()
             .AddScoped<IAboutMeService, AboutMeService>()
             .AddScoped<IProjectService, ProjectService>()
+            .AddScoped<IUrlService, UrlService>()
             .AddScoped<IBlogPostService, BlogPostService>()
             .AddScoped<IBlogPostCommentService, BlogPostCommentService>()
             .AddSingleton(new HostingConfig())
