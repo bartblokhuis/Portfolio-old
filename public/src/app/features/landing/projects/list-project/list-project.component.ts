@@ -1,27 +1,30 @@
 import { DOCUMENT } from '@angular/common';
-import { Component, Inject, OnInit } from '@angular/core';
+import { Component, ComponentFactoryResolver, Inject, OnInit } from '@angular/core';
 import { Project } from 'src/app/data/project/Project';
 import { Skill } from 'src/app/data/Skill';
 import { ProjectsService } from 'src/app/services/projects/projects.service';
 import { environment } from 'src/environments/environment';
-import Swal from 'sweetalert2'
+import Swal from 'sweetalert2';
 
 @Component({
-  selector: 'app-projects',
-  templateUrl: './projects.component.html',
-  styleUrls: ['./projects.component.scss']
+  selector: 'app-list-project',
+  templateUrl: './list-project.component.html',
+  styleUrls: ['./list-project.component.scss']
 })
-export class ProjectsComponent implements OnInit {
+export class ListProjectComponent implements OnInit {
 
   projects: Project[] | null = null;
   baseUrl: string = environment.baseApiUrl;
 
-  constructor(private projectsService: ProjectsService, @Inject(DOCUMENT) private document: Document) { }
+  constructor(private projectsService: ProjectsService, @Inject(DOCUMENT) private document: Document, private componentFactoryResolver: ComponentFactoryResolver) { }
 
   ngOnInit(): void {
     this.projectsService.get().subscribe((result) => {
       if(result.succeeded) this.projects = result.data;
     })
+
+    //let childComponent = this.componentFactoryResolver.resolveComponentFactory(ChildComponent);
+    //this.componentRef = this.target.createComponent(childComponent);
   }
 
   readMore(project: Project) {

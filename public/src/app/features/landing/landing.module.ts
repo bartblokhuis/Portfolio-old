@@ -8,9 +8,10 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { SharedModule } from 'src/app/components/shared/shared.module';
 import { AboutComponent } from './about/about.component';
 import { SkillsComponent } from './skills/skills.component';
-import { ProjectsComponent } from './projects/projects.component';
 import { ContactComponent } from './contact/contact.component';
 import { GlobalDirectivesModule } from 'src/app/modules/directives/global-directives/global-directives.module';
+import { ListProjectComponent } from './projects/list-project/list-project.component';
+import { ProjectComponent } from './projects/project/project.component';
 
 
 
@@ -20,8 +21,9 @@ import { GlobalDirectivesModule } from 'src/app/modules/directives/global-direct
     HomeComponent,
     AboutComponent,
     SkillsComponent,
-    ProjectsComponent,
-    ContactComponent
+    ContactComponent,
+    ListProjectComponent,
+    ProjectComponent
   ],
   imports: [
     CommonModule,
