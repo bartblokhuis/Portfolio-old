@@ -3,6 +3,7 @@ import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { Url } from 'src/app/data/url';
 import { ProjectsService } from 'src/app/services/api/projects/projects.service';
 import { DeleteUrlComponent } from '../delete-url/delete-url.component';
+import { EditUrlComponent } from '../edit-url/edit-url.component';
 
 @Component({
   selector: 'app-list-url',
@@ -24,7 +25,7 @@ export class ListUrlComponent implements OnInit {
   }
 
   editUrl(url: Url): void {
-
+    this.openModel(EditUrlComponent, url);
   }
 
   deleteUrl(url: Url): void {

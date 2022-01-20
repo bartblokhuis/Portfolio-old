@@ -1,1 +1,28 @@
-<p>edit-url works!</p>
+<div class="modal-header">
+    <h4 class="modal-title" id="modal-message-title">Edit URL</h4>
+    <button type="button" class="close" aria-label="Close" (click)="modal?.close()">
+      <span aria-hidden="true">&times;</span>
+    </button>
+</div>
+<form id="editUrlForm">
+    <div class="modal-body">
+        <div class="row">
+            <div class="col-sm-6">
+                <div class="form-group">
+                    <label>Full url</label>
+                    <input class="form-control" type="text" [(ngModel)]="url.fullUrl" name="fullUrl" />
+                </div>
+            </div>
+            <div class="col-sm-6">
+                <div class="form-group">
+                    <label>Lastname</label>
+                    <input class="form-control" type="text" [(ngModel)]="url.friendlyName" name="friendlyName" />
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal-footer justify-content-between">
+        <button type="button" class="btn btn-default" (click)="modal?.close()">Cancel</button>
+        <button type="button" class="btn btn-primary" (click)="update()">Save</button>
+    </div>
+</form>

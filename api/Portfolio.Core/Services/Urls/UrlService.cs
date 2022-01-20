@@ -30,7 +30,7 @@ public class UrlService : IUrlService
 
     public Task UpdateAsync(Url url)
     {
-        throw new System.NotImplementedException();
+        return _urlRepository.UpdateAsync(url);
     }
 
     #endregion
