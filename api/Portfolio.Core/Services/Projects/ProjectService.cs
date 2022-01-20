@@ -53,7 +53,12 @@ public class ProjectService : IProjectService
         var project = await GetById(id);
 
         return project == null ? null : project.ProjectUrls.Select(x => x.Url);
+    }
 
+    public async Task<IEnumerable<ProjectPicture>> GetProjectPicturesByIdAsync(int id)
+    {
+        var project = await GetById(id);
+        return project == null ? null : project.ProjectPictures;
     }
 
     #endregion

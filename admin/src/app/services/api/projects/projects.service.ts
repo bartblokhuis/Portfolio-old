@@ -4,6 +4,7 @@ import { Result } from 'src/app/data/common/Result';
 import { CreateProjectUrl } from 'src/app/data/projects/add-project-url';
 import { AddUpdateProject } from 'src/app/data/projects/add-update-project';
 import { Project } from 'src/app/data/projects/project';
+import { ProjectPicture } from 'src/app/data/projects/project-picture';
 import { UpdateProjectSkills } from 'src/app/data/projects/update-project-skills';
 import { Url } from 'src/app/data/url';
 import { ApiService } from '../api.service';
@@ -25,6 +26,10 @@ export class ProjectsService {
 
   getProjectUrlsByProjectId(id: number): Observable<Result<Url[]>> {
     return this.apiService.get<Url[]>(`Project/Url/GetByProjectId?projectId=${id}`)
+  }
+
+  getProjectPicturesByProjectId(id: number): Observable<Result<ProjectPicture[]>> {
+    return this.apiService.get<ProjectPicture[]>(`Project/Pictures/GetByProjectId?projectId=${id}`)
   }
 
   createProject(project: AddUpdateProject): Observable<Result<Project>> {

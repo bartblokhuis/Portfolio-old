@@ -84,6 +84,15 @@ public class ProjectController : ControllerBase
         return Ok(result);
     }
 
+    [HttpGet("Pictures/GetByProjectId")]
+    public async Task<IActionResult> GetProjectPicturesById(int projectId)
+    {
+        var pictures = (await _projectService.GetProjectPicturesByIdAsync(projectId)).ToListResult();
+        var result = _mapper.Map<ListResult<ProjectPictureDto>>(pictures);
+        result.Succeeded = true;
+        return Ok(result);
+    }
+
     #endregion
 
     #region Post

@@ -12,6 +12,8 @@ public interface IProjectService
 
     Task<IEnumerable<Url>> GetProjectUrlsByIdAsync(int id);
 
+    Task<IEnumerable<ProjectPicture>> GetProjectPicturesByIdAsync(int id);
+
     Task Create(Project model);
 
     Task CreateProjectUrlAsync(Project project, Url url);

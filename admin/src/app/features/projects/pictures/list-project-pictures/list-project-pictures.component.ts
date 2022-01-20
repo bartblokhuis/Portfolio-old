@@ -1,7 +1,11 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { ProjectPicture } from 'src/app/data/projects/project-picture';
+import { ProjectsService } from 'src/app/services/api/projects/projects.service';
 import { environment } from 'src/environments/environment';
+import { AddProjectPictureComponent } from '../add-project-picture/add-project-picture.component';
+import { DeleteProjectPictureComponent } from '../delete-project-picture/delete-project-picture.component';
+import { EditProjectPictureComponent } from '../edit-project-picture/edit-project-picture.component';
 
 @Component({
   selector: 'app-list-project-pictures',
@@ -15,22 +19,22 @@ export class ListProjectPicturesComponent implements OnInit {
 
   baseUrl: string = environment.baseApiUrl;
 
-  constructor(private readonly modalService: NgbModal) { }
+  constructor(private readonly modalService: NgbModal, private readonly projectsService: ProjectsService) { }
 
   ngOnInit(): void {
-
+    
   }
 
   addPicture() {
-
+    this.openModel(AddProjectPictureComponent);
   }
 
   editPicture(picture: ProjectPicture) {
-
+    this.openModel(EditProjectPictureComponent, picture);
   }
 
   deletePicture(picture: ProjectPicture) {
-
+    this.openModel(DeleteProjectPictureComponent, picture);
   }
 
   openModel(component: any, projectPicture: ProjectPicture | null = null): void {
@@ -49,6 +53,8 @@ export class ListProjectPicturesComponent implements OnInit {
   }
 
   refreshPictures() {
-    
+    this.projectsService.getProjectPicturesByProjectId(this.projectId).subscribe((result) => {
+      if(result.succeeded) this.pictures = result.data;
+    })
   }
 }
