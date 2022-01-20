@@ -149,24 +149,6 @@ public class ProjectController : ControllerBase
         return Ok(result);
     }
 
-    [HttpPut("UpdateDemoImage/{projectId}")]
-    public async Task<IActionResult> SaveSkillImage(int projectId, IFormFile icon)
-    {
-        var project = await _projectService.GetById(projectId);
-        if (project == null)
-            throw new Exception("No skill found with the provided id");
-
-        var errorMessage = _uploadImageHelper.ValidateImage(icon);
-        if (!string.IsNullOrEmpty(errorMessage))
-            throw new Exception(errorMessage);
-
-        project.ImagePath = await _uploadImageHelper.UploadImage(icon);
-        project = await _projectService.Update(project);
-
-        var result = await Result<ProjectDto>.SuccessAsync(_mapper.Map<ProjectDto>(project));
-        return Ok(result);
-    }
-
     #endregion
 
     #region Delete
