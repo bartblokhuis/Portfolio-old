@@ -13,5 +13,7 @@ public class ProjectProfile : Profile
             .BeforeMap((s, d) => d.Urls = s.ProjectUrls?.Select(x => x.Url));
 
         CreateMap<CreateUpdateProject, Project>();
+
+        CreateMap<CreateProjectUrlDto, Url>().ForMember(x => x.Id, options => options.Ignore());
     }
 }

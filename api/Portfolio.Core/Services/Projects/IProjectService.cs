@@ -14,6 +14,8 @@ public interface IProjectService
 
     Task Create(Project model);
 
+    Task CreateProjectUrlAsync(Project project, Url url);
+
     Task<Project> Update(Project model);
 
     Task<Project> UpdateSkills(int projectId, IEnumerable<Skill> skills);

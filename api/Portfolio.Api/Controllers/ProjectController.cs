@@ -98,6 +98,23 @@ public class ProjectController : ControllerBase
         return Ok(result);
     }
 
+    [HttpPost("Url/Create")]
+    public async Task<IActionResult> Create(CreateProjectUrlDto model)
+    {
+        if(model == null)
+            throw new ArgumentNullException(nameof(model));
+
+        var project = await _projectService.GetById(model.ProjectId);
+        if (project == null)
+            return Ok(await Result.FailAsync("Project not found"));
+
+        var url = _mapper.Map<Url>(model);
+        await _projectService.CreateProjectUrlAsync(project, url);
+
+        var result = await Result.SuccessAsync();
+        return Ok(result);
+    }
+
     #endregion
 
     #region Put

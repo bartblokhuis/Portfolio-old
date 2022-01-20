@@ -2,6 +2,7 @@ import { Component, Input, OnInit } from '@angular/core';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { Url } from 'src/app/data/url';
 import { ProjectsService } from 'src/app/services/api/projects/projects.service';
+import { AddUrlComponent } from '../add-url/add-url.component';
 import { DeleteUrlComponent } from '../delete-url/delete-url.component';
 import { EditUrlComponent } from '../edit-url/edit-url.component';
 
@@ -21,7 +22,7 @@ export class ListUrlComponent implements OnInit {
   }
 
   addUrl(): void {
-
+    this.openModel(AddUrlComponent);
   }
 
   editUrl(url: Url): void {

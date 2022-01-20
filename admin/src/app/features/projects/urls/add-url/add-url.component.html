@@ -1,1 +1,28 @@
-<p>add-url works!</p>
+<div class="modal-header">
+    <h4 class="modal-title" id="modal-message-title">Add Project URL</h4>
+    <button type="button" class="close" aria-label="Close" (click)="modal?.close()">
+      <span aria-hidden="true">&times;</span>
+    </button>
+</div>
+<form id="addUrlForm">
+    <div class="modal-body">
+        <div class="row">
+            <div class="col-sm-6">
+                <div class="form-group">
+                    <label>Full url</label>
+                    <input class="form-control" type="text" [(ngModel)]="model.fullUrl" name="fullUrl" />
+                </div>
+            </div>
+            <div class="col-sm-6">
+                <div class="form-group">
+                    <label>Friendly name</label>
+                    <input class="form-control" type="text" [(ngModel)]="model.friendlyName" name="friendlyName" />
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal-footer justify-content-between">
+        <button type="button" class="btn btn-default" (click)="modal?.close()">Cancel</button>
+        <button type="button" class="btn btn-primary" (click)="add()">Save</button>
+    </div>
+</form>
