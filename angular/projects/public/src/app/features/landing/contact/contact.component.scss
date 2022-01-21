@@ -1,0 +1,77 @@
+@import '../../../../assets/scss/_variables.scss';
+.custom-shape-divider-top {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    overflow: hidden;
+    line-height: 0;
+    
+    svg {
+        fill: #fff;
+    }
+}
+#contact {
+    background-color: $primary-black-color;
+    position: relative;
+
+    .section-header {
+
+        h1 {
+            color: #fff;
+        } 
+
+        .section-header-line{
+            background-color: #fff;
+        }
+    }
+
+    .contact-message{
+        margin-bottom: 50px;
+        color: $active-color;
+    }
+
+    .form-group {
+        padding: 20px 0 0;
+        width: 100%;
+        margin: auto;
+        text-align: left;
+
+        label {
+            display: block;
+            color: #fff;
+            margin-bottom: 5px;
+        }
+
+        input, textarea {
+            outline: none !important;
+            width: 100%;
+            padding: 12px 6px;
+            box-sizing: border-box;
+            border-color: #ccc;
+            transition: all 200ms ease-in-out;
+
+            &:focus-within {
+                border-color: #000;
+            }
+        }
+
+        textarea {
+            min-height: 150px;
+        }
+        
+        .alert {
+            margin-top: 10px;
+        }
+    }
+
+    .success-container,
+    .error-container {
+          text-align: left;  
+          margin-top: 20px;
+    }
+
+    .success-container{
+        color: #28a745;
+    }
+}

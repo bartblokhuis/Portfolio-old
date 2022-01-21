@@ -1,0 +1,142 @@
+@import '../../../../assets/scss/variables';
+
+nav {
+    background-color: $black;
+    color: #fff;
+    min-height: 45px;
+    z-index: 10;
+    line-height: 1;
+
+    .container{
+        display: flex;
+        justify-content: flex-start;
+        flex-wrap: wrap;
+        height: 100%;
+
+        .button-container {
+            display: flex;
+            justify-content: center;
+            min-height: 45px;
+        }
+
+        .navbar-toggler{
+            padding: 0;
+            font-size: 1.25rem;
+            line-height: 1;
+            background-color: initial;
+            border: 1px solid #0000;
+            border-radius: 0.25rem;
+            transition: box-shadow .15s ease-in-out;
+
+            &:hover{
+                cursor: pointer;
+            }
+        }
+
+        .navbar-toggler-icon {
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' class='bi bi-list' viewBox='0 0 16 16' fill='%23fff'%3E%3Cpath fill-rule='evenodd' d='M2.5 12a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5zm0-4a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5zm0-4a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5z'/%3E%3C/svg%3E");
+            display: inline-block;
+            width: 1.5em;
+            height: 1.5em;
+            vertical-align: middle;
+            background-repeat: no-repeat;
+            background-position: 50%;
+            background-size: 100%;
+        }
+
+        .navbarContent{
+            overflow: hidden;
+            transition: height 350ms ease-in-out;
+            height: 0;
+
+            ul {
+                list-style-type: none;
+                margin: 0;
+                padding: 0;
+
+                li a{
+                    display: block;
+                    padding: 5px 0;
+                    transition: color 300ms ease-in;
+
+                    &:hover{
+                        cursor: pointer;
+                    }
+    
+                    &.active{
+                        color: $active-color;
+                    }
+                }
+            }
+
+            &.collapsed {
+                display: hidden;
+            }
+
+            &.open {
+                display: block;
+                padding: 0.25rem 0.75rem;
+                width: 100%;
+                display: block;
+                height: var(--calc-height);
+            }
+
+            &.collapsing {
+                height: 0;
+                overflow: hidden;
+                transition: height .35s ease;
+            }
+        }
+    }
+
+    &.fixed {
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+    }
+
+    @media (min-width: 576px) {
+
+        .container {
+
+            .navbar-toggler {
+                display: none;
+            }
+    
+            .navbarContent {
+                display: flex;
+                height: 45px;
+                justify-content: flex-start;
+                align-items: center;
+                
+                li {
+                    display: inline-block;
+                    overflow: hidden;
+                    
+                    a {
+                        margin: 10px;
+                        padding: 10px 15px;
+                        display: block;
+                        transition: color 300ms ease-in;
+                        color: #fff;
+                        text-decoration: none;
+
+                        &:hover{
+                            cursor: pointer;
+                        }
+        
+                        &.active{
+                            color: $active-color;
+                        }
+                    }
+
+                    &:first-child a{
+                        margin-left: 0;
+                    }
+        
+                }
+            }
+        }
+    }
+}

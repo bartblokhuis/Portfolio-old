@@ -1,0 +1,24 @@
+.blog-posts {
+    padding-top: 200px;
+    padding-bottom: 200px;
+
+    .post-thumbnail{
+        overflow: hidden;
+
+        img {
+            width: 100%;
+        }
+    }
+
+    .post-title {
+        padding: 5px 0;
+    }
+
+    .post-description {
+        margin: 5px 0 20px 0;
+    }
+}
+
+body {
+    background-color: #f5f5f5;
+}
