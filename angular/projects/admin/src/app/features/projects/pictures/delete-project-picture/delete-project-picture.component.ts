@@ -1,6 +1,6 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
-import { ProjectsService } from 'projects/admin/src/app/services/api/projects/projects.service';
+import { ProjectsService } from 'projects/shared/src/lib/services/api/projects/projects.service';
 import { NotificationService } from 'projects/admin/src/app/services/notification/notification.service';
 import { ProjectPicture } from 'projects/shared/src/lib/data/projects/project-picture';
 

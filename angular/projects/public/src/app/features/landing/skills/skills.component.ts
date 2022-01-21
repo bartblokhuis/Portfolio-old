@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { environment } from 'projects/admin/src/environments/environment';
 import { SkillGroup } from 'projects/shared/src/lib/data/skill-groups/skill-group';
-import { SkillsService } from '../../../services/skills/skills.service';
+import { SkillGroupsService } from 'projects/shared/src/lib/services/api/skill-groups/skill-groups.service';
 
 @Component({
   selector: 'app-skills',
@@ -13,10 +13,10 @@ export class SkillsComponent implements OnInit {
   skillGroups: SkillGroup[] | null = null;
   baseUrl = environment.baseApiUrl;
 
-  constructor(private skillGroupService: SkillsService) { }
+  constructor(private skillGroupService: SkillGroupsService) { }
 
   ngOnInit(): void {
-    this.skillGroupService.getSkillGroups().subscribe((result) => {
+    this.skillGroupService.getAll().subscribe((result) => {
       if(result.succeeded) this.skillGroups = result.data;
     });
   }

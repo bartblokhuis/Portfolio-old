@@ -1,8 +1,8 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { BlogComment } from 'projects/shared/src/lib/data/blog/comment';
 import { CreateBlogComent } from 'projects/shared/src/lib/data/blog/create-blog-comment';
-import { BlogPostsService } from 'projects/public/src/app/services/blogPosts/blog-posts.service';
 import { BlogPost } from 'projects/shared/src/lib/data/blog/blog-post';
+import { CommentsService } from 'projects/shared/src/lib/services/api/comments/comments.service';
 
 @Component({
   selector: 'app-comment-new',
@@ -20,7 +20,7 @@ export class CommentNewComponent implements OnInit {
   emailError: string | null = null;
   commentError: string | null = null;
 
-  constructor(private readonly blogPostsService: BlogPostsService) { }
+  constructor(private readonly commentsService: CommentsService) { }
 
   ngOnInit(): void {
     if(this.blogPost != null){
@@ -53,7 +53,7 @@ export class CommentNewComponent implements OnInit {
 
     if(hasError) return;
 
-    this.blogPostsService.postComment(this.model).subscribe((result) => {
+    this.commentsService.postComment(this.model).subscribe((result) => {
       if(!result.succeeded){
         this.error = result.messages[0];
       }

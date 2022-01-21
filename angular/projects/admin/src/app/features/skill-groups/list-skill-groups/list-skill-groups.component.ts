@@ -5,7 +5,7 @@ import { CreateUpdateSkillGroup } from 'projects/shared/src/lib/data/skill-group
 import { CreateSkillGroupCreatedEvent } from 'projects/shared/src/lib/data/skill-groups/events/create-skill-group-created-event';
 import { ListSkillGroup, SkillGroup } from 'projects/shared/src/lib/data/skill-groups/skill-group';
 import { Skill } from 'projects/shared/src/lib/data/skills/skill';
-import { SkillGroupsService } from '../../../services/api/skill-groups/skill-groups.service';
+import { SkillGroupsService } from 'projects/shared/src/lib/services/api/skill-groups/skill-groups.service';
 import { DeleteSkillGroupComponent } from '../delete-skill-group/delete-skill-group.component';
 import { CreateSkillComponent } from '../skills/create-skill/create-skill.component';
 

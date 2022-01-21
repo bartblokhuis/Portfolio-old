@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { Message } from 'projects/shared/src/lib/data/messages/message';
 import { MessageStatus } from 'projects/shared/src/lib/data/messages/message-status';
-import { AuthenticationService } from '../../../services/api/authentication/authentication.service';
-import { SystemService } from '../../../services/api/system/system.service';
+import { AuthenticationService } from 'projects/shared/src/lib/services/api/authentication/authentication.service';
+import { SystemService } from 'projects/shared/src/lib/services/api/system/system.service';
 import { MessagesService } from '../../../services/messages/messages.service';
 import { NotificationService } from '../../../services/notification/notification.service';
 import { ThemingService } from '../../../services/theming/theming.service';

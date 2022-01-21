@@ -1,7 +1,7 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { BlogComment } from 'projects/shared/src/lib/data/blog/comment';
 import { CreateBlogComent } from 'projects/shared/src/lib/data/blog/create-blog-comment';
-import { BlogPostsService } from 'projects/public/src/app/services/blogPosts/blog-posts.service';
+import { CommentsService } from 'projects/shared/src/lib/services/api/comments/comments.service';
 import { isEmail } from '../comment-new/comment-new.component';
 
 @Component({
@@ -22,7 +22,7 @@ export class CommentReplyComponent implements OnInit {
   emailError: string | null = null;
   commentError: string | null = null;
 
-  constructor(private readonly blogPostsService: BlogPostsService) { }
+  constructor(private readonly commentsService: CommentsService) { }
 
   ngOnInit(): void {
     if(this.comment != null){
@@ -55,7 +55,7 @@ export class CommentReplyComponent implements OnInit {
 
     if(hasError) return;
 
-    this.blogPostsService.postComment(this.model).subscribe((result) => {
+    this.commentsService.postComment(this.model).subscribe((result) => {
       if(result.succeeded) this.onReplied.emit(result.data);
     });
   }

@@ -3,8 +3,8 @@ import { Meta, Title } from '@angular/platform-browser';
 import { Event as NavigationEvent, NavigationStart, Router } from '@angular/router';
 import { GeneralSettings } from 'projects/shared/src/lib/data/settings/general-settings';
 import { SeoSettings } from 'projects/shared/src/lib/data/settings/seo-settings';
+import { SettingsService } from 'projects/shared/src/lib/services/api/settings/settings.service';
 import { combineLatest, isObservable, Observable } from 'rxjs';
-import { SettingsService } from './services/settings/settings.service';
 
 @Component({
   selector: 'app-root',
@@ -21,12 +21,12 @@ export class AppComponent implements OnInit {
 
     let observables: Observable<any>[] = [];
     
-    const seoSettingsRequest = this.settingsService.get<SeoSettings>('SeoSettings');
+    const seoSettingsRequest = this.settingsService.getSeoSettings();
     if(isObservable(seoSettingsRequest)) {
       observables.push(seoSettingsRequest);
     }
 
-    const generalSettings = this.settingsService.get<GeneralSettings>("GeneralSettings");
+    const generalSettings = this.settingsService.getGeneralSettings();
     if(isObservable(generalSettings)) observables.push(generalSettings);
 
     let title: string = "";

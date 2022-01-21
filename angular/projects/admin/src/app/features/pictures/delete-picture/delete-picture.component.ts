@@ -1,7 +1,7 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
 import { Picture } from 'projects/shared/src/lib/data/common/picture';
-import { PicturesService } from '../../../services/api/pictures/pictures.service';
+import { PicturesService } from 'projects/shared/src/lib/services/api/pictures/pictures.service';
 
 @Component({
   selector: 'app-delete-picture',

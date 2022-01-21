@@ -2,9 +2,9 @@ import { DOCUMENT } from '@angular/common';
 import { Component, Inject, OnInit, ViewContainerRef } from '@angular/core';
 import { Project } from 'projects/shared/src/lib/data/projects/project';
 import { environment } from 'projects/admin/src/environments/environment';
-import { ProjectsService } from 'projects/public/src/app/services/projects/projects.service';
 import { ProjectComponent } from '../project/project.component';
 import { Skill } from 'projects/shared/src/lib/data/skills/skill';
+import { ProjectsService } from 'projects/shared/src/lib/services/api/projects/projects.service';
 
 @Component({
   selector: 'app-list-project',
@@ -19,7 +19,7 @@ export class ListProjectComponent implements OnInit {
   constructor(private projectsService: ProjectsService, @Inject(DOCUMENT) private document: Document, private viewContainerRef: ViewContainerRef) { }
 
   ngOnInit(): void {
-    this.projectsService.get().subscribe((result) => {
+    this.projectsService.getAllPublished().subscribe((result) => {
       if(result.succeeded) this.projects = result.data;
     });
   }

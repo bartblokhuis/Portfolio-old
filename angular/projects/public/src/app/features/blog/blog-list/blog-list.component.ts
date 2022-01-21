@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { environment } from 'projects/admin/src/environments/environment';
 import { ListBlog } from 'projects/shared/src/lib/data/blog/list-blog';
 import { Result } from 'projects/shared/src/lib/data/common/Result';
-import { ApiService } from '../../../services/common/api.service';
+import { ApiService } from 'projects/shared/src/lib/services/api/api.service';
 
 @Component({
   selector: 'app-blog-list',

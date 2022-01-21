@@ -1,6 +1,6 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
-import { ProjectsService } from 'projects/admin/src/app/services/api/projects/projects.service';
+import { ProjectsService } from 'projects/shared/src/lib/services/api/projects/projects.service';
 import { environment } from 'projects/admin/src/environments/environment';
 import { ProjectPicture } from 'projects/shared/src/lib/data/projects/project-picture';
 import { AddProjectPictureComponent } from '../add-project-picture/add-project-picture.component';

@@ -1,6 +1,6 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
-import { SkillsService } from 'projects/admin/src/app/services/api/skills/skills.service';
+import { SkillsService } from 'projects/shared/src/lib/services/api/skills/skills.service';
 import { Result } from 'projects/shared/src/lib/data/common/Result';
 import { EditSkill } from 'projects/shared/src/lib/data/skills/edit-skill';
 import { Skill } from 'projects/shared/src/lib/data/skills/skill';

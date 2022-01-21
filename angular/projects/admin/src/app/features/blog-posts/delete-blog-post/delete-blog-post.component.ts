@@ -2,7 +2,7 @@ import { Component, Input, OnInit } from '@angular/core';
 import { NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
 import { ListBlog } from 'projects/shared/src/lib/data/blog/list-blog';
 import { Result } from 'projects/shared/src/lib/data/common/Result';
-import { BlogPostsService } from '../../../services/api/blog-posts/blog-posts.service';
+import { BlogPostsService } from 'projects/shared/src/lib/services/api/blog-posts/blog-posts.service';
 import { NotificationService } from '../../../services/notification/notification.service';
 
 @Component({

@@ -3,7 +3,7 @@ import { Router } from '@angular/router';
 import { CreateBlog } from 'projects/shared/src/lib/data/blog/create-blog';
 import { ListBlog } from 'projects/shared/src/lib/data/blog/list-blog';
 import { Result } from 'projects/shared/src/lib/data/common/Result';
-import { BlogPostsService } from '../../../services/api/blog-posts/blog-posts.service';
+import { BlogPostsService } from 'projects/shared/src/lib/services/api/blog-posts/blog-posts.service';
 import { ContentTitleService } from '../../../services/content-title/content-title.service';
 import { validateBlogForm } from '../helpers/blog-helper';
 

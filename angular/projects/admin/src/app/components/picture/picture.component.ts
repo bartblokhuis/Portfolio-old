@@ -2,7 +2,7 @@ import { AfterViewInit, Component, EventEmitter, Input, OnInit, Output } from '@
 import { Observable } from 'rxjs';
 import { Picture } from 'projects/shared/src/lib/data/common/picture';
 import { Result } from 'projects/shared/src/lib/data/common/Result';
-import { PicturesService } from '../../services/api/pictures/pictures.service';
+import { PicturesService } from 'projects/shared/src/lib/services/api/pictures/pictures.service';
 
 
 declare var $: any;

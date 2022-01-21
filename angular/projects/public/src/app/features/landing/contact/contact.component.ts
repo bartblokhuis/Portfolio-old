@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { Message } from 'projects/shared/src/lib/data/messages/message';
-import { MessageStatus } from 'projects/shared/src/lib/data/messages/message-status';
-import { MessageService } from '../../../services/message/message.service';
+import { CreateMessage } from 'projects/shared/src/lib/data/messages/create-message';
+import { MessageService } from 'projects/shared/src/lib/services/api/message/message.service';
 
 @Component({
   selector: 'app-contact',
@@ -10,8 +9,7 @@ import { MessageService } from '../../../services/message/message.service';
 })
 export class ContactComponent implements OnInit {
 
-  //TODO Change to create message
-  model: Message = { email: '', firstName: '', lastName: '', messageContent: '', createdAtUTC: new Date(), id: 0, messageStatus: MessageStatus.Unread, updatedAtUtc: new Date()  };
+  model: CreateMessage = { email: '', firstName: '', lastName: '', messageContent: '' };
   error: string | undefined = undefined;
   firstNameError: string = '';
   emailError: string = '';

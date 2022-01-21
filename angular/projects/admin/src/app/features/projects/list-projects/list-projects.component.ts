@@ -2,7 +2,7 @@ import { Component, OnInit, ViewEncapsulation } from '@angular/core';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { Result } from 'projects/shared/src/lib/data/common/Result';
 import { Project } from 'projects/shared/src/lib/data/projects/project';
-import { ProjectsService } from '../../../services/api/projects/projects.service';
+import { ProjectsService } from 'projects/shared/src/lib/services/api/projects/projects.service';
 import { AddProjectComponent } from '../add-project/add-project.component';
 import { DeleteProjectComponent } from '../delete-project/delete-project.component';
 import { EditProjectComponent } from '../edit-project/edit-project.component';
@@ -53,7 +53,6 @@ export class ListProjectsComponent implements OnInit {
   loadProjects() {
     this.projectsService.getAll().subscribe((result: Result<Project[]>) => {
       if(result.succeeded) this.projects = result.data;
-      console.log(result)
     })
   }
 }

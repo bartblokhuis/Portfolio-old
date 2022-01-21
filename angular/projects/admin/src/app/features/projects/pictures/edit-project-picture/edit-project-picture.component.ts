@@ -1,6 +1,6 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { NgbModal, NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
-import { ProjectsService } from 'projects/admin/src/app/services/api/projects/projects.service';
+import { ProjectsService } from 'projects/shared/src/lib/services/api/projects/projects.service';
 import { ProjectPicture } from 'projects/shared/src/lib/data/projects/project-picture';
 import { UpdateProjectPicture } from 'projects/shared/src/lib/data/projects/update-project-picture';
 import { GridPictureComponent } from '../../../pictures/grid-picture/grid-picture.component';

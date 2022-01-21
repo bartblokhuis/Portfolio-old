@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { AboutMe } from 'projects/shared/src/lib/data/about-me';
 import { Result } from 'projects/shared/src/lib/data/common/Result';
-import { AboutMeService } from '../../../services/api/about-me/about-me.service';
+import { AboutMeService } from 'projects/shared/src/lib/services/api/about-me/about-me.service';
 import { NotificationService } from '../../../services/notification/notification.service';
 
 declare var $:any;

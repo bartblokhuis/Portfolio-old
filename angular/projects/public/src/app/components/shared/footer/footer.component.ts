@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { GeneralSettings } from 'projects/shared/src/lib/data/settings/general-settings';
+import { SettingsService } from 'projects/shared/src/lib/services/api/settings/settings.service';
 import { isObservable } from 'rxjs';
-import { SettingsService } from '../../../services/settings/settings.service';
 
 @Component({
   selector: 'app-footer',
@@ -19,14 +19,9 @@ export class FooterComponent implements OnInit {
   constructor(private settingService: SettingsService) { }
 
   ngOnInit(): void {
-    var response = this.settingService.get<GeneralSettings>("GeneralSettings");
-    if(!isObservable(response)){
-      this.generalSettings = response;
-      return;
-    }
-    
+    var response = this.settingService.getGeneralSettings();
     response.subscribe((result) => {
-      this.generalSettings = result;
+      this.generalSettings = result.data;
     })
   }
 

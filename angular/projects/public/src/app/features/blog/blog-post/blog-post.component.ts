@@ -5,7 +5,7 @@ import { environment } from 'projects/admin/src/environments/environment';
 import { BlogPost } from 'projects/shared/src/lib/data/blog/blog-post';
 import { BlogComment } from 'projects/shared/src/lib/data/blog/comment';
 import { Result } from 'projects/shared/src/lib/data/common/Result';
-import { ApiService } from '../../../services/common/api.service';
+import { ApiService } from 'projects/shared/src/lib/services/api/api.service';
 
 @Component({
   selector: 'app-blog-post',

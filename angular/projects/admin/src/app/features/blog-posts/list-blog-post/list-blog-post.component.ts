@@ -3,7 +3,7 @@ import { Router } from '@angular/router';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { ListBlog } from 'projects/shared/src/lib/data/blog/list-blog';
 import { Result } from 'projects/shared/src/lib/data/common/Result';
-import { BlogPostsService } from '../../../services/api/blog-posts/blog-posts.service';
+import { BlogPostsService } from 'projects/shared/src/lib/services/api/blog-posts/blog-posts.service';
 import { DeleteBlogPostComponent } from '../delete-blog-post/delete-blog-post.component';
 
 @Component({
@@ -34,7 +34,7 @@ export class ListBlogPostComponent implements OnInit {
   deleteBlogPost(blog: ListBlog) {
     const modalRef = this.modalService.open(DeleteBlogPostComponent, { size: 'lg' });
 
-    const editBlogPost: ListBlog = { createdAtUTC: blog.createdAtUTC, description: blog.description, displayNumber: blog.displayNumber, id: blog.id, isPublished: blog.isPublished, title: blog.title, updatedAtUtc: blog.updatedAtUtc };
+    const editBlogPost: ListBlog = { createdAtUTC: blog.createdAtUTC, description: blog.description, displayNumber: blog.displayNumber, id: blog.id, isPublished: blog.isPublished, title: blog.title, updatedAtUtc: blog.updatedAtUtc, thumbnail: blog.thumbnail };
     modalRef.componentInstance.blogPost = editBlogPost
     modalRef.componentInstance.modal = modalRef;
     

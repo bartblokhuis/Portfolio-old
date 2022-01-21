@@ -5,8 +5,7 @@ import { map } from 'rxjs/operators';
 import { Message } from 'projects/shared/src/lib/data/messages/message';
 import { MessageStatus } from 'projects/shared/src/lib/data/messages/message-status';
 import { UpdateMessage } from 'projects/shared/src/lib/data/messages/update-message';
-import { ApiService } from '../api/api.service';
-
+import { ApiService } from 'projects/shared/src/lib/services/api/api.service';
 @Injectable({
   providedIn: 'root'
 })

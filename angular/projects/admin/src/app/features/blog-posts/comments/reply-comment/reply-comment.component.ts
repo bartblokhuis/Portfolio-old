@@ -1,6 +1,6 @@
 import { AfterViewInit, Component, Input, OnInit } from '@angular/core';
 import { NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
-import { CommentsService } from 'projects/admin/src/app/services/api/comments/comments.service';
+import { CommentsService } from 'projects/shared/src/lib/services/api/comments/comments.service';
 import { BlogComment } from 'projects/shared/src/lib/data/blog/comment';
 import { CreateBlogComent } from 'projects/shared/src/lib/data/blog/create-blog-comment';
 
@@ -26,7 +26,6 @@ export class ReplyCommentComponent implements OnInit, AfterViewInit {
   }
 
   ngAfterViewInit(): void {
-    console.log(this.comment);
   }
 
   reply() {

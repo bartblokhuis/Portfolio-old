@@ -22,6 +22,10 @@ export class ProjectsService {
     return this.apiService.get<Project[]>('Project');
   }
 
+  getAllPublished(): Observable<Result<Project[]>> {
+    return this.apiService.get<Project[]>('Project/Published');
+  }
+
   getById(id: number): Observable<Result<Project>> {
     return this.apiService.get<Project>(`Project/GetById?id=${id}`)
   }

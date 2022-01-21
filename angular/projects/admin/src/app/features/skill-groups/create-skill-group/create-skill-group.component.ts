@@ -1,7 +1,7 @@
 import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 import { CreateUpdateSkillGroup } from 'projects/shared/src/lib/data/skill-groups/create-update-skill-group';
 import { CreateSkillGroupCreatedEvent } from 'projects/shared/src/lib/data/skill-groups/events/create-skill-group-created-event';
-import { SkillGroupsService } from '../../../services/api/skill-groups/skill-groups.service';
+import { SkillGroupsService } from 'projects/shared/src/lib/services/api/skill-groups/skill-groups.service';
 
 declare var $: any;
 @Component({

@@ -20,7 +20,6 @@ export class DatePrinterPipe implements PipeTransform {
 
 
   transform(date: Date): any {
-    console.log(date);
     date = new Date(date);
     //If the year is not the same as the current year print it.
     if(date.getFullYear() !== this.currentDate.getFullYear()) {
@@ -35,8 +34,7 @@ export class DatePrinterPipe implements PipeTransform {
     else {
       this.displayDate = "Today"
     }
-
-    console.log(date, this.displayDate);
+    
     return this.displayDate;
   }
 

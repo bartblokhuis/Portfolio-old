@@ -3,7 +3,7 @@ import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { environment } from 'projects/admin/src/environments/environment';
 import { Picture } from 'projects/shared/src/lib/data/common/picture';
 import { Result } from 'projects/shared/src/lib/data/common/Result';
-import { PicturesService } from '../../../services/api/pictures/pictures.service';
+import { PicturesService } from 'projects/shared/src/lib/services/api/pictures/pictures.service';
 import { NotificationService } from '../../../services/notification/notification.service';
 import { AddPictureComponent } from '../add-picture/add-picture.component';
 import { DeletePictureComponent } from '../delete-picture/delete-picture.component';

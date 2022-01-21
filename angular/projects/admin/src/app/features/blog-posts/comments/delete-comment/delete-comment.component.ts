@@ -1,6 +1,6 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
-import { CommentsService } from 'projects/admin/src/app/services/api/comments/comments.service';
+import { CommentsService } from 'projects/shared/src/lib/services/api/comments/comments.service';
 import { NotificationService } from 'projects/admin/src/app/services/notification/notification.service';
 import { BlogComment } from 'projects/shared/src/lib/data/blog/comment';
 

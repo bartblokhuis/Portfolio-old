@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Result } from 'projects/shared/src/lib/data/common/Result';
 import { ChangeUserPassword } from 'projects/shared/src/lib/data/user/change-password';
 import { UserDetails } from 'projects/shared/src/lib/data/user/user-details';
-import { AuthenticationService } from '../../../services/api/authentication/authentication.service';
+import { AuthenticationService } from 'projects/shared/src/lib/services/api/authentication/authentication.service';
 import { BreadcrumbsService } from '../../../services/breadcrumbs/breadcrumbs.service';
 import { ContentTitleService } from '../../../services/content-title/content-title.service';
 import { NotificationService } from '../../../services/notification/notification.service';
