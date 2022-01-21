@@ -12,6 +12,7 @@ import { ContactComponent } from './contact/contact.component';
 import { GlobalDirectivesModule } from 'src/app/modules/directives/global-directives/global-directives.module';
 import { ListProjectComponent } from './projects/list-project/list-project.component';
 import { ProjectComponent } from './projects/project/project.component';
+import { NgxUsefulSwiperModule } from 'ngx-useful-swiper';
 
 
 
@@ -30,6 +31,7 @@ import { ProjectComponent } from './projects/project/project.component';
     FormsModule,
     ReactiveFormsModule,
     SharedModule,
+    NgxUsefulSwiperModule,
     GlobalDirectivesModule,
     RouterModule.forChild(LandingRoutes),
   ]

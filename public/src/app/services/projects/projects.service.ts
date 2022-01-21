@@ -12,6 +12,6 @@ export class ProjectsService {
   constructor(private apiService: ApiService) { }
 
   get() : Observable<Result<Project[]>> {
-    return this.apiService.get<Project[]>('Project');
+    return this.apiService.get<Project[]>('Project/Published');
   }
 }

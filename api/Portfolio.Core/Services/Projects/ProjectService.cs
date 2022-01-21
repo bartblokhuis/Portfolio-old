@@ -1,5 +1,4 @@
 using Microsoft.EntityFrameworkCore;
-using Portfolio.Core.Interfaces;
 using Portfolio.Core.Interfaces.Common;
 using Portfolio.Core.Services.Urls;
 using Portfolio.Domain.Models;
@@ -37,10 +36,18 @@ public class ProjectService : IProjectService
 
     #region Get
 
-    public async Task<IEnumerable<Project>> Get()
+    public async Task<IEnumerable<Project>> GetAllAsync()
     {
         var projects = await _projectRepository.GetAllAsync(query => query.Include(x => x.Skills).Include(x => x.ProjectUrls).ThenInclude(x => x.Url).Include(x => x.ProjectPictures.OrderBy(x => x.DisplayNumber)).ThenInclude(x => x.Picture),
             cache => cache.PrepareKeyForDefaultCache(ProjectDefaults.AllProjectsCacheKey));
+        return projects;
+    }
+
+    public async Task<IEnumerable<Project>> GetAllPublishedAsync()
+    {
+        var projects = await _projectRepository.GetAllAsync(
+            query => query.Include(x => x.Skills).Include(x => x.ProjectUrls).ThenInclude(x => x.Url).Include(x => x.ProjectPictures.OrderBy(x => x.DisplayNumber)).ThenInclude(x => x.Picture).Where(x => x.IsPublished),
+            cache => cache.PrepareKeyForDefaultCache(ProjectDefaults.AllPublishedProjectsCacheKey));
         return projects;
     }
 

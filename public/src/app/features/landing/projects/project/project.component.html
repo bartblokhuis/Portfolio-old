@@ -1,9 +1,40 @@
-<div class="pop-up" (click)="close()">
+<div class="pop-up" (click)="close($event)">
     <div class="pop-up-container">
         <div class="html-container">
             <div class="modal-image">
-                <img *ngIf="project" [src]="baseUrl + project.pictures[0].path">
+                <swiper [config]="config">
+                    <div class="swiper-wrapper">
+                      <div class="swiper-slide" *ngFor="let picture of project?.pictures ?? []">
+                        <img [src]="baseUrl + picture.path" [alt]="picture.altAttribute ?? ''" />
+                      </div>
+                    </div>
+                    <!-- Add Pagination -->
+                    <div class="swiper-pagination custom" *ngIf="project && project.pictures.length > 1"></div>
+                    <!-- Add Arrows -->
+                    <div class="swiper-button-next" *ngIf="project && project.pictures.length > 1"></div>
+                    <div class="swiper-button-prev" *ngIf="project && project.pictures.length > 1"></div>
+                  </swiper>
+            </div>
+            <div class="modal-header">
+                <div class="title">
+                    <h2>{{ project?.title }}</h2>
+                </div>
+                <div class="project-skills">
+                    {{ printSkill(project?.skills) }}
+                </div>
+            </div>
+            <div class="modal-body">
+                <div [innerHtml]="project?.description"></div>
+            </div>
+            <div class="modal-footer">
+                <div class="urls">
+                    <div class="url" *ngFor="let url of project?.urls ?? []">
+                        <a class="btn btn-secondary" target="_blank" [href]="url.fullUrl" [innerHtml]="url.friendlyName"></a>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
 </div>
+
+

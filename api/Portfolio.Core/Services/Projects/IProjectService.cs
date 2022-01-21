@@ -6,7 +6,9 @@ namespace Portfolio.Core.Services.Projects;
 
 public interface IProjectService
 {
-    Task<IEnumerable<Project>> Get();
+    Task<IEnumerable<Project>> GetAllAsync();
+
+    Task<IEnumerable<Project>> GetAllPublishedAsync();
 
     Task<Project> GetById(int id);
 

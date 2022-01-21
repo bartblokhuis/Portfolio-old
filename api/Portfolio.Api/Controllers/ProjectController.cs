@@ -49,14 +49,29 @@ public class ProjectController : ControllerBase
 
     #region Get
 
-    [AllowAnonymous]
     [HttpGet]
     public async Task<IActionResult> Get()
     {
-        var projects = (await _projectService.Get()).ToListResult();
+        var projects = (await _projectService.GetAllAsync()).ToListResult();
 
         //Prevent infinit loop issues with the json serializer.
         if(projects.Data != null)
+            foreach (var skill in projects.Data.SelectMany(x => x.Skills))
+                skill.Projects = null;
+
+        var result = _mapper.Map<ListResult<ProjectDto>>(projects);
+        result.Succeeded = true;
+        return Ok(result);
+    }
+
+    [AllowAnonymous]
+    [HttpGet("Published")]
+    public async Task<IActionResult> GetPublished()
+    {
+        var projects = (await _projectService.GetAllPublishedAsync()).ToListResult();
+
+        //Prevent infinit loop issues with the json serializer.
+        if (projects.Data != null)
             foreach (var skill in projects.Data.SelectMany(x => x.Skills))
                 skill.Projects = null;
 
