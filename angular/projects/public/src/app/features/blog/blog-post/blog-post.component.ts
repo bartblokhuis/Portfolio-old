@@ -2,9 +2,9 @@ import { Component, OnInit, ViewEncapsulation } from '@angular/core';
 import { Meta, Title } from '@angular/platform-browser';
 import { ActivatedRoute, Router } from '@angular/router';
 import { environment } from 'projects/admin/src/environments/environment';
-import { Blog } from '../../../data/blog/blog';
-import { BlogComment } from '../../../data/blog/comment';
-import { Result } from '../../../data/common/result';
+import { BlogPost } from 'projects/shared/src/lib/data/blog/blog-post';
+import { BlogComment } from 'projects/shared/src/lib/data/blog/comment';
+import { Result } from 'projects/shared/src/lib/data/common/Result';
 import { ApiService } from '../../../services/common/api.service';
 
 @Component({
@@ -16,7 +16,7 @@ import { ApiService } from '../../../services/common/api.service';
 export class BlogPostComponent implements OnInit {
 
   baseUrl = environment.baseApiUrl;
-  blogPost: Blog | null = null;
+  blogPost: BlogPost | null = null;
   id: number | null = null;
 
   constructor(private activatedRoute: ActivatedRoute, private router: Router, private apiService: ApiService, private metaService: Meta, private titleService: Title) { }
@@ -32,7 +32,7 @@ export class BlogPostComponent implements OnInit {
       title = title.replace("+", "%2B");
     }
 
-    this.apiService.get<Blog>(`BlogPost/GetByTitle?title=${title}&includeUnPublished=false`).subscribe((result: Result<Blog>) => {
+    this.apiService.get<BlogPost>(`BlogPost/GetByTitle?title=${title}&includeUnPublished=false`).subscribe((result: Result<BlogPost>) => {
 
       if(!result.succeeded) this.router.navigate([`blog`]);
 
@@ -48,8 +48,7 @@ export class BlogPostComponent implements OnInit {
         this.metaService.addTag({ name: 'twitter:description', content: this.blogPost.metaDescription});
       }
 
-    }, //error => this.router.navigate([`blog`]));
-    );
+    }, error => this.router.navigate([`blog`]));
   }
 
   onCommentCreated($event: BlogComment) {

@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
-import { ListBlog } from '../../../data/blog/list-blog';
-import { Result } from '../../../data/common/Result';
+import { ListBlog } from 'projects/shared/src/lib/data/blog/list-blog';
+import { Result } from 'projects/shared/src/lib/data/common/Result';
 import { BlogPostsService } from '../../../services/api/blog-posts/blog-posts.service';
 import { DeleteBlogPostComponent } from '../delete-blog-post/delete-blog-post.component';
 

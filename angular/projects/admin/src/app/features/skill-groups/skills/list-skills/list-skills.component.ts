@@ -1,8 +1,8 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
-import { SkillGroup } from 'projects/admin/src/app/data/skill-groups/skill-group';
-import { Skill } from 'projects/admin/src/app/data/skills/skill';
 import { environment } from 'projects/admin/src/environments/environment';
+import { SkillGroup } from 'projects/shared/src/lib/data/skill-groups/skill-group';
+import { Skill } from 'projects/shared/src/lib/data/skills/skill';
 import { CreateSkillComponent } from '../create-skill/create-skill.component';
 import { DeleteSkillComponent } from '../delete-skill/delete-skill.component';
 import { EditSkillComponent } from '../edit-skill/edit-skill.component';

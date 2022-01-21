@@ -1,11 +1,11 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
-import { Result } from 'projects/admin/src/app/data/common/Result';
-import { SkillGroup } from 'projects/admin/src/app/data/skill-groups/skill-group';
-import { CreateSkill } from 'projects/admin/src/app/data/skills/create-skill';
-import { Skill } from 'projects/admin/src/app/data/skills/skill';
 import { SkillsService } from 'projects/admin/src/app/services/api/skills/skills.service';
 import { NotificationService } from 'projects/admin/src/app/services/notification/notification.service';
+import { Result } from 'projects/shared/src/lib/data/common/Result';
+import { SkillGroup } from 'projects/shared/src/lib/data/skill-groups/skill-group';
+import { CreateSkill } from 'projects/shared/src/lib/data/skills/create-skill';
+import { Skill } from 'projects/shared/src/lib/data/skills/skill';
 import { validateSkillForm } from '../helpers/skill-helpers';
 
 declare var $: any;

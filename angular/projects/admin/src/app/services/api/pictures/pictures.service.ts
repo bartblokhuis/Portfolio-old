@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import { Picture } from '../../../data/common/picture';
-import { Result } from '../../../data/common/Result';
+import { Picture } from 'projects/shared/src/lib/data/common/picture';
+import { Result } from 'projects/shared/src/lib/data/common/Result';
 import { ApiService } from '../api.service';
 
 @Injectable({

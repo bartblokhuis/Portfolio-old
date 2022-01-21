@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { environment } from 'projects/admin/src/environments/environment';
-import { SkillGroup } from '../../../data/SkillGroup';
+import { SkillGroup } from 'projects/shared/src/lib/data/skill-groups/skill-group';
 import { SkillsService } from '../../../services/skills/skills.service';
 
 @Component({

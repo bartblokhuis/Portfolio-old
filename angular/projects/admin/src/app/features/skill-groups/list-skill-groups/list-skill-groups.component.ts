@@ -1,10 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
-import { Result } from '../../../data/common/Result';
-import { CreateUpdateSkillGroup } from '../../../data/skill-groups/create-update-skill-group';
-import { CreateSkillGroupCreatedEvent } from '../../../data/skill-groups/events/create-skill-group-created-event';
-import { ListSkillGroup, SkillGroup } from '../../../data/skill-groups/skill-group';
-import { Skill } from '../../../data/skills/skill';
+import { Result } from 'projects/shared/src/lib/data/common/Result';
+import { CreateUpdateSkillGroup } from 'projects/shared/src/lib/data/skill-groups/create-update-skill-group';
+import { CreateSkillGroupCreatedEvent } from 'projects/shared/src/lib/data/skill-groups/events/create-skill-group-created-event';
+import { ListSkillGroup, SkillGroup } from 'projects/shared/src/lib/data/skill-groups/skill-group';
+import { Skill } from 'projects/shared/src/lib/data/skills/skill';
 import { SkillGroupsService } from '../../../services/api/skill-groups/skill-groups.service';
 import { DeleteSkillGroupComponent } from '../delete-skill-group/delete-skill-group.component';
 import { CreateSkillComponent } from '../skills/create-skill/create-skill.component';

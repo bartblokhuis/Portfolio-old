@@ -1,9 +1,9 @@
 import { DOCUMENT } from '@angular/common';
 import { Component, EventEmitter, Inject, Input, OnInit, Output, ViewEncapsulation } from '@angular/core';
-import { Project } from 'projects/admin/src/app/data/projects/project';
+import { Project } from 'projects/shared/src/lib/data/projects/project';
 import { environment } from 'projects/admin/src/environments/environment';
-import { Skill } from 'projects/public/src/app/data/Skill';
 import { SwiperOptions } from 'swiper';
+import { Skill } from 'projects/shared/src/lib/data/skills/skill';
 
 
 @Component({

@@ -1,6 +1,6 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
-import { Message } from '../../../data/messages/message';
+import { Message } from 'projects/shared/src/lib/data/messages/message';
 import { MessagesService } from '../../../services/messages/messages.service';
 import { NotificationService } from '../../../services/notification/notification.service';
 

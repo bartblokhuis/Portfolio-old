@@ -1,11 +1,11 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { combineLatest, Observable } from 'rxjs';
-import { Result } from '../../../data/common/Result';
-import { AddUpdateProject } from '../../../data/projects/add-update-project';
-import { Project } from '../../../data/projects/project';
-import { UpdateProjectSkills } from '../../../data/projects/update-project-skills';
-import { SkillGroup } from '../../../data/skill-groups/skill-group';
+import { Result } from 'projects/shared/src/lib/data/common/Result';
+import { AddUpdateProject } from 'projects/shared/src/lib/data/projects/add-update-project';
+import { Project } from 'projects/shared/src/lib/data/projects/project';
+import { UpdateProjectSkills } from 'projects/shared/src/lib/data/projects/update-project-skills';
+import { SkillGroup } from 'projects/shared/src/lib/data/skill-groups/skill-group';
 import { ProjectsService } from '../../../services/api/projects/projects.service';
 import { SkillGroupsService } from '../../../services/api/skill-groups/skill-groups.service';
 import { ContentTitleService } from '../../../services/content-title/content-title.service';

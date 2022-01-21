@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { BreadcrumbItem } from '../../../data/breadcrumb-item';
+import { BreadcrumbItem } from 'projects/shared/src/lib/data/breadcrumb-item';
 import { BreadcrumbsService } from '../../../services/breadcrumbs/breadcrumbs.service';
 import { ContentTitleService } from '../../../services/content-title/content-title.service';
 

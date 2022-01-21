@@ -1,8 +1,8 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
-import { BlogComment } from 'projects/admin/src/app/data/blog/comment';
 import { CommentsService } from 'projects/admin/src/app/services/api/comments/comments.service';
 import { NotificationService } from 'projects/admin/src/app/services/notification/notification.service';
+import { BlogComment } from 'projects/shared/src/lib/data/blog/comment';
 
 @Component({
   selector: 'app-delete-comment',

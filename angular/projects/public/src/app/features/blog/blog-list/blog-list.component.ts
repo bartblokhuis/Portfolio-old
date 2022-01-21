@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { environment } from 'projects/admin/src/environments/environment';
-import { ListBlog } from '../../../data/blog/list-blog';
-import { Result } from '../../../data/common/result';
+import { ListBlog } from 'projects/shared/src/lib/data/blog/list-blog';
+import { Result } from 'projects/shared/src/lib/data/common/Result';
 import { ApiService } from '../../../services/common/api.service';
 
 @Component({

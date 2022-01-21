@@ -1,7 +1,7 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
-import { Url } from 'projects/admin/src/app/data/url';
 import { UrlsService } from 'projects/admin/src/app/services/api/urls/urls.service';
+import { Url } from 'projects/shared/src/lib/data/url';
 import { validateUrlForm } from '../helpers/project-url-helpers';
 
 declare var $: any;

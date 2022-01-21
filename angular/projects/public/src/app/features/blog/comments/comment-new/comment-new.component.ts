@@ -1,8 +1,8 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
-import { BlogComment } from 'projects/admin/src/app/data/blog/comment';
-import { CreateBlogComent } from 'projects/admin/src/app/data/blog/create-blog-comment';
-import { Blog } from 'projects/public/src/app/data/blog/blog';
+import { BlogComment } from 'projects/shared/src/lib/data/blog/comment';
+import { CreateBlogComent } from 'projects/shared/src/lib/data/blog/create-blog-comment';
 import { BlogPostsService } from 'projects/public/src/app/services/blogPosts/blog-posts.service';
+import { BlogPost } from 'projects/shared/src/lib/data/blog/blog-post';
 
 @Component({
   selector: 'app-comment-new',
@@ -11,7 +11,7 @@ import { BlogPostsService } from 'projects/public/src/app/services/blogPosts/blo
 })
 export class CommentNewComponent implements OnInit {
 
-  @Input() blogPost: Blog | null = null;
+  @Input() blogPost: BlogPost | null = null;
   @Output() onCommentCreated: EventEmitter<BlogComment> = new EventEmitter<BlogComment>();
 
   model : CreateBlogComent = { blogPostId: null, content: '', name: '', parentCommentId: null, email: '' };

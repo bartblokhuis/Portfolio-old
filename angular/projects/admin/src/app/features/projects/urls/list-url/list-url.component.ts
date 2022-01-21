@@ -1,7 +1,7 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
-import { Url } from 'projects/admin/src/app/data/url';
 import { ProjectsService } from 'projects/admin/src/app/services/api/projects/projects.service';
+import { Url } from 'projects/shared/src/lib/data/url';
 import { AddUrlComponent } from '../add-url/add-url.component';
 import { DeleteUrlComponent } from '../delete-url/delete-url.component';
 import { EditUrlComponent } from '../edit-url/edit-url.component';

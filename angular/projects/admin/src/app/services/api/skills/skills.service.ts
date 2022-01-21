@@ -1,9 +1,9 @@
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import { Result } from '../../../data/common/Result';
-import { CreateSkill } from '../../../data/skills/create-skill';
-import { EditSkill } from '../../../data/skills/edit-skill';
-import { Skill } from '../../../data/skills/skill';
+import { Result } from 'projects/shared/src/lib/data/common/Result';
+import { CreateSkill } from 'projects/shared/src/lib/data/skills/create-skill';
+import { EditSkill } from 'projects/shared/src/lib/data/skills/edit-skill';
+import { Skill } from 'projects/shared/src/lib/data/skills/skill';
 import { ApiService } from '../api.service';
 
 @Injectable({

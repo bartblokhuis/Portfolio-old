@@ -1,7 +1,7 @@
 import { Component, OnInit, ViewEncapsulation } from '@angular/core';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
-import { Result } from '../../../data/common/Result';
-import { Project } from '../../../data/projects/project';
+import { Result } from 'projects/shared/src/lib/data/common/Result';
+import { Project } from 'projects/shared/src/lib/data/projects/project';
 import { ProjectsService } from '../../../services/api/projects/projects.service';
 import { AddProjectComponent } from '../add-project/add-project.component';
 import { DeleteProjectComponent } from '../delete-project/delete-project.component';

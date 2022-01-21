@@ -1,7 +1,7 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { NgbModal, NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
 import { environment } from 'projects/admin/src/environments/environment';
-import { Picture } from '../../../data/common/picture';
+import { Picture } from 'projects/shared/src/lib/data/common/picture';
 import { PicturesService } from '../../../services/api/pictures/pictures.service';
 import { AddPictureComponent } from '../add-picture/add-picture.component';
 

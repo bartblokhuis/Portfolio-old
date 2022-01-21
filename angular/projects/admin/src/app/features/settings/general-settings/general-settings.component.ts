@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { Result } from '../../../data/common/Result';
-import { GeneralSettings } from '../../../data/settings/general-settings';
+import { Result } from 'projects/shared/src/lib/data/common/Result';
+import { GeneralSettings } from 'projects/shared/src/lib/data/settings/general-settings';
 import { SettingsService } from '../../../services/api/settings/settings.service';
 import { BreadcrumbsService } from '../../../services/breadcrumbs/breadcrumbs.service';
 import { NotificationService } from '../../../services/notification/notification.service';

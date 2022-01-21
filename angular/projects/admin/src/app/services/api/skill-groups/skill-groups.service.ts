@@ -1,8 +1,8 @@
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import { Result } from '../../../data/common/Result';
-import { CreateUpdateSkillGroup } from '../../../data/skill-groups/create-update-skill-group';
-import { SkillGroup } from '../../../data/skill-groups/skill-group';
+import { Result } from 'projects/shared/src/lib/data/common/Result';
+import { CreateUpdateSkillGroup } from 'projects/shared/src/lib/data/skill-groups/create-update-skill-group';
+import { SkillGroup } from 'projects/shared/src/lib/data/skill-groups/skill-group';
 import { ApiService } from '../api.service';
 
 @Injectable({

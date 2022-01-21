@@ -1,6 +1,6 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
-import { Picture } from '../../../data/common/picture';
+import { Picture } from 'projects/shared/src/lib/data/common/picture';
 
 @Component({
   selector: 'app-edit-picture',

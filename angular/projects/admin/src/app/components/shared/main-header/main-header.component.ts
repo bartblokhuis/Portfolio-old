@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { Message } from '../../../data/messages/message';
-import { MessageStatus } from '../../../data/messages/message-status';
+import { Message } from 'projects/shared/src/lib/data/messages/message';
+import { MessageStatus } from 'projects/shared/src/lib/data/messages/message-status';
 import { AuthenticationService } from '../../../services/api/authentication/authentication.service';
 import { SystemService } from '../../../services/api/system/system.service';
 import { MessagesService } from '../../../services/messages/messages.service';

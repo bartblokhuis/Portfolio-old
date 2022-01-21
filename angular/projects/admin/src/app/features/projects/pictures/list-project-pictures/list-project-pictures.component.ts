@@ -1,8 +1,8 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
-import { ProjectPicture } from 'projects/admin/src/app/data/projects/project-picture';
 import { ProjectsService } from 'projects/admin/src/app/services/api/projects/projects.service';
 import { environment } from 'projects/admin/src/environments/environment';
+import { ProjectPicture } from 'projects/shared/src/lib/data/projects/project-picture';
 import { AddProjectPictureComponent } from '../add-project-picture/add-project-picture.component';
 import { DeleteProjectPictureComponent } from '../delete-project-picture/delete-project-picture.component';
 import { EditProjectPictureComponent } from '../edit-project-picture/edit-project-picture.component';

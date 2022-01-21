@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { NgbModal, NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
-import { Message } from '../../../data/messages/message';
+import { Message } from 'projects/shared/src/lib/data/messages/message';
 import { MessagesService } from '../../../services/messages/messages.service';
 import { DeleteMessageComponent } from '../delete-message/delete-message.component';
 import { EditMessageComponent } from '../edit-message/edit-message.component';

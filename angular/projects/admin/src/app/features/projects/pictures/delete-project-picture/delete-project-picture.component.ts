@@ -1,8 +1,8 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
-import { ProjectPicture } from 'projects/admin/src/app/data/projects/project-picture';
 import { ProjectsService } from 'projects/admin/src/app/services/api/projects/projects.service';
 import { NotificationService } from 'projects/admin/src/app/services/notification/notification.service';
+import { ProjectPicture } from 'projects/shared/src/lib/data/projects/project-picture';
 
 @Component({
   selector: 'app-delete-project-picture',

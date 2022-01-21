@@ -1,8 +1,8 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
-import { Url } from 'projects/admin/src/app/data/url';
 import { ProjectsService } from 'projects/admin/src/app/services/api/projects/projects.service';
 import { NotificationService } from 'projects/admin/src/app/services/notification/notification.service';
+import { Url } from 'projects/shared/src/lib/data/url';
 
 @Component({
   selector: 'app-delete-url',

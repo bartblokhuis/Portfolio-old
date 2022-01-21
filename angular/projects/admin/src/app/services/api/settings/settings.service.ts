@@ -1,9 +1,9 @@
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import { Result } from '../../../data/common/Result';
-import { EmailSettings } from '../../../data/settings/email-settings';
-import { GeneralSettings } from '../../../data/settings/general-settings';
-import { SeoSettings } from '../../../data/settings/seo-settings';
+import { Result } from 'projects/shared/src/lib/data/common/Result';
+import { EmailSettings } from 'projects/shared/src/lib/data/settings/email-settings';
+import { GeneralSettings } from 'projects/shared/src/lib/data/settings/general-settings';
+import { SeoSettings } from 'projects/shared/src/lib/data/settings/seo-settings';
 import { ApiService } from '../api.service';
 
 @Injectable({

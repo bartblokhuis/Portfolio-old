@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { Message } from '../../../data/Message';
+import { Message } from 'projects/shared/src/lib/data/messages/message';
+import { MessageStatus } from 'projects/shared/src/lib/data/messages/message-status';
 import { MessageService } from '../../../services/message/message.service';
 
 @Component({
@@ -9,7 +10,8 @@ import { MessageService } from '../../../services/message/message.service';
 })
 export class ContactComponent implements OnInit {
 
-  model: Message = { email: '', firstName: '', lastName: '', messageContent: '' };
+  //TODO Change to create message
+  model: Message = { email: '', firstName: '', lastName: '', messageContent: '', createdAtUTC: new Date(), id: 0, messageStatus: MessageStatus.Unread, updatedAtUtc: new Date()  };
   error: string | undefined = undefined;
   firstNameError: string = '';
   emailError: string = '';

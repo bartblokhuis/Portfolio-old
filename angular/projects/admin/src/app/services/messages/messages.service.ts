@@ -1,10 +1,10 @@
 import { Injectable } from '@angular/core';
+import { Result } from 'projects/shared/src/lib/data/common/Result';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
-import { Result } from '../../data/common/Result';
-import { Message } from '../../data/messages/message';
-import { MessageStatus } from '../../data/messages/message-status';
-import { UpdateMessage } from '../../data/messages/update-message';
+import { Message } from 'projects/shared/src/lib/data/messages/message';
+import { MessageStatus } from 'projects/shared/src/lib/data/messages/message-status';
+import { UpdateMessage } from 'projects/shared/src/lib/data/messages/update-message';
 import { ApiService } from '../api/api.service';
 
 @Injectable({

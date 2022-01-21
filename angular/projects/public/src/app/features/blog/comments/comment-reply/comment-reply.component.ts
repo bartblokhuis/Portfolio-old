@@ -1,6 +1,6 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
-import { BlogComment } from 'projects/admin/src/app/data/blog/comment';
-import { CreateBlogComent } from 'projects/admin/src/app/data/blog/create-blog-comment';
+import { BlogComment } from 'projects/shared/src/lib/data/blog/comment';
+import { CreateBlogComent } from 'projects/shared/src/lib/data/blog/create-blog-comment';
 import { BlogPostsService } from 'projects/public/src/app/services/blogPosts/blog-posts.service';
 import { isEmail } from '../comment-new/comment-new.component';
 

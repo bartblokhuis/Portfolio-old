@@ -1,7 +1,7 @@
 import { AfterViewInit, Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { Observable } from 'rxjs';
-import { Picture } from '../../data/common/picture';
-import { Result } from '../../data/common/Result';
+import { Picture } from 'projects/shared/src/lib/data/common/picture';
+import { Result } from 'projects/shared/src/lib/data/common/Result';
 import { PicturesService } from '../../services/api/pictures/pictures.service';
 
 

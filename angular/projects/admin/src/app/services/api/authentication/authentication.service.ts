@@ -2,11 +2,11 @@ import { Injectable } from '@angular/core';
 import { map } from 'rxjs/operators';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { ApiService } from '../api.service';
-import { Result } from '../../../data/common/Result';
-import { ChangeUserPassword } from '../../../data/user/change-password';
-import { LoginResponse } from '../../../data/user/response';
-import { User } from '../../../data/user/user';
-import { UserDetails } from '../../../data/user/user-details';
+import { Result } from 'projects/shared/src/lib/data/common/Result';
+import { ChangeUserPassword } from 'projects/shared/src/lib/data/user/change-password';
+import { LoginResponse } from 'projects/shared/src/lib/data/user/response';
+import { User } from 'projects/shared/src/lib/data/user/user';
+import { UserDetails } from 'projects/shared/src/lib/data/user/user-details';
 
 @Injectable({
   providedIn: 'root'

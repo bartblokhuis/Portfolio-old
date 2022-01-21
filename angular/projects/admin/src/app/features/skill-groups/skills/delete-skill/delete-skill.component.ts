@@ -1,8 +1,8 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
-import { Skill } from 'projects/admin/src/app/data/skills/skill';
 import { SkillsService } from 'projects/admin/src/app/services/api/skills/skills.service';
 import { NotificationService } from 'projects/admin/src/app/services/notification/notification.service';
+import { Skill } from 'projects/shared/src/lib/data/skills/skill';
 
 @Component({
   selector: 'app-delete-skill',

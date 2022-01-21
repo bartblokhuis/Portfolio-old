@@ -1,10 +1,10 @@
 import { DOCUMENT } from '@angular/common';
 import { Component, Inject, OnInit, ViewContainerRef } from '@angular/core';
-import { Project } from 'projects/admin/src/app/data/projects/project';
+import { Project } from 'projects/shared/src/lib/data/projects/project';
 import { environment } from 'projects/admin/src/environments/environment';
-import { Skill } from 'projects/public/src/app/data/Skill';
 import { ProjectsService } from 'projects/public/src/app/services/projects/projects.service';
 import { ProjectComponent } from '../project/project.component';
+import { Skill } from 'projects/shared/src/lib/data/skills/skill';
 
 @Component({
   selector: 'app-list-project',
@@ -32,18 +32,6 @@ export class ListProjectComponent implements OnInit {
         buttons += `<a class="btn btn-secondary" target="_blank" href="${url.fullUrl}">${url.friendlyName}</a>`
       })
     }
-
-    const modalContent = `<div class="modal-image"></div>
-    <div class="modal-title">${project.title}</div> <div class="project-skills">${this.printSkill(project.skills)}</div> <div class="modal-content">${project.description}</div><div class="modal-footer">${buttons}</div>`;
-
-    // Swal.fire({
-    //   title: "",
-    //   showCancelButton: false,
-    //   showConfirmButton: false,
-    //   html: modalContent,
-    //   heightAuto: false,
-    // });
-
     var projectComponent = this.viewContainerRef.createComponent(ProjectComponent);
     projectComponent.instance.project = project;
     projectComponent.instance.onClose.subscribe(() => {

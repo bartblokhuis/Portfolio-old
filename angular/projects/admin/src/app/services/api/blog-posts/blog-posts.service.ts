@@ -1,10 +1,10 @@
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import { CreateBlog } from '../../../data/blog/create-blog';
-import { EditBlog } from '../../../data/blog/edit-blog';
-import { ListBlog } from '../../../data/blog/list-blog';
-import { UpdateBlogPicture } from '../../../data/blog/update-blog-picture';
-import { Result } from '../../../data/common/Result';
+import { CreateBlog } from 'projects/shared/src/lib/data/blog/create-blog';
+import { EditBlog } from 'projects/shared/src/lib/data/blog/edit-blog';
+import { ListBlog } from 'projects/shared/src/lib/data/blog/list-blog';
+import { UpdateBlogPicture } from 'projects/shared/src/lib/data/blog/update-blog-picture';
+import { Result } from 'projects/shared/src/lib/data/common/Result';
 import { ApiService } from '../api.service';
 
 @Injectable({

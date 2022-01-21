@@ -1,6 +1,6 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
-import { SkillGroup } from '../../../data/skill-groups/skill-group';
+import { SkillGroup } from 'projects/shared/src/lib/data/skill-groups/skill-group';
 import { SkillGroupsService } from '../../../services/api/skill-groups/skill-groups.service';
 import { NotificationService } from '../../../services/notification/notification.service';
 

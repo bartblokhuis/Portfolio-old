@@ -1,8 +1,8 @@
 import { AfterViewInit, Component, Input, OnInit } from '@angular/core';
 import { NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
-import { BlogComment } from 'projects/admin/src/app/data/blog/comment';
-import { CreateBlogComent } from 'projects/admin/src/app/data/blog/create-blog-comment';
 import { CommentsService } from 'projects/admin/src/app/services/api/comments/comments.service';
+import { BlogComment } from 'projects/shared/src/lib/data/blog/comment';
+import { CreateBlogComent } from 'projects/shared/src/lib/data/blog/create-blog-comment';
 
 @Component({
   selector: 'app-reply-comment',

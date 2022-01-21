@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { AboutMe } from '../../../data/about-me';
-import { Result } from '../../../data/common/Result';
+import { AboutMe } from 'projects/shared/src/lib/data/about-me';
+import { Result } from 'projects/shared/src/lib/data/common/Result';
 import { AboutMeService } from '../../../services/api/about-me/about-me.service';
 import { NotificationService } from '../../../services/notification/notification.service';
 

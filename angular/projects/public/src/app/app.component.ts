@@ -1,9 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { Meta, Title } from '@angular/platform-browser';
 import { Event as NavigationEvent, NavigationStart, Router } from '@angular/router';
+import { GeneralSettings } from 'projects/shared/src/lib/data/settings/general-settings';
+import { SeoSettings } from 'projects/shared/src/lib/data/settings/seo-settings';
 import { combineLatest, isObservable, Observable } from 'rxjs';
-import { GeneralSettings } from './data/settings/GeneralSettings';
-import { SeoSettings } from './data/settings/SeoSettings';
 import { SettingsService } from './services/settings/settings.service';
 
 @Component({

@@ -1,8 +1,8 @@
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import { BlogComment } from '../../../data/blog/comment';
-import { CreateBlogComent } from '../../../data/blog/create-blog-comment';
-import { Result } from '../../../data/common/Result';
+import { BlogComment } from 'projects/shared/src/lib/data/blog/comment';
+import { CreateBlogComent } from 'projects/shared/src/lib/data/blog/create-blog-comment';
+import { Result } from 'projects/shared/src/lib/data/common/Result';
 import { ApiService } from '../api.service';
 
 @Injectable({

@@ -1,11 +1,11 @@
 import { Component, OnInit, ViewEncapsulation } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
-import { BlogComment } from '../../../data/blog/comment';
-import { EditBlog } from '../../../data/blog/edit-blog';
-import { UpdateBlogPicture } from '../../../data/blog/update-blog-picture';
-import { Picture } from '../../../data/common/picture';
-import { Result } from '../../../data/common/Result';
+import { BlogComment } from 'projects/shared/src/lib/data/blog/comment';
+import { EditBlog } from 'projects/shared/src/lib/data/blog/edit-blog';
+import { UpdateBlogPicture } from 'projects/shared/src/lib/data/blog/update-blog-picture';
+import { Picture } from 'projects/shared/src/lib/data/common/picture';
+import { Result } from 'projects/shared/src/lib/data/common/Result';
 import { BlogPostsService } from '../../../services/api/blog-posts/blog-posts.service';
 import { CommentsService } from '../../../services/api/comments/comments.service';
 import { ContentTitleService } from '../../../services/content-title/content-title.service';

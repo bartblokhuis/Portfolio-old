@@ -1,14 +1,14 @@
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import { Result } from '../../../data/common/Result';
-import { AddProjectPicture } from '../../../data/projects/add-project-picture';
-import { CreateProjectUrl } from '../../../data/projects/add-project-url';
-import { AddUpdateProject } from '../../../data/projects/add-update-project';
-import { Project } from '../../../data/projects/project';
-import { ProjectPicture } from '../../../data/projects/project-picture';
-import { UpdateProjectPicture } from '../../../data/projects/update-project-picture';
-import { UpdateProjectSkills } from '../../../data/projects/update-project-skills';
-import { Url } from '../../../data/url';
+import { Result } from 'projects/shared/src/lib/data/common/Result';
+import { AddProjectPicture } from 'projects/shared/src/lib/data/projects/add-project-picture';
+import { CreateProjectUrl } from 'projects/shared/src/lib/data/projects/add-project-url';
+import { AddUpdateProject } from 'projects/shared/src/lib/data/projects/add-update-project';
+import { Project } from 'projects/shared/src/lib/data/projects/project';
+import { ProjectPicture } from 'projects/shared/src/lib/data/projects/project-picture';
+import { UpdateProjectPicture } from 'projects/shared/src/lib/data/projects/update-project-picture';
+import { UpdateProjectSkills } from 'projects/shared/src/lib/data/projects/update-project-skills';
+import { Url } from 'projects/shared/src/lib/data/url';
 import { ApiService } from '../api.service';
 
 @Injectable({

@@ -1,9 +1,9 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
-import { Result } from 'projects/admin/src/app/data/common/Result';
-import { EditSkill } from 'projects/admin/src/app/data/skills/edit-skill';
-import { Skill } from 'projects/admin/src/app/data/skills/skill';
 import { SkillsService } from 'projects/admin/src/app/services/api/skills/skills.service';
+import { Result } from 'projects/shared/src/lib/data/common/Result';
+import { EditSkill } from 'projects/shared/src/lib/data/skills/edit-skill';
+import { Skill } from 'projects/shared/src/lib/data/skills/skill';
 import { validateSkillForm } from '../helpers/skill-helpers';
 
 declare var $: any;

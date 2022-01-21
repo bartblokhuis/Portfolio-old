@@ -1,7 +1,7 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { NgbModal, NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
-import { AddProjectPicture } from 'projects/admin/src/app/data/projects/add-project-picture';
 import { ProjectsService } from 'projects/admin/src/app/services/api/projects/projects.service';
+import { AddProjectPicture } from 'projects/shared/src/lib/data/projects/add-project-picture';
 import { GridPictureComponent } from '../../../pictures/grid-picture/grid-picture.component';
 import { validateProjectPictureForm } from '../helpers/project-picture-helpers';
 
