@@ -1,0 +1,48 @@
+<div class="card">
+    <div class="card-header">
+      <h3 class="card-title">
+        Pictures
+      </h3>
+      <div class="card-tools">
+        <button type="button" class="btn btn-tool" data-card-widget="collapse">
+        <i class="fas fa-minus"></i>
+        </button>
+    </div>
+    </div>
+    <div class="card-body table-responsive p-0">
+      <table class="table table-hover text-nowrap">
+          <thead>
+              <tr>
+                <th>Display Number</th>
+                <th>Picture</th>
+                <th>Title attribute</th>
+                <th>Alt attribute</th>
+                <th>Mime Type</th>
+                <th>Actions</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let picture of pictures">
+                <td>{{ picture.displayNumber }}</td>
+                <td><img [src]="baseUrl + picture.path"></td>
+                <td>{{ picture.titleAttribute }}</td>
+                <td>{{ picture.altAttribute }}</td>
+                <td>{{ picture.mimeType }}</td>
+                <td> 
+                  <div class="actions">
+                    <div (click)="editPicture(picture)" class="action">
+                      <i class="fas fa-pen-alt"></i>
+                    </div>
+                    <div (click)="deletePicture(picture)" class="action">
+                      <i class="fas fa-trash-alt danger"></i>
+                    </div>
+                  </div>
+                </td>
+              </tr>
+            </tbody>
+      </table>
+    </div>
+    <div class="card-footer">
+      <button class="btn btn-primary" (click)="addPicture()">Add Picture</button>
+    </div>
+  </div>

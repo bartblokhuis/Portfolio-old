@@ -14,7 +14,7 @@
                     </div>
                 </div>
                 <div class="project-details-image" data-aos="fade-up" [attr.data-aos-delay]="100 * i">
-                    <img [src]="baseUrl + project.imagePath">
+                    <img *ngIf="project.pictures && project.pictures.length > 0" [src]="baseUrl + project.pictures[0]?.path">
                 </div>
                 <div class="project-details-bottom">
                     <button class="btn btn-primary" (click)="readMore(project)">READ MORE</button>

@@ -46,6 +46,10 @@ public class PortfolioContext : DbContext
 
     public DbSet<Url> Urls { get; set; }
 
+    public DbSet<ProjectPicture> ProjectPictures { get; set; }
+
+    public DbSet<ProjectUrls> ProjectUrls { get; set; }
+
     #endregion
 
     #region Methods

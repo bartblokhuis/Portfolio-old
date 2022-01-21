@@ -6,7 +6,7 @@
 </div>
 <form id="addSkillForm">
     <div class="modal-body">
-       <app-picture (updatedPicture)="modal?.close()"></app-picture>
+       <app-picture (updatedPicture)="modal?.close($event)"></app-picture>
     </div>
     <div class="modal-footer justify-content-between">
         <button type="button" class="btn btn-default" (click)="modal?.close()">Cancel</button>

@@ -1,7 +1,6 @@
 export interface AddUpdateProject {
     title: string,
     description: string,
-    imagePath: string,
     displayNumber: number,
     isPublished: boolean,
     githubUrl? :string,

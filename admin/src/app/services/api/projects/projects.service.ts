@@ -1,9 +1,12 @@
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { Result } from 'src/app/data/common/Result';
+import { AddProjectPicture } from 'src/app/data/projects/add-project-picture';
 import { CreateProjectUrl } from 'src/app/data/projects/add-project-url';
 import { AddUpdateProject } from 'src/app/data/projects/add-update-project';
 import { Project } from 'src/app/data/projects/project';
+import { ProjectPicture } from 'src/app/data/projects/project-picture';
+import { UpdateProjectPicture } from 'src/app/data/projects/update-project-picture';
 import { UpdateProjectSkills } from 'src/app/data/projects/update-project-skills';
 import { Url } from 'src/app/data/url';
 import { ApiService } from '../api.service';
@@ -27,12 +30,20 @@ export class ProjectsService {
     return this.apiService.get<Url[]>(`Project/Url/GetByProjectId?projectId=${id}`)
   }
 
+  getProjectPicturesByProjectId(id: number): Observable<Result<ProjectPicture[]>> {
+    return this.apiService.get<ProjectPicture[]>(`Project/Pictures/GetByProjectId?projectId=${id}`)
+  }
+
   createProject(project: AddUpdateProject): Observable<Result<Project>> {
     return this.apiService.post<Project>("Project", project)
   }
 
   createProjectUrl(projectUrl: CreateProjectUrl): Observable<Result> {
     return this.apiService.post("Project/Url/Create", projectUrl)
+  }
+
+  createProjectPicture(createProjectPicture: AddProjectPicture): Observable<Result>{
+    return this.apiService.post("Project/Pictures", createProjectPicture);
   }
 
   updateProject(project: AddUpdateProject) {
@@ -43,8 +54,8 @@ export class ProjectsService {
     return this.apiService.put("Project/UpdateSkills", updateProjectSkills)
   }
 
-  updateDemoImage(projectId: number, formData: FormData): Observable<Result> {
-    return this.apiService.put(`Project/UpdateDemoImage/${projectId}`, formData);
+  updateProjectPicture(updateProjectPicture: UpdateProjectPicture): Observable<Result> {
+    return this.apiService.put(`Project/Pictures/`, updateProjectPicture);
   }
 
   deleteProject(id: number): Observable<Result> {
@@ -53,5 +64,9 @@ export class ProjectsService {
 
   deleteProjectUrl(projectId: number, urlId: number): Observable<Result> {
     return this.apiService.delete(`Project/Url/Delete?projectId=${projectId}&urlId=${urlId}`);
+  }
+
+  deleteProjectPicture(projectId: number, pictureId: number): Observable<Result> {
+    return this.apiService.delete(`Project/Pictures?projectId=${projectId}&pictureId=${pictureId}`)
   }
 }

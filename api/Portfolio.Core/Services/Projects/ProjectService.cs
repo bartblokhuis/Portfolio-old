@@ -1,5 +1,4 @@
 using Microsoft.EntityFrameworkCore;
-using Portfolio.Core.Interfaces;
 using Portfolio.Core.Interfaces.Common;
 using Portfolio.Core.Services.Urls;
 using Portfolio.Domain.Models;
@@ -16,17 +15,19 @@ public class ProjectService : IProjectService
 
     private readonly IBaseRepository<Project> _projectRepository;
     private readonly IBaseRepository<ProjectUrls> _projectUrlsRepository;
+    private readonly IBaseRepository<ProjectPicture> _projectPictureRepository;
     private readonly IUrlService _urlService;
 
     #endregion
 
     #region Constructor
 
-    public ProjectService(IBaseRepository<Project> projectRepository, IUrlService urlService, IBaseRepository<ProjectUrls> projectUrlsRepository)
+    public ProjectService(IBaseRepository<Project> projectRepository, IUrlService urlService, IBaseRepository<ProjectUrls> projectUrlsRepository, IBaseRepository<ProjectPicture> projectPictureRepository)
     {
         _projectRepository = projectRepository;
         _urlService = urlService;
         _projectUrlsRepository = projectUrlsRepository;
+        _projectPictureRepository = projectPictureRepository;
     }
 
     #endregion
@@ -35,16 +36,24 @@ public class ProjectService : IProjectService
 
     #region Get
 
-    public async Task<IEnumerable<Project>> Get()
+    public async Task<IEnumerable<Project>> GetAllAsync()
     {
-        var projects = await _projectRepository.GetAllAsync(query => query.Include(x => x.Skills).Include(x => x.ProjectUrls).ThenInclude(x => x.Url),
+        var projects = await _projectRepository.GetAllAsync(query => query.Include(x => x.Skills).Include(x => x.ProjectUrls).ThenInclude(x => x.Url).Include(x => x.ProjectPictures.OrderBy(x => x.DisplayNumber)).ThenInclude(x => x.Picture),
             cache => cache.PrepareKeyForDefaultCache(ProjectDefaults.AllProjectsCacheKey));
+        return projects;
+    }
+
+    public async Task<IEnumerable<Project>> GetAllPublishedAsync()
+    {
+        var projects = await _projectRepository.GetAllAsync(
+            query => query.Include(x => x.Skills).Include(x => x.ProjectUrls).ThenInclude(x => x.Url).Include(x => x.ProjectPictures.OrderBy(x => x.DisplayNumber)).ThenInclude(x => x.Picture).Where(x => x.IsPublished),
+            cache => cache.PrepareKeyForDefaultCache(ProjectDefaults.AllPublishedProjectsCacheKey));
         return projects;
     }
 
     public async Task<Project> GetById(int id)
     {
-        var projects = await _projectRepository.GetAllAsync(query => query.Include(x => x.Skills).Include(x => x.ProjectUrls).ThenInclude(x => x.Url).Where(x => x.Id == id));
+        var projects = await _projectRepository.GetAllAsync(query => query.Include(x => x.Skills).Include(x => x.ProjectUrls).ThenInclude(x => x.Url).Include(x => x.ProjectPictures.OrderBy(x => x.DisplayNumber)).ThenInclude(x => x.Picture).Where(x => x.Id == id));
         return projects == null ? null : projects.First();
     }
 
@@ -53,7 +62,12 @@ public class ProjectService : IProjectService
         var project = await GetById(id);
 
         return project == null ? null : project.ProjectUrls.Select(x => x.Url);
+    }
 
+    public async Task<IEnumerable<ProjectPicture>> GetProjectPicturesByIdAsync(int id)
+    {
+        var project = await GetById(id);
+        return project == null ? null : project.ProjectPictures;
     }
 
     #endregion
@@ -69,6 +83,12 @@ public class ProjectService : IProjectService
     {
         var projectUrl = new ProjectUrls(project, url);
         await _projectUrlsRepository.InsertAsync(projectUrl);
+    }
+
+    public async Task CreateProjectPictureAsync(Project project, Picture picture)
+    {
+        var projectPicture = new ProjectPicture(project, picture);
+        await _projectPictureRepository.InsertAsync(projectPicture);
     }
 
     #endregion
@@ -105,6 +125,11 @@ public class ProjectService : IProjectService
         return project;
     }
 
+    public Task UpdateProjectPictureAsync(ProjectPicture picture)
+    {
+        return _projectPictureRepository.UpdateAsync(picture);
+    }
+
     #endregion
 
     #region Delete
@@ -127,6 +152,11 @@ public class ProjectService : IProjectService
         await Update(project);
 
         await _urlService.DeleteAsync(urlId);
+    }
+
+    public Task DeleteProjectPictureAsync(ProjectPicture projectPicture)
+    {
+        return _projectPictureRepository.DeleteAsync(projectPicture);
     }
 
     #endregion

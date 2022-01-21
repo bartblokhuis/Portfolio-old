@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { Result } from 'src/app/data/common/result';
-import { Project } from 'src/app/data/Project';
+import { Project } from 'src/app/data/project/Project';
 import { ApiService } from '../common/api.service';
 
 @Injectable({
@@ -12,6 +12,6 @@ export class ProjectsService {
   constructor(private apiService: ApiService) { }
 
   get() : Observable<Result<Project[]>> {
-    return this.apiService.get<Project[]>('Project');
+    return this.apiService.get<Project[]>('Project/Published');
   }
 }

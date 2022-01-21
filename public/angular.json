@@ -33,6 +33,7 @@
             "styles": [
               "./node_modules/tippy.js/dist/tippy.css",
               "./node_modules/aos/dist/aos.css",
+              "./node_modules/swiper/swiper-bundle.css",
               "src/styles.scss"
             ],
             "scripts": [

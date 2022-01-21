@@ -206,16 +206,22 @@ public class BaseRepository<TEntity, TKey, TDbContext> : IBaseRepository<TEntity
         await SaveChanges();
     }
 
-    public Task DeleteAsync(TEntity entity)
+    public async Task DeleteAsync(TEntity entity)
     {
         _dbSet.Remove(entity);
-        return SaveChanges();
+        await _eventPublisher.EntityDeletedAsync<TEntity, TKey>(entity);
+
+        await SaveChanges();
     }
 
-    public Task DeleteAsync(IEnumerable<TEntity> entities)
+    public async Task DeleteAsync(IEnumerable<TEntity> entities)
     {
         _dbSet.RemoveRange(entities);
-        return SaveChanges();
+
+        foreach (var entity in entities)
+            await _eventPublisher.EntityDeletedAsync<TEntity, TKey>(entity);
+
+        SaveChanges();
     }
 
     #endregion
@@ -225,12 +231,18 @@ public class BaseRepository<TEntity, TKey, TDbContext> : IBaseRepository<TEntity
     public async Task UpdateAsync(TEntity entity)
     {
         _dbSet.Update(entity);
+
+        await _eventPublisher.EntityUpdatedAsync<TEntity, TKey>(entity);
         await SaveChanges();
     }
 
     public async Task UpdateRangeAsync(IEnumerable<TEntity> entities)
     {
         _dbSet.UpdateRange(entities);
+
+        foreach (var entity in entities)
+            await _eventPublisher.EntityUpdatedAsync<TEntity, TKey>(entity);
+
         await SaveChanges();
     }
 

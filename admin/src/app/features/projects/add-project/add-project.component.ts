@@ -22,11 +22,9 @@ declare var $:any;
 })
 export class AddProjectComponent implements OnInit {
 
-  model: AddUpdateProject = { description: '', displayNumber: 0, imagePath: '', isPublished: false, title: '', demoUrl: '',githubUrl: '' }
+  model: AddUpdateProject = { description: '', displayNumber: 0, isPublished: false, title: '', demoUrl: '',githubUrl: '' }
   skillModel: UpdateProjectSkills = {projectId: 0, skillIds: undefined }
-  currentFileName: string = ''
   skillGroups: SkillGroup[] = [];
-  formData: FormData | undefined;
 
   addProjectForm: any;
 
@@ -47,16 +45,7 @@ export class AddProjectComponent implements OnInit {
 
     this.contentTitleService.title.next('Add new project')
   }
-
-  onFileChange($event: any) {
-    if ($event.target.files.length > 0) {
-      const file = $event.target.files[0];
-      this.currentFileName = file.name;
-      this.formData = new FormData();
-      this.formData.append('icon', file);
-    }
-  }
-
+  
   submit(): void {
     if(!this.addProjectForm.valid()) return;
 
@@ -72,10 +61,6 @@ export class AddProjectComponent implements OnInit {
       if(this.skillModel.skillIds && this.skillModel.skillIds.length !== 0){
         this.skillModel.projectId = project.id;
         observables.push(this.projectsService.updateProjectSkills(this.skillModel));
-      }
-
-      if(this.formData) {
-        observables.push(this.projectsService.updateDemoImage(project.id, this.formData));
       }
 
       if(observables.length !== 0){

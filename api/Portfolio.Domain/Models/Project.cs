@@ -11,8 +11,6 @@ public class Project : BaseEntity, IHasDisplayNumber
 
     public string Description { get; set; }
 
-    public string ImagePath { get; set; }
-
     public bool IsPublished { get; set; }
 
     public int DisplayNumber { get; set; }
@@ -20,6 +18,8 @@ public class Project : BaseEntity, IHasDisplayNumber
     public ICollection<Skill> Skills { get; set; }
 
     public ICollection<ProjectUrls> ProjectUrls { get; set; }
+
+    public ICollection<ProjectPicture> ProjectPictures { get; set; }
 
     #endregion
 }

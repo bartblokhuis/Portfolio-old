@@ -40,7 +40,7 @@ export class ListProjectsComponent implements OnInit {
     const modalRef = this.modalService.open(component, { size: 'lg' });
 
     if(project) {
-      const editProject: Project = { description: project.description, displayNumber: project.displayNumber, id: project.id, imagePath: project.imagePath, isPublished: project.isPublished, title: project.title, urls: [], skills: project.skills  };
+      const editProject: Project = { description: project.description, displayNumber: project.displayNumber, id: project.id, isPublished: project.isPublished, title: project.title, urls: [], skills: project.skills, pictures: project.pictures  };
       modalRef.componentInstance.project = editProject
     }
     modalRef.componentInstance.modalRef = modalRef;

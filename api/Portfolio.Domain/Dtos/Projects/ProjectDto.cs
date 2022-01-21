@@ -26,5 +26,7 @@ public class ProjectDto : BaseDto
 
     public IEnumerable<Url> Urls { get; set; }
 
+    public IEnumerable<ProjectPictureDto> Pictures { get; set; }
+
     #endregion
 }

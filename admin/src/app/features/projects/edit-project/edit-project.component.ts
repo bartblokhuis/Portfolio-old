@@ -20,17 +20,15 @@ declare var $:any;
   templateUrl: './edit-project.component.html',
   styleUrls: ['./edit-project.component.scss']
 })
-export class EditProjectComponent implements OnInit, AfterViewInit {
+export class EditProjectComponent implements OnInit {
 
   @ViewChildren('skillSelect') skills: QueryList<any> | undefined;
 
   project: Project | null = null;
   skillIds: number[] = [];
-  model: AddUpdateProject = { description: '', displayNumber: 0, imagePath: '', isPublished: false, title: '', demoUrl: '',githubUrl: '' }
+  model: AddUpdateProject = { description: '', displayNumber: 0, isPublished: false, title: '', demoUrl: '',githubUrl: '' }
   skillModel: UpdateProjectSkills = {projectId: 0, skillIds: undefined }
-  currentFileName: string = '';
   skillGroups: SkillGroup[] | undefined = undefined;
-  formData: FormData | undefined;
   editProjectForm: any;
   projectTitle: string = '';
   
@@ -44,7 +42,7 @@ export class EditProjectComponent implements OnInit, AfterViewInit {
     if(!idParam) return;
 
     const id = parseInt(idParam);
-
+    
     this.projectsService.getById(id).subscribe((result) => {
       if(!result.succeeded){
         this.router.navigate(['Projects']);
@@ -61,9 +59,6 @@ export class EditProjectComponent implements OnInit, AfterViewInit {
       this.projectTitle = this.model.title;
       this.contentTitleService.title.next(`Edit project: ${this.project.title}`)
       
-      this.currentFileName = this.project.imagePath;
-      this.model.id = this.project.id;
-  
       $('.select2').select2({closeOnSelect: false, templateResult: formatProjectSkillsSelect, tags: true});
       $('.select2').on('change', (e: any) => this.skillModel.skillIds = $('.select2').val().map((x: string) => parseInt(x)));
   
@@ -79,25 +74,7 @@ export class EditProjectComponent implements OnInit, AfterViewInit {
         });
       });
 
-      console.log('done 1')
-
-      
-
     }, () => this.router.navigate(['Projects']))
-  }
-
-  ngAfterViewInit(): void {
-    console.log('done 2')
-    
-  }
-
-  onFileChange($event: any) {
-    if ($event.target.files.length > 0) {
-      const file = $event.target.files[0];
-      this.currentFileName = file.name;
-      this.formData = new FormData();
-      this.formData.append('icon', file);
-    }
   }
 
   submit() {
@@ -109,10 +86,6 @@ export class EditProjectComponent implements OnInit, AfterViewInit {
     if(this.skillModel.skillIds){
       this.skillModel.projectId = this.project.id;
       observables.push(this.projectsService.updateProjectSkills(this.skillModel));
-    }
-
-    if(this.formData) {
-      observables.push(this.projectsService.updateDemoImage(this.project.id, this.formData));
     }
 
     combineLatest(observables).subscribe(() => {
