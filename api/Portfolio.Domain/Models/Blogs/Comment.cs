@@ -2,7 +2,7 @@
 using System;
 using System.Collections.Generic;
 
-namespace Portfolio.Domain.Models;
+namespace Portfolio.Domain.Models.Blogs;
 
 public class Comment : BaseEntity, IFullyAudited
 {

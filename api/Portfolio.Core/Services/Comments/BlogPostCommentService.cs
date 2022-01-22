@@ -1,5 +1,6 @@
 ﻿using Portfolio.Core.Interfaces.Common;
 using Portfolio.Domain.Models;
+using Portfolio.Domain.Models.Blogs;
 using System.Threading.Tasks;
 
 namespace Portfolio.Core.Services.Comments;

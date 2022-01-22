@@ -1,5 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Portfolio.Domain.Models;
+using Portfolio.Domain.Models.Blogs;
 using Portfolio.Domain.Models.Common;
 using Portfolio.Domain.Models.Settings;
 using System;
@@ -49,6 +50,8 @@ public class PortfolioContext : DbContext
     public DbSet<ProjectPicture> ProjectPictures { get; set; }
 
     public DbSet<ProjectUrls> ProjectUrls { get; set; }
+
+    public DbSet<BlogSubscriber> BlogSubscribers { get; set; }
 
     #endregion
 
