@@ -2,7 +2,7 @@
 
 namespace Portfolio.Domain.Models.Settings;
 
-public class BlogSettings : BaseEntity
+public class BlogSettings : BaseEntity, ISetting
 {
     #region Properties
 
