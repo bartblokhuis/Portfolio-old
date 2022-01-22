@@ -187,7 +187,7 @@ public class SettingsController : Controller
 
     #endregion
 
-    #region BlogSettings
+    #region PublicSiteSettings
 
     [HttpGet("PublicSiteSettings")]
     [AllowAnonymous]
