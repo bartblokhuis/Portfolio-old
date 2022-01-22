@@ -1,10 +1,12 @@
-﻿using Portfolio.Domain.Models.Common;
-using System;
+﻿using System;
 
-namespace Portfolio.Domain.Models.Blogs;
-public class BlogSubscriber : BaseEntity<Guid>, IFullyAudited, ISoftDelete
+namespace Portfolio.Domain.Dtos.BlogSubscribers;
+
+public class ListBlogSubscriberDto
 {
     #region Properties
+
+    public Guid Id { get; set; }
 
     public string Name { get; set; }
 
@@ -15,6 +17,7 @@ public class BlogSubscriber : BaseEntity<Guid>, IFullyAudited, ISoftDelete
     public DateTime UpdatedAtUtc { get; set; }
 
     public bool IsDeleted { get; set; }
+
 
     #endregion
 }

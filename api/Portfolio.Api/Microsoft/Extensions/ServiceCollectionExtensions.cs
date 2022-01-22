@@ -17,6 +17,7 @@ using Portfolio.Core.Interfaces;
 using Portfolio.Core.Interfaces.Common;
 using Portfolio.Core.Services;
 using Portfolio.Core.Services.Blogs;
+using Portfolio.Core.Services.BlogSubscribers;
 using Portfolio.Core.Services.Comments;
 using Portfolio.Core.Services.Common;
 using Portfolio.Core.Services.Messages;
@@ -116,6 +117,7 @@ public static class ServiceCollectionExtensions
             .AddScoped<IUrlService, UrlService>()
             .AddScoped<IBlogPostService, BlogPostService>()
             .AddScoped<IBlogPostCommentService, BlogPostCommentService>()
+            .AddScoped<IBlogSubscriberService, BlogSubscriberService>()
             .AddSingleton(new HostingConfig())
             .AddScoped<IWebHelper, WebHelper>()
             .AddScoped<IEmailService, EmailService>()
