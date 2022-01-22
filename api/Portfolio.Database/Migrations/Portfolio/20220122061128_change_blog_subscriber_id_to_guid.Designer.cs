@@ -3,17 +3,19 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Portfolio.Database;
 
 #nullable disable
 
-namespace Portfolio.Database.Migrations
+namespace Portfolio.Database.Migrations.Portfolio
 {
     [DbContext(typeof(PortfolioContext))]
-    partial class PortfolioContextModelSnapshot : ModelSnapshot
+    [Migration("20220122061128_change_blog_subscriber_id_to_guid")]
+    partial class change_blog_subscriber_id_to_guid
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder

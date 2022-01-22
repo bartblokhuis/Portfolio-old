@@ -2,7 +2,7 @@
 using System;
 
 namespace Portfolio.Domain.Models.Blogs;
-public class BlogSubscriber : BaseEntity, IFullyAudited, ISoftDelete
+public class BlogSubscriber : BaseEntity<Guid>, IFullyAudited, ISoftDelete
 {
     #region Properties
 
