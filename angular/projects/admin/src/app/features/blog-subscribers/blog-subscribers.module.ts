@@ -5,12 +5,14 @@ import { RouterModule } from '@angular/router';
 import { BlogSubscriberRoutes } from './blog-subscribers.routes';
 import { FormsModule } from '@angular/forms';
 import { PipesModule } from '../../pipes/pipes.module';
+import { DeleteBlogSubscriberComponent } from './delete-blog-subscriber/delete-blog-subscriber.component';
 
 
 
 @NgModule({
   declarations: [
-    ListBlogSubscriberComponent
+    ListBlogSubscriberComponent,
+    DeleteBlogSubscriberComponent
   ],
   imports: [
     CommonModule,
