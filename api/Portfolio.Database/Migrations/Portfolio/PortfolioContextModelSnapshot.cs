@@ -93,9 +93,11 @@ namespace Portfolio.Database.Migrations
 
             modelBuilder.Entity("Portfolio.Domain.Models.Blogs.BlogSubscriber", b =>
                 {
-                    b.Property<Guid>("Id")
+                    b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("uniqueidentifier");
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
 
                     b.Property<DateTime>("CreatedAtUTC")
                         .HasColumnType("datetime2");
