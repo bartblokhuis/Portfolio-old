@@ -157,7 +157,7 @@ public class BaseRepository<TEntity, TKey, TDbContext> : IBaseRepository<TEntity
     {
         async Task<TEntity> getEntityAsync()
         {
-            return await _dbSet.FirstAsync();
+            return await _dbSet.FirstOrDefaultAsync();
         }
 
         if (getCacheKey == null)
