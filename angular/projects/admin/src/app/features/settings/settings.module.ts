@@ -8,6 +8,7 @@ import { EmailSettingsComponent } from './email-settings/email-settings.componen
 import { FormsModule } from '@angular/forms';
 import { BlogSettingsComponent } from './blog-settings/blog-settings.component';
 import { PublicSiteSettingsComponent } from './public-site-settings/public-site-settings.component';
+import { RichTextEditorModule } from '../../components/rich-text-editor/rich-text-editor.module';
 
 
 @NgModule({
@@ -21,6 +22,7 @@ import { PublicSiteSettingsComponent } from './public-site-settings/public-site-
   imports: [
     CommonModule,
     FormsModule,
+    RichTextEditorModule,
     RouterModule.forChild(SettingRoutes),
   ]
 })
