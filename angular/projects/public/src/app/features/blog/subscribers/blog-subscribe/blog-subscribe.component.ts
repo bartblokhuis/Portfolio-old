@@ -25,9 +25,13 @@ export class BlogSubscribeComponent implements OnInit {
     this.error = null;
     this.success = null;
 
-    if(!emailAddres || !isValidEmail(emailAddres)){
-      this.error = "Please enter a real email";
+    if(!emailAddres || emailAddres.length < 2) {
+      this.error = "Please enter an email";
       return;
+    }
+
+    if(!emailAddres || !isValidEmail(emailAddres)){
+      
     }
 
     const model: CreateBlogSubscriber = { emailAddress: emailAddres, name: '' }

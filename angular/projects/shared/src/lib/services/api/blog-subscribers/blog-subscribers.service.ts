@@ -27,7 +27,7 @@ export class BlogSubscribersService {
     return this.apiService.post<ListBlogSubscriber>(this.baseUrl, createBlogSubscriber);
   }
 
-  unsubscribe(id: string) {
+  unsubscribe(id: string): Observable<Result> {
     return this.apiService.delete(`${this.baseUrl}?id=${id}`)
   }
 
