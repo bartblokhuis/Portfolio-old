@@ -1,6 +1,8 @@
 import { Routes } from "@angular/router";
+import { BlogSettingsComponent } from "./blog-settings/blog-settings.component";
 import { EmailSettingsComponent } from "./email-settings/email-settings.component";
 import { GeneralSettingsComponent } from "./general-settings/general-settings.component";
+import { PublicSiteSettingsComponent } from "./public-site-settings/public-site-settings.component";
 import { SeoSettingsComponent } from "./seo-settings/seo-settings.component";
 
 export const SettingRoutes: Routes = [
@@ -18,6 +20,14 @@ export const SettingRoutes: Routes = [
             {
                 path: 'email-settings',
                 component: EmailSettingsComponent
+            },
+            {
+                path: 'blog-settings',
+                component: BlogSettingsComponent
+            },
+            {
+                path: 'public-site-settings',
+                component: PublicSiteSettingsComponent
             }
         ]
     }
