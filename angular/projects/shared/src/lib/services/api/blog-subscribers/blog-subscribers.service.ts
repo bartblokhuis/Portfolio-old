@@ -15,8 +15,8 @@ export class BlogSubscribersService {
 
   constructor(private readonly apiService: ApiService) { }
 
-  getAll(): Observable<Result<ListBlogSubscriber>> {
-    return this.apiService.get<ListBlogSubscriber>(this.baseUrl);
+  getAll(): Observable<Result<ListBlogSubscriber[]>> {
+    return this.apiService.get<ListBlogSubscriber[]>(this.baseUrl);
   }
 
   getById(id: string): Observable<Result<BlogSubscriber>> {
