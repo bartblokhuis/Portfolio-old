@@ -8,12 +8,10 @@ using Portfolio.Core.Services.Blogs;
 using Portfolio.Core.Services.Comments;
 using Portfolio.Domain.Dtos.BlogPosts;
 using Portfolio.Domain.Dtos.Comments;
-using Portfolio.Domain.Models;
 using Portfolio.Domain.Models.Blogs;
 using Portfolio.Domain.Wrapper;
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 
 namespace Portfolio.Controllers

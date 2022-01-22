@@ -1,0 +1,17 @@
+<div class="card">
+    <div class="card-header">
+        <h1 class="card-title">
+            SUBSCRIBE TO MY BLOG
+        </h1>
+    </div>
+    <div class="card-body">
+        <label>Subscribe now and don't miss any new blog posts.</label>
+        <input type="email" name="email" #emailAddress autocomplete="email" placeholder="Enter email address">
+        <label class="error" *ngIf="error">{{error}}</label>
+        <label class="success" *ngIf="success">{{success}}</label>
+    </div>
+    <div class="card-footer">
+        <div class="btn btn-secondary" (click)="subscribe(emailAddress.value)">Subscribe</div>
+        
+    </div>
+</div>

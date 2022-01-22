@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { CreateMessage } from 'projects/shared/src/lib/data/messages/create-message';
+import { isValidEmail } from 'projects/shared/src/lib/helpers/common-helpers';
 import { MessageService } from 'projects/shared/src/lib/services/api/message/message.service';
 
 @Component({
@@ -45,7 +46,7 @@ export class ContactComponent implements OnInit {
       this.emailError = "Please enter your email address";
       error = true;
     }
-    else if(!this.isEmail(this.model.email)){
+    else if(!isValidEmail(this.model.email)){
       this.emailError = "Please enter a real email address";
       error = true;
     }
@@ -76,10 +77,4 @@ export class ContactComponent implements OnInit {
       this.success = "Thanks for contacting me! I received your message and I'll respons as soon as possible";
     }, () => this.sendingMessage = false)
   }
-
-  isEmail(search:string): boolean {
-      const regexp = new RegExp(/^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/);
-      return regexp.test(search);
-  }
-
 }

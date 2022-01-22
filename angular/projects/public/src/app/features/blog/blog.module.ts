@@ -10,6 +10,8 @@ import { CommentListComponent } from './comments/comment-list/comment-list.compo
 import { CommentNewComponent } from './comments/comment-new/comment-new.component';
 import { CommentReplyComponent } from './comments/comment-reply/comment-reply.component';
 import { SharedModule } from '../../components/shared/shared.module';
+import { BlogSubscribeComponent } from './subscribers/blog-subscribe/blog-subscribe.component';
+import { BlogUnsubscribeComponent } from './subscribers/blog-unsubscribe/blog-unsubscribe.component';
 
 
 
@@ -20,7 +22,9 @@ import { SharedModule } from '../../components/shared/shared.module';
     CommentComponent,
     CommentListComponent,
     CommentNewComponent,
-    CommentReplyComponent
+    CommentReplyComponent,
+    BlogSubscribeComponent,
+    BlogUnsubscribeComponent
   ],
   imports: [
     CommonModule,

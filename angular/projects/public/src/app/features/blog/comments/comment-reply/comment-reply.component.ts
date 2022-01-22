@@ -1,8 +1,8 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { BlogComment } from 'projects/shared/src/lib/data/blog/comment';
 import { CreateBlogComent } from 'projects/shared/src/lib/data/blog/create-blog-comment';
+import { isValidEmail } from 'projects/shared/src/lib/helpers/common-helpers';
 import { CommentsService } from 'projects/shared/src/lib/services/api/comments/comments.service';
-import { isEmail } from '../comment-new/comment-new.component';
 
 @Component({
   selector: 'app-comment-reply',
@@ -43,7 +43,7 @@ export class CommentReplyComponent implements OnInit {
       hasError = true;
     }
 
-   if(this.model.email && this.model.email.length > 0 && !isEmail(this.model.email)){
+   if(this.model.email && this.model.email.length > 0 && !isValidEmail(this.model.email)){
       this.emailError = "Please enter a valid email address";
       hasError = true;
     }

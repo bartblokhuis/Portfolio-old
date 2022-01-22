@@ -3,6 +3,7 @@ import { BlogComment } from 'projects/shared/src/lib/data/blog/comment';
 import { CreateBlogComent } from 'projects/shared/src/lib/data/blog/create-blog-comment';
 import { BlogPost } from 'projects/shared/src/lib/data/blog/blog-post';
 import { CommentsService } from 'projects/shared/src/lib/services/api/comments/comments.service';
+import { isValidEmail } from 'projects/shared/src/lib/helpers/common-helpers';
 
 @Component({
   selector: 'app-comment-new',
@@ -41,7 +42,7 @@ export class CommentNewComponent implements OnInit {
       hasError = true;
     }
 
-   if(this.model.email && this.model.email.length > 0 && !isEmail(this.model.email)){
+   if(this.model.email && this.model.email.length > 0 && !isValidEmail(this.model.email)){
       this.emailError = "Please enter a valid email address";
       hasError = true;
     }
@@ -68,9 +69,4 @@ export class CommentNewComponent implements OnInit {
     });
 
   }
-}
-
-export function isEmail(search:string): boolean {
-  const regexp = new RegExp(/^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/);
-  return regexp.test(search);
 }
