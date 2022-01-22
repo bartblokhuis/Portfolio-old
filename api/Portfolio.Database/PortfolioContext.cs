@@ -53,6 +53,10 @@ public class PortfolioContext : DbContext
 
     public DbSet<BlogSubscriber> BlogSubscribers { get; set; }
 
+    public DbSet<BlogSettings> BlogSettings { get; set; }
+
+    public DbSet<PublicSiteSettings> PublicSiteSettings { get; set; }
+
     #endregion
 
     #region Methods

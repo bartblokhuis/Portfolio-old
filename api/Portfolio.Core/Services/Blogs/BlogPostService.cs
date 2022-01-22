@@ -1,7 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using Portfolio.Core.Interfaces;
 using Portfolio.Core.Interfaces.Common;
-using Portfolio.Domain.Models;
 using Portfolio.Domain.Models.Blogs;
 using System.Collections.Generic;
 using System.Linq;
