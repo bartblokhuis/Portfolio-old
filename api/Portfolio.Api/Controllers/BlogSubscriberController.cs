@@ -67,7 +67,7 @@ public class BlogSubscriberController : ControllerBase
 
     [HttpPost]
     [AllowAnonymous]
-    public async Task<IActionResult> Create(CreateBlogSubscriberDto dto)
+    public async Task<IActionResult> Subscribe(CreateBlogSubscriberDto dto)
     {
         if (!ModelState.IsValid)
             throw new Exception("Invalid model");
@@ -91,7 +91,7 @@ public class BlogSubscriberController : ControllerBase
 
     [HttpDelete]
     [AllowAnonymous]
-    public async Task<IActionResult> Delete(Guid id)
+    public async Task<IActionResult> Unsubscribe(Guid id)
     {
         var blogSubscriber = await _blogSubscriberService.GetByIdAsync(id);
         if (blogSubscriber == null)
