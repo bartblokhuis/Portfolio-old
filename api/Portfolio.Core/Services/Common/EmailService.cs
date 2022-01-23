@@ -46,10 +46,8 @@ public class EmailService : IEmailService
             await client.ConnectAsync(emailSettings.Host, emailSettings.Port, emailSettings.EnableSsl);
 
             if (!string.IsNullOrEmpty(emailSettings.Username) && !string.IsNullOrEmpty(emailSettings.Password))
-            {
                 await client.AuthenticateAsync(emailSettings.Username, emailSettings.Password);
-            }
-
+            
             await client.SendAsync(message);
             await client.DisconnectAsync(true);
         }
@@ -57,8 +55,8 @@ public class EmailService : IEmailService
         {
             return false;
         }
+
         return true;
-        
     }
 
     #endregion

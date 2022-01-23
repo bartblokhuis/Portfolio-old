@@ -42,15 +42,16 @@ public class BlogPostService : IBlogPostService
     public async Task<BlogPost> GetById(int id, bool includeUnPublished = false)
     {
         var blogPosts = await _blogPostRepository.GetAllAsync(query => query
-        .Include(x => x.Thumbnail)
-        .Include(x => x.BannerPicture)
-        .Include(x => x.Comments.OrderByDescending(x => x.CreatedAtUTC))
-        .ThenInclude(x => x.Comments.OrderByDescending(x => x.CreatedAtUTC))
-        .ThenInclude(x => x.Comments.OrderByDescending(x => x.CreatedAtUTC))
-        .ThenInclude(x => x.Comments.OrderByDescending(x => x.CreatedAtUTC))
-        .ThenInclude(x => x.Comments.OrderByDescending(x => x.CreatedAtUTC))
-        .OrderByDescending(x => x.DisplayNumber).ThenBy(x => x.CreatedAtUTC)
-        .Where(x => x.Id == id));
+            .Include(x => x.Thumbnail)
+            .Include(x => x.BannerPicture)
+            .Include(x => x.Comments.OrderByDescending(x => x.CreatedAtUTC))
+            .ThenInclude(x => x.Comments.OrderByDescending(x => x.CreatedAtUTC))
+            .ThenInclude(x => x.Comments.OrderByDescending(x => x.CreatedAtUTC))
+            .ThenInclude(x => x.Comments.OrderByDescending(x => x.CreatedAtUTC))
+            .ThenInclude(x => x.Comments.OrderByDescending(x => x.CreatedAtUTC))
+            .OrderByDescending(x => x.DisplayNumber).ThenBy(x => x.CreatedAtUTC)
+            .Where(x => x.Id == id));
+
         if (blogPosts == null)
             return null;
 
