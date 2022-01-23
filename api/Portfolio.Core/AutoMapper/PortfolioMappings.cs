@@ -6,6 +6,7 @@ using Portfolio.Domain.Dtos.Skills;
 using Portfolio.Domain.Models;
 using Portfolio.Domain.Models.Settings;
 using Portfolio.Domain.Wrapper;
+using System.Linq;
 
 namespace Portfolio.Core.AutoMapper;
 
@@ -16,19 +17,7 @@ public class PortfolioMappings : Profile
         CreateMap<AboutMe, AboutMeDto>();
         CreateMap<AboutMeDto, AboutMe>().ForMember(x => x.Id, options => options.Ignore());
 
-        CreateMap<EmailSettings, EmailSettingsDto>();
-        CreateMap<EmailSettingsDto, EmailSettings>().ForMember(x => x.Id, options => options.Ignore());
-
-        CreateMap<SeoSettings, SeoSettingsDto>();
-        CreateMap<SeoSettingsDto, SeoSettings>().ForMember(x => x.Id, options => options.Ignore());
-
-        CreateMap<GeneralSettings, GeneralSettingsDto>();
-        CreateMap<GeneralSettingsDto, GeneralSettings>().ForMember(x => x.Id, options => options.Ignore());
-
         CreateMap<Message, MessageDto>().ReverseMap();
-
-        CreateMap<Project, ProjectDto>().ReverseMap();
-        CreateMap<CreateUpdateProject, Project>();
 
         CreateMap<CreateSkillDto, Skill>();
         CreateMap<UpdateSkillDto, Skill>();

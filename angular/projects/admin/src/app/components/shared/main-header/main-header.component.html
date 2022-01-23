@@ -1,0 +1,56 @@
+<nav class="main-header navbar navbar-expand {{currentTheme}}">
+    <!-- Left navbar links -->
+    <ul class="navbar-nav">
+      <li class="nav-item">
+        <a class="nav-link" data-widget="pushmenu" href="#" role="button"><i class="fas fa-bars"></i></a>
+      </li>
+    </ul>
+  
+    <!-- Right navbar links -->
+    <ul class="navbar-nav ml-auto">
+      <!-- Messages Dropdown Menu -->
+      <li class="nav-item">
+        <a [routerLink]="'/messages'" class="nav-link" data-toggle="dropdown" href="#">
+          <i class="far fa-comments"></i>
+          <span class="badge badge-danger navbar-badge" *ngIf="amountOfnewMessages !== 0">{{ amountOfnewMessages }}</span>
+        </a>
+      </li>
+
+      <li class="nav-item">
+        <a class="nav-link" (click)="toggleTheme()">
+          <i class="far fa-moon"></i>
+        </a>
+      </li>
+
+      <li class="nav-item dropdown">
+        <a class="nav-link" data-toggle="dropdown" href="#">
+          <i class="fas fa-user"></i>
+        </a>
+        
+        <div class="dropdown-menu dropdown-menu-sm dropdown-menu-right">
+
+          <a [routerLink]="'/user/details'" routerLinkActive="active" class="dropdown-item">
+            <i class="fas fa-cog mr-2"></i>
+             Details
+          </a>
+          <a href="#" class="dropdown-item" (click)="logout();">
+            <i class="fas fa-power-off mr-2"></i>
+             Logout
+          </a>
+        </div>
+      </li>
+      <li class="nav-item dropdown">
+        <a class="nav-link" data-toggle="dropdown" href="#">
+          <i class="fas fa-cog"></i>
+        </a>
+        
+        <div class="dropdown-menu dropdown-menu-sm dropdown-menu-right">
+
+          <a class="dropdown-item" (click)="clearApiCache()">
+            <i class="fas fa-cog mr-2"></i>
+             Clear API cache
+          </a>
+        </div>
+      </li>
+    </ul>
+</nav>

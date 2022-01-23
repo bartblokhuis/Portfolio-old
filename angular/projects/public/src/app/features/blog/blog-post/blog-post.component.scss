@@ -1,0 +1,92 @@
+@import '../../../../assets/scss/_variables.scss';
+
+.main-container {
+    overflow: hidden;
+}
+
+.blog-container {
+    width: 100%;
+    margin: auto;
+    padding-right: .75rem;
+    padding-left: .75rem;
+    margin-right: auto;
+    margin-left: auto;
+    box-sizing: border-box;
+    margin-top: 100px;
+    position: relative;
+    display: block;
+
+    @media only screen and (min-width: 576px) {
+        max-width: 540px;
+    }
+
+    @media only screen and (min-width: 768px) {
+        max-width: 620px;
+    }  
+
+    @media only screen and (min-width: 1024px) {
+        max-width: 620px;
+    }
+
+    @media only screen and (min-width: 1650px) {
+        max-width: 820px;
+    }
+
+    @media only screen and (min-width: 1750px) {
+        max-width: 850px;
+    }
+
+    @media only screen and (min-width: 1980px) {
+        max-width: 920px;
+    }
+
+    .blog-post{
+        width: 100%;
+        float: left;
+        
+        img {
+            width: 100%;
+        }
+    }
+
+    .right-side-wrapper {
+        width: 40%;
+        float: left;
+        position: absolute;
+        right: calc(-40% + -20px);
+        overflow: hidden;
+        max-width: 370px;
+
+        @media (max-width: 1200px) {
+            display: none;
+        }
+    }
+}
+
+.image-banner{
+    overflow: hidden;
+    max-height: 25rem;
+    
+    img {
+        width: 100%;
+    }
+}
+
+.ql-syntax {
+    background-color: #23241f;
+    color: #f8f8f2;
+    overflow: visible;
+    white-space: pre-wrap;
+    margin-bottom: 5px;
+    margin-top: 5px;
+    padding: 5px 10px;
+    border-radius: 3px;
+    margin: 0;
+    counter-reset: list-1 list-2 list-3 list-4 list-5 list-6 list-7 list-8 list-9;
+    max-height: 500px;
+    overflow-y: auto;
+}
+
+body {
+    background-color: #fff;
+}

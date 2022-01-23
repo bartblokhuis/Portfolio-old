@@ -4,10 +4,13 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Portfolio.Core.Interfaces;
 using Portfolio.Core.Interfaces.Common;
+using Portfolio.Core.Services.SkillGroups;
+using Portfolio.Core.Services.Skills;
 using Portfolio.Domain.Dtos;
 using Portfolio.Domain.Dtos.Skills;
 using Portfolio.Domain.Models;
 using Portfolio.Domain.Wrapper;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -45,7 +48,7 @@ public class SkillController : ControllerBase
     [HttpGet]
     public async Task<IActionResult> Get()
     {
-        var skills = await (await _skillService.GetAll()).ToListResultAsync();
+        var skills = (await _skillService.GetAll()).ToListResult();
 
         var result = _mapper.Map<ListResult<SkillDto>>(skills);
         return Ok(result);
@@ -55,7 +58,7 @@ public class SkillController : ControllerBase
     [HttpGet("GetBySkillGroupId/{skillGroupId}")]
     public async Task<IActionResult> GetBySkillGroupId(int skillGroupId)
     {
-        var skills = await (await _skillService.GetBySkillGroupId(skillGroupId)).ToListResultAsync();
+        var skills = (await _skillService.GetBySkillGroupId(skillGroupId)).ToListResult();
 
         var result = _mapper.Map<ListResult<SkillDto>>(skills);
         return Ok(result);

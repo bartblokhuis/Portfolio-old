@@ -1,0 +1,56 @@
+<div class="row">
+    <div class="col-12">
+        <div class="card">
+            <div class="card-header">
+                <h3 class="card-title">
+                    Projects
+                </h3>
+            </div>
+            <div class="card-body table-responsive p-0">
+                <table class="table table-hover text-nowrap">
+                    <thead>
+                        <tr>
+                          <th>Title</th>
+                          <th>Description</th>
+                          <th>Skills</th>
+                          <th>Published</th>
+                          <th>Actions</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        <tr *ngFor="let project of projects">
+                          <td>{{project.title}}</td>
+                          <td [innerHtml]="project.description"></td>
+                          <td>
+                            <span class="badge bg-primary" *ngFor="let skill of project.skills">
+                              {{skill.name}}
+                            </span>
+                          </td>
+                          <td> 
+                            <ng-container *ngIf="project.isPublished; else unpublished">
+                              <i class="fas fa-check"></i>
+                            </ng-container>
+                            <ng-template #unpublished>
+                              <i class="fas fa-ban"></i> 
+                            </ng-template>
+                          </td>
+                          <td> 
+                            <div class="actions">
+                              <a [routerLink]="'/projects/edit/' + project.id" class="action">
+                                <i class="fas fa-pen-alt"></i>
+                              </a>
+                              <div (click)="deleteProject(project)" class="action">
+                                <i class="fas fa-trash-alt danger"></i>
+                              </div>
+                            </div>
+                          </td>
+                        </tr>
+                      </tbody>
+                </table>
+            </div>
+            <div class="card-footer">
+              <button class="btn btn-primary" routerLink="/projects/new">Add new project</button>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,25 @@
+<section id="my-work">
+    <div class="section-header">
+        <h1  data-aos="fade-left">MY WORK</h1>
+        <div class="section-header-line" data-aos="fade-left" data-aos-delay="300"></div>
+    </div>
+    <div class="section-body">
+        <div class="projects">
+
+            <div *ngFor="let project of projects; index as i" class="project">
+                <div class="project-details-top">
+                    <h2 class="project-title">{{project.title}}</h2>
+                    <div class="project-skills">
+                        {{printSkill(project.skills)}}
+                    </div>
+                </div>
+                <div class="project-details-image" data-aos="fade-up" [attr.data-aos-delay]="100 * i">
+                    <img *ngIf="project.pictures && project.pictures.length > 0" [src]="baseUrl + project.pictures[0]?.path">
+                </div>
+                <div class="project-details-bottom">
+                    <button class="btn btn-primary" (click)="readMore(project)">READ MORE</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>

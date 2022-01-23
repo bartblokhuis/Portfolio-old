@@ -1,6 +1,8 @@
 ﻿using MailKit.Net.Smtp;
 using MimeKit;
+using MimeKit.Text;
 using Portfolio.Core.Interfaces.Common;
+using Portfolio.Core.Services.Settings;
 using Portfolio.Domain.Models.Settings;
 using System;
 using System.Threading.Tasks;
@@ -26,18 +28,24 @@ public class EmailService : IEmailService
 
     #region Methods
 
-    public async Task<bool> SendEmail(MailboxAddress toAddress, string subject, MimeEntity body, EmailSettings emailSettings = null)
+    public async Task<bool> SendEmail(string toName, string toEmailAddress, string subject, string body, EmailSettings emailSettings = null)
     {
         if(emailSettings == null)
             emailSettings = await _emailSettingsService.Get();
 
+        var toAddress = new MailboxAddress(toName, toEmailAddress);
         var message = new MimeMessage();
 
         message.From.Add(new MailboxAddress(emailSettings.DisplayName, emailSettings.Email));
         message.To.Add(toAddress);
         message.Subject = subject;
 
-        message.Body = body;
+        var multipart = new Multipart("mixed")
+        {
+            new TextPart(TextFormat.Html) { Text = body }
+        };
+
+        message.Body = multipart;
 
         try
         {
@@ -45,10 +53,8 @@ public class EmailService : IEmailService
             await client.ConnectAsync(emailSettings.Host, emailSettings.Port, emailSettings.EnableSsl);
 
             if (!string.IsNullOrEmpty(emailSettings.Username) && !string.IsNullOrEmpty(emailSettings.Password))
-            {
                 await client.AuthenticateAsync(emailSettings.Username, emailSettings.Password);
-            }
-
+            
             await client.SendAsync(message);
             await client.DisconnectAsync(true);
         }
@@ -56,8 +62,8 @@ public class EmailService : IEmailService
         {
             return false;
         }
+
         return true;
-        
     }
 
     #endregion

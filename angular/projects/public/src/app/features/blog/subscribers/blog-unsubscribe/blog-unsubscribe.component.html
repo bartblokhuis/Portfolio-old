@@ -1,0 +1,13 @@
+<app-navbar></app-navbar>
+
+<div class="unsub-container" *ngIf="isUnsubscribed">
+    
+    <div *ngIf="error">
+        <h1>{{error}}</h1>
+    </div>
+    <div class="" *ngIf="!error">
+        <h1>Successfully unsubscribed</h1>
+    </div>
+</div>
+
+<app-footer></app-footer>

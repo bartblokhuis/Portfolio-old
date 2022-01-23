@@ -17,18 +17,15 @@ namespace Portfolio.Core.Services
 
         private readonly IBaseRepository<Picture> _pictureRepository;
         private readonly IUploadImageHelper _uploadImageHelper;
-        private readonly CacheService _cacheService;
-        private const string CACHE_KEY = "PICTURES";
 
         #endregion
 
         #region Constructor
 
-        public PictureService(IBaseRepository<Picture> pictureRepository, IUploadImageHelper uploadImageHelper, CacheService cacheService)
+        public PictureService(IBaseRepository<Picture> pictureRepository, IUploadImageHelper uploadImageHelper)
         {
             _pictureRepository = pictureRepository;
             _uploadImageHelper = uploadImageHelper;
-            _cacheService = cacheService;
         }
 
         #endregion
@@ -37,39 +34,13 @@ namespace Portfolio.Core.Services
 
         public async Task<IEnumerable<Picture>> GetAll()
         {
-            //First try getting from cache.
-            var cachedResult = _cacheService.Get<IEnumerable<Picture>>(CACHE_KEY);
-            if (cachedResult != null)
-                return cachedResult;
-
-            //If there was nothing in the cache get the pictures from the database and add them to the cache.
             var pictures = await _pictureRepository.GetAllAsync();
-            if (pictures != null)
-                _cacheService.Set(CACHE_KEY, pictures);
-
             return pictures;
         }
 
         public async Task<Picture> GetById(int pictureId)
         {
-            var cachedResult = _cacheService.Get<IEnumerable<Picture>>(CACHE_KEY);
-            Picture picture = null;
-            if(cachedResult != null)
-            {
-                picture = cachedResult.FirstOrDefault(x => x.Id == pictureId);
-                if (picture != null) 
-                    return picture;
-            }
-
-            picture = await _pictureRepository.GetByIdAsync(pictureId);
-            if (picture == null)
-                return null;
-
-            if (cachedResult != null)
-            {
-                cachedResult = cachedResult.Add(picture);
-                _cacheService.Set(CACHE_KEY, cachedResult);
-            }
+            var picture = await _pictureRepository.GetByIdAsync(pictureId);
             return picture;
         }
 
@@ -90,15 +61,6 @@ namespace Portfolio.Core.Services
             };
 
             await _pictureRepository.InsertAsync(picture);
-
-            //Update cache
-            var cache = _cacheService.Get<IEnumerable<Picture>>(CACHE_KEY);
-            if (cache == null)
-                cache = new List<Picture>() { picture };
-            else
-                cache = cache.Add(picture);
-            _cacheService.Set(CACHE_KEY, cache);
-
             return picture;
         }
 
@@ -122,17 +84,6 @@ namespace Portfolio.Core.Services
 
             await _pictureRepository.UpdateAsync(picture);
 
-            //Update cache
-            var cache = _cacheService.Get<IEnumerable<Picture>>(CACHE_KEY);
-            if (cache == null)
-                cache = new List<Picture>() { picture };
-            else
-            {
-                cache = cache.Where(x => x.Id != picture.Id);
-                cache = cache.Add(picture);
-            }
-            _cacheService.Set(CACHE_KEY, cache);
-
             return picture;
         }
 
@@ -145,13 +96,6 @@ namespace Portfolio.Core.Services
             {
                 await _pictureRepository.DeleteAsync(picture);
                 _uploadImageHelper.DeleteImage(picture.Path);
-
-                //Update cache
-                var cache = _cacheService.Get<IEnumerable<Picture>>(CACHE_KEY);
-                if (cache != null)
-                    cache = cache.Where(x => x.Id != picture.Id);
-                
-                _cacheService.Set(CACHE_KEY, cache);
             }
             catch (DbUpdateException ex)
             {

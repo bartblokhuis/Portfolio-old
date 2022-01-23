@@ -1,0 +1,19 @@
+<div class="modal-header">
+    <h4 class="modal-title" id="modal-project-title">Reply to {{comment.name}}</h4>
+    <button type="button" class="close" aria-label="Close" (click)="modal?.close()">
+      <span aria-hidden="true">&times;</span>
+    </button>
+</div>
+
+<form id="editProjectForm">
+    <div class="modal-body">
+        <div class="form-group">
+            <label>Message</label>
+            <input class="form-control" type="text" required [(ngModel)]="model.content" name="title"/>
+        </div>
+    </div>
+    <div class="modal-footer justify-content-between">
+        <button type="button" class="btn btn-default" (click)="modal?.close()">Cancel</button>
+        <button class="btn btn-primary" (click)="reply()">Reply</button>
+    </div>
+</form>

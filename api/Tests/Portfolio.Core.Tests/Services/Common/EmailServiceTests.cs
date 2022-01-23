@@ -1,7 +1,6 @@
-﻿using MimeKit;
-using Moq;
-using Portfolio.Core.Interfaces.Common;
+﻿using Moq;
 using Portfolio.Core.Services.Common;
+using Portfolio.Core.Services.Settings;
 using Portfolio.Core.Tests.Attributes;
 using Portfolio.Domain.Models.Settings;
 using System.Threading.Tasks;
@@ -20,7 +19,7 @@ public class EmailServiceTests
 
         EmailService emailService = new EmailService(settingsService.Object);
 
-        var result = await emailService.SendEmail(new MailboxAddress("Bart Blokhuis", "bartblokhuis123@outlook.com"), "test", new TextPart("plain") { Text = "Hello World!" });
+        var result = await emailService.SendEmail("Bart Blokhuis", "bartblokhuis123@outlook.com", "test", "Hello World!");
         Assert.Equal(expectedResult, result);
     }
 
@@ -33,7 +32,7 @@ public class EmailServiceTests
 
         EmailService emailService = new EmailService(settingsService.Object);
 
-        var result = await emailService.SendEmail(new MailboxAddress("Bart Blokhuis", "bartblokhuis123@outlook.com"), "test", new TextPart("plain") { Text = "Hello World!" });
+        var result = await emailService.SendEmail("Bart Blokhuis", "bartblokhuis123@outlook.com", "test", "Hello World!");
         Assert.Equal(expectedResult, result);
     }
 }

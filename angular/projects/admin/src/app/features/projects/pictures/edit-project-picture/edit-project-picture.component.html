@@ -1,0 +1,34 @@
+<div class="modal-header">
+    <h4 class="modal-title" id="modal-message-title">Edit Project Picture</h4>
+    <button type="button" class="close" aria-label="Close" (click)="modal?.close()">
+      <span aria-hidden="true">&times;</span>
+    </button>
+</div>
+<form id="editPictureForm">
+    <div class="modal-body">
+        <div class="row">
+            <div class="col-sm-6">
+                <div class="form-group">
+                    <label>Display number</label>
+                    <input class="form-control" type="number" [(ngModel)]="model.displayNumber" name="displayNumber" />
+                </div>
+            </div>
+            <div class="col-sm-6">
+                <div class="form-group">
+                    <label>Picture</label>
+                    <div class="custom-file">
+                        <input type="file" class="form-control" (click)="selectPicture($event)" />
+                        <label class="custom-file-label" (click)="selectPicture($event)">{{picturePath}}</label>
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-12">
+                <label class="custom-error">{{error}}</label>
+            </div>
+        </div>
+    </div>
+    <div class="modal-footer justify-content-between">
+        <button type="button" class="btn btn-default" (click)="modal?.close()">Cancel</button>
+        <button type="button" class="btn btn-primary" (click)="save()">Save</button>
+    </div>
+</form>
