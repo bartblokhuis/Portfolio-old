@@ -1,0 +1,35 @@
+<div class="card">
+    <div class="card-header">
+        <h3 class="card-title">
+            <i class="ion ion-clipboard mr-1"></i>
+            Blog subscribers
+        </h3>
+        <div class="card-tools float-right">
+            <button class="btn btn-xs btn-info btn-flat margin-r-5" (click)="changeSelectedPeriod('year')">Year</button>
+            <button class="btn btn-xs btn-info btn-flat margin-r-5" (click)="changeSelectedPeriod('month')">Month</button>
+            <button class="btn btn-xs btn-info btn-flat" (click)="changeSelectedPeriod('week')">Week</button>
+        </div>
+    </div>
+    <div class="card-body p-0">
+        <div class="tab-content p-0" style="position: relative; height: 300px;">
+            <!-- Morris chart - Sales -->
+                 <canvas baseChart *ngIf="loaded" 
+                 [datasets]="lineChartData" 
+                 [labels]="lineChartLabels" 
+                 [options]="lineChartOptions"
+                 [legend]="lineChartLegend"
+                 [plugins]="lineChartPlugins"
+                 [type]="'line'"
+                 >
+             </canvas>
+          </div>
+    </div>
+    <div class="card-footer">
+        <button type="button" class="btn btn-primary float-right"><i class="fas fa-redo"></i></button>
+    </div>
+</div>
+
+
+<div class="chart-wrapper">
+    
+</div>
