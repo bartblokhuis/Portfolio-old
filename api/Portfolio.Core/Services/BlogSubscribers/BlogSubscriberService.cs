@@ -38,7 +38,7 @@ public class BlogSubscriberService : IBlogSubscriberService
             query = query.Where(c => !c.IsDeleted);
 
             return query;
-        }, getOnlyTotalCount: true);
+        }, getOnlyTotalCount: getOnlyTotalCount);
     }
 
     public async Task<BlogSubscriber> GetByIdAsync(Guid id)
