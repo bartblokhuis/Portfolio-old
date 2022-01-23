@@ -11,9 +11,14 @@ export class ThemingService {
 
   constructor(private ref: ApplicationRef) {
     // Initially check if dark mode is enabled on system
-    const darkModeOn =
+    let darkModeOn =
       window.matchMedia &&
       window.matchMedia("(prefers-color-scheme: dark)").matches;
+
+    var savedPreference = localStorage.getItem('theme-preference');
+    if(savedPreference){
+      darkModeOn = savedPreference == 'dark-mode';
+    }
     
     // If dark mode is enabled then directly switch to the dark-theme
     if(darkModeOn){
@@ -28,5 +33,9 @@ export class ThemingService {
       // Trigger refresh of UI
       this.ref.tick();
     });
+  }
+
+  updateSavedThemePreference(preference: string) {
+    localStorage.setItem('theme-preference', preference)
   }
 }

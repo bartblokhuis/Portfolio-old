@@ -45,9 +45,11 @@ export class MainHeaderComponent implements OnInit {
     
     if(this.themingService.theme.value === 'dark-mode') {
       this.themingService.theme.next('light-mode');
+      this.themingService.updateSavedThemePreference('light-mode');
     }
     else {
       this.themingService.theme.next('dark-mode');
+      this.themingService.updateSavedThemePreference('dark-mode');
     }
   }
 
