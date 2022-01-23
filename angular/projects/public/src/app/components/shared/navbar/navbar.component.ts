@@ -103,9 +103,8 @@ export class NavbarComponent implements OnInit, AfterViewInit {
     // Temporarily disable the scroll event.
     this.ignoreScrollEvent = true;
 
-    if(!menuItem.active) this.deactiveAllMenuItems();
-
     this.scrollTo(scrollToX, () => {
+      if(!menuItem.active) this.deactiveAllMenuItems();
       menuItem.active = true;
       this.ignoreScrollEvent = false;
       if(this.toggleNavBarElement?.classList.contains("open")) this.toggleNavBar();

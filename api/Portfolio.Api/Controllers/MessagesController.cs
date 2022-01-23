@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using Portfolio.Core.Interfaces.Common;
 using Portfolio.Core.Services.Messages;
+using Portfolio.Core.Services.QueuedEmails;
 using Portfolio.Core.Services.Settings;
 using Portfolio.Domain.Dtos;
 using Portfolio.Domain.Dtos.Messages;
@@ -27,21 +28,17 @@ public class MessagesController : ControllerBase
     private readonly IMessageService _messageService;
     private readonly IWebHelper _webHelper;
     private readonly IMapper _mapper;
-    private readonly IEmailService _emailService;
-    private readonly ISettingService<EmailSettings> _emailSettings;
 
     #endregion
 
     #region Constructor
 
-    public MessagesController(ILogger<MessagesController> logger, IMessageService messageService, IWebHelper webHelper, IMapper mapper, IEmailService emailService, ISettingService<EmailSettings> emailSettings)
+    public MessagesController(ILogger<MessagesController> logger, IMessageService messageService, IWebHelper webHelper, IMapper mapper)
     {
         _logger = logger;
         _messageService = messageService;
         _webHelper = webHelper;
         _mapper = mapper;
-        _emailService = emailService;
-        _emailSettings = emailSettings;
     }
 
     #endregion
@@ -82,12 +79,6 @@ public class MessagesController : ControllerBase
         };
 
         await _messageService.Create(message);
-
-        var emailSettings = await _emailSettings.Get();
-        if(emailSettings != null)
-            await _emailService.SendEmail(emailSettings.DisplayName, emailSettings.SiteOwnerEmailAddress, "New message!", message.MessageContent);
-        
-        
         return Ok(Result.Success("Created the message"));
     }
 

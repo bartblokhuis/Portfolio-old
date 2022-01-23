@@ -2,8 +2,10 @@
 using Portfolio.Core.Interfaces.Common;
 using Portfolio.Core.Services.Blogs;
 using Portfolio.Core.Services.BlogSubscribers;
+using Portfolio.Core.Services.QueuedEmails;
 using Portfolio.Core.Services.Settings;
 using Portfolio.Core.Services.Tokens;
+using Portfolio.Domain.Models;
 using Portfolio.Domain.Models.Blogs;
 using Portfolio.Domain.Models.Settings;
 using System;
@@ -20,22 +22,24 @@ public class BlogPublishedEvent : IConsumer<EntityInsertedEvent<BlogPost, int>>,
     private readonly IBlogPostService _blogPostService;
     private readonly IBlogSubscriberService _blogSubscriberService;
     private readonly ISettingService<BlogSettings> _blogSettings;
+    private readonly ISettingService<EmailSettings> _emailSettings;
     private readonly IMessageTokenProvider _messageTokenProvider;
     private readonly ITokenizer _tokenizer;
-    private readonly IEmailService _emailService;
+    private readonly IQueuedEmailService _queuedEmailService;
 
     #endregion
 
     #region Constructor
 
-    public BlogPublishedEvent(IBlogPostService blogPostService, IBlogSubscriberService blogSubscriberService, ISettingService<BlogSettings> blogSettings, IMessageTokenProvider messageTokenProvider, ITokenizer tokenizer, IEmailService emailService)
+    public BlogPublishedEvent(IBlogPostService blogPostService, IBlogSubscriberService blogSubscriberService, ISettingService<BlogSettings> blogSettings, ISettingService<EmailSettings> emailSettings, IMessageTokenProvider messageTokenProvider, ITokenizer tokenizer, IQueuedEmailService queuedEmailService)
     {
         _blogPostService = blogPostService;
         _blogSubscriberService = blogSubscriberService;
         _blogSettings = blogSettings;
+        _emailSettings = emailSettings;
         _messageTokenProvider = messageTokenProvider;
         _tokenizer = tokenizer;
-        _emailService = emailService;
+        _queuedEmailService = queuedEmailService;
     }
 
     #endregion
@@ -45,7 +49,8 @@ public class BlogPublishedEvent : IConsumer<EntityInsertedEvent<BlogPost, int>>,
     public async Task PublishBlog(BlogPost blogPost)
     {
         var blogSettings = await _blogSettings.Get();
-        if (blogSettings == null || !blogSettings.IsSendEmailOnPublishing)
+        var emailSettings = await _emailSettings.Get();
+        if (blogSettings == null || !blogSettings.IsSendEmailOnPublishing || emailSettings == null)
             return;
 
         var subscribers = await _blogSubscriberService.GetAllAsync();
@@ -62,7 +67,17 @@ public class BlogPublishedEvent : IConsumer<EntityInsertedEvent<BlogPost, int>>,
             var subject = _tokenizer.Replace(blogSettings.EmailOnPublishingSubjectTemplate, tokens, true);
             var body = _tokenizer.Replace(blogSettings.EmailOnPublishingTemplate, tokens, true);
 
-            await _emailService.SendEmail(subscriber.EmailAddress, subscriber.EmailAddress, subject, body);
+            var queuedEmail = new QueuedEmail
+            {
+                Body = body,
+                Subject = subject,
+                FromName = emailSettings.DisplayName,
+                From = emailSettings.Email,
+                To = subscriber.EmailAddress,
+                ToName = subscriber.EmailAddress,
+            };
+
+            await _queuedEmailService.InsertAsync(queuedEmail);
         }
     }
 
