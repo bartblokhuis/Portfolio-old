@@ -17,7 +17,7 @@
                     </div>
                     <div class="form-group">
                         <label class="col-form-label" for="emailOnPublishingSubjectTemplate">Email on publish subject template</label>
-                        <app-rich-text-editor [(ngModel)]="model.emailOnPublishingSubjectTemplate" name="emailOnPublishingSubjectTemplate"></app-rich-text-editor>
+                        <input type="text" class="form-control" [(ngModel)]="model.emailOnPublishingSubjectTemplate" name="emailOnPublishingSubjectTemplate">
                     </div>
                     <div class="form-group">
                         <label class="col-form-label">Email on publish template</label>
@@ -43,7 +43,7 @@
                     </div>
                     <div class="form-group">
                         <label class="col-form-label" for="emailOnSubscribingSubjectTemplate">Email on subscription subject template</label>
-                        <app-rich-text-editor [(ngModel)]="model.emailOnSubscribingSubjectTemplate" name="emailOnSubscribingSubjectTemplate"></app-rich-text-editor>
+                        <input type="text" class="form-control"  [(ngModel)]="model.emailOnSubscribingSubjectTemplate" name="emailOnSubscribingSubjectTemplate">
                     </div>
                     <div class="form-group">
                         <label class="col-form-label" for="emailOnSubscribingTemplate">Email on subscription template</label>
