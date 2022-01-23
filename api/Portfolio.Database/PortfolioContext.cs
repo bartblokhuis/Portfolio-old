@@ -57,6 +57,8 @@ public class PortfolioContext : DbContext
 
     public DbSet<PublicSiteSettings> PublicSiteSettings { get; set; }
 
+    public DbSet<QueuedEmail> QueuedEmails { get; set; }
+
     #endregion
 
     #region Methods
