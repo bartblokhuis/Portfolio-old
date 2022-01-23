@@ -2,7 +2,6 @@
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
-using MimeKit;
 using Portfolio.Core.Interfaces.Common;
 using Portfolio.Core.Services.Settings;
 using Portfolio.Domain.Dtos;

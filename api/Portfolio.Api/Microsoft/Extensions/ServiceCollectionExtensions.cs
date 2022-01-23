@@ -1,5 +1,4 @@
-﻿using AutoMapper;
-using Microsoft.AspNetCore.Authentication.JwtBearer;
+﻿using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
@@ -29,8 +28,6 @@ using Portfolio.Core.Services.Tokens;
 using Portfolio.Core.Services.Urls;
 using Portfolio.Database;
 using Portfolio.Domain.Models.Authentication;
-using System;
-using System.Linq;
 using System.Text;
 
 namespace Portfolio.Microsoft.Extensions;

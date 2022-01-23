@@ -1,5 +1,4 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using Portfolio.Core.Interfaces;
 using Portfolio.Core.Interfaces.Common;
 using Portfolio.Domain.Models;
 using System.Collections.Generic;

@@ -1,6 +1,5 @@
 ﻿using AutoMapper;
 using Portfolio.Domain.Dtos.BlogPosts;
-using Portfolio.Domain.Models;
 using Portfolio.Domain.Models.Blogs;
 using Portfolio.Domain.Wrapper;
 

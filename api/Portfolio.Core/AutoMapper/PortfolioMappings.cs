@@ -4,9 +4,7 @@ using Portfolio.Domain.Dtos.Projects;
 using Portfolio.Domain.Dtos.SkillGroup;
 using Portfolio.Domain.Dtos.Skills;
 using Portfolio.Domain.Models;
-using Portfolio.Domain.Models.Settings;
 using Portfolio.Domain.Wrapper;
-using System.Linq;
 
 namespace Portfolio.Core.AutoMapper;
 

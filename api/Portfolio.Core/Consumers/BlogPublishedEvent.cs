@@ -1,6 +1,4 @@
-﻿using MimeKit;
-using MimeKit.Text;
-using Portfolio.Core.Events;
+﻿using Portfolio.Core.Events;
 using Portfolio.Core.Interfaces.Common;
 using Portfolio.Core.Services.Blogs;
 using Portfolio.Core.Services.BlogSubscribers;
@@ -11,7 +9,6 @@ using Portfolio.Domain.Models.Settings;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace Portfolio.Core.Consumers;
