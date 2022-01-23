@@ -17,20 +17,21 @@ export class EmailSettingsComponent implements OnInit {
   private form: any;
   error: string | undefined;
 
-  constructor(private readonly BreadcrumbService: BreadcrumbsService, private settingsService: SettingsService, private notificationService: NotificationService) { }
+  constructor(private readonly breadcrumbsService: BreadcrumbsService, private settingsService: SettingsService, private notificationService: NotificationService) { }
 
   ngOnInit(): void {
     this.form = $("#email-settings-form");
     this.validate();
-    this.BreadcrumbService.setBreadcrumb([
+    this.breadcrumbsService.setBreadcrumb([
+      this.breadcrumbsService.homeCrumb,
       {
         name: 'Settings',
-        path: undefined,
+        url: undefined,
         active: true
       },
       {
         name: 'Email Settings',
-        path: undefined,
+        url: undefined,
         active: true
       }
     ]);

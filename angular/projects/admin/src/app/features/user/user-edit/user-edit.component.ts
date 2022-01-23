@@ -39,12 +39,12 @@ export class UserEditComponent implements OnInit {
     this.BreadcrumbService.setBreadcrumb([
       {
         name: 'User',
-        path: undefined,
+        url: undefined,
         active: true
       },
       {
         name: 'Details',
-        path: undefined,
+        url: undefined,
         active: true
       }
     ]);

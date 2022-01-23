@@ -15,20 +15,21 @@ export class BlogSettingsComponent implements OnInit {
   form: any;
   error: string | undefined;
 
-  constructor(private readonly BreadcrumbService: BreadcrumbsService, private readonly settingsService: SettingsService, private readonly notificationService: NotificationService) { }
+  constructor(private readonly breadcrumbsService: BreadcrumbsService, private readonly settingsService: SettingsService, private readonly notificationService: NotificationService) { }
 
   ngOnInit(): void {
     this.loadSettings();
 
-    this.BreadcrumbService.setBreadcrumb([
+    this.breadcrumbsService.setBreadcrumb([
+      this.breadcrumbsService.homeCrumb,
       {
         name: 'Settings',
-        path: undefined,
+        url: undefined,
         active: true
       },
       {
         name: 'Blog Settings',
-        path: undefined,
+        url: undefined,
         active: true
       }
     ]);

@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { Message } from 'projects/shared/src/lib/data/messages/message';
 import { MessageStatus } from 'projects/shared/src/lib/data/messages/message-status';
+import { BreadcrumbsService } from '../../../services/breadcrumbs/breadcrumbs.service';
 import { MessagesService } from '../../../services/messages/messages.service';
 
 
@@ -18,7 +19,7 @@ export class SidebarComponent {
     { name: "About me", path: "/about-me", icon: "nav-icon fas fa-male" }, 
     { name: "Skills", path: "/skills", icon: "nav-icon fas fa-trophy" }, 
     { name: "Projects", path: "/projects", icon: "nav-icon fas fa-tasks" },
-    { name: "Blog posts", path: "", icon: "nav-icon fas fa-book", menuItems: [
+    { name: "Blog", path: "", icon: "nav-icon fas fa-book", menuItems: [
       { name: "Blog posts", path: "/blog/posts", icon: "far fa-circle nav-icon" },
       { name: "Blog subscribers", path: "/blog/subscribers", icon: "far fa-circle nav-icon" },
     ] },

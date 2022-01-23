@@ -4,6 +4,7 @@ import { CreateBlog } from 'projects/shared/src/lib/data/blog/create-blog';
 import { ListBlog } from 'projects/shared/src/lib/data/blog/list-blog';
 import { Result } from 'projects/shared/src/lib/data/common/Result';
 import { BlogPostsService } from 'projects/shared/src/lib/services/api/blog-posts/blog-posts.service';
+import { BreadcrumbsService } from '../../../services/breadcrumbs/breadcrumbs.service';
 import { ContentTitleService } from '../../../services/content-title/content-title.service';
 import { validateBlogForm } from '../helpers/blog-helper';
 
@@ -19,10 +20,18 @@ export class AddBlogPostComponent implements OnInit {
   model: CreateBlog = { title: '', content: '', description: '', displayNumber: 0, isPublished: false, metaDescription: '', metaTitle: '' };
   form: any;
 
-  constructor(private contentTitleService: ContentTitleService, private blogPostsService: BlogPostsService, private router: Router) { }
+  constructor(private contentTitleService: ContentTitleService, private blogPostsService: BlogPostsService, private router: Router, private readonly breadcrumbsService: BreadcrumbsService) { }
 
   ngOnInit(): void {
     this.contentTitleService.title.next("Add blog post");
+
+
+    this.breadcrumbsService.setBreadcrumb([
+      this.breadcrumbsService.homeCrumb,
+      { name: "Blog", active: false },
+      { name: `Post`, active: false, routePath: 'blog/posts' },
+      { name: `New`, active: true, },
+    ])
 
     this.form = $("#addBlogForm");
     if(this.form) validateBlogForm(this.form);

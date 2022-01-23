@@ -1,5 +1,6 @@
 export interface BreadcrumbItem {
     name: string,
-    path: string | undefined,
-    active: boolean
+    active: boolean,
+    url?: string | null,
+    routePath?: string | null
 }

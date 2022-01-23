@@ -11,6 +11,7 @@ import { SkillGroupsService } from 'projects/shared/src/lib/services/api/skill-g
 import { ContentTitleService } from '../../../services/content-title/content-title.service';
 import { NotificationService } from '../../../services/notification/notification.service';
 import { formatProjectSkillsSelect, validateProjectForm } from '../helpers/project-helpers';
+import { BreadcrumbsService } from '../../../services/breadcrumbs/breadcrumbs.service';
 
 declare var $:any;
 
@@ -32,7 +33,7 @@ export class EditProjectComponent implements OnInit {
   projectTitle: string = '';
   
   constructor(private readonly route: ActivatedRoute, private projectsService: ProjectsService, private skillGroupsService: SkillGroupsService, private notificationService: NotificationService, 
-    private readonly router: Router, private readonly contentTitleService: ContentTitleService) { }
+    private readonly router: Router, private readonly contentTitleService: ContentTitleService, private breadcrumbsService: BreadcrumbsService) { }
   
 
   ngOnInit(): void {
@@ -56,7 +57,13 @@ export class EditProjectComponent implements OnInit {
       }
 
       this.projectTitle = this.model.title;
-      this.contentTitleService.title.next(`Edit project: ${this.project.title}`)
+      this.contentTitleService.title.next(`Edit project: ${this.project.title}`);
+
+      this.breadcrumbsService.setBreadcrumb([
+        this.breadcrumbsService.homeCrumb,
+        { name: "Projects", active: false, url: null, routePath: 'projects' },
+        { name: `Edit`, active: true, },
+      ])
       
       $('.select2').select2({closeOnSelect: false, templateResult: formatProjectSkillsSelect, tags: true});
       $('.select2').on('change', (e: any) => this.skillModel.skillIds = $('.select2').val().map((x: string) => parseInt(x)));

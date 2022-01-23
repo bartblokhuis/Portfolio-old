@@ -4,6 +4,7 @@ import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { ListBlog } from 'projects/shared/src/lib/data/blog/list-blog';
 import { Result } from 'projects/shared/src/lib/data/common/Result';
 import { BlogPostsService } from 'projects/shared/src/lib/services/api/blog-posts/blog-posts.service';
+import { BreadcrumbsService } from '../../../services/breadcrumbs/breadcrumbs.service';
 import { DeleteBlogPostComponent } from '../delete-blog-post/delete-blog-post.component';
 
 @Component({
@@ -15,10 +16,16 @@ export class ListBlogPostComponent implements OnInit {
 
   blogPosts: ListBlog[] = [];
 
-  constructor(private blogPostsService: BlogPostsService, private router: Router,private modalService: NgbModal) { }
+  constructor(private blogPostsService: BlogPostsService, private router: Router,private modalService: NgbModal, private readonly breadcrumbsService: BreadcrumbsService) { }
 
   ngOnInit(): void {
     this.loadBlog();
+
+    this.breadcrumbsService.setBreadcrumb([
+      this.breadcrumbsService.homeCrumb,
+      { name: "Blog", active: false },
+      { name: `Posts`, active: true, routePath: 'blog/posts' },
+    ])
   }
 
   loadBlog() : void {

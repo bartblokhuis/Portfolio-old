@@ -15,18 +15,19 @@ export class GeneralSettingsComponent implements OnInit {
   model: GeneralSettings = { callToActionText: '', footerText: '', footerTextBetweenCopyRightAndYear: false, githubUrl: '', landingDescription: '', landingTitle: '', linkedInUrl: '', showContactMeForm: false, showCopyRightInFooter: false, stackOverFlowUrl: ''}
   private form: any;
 
-  constructor(private readonly BreadcrumbService: BreadcrumbsService, private settingsService: SettingsService, private notificationService: NotificationService) { }
+  constructor(private readonly breadcrumbsService: BreadcrumbsService, private settingsService: SettingsService, private notificationService: NotificationService) { }
 
   ngOnInit(): void {
-    this.BreadcrumbService.setBreadcrumb([
+    this.breadcrumbsService.setBreadcrumb([
+      this.breadcrumbsService.homeCrumb,
       {
         name: 'Settings',
-        path: undefined,
+        url: undefined,
         active: true
       },
       {
         name: 'General Settings',
-        path: undefined,
+        url: undefined,
         active: true
       }
     ]);

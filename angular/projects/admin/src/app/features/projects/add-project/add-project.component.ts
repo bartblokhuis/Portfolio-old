@@ -11,6 +11,7 @@ import { SkillGroupsService } from 'projects/shared/src/lib/services/api/skill-g
 import { ContentTitleService } from '../../../services/content-title/content-title.service';
 import { NotificationService } from '../../../services/notification/notification.service';
 import { formatProjectSkillsSelect, validateProjectForm } from '../helpers/project-helpers';
+import { BreadcrumbsService } from '../../../services/breadcrumbs/breadcrumbs.service';
 
 declare var $:any;
 
@@ -28,7 +29,7 @@ export class AddProjectComponent implements OnInit {
   addProjectForm: any;
 
   constructor(private projectsService: ProjectsService, private skillGroupsService: SkillGroupsService, private notificationService: NotificationService, 
-    private readonly router: Router, private readonly contentTitleService: ContentTitleService) { }
+    private readonly router: Router, private readonly contentTitleService: ContentTitleService, private readonly breadcrumbsService: BreadcrumbsService) { }
 
   ngOnInit(): void {
     //Initialize Select2 Elements
@@ -41,6 +42,12 @@ export class AddProjectComponent implements OnInit {
     this.skillGroupsService.getAll().subscribe((result: Result<SkillGroup[]>) => {
       if(result.succeeded) this.skillGroups = result.data;
     })
+
+    this.breadcrumbsService.setBreadcrumb([
+      this.breadcrumbsService.homeCrumb,
+      { name: "Projects", active: false, url: null, routePath: 'projects' },
+      { name: `New`, active: true, },
+    ])
 
     this.contentTitleService.title.next('Add new project')
   }

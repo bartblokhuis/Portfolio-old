@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { ListBlogSubscriber } from 'projects/shared/src/lib/data/blog-subscribers/list-blog-subscriber';
 import { BlogSubscribersService } from 'projects/shared/src/lib/services/api/blog-subscribers/blog-subscribers.service';
+import { BreadcrumbsService } from '../../../services/breadcrumbs/breadcrumbs.service';
 import { DeleteBlogSubscriberComponent } from '../delete-blog-subscriber/delete-blog-subscriber.component';
 
 @Component({
@@ -13,10 +14,16 @@ export class ListBlogSubscriberComponent implements OnInit {
 
   subscribers: ListBlogSubscriber[] = [];
 
-  constructor(private readonly blogSubscribersService: BlogSubscribersService, private modalService: NgbModal) { }
+  constructor(private readonly blogSubscribersService: BlogSubscribersService, private modalService: NgbModal, private readonly breadcrumbsService: BreadcrumbsService) { }
 
   ngOnInit(): void {
     this.loadBlogSubscribers();
+
+    this.breadcrumbsService.setBreadcrumb([
+      this.breadcrumbsService.homeCrumb,
+      { name: "Blog", active: false },
+      { name: `Subscribers`, active: true, routePath: 'blog/subscribers'},
+    ])
   }
 
   loadBlogSubscribers() {

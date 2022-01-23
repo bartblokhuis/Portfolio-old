@@ -8,6 +8,7 @@ import { Picture } from 'projects/shared/src/lib/data/common/picture';
 import { Result } from 'projects/shared/src/lib/data/common/Result';
 import { BlogPostsService } from 'projects/shared/src/lib/services/api/blog-posts/blog-posts.service';
 import { CommentsService } from 'projects/shared/src/lib/services/api/comments/comments.service';
+import { BreadcrumbsService } from '../../../services/breadcrumbs/breadcrumbs.service';
 import { ContentTitleService } from '../../../services/content-title/content-title.service';
 import { NotificationService } from '../../../services/notification/notification.service';
 import { DeleteCommentComponent } from '../comments/delete-comment/delete-comment.component';
@@ -32,11 +33,18 @@ export class EditBlogPostComponent implements OnInit{
   titleError: string | null = null;
 
   constructor(private route: ActivatedRoute, private blogPostsService: BlogPostsService, private contentTitleService: ContentTitleService, private router: Router, 
-    private notificationService: NotificationService, private modalService: NgbModal, private readonly commentsService: CommentsService) { }
+    private notificationService: NotificationService, private modalService: NgbModal, private readonly commentsService: CommentsService, private readonly breadcrumbsService: BreadcrumbsService) { }
 
   ngOnInit(): void {
 
-    this.contentTitleService.title.next('Edit blog post')
+    this.contentTitleService.title.next('Edit blog post');
+
+    this.breadcrumbsService.setBreadcrumb([
+      this.breadcrumbsService.homeCrumb,
+      { name: "Blog", active: false },
+      { name: `Posts`, active: false, routePath: 'blog/posts' },
+      { name: 'Edit', active: true}
+    ])
 
     const idParam = this.route.snapshot.paramMap.get('id');
     if(!idParam) return;

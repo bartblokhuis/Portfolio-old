@@ -9,7 +9,7 @@
               <ng-container >
                 <li *ngFor='let breadcrumb of breadcrumbs;' class="breadcrumb-item" [ngClass]="breadcrumb.active ? 'active' : ''">
                     <ng-container 
-                        [ngTemplateOutlet]="breadcrumb.path ? withPath : withoutPath" 
+                        [ngTemplateOutlet]="breadcrumb.url || breadcrumb.routePath ? withPath : withoutPath" 
                         [ngTemplateOutletContext]="{breadcrumb:breadcrumb}">
                     </ng-container>
                 </li>
@@ -21,7 +21,8 @@
 </div>
 
 <ng-template #withPath let-breadcrumb='breadcrumb'>
-    <a [routerLink]="breadcrumb.path" >{{breadcrumb.name}}</a>
+  <a *ngIf="breadcrumb.url" [href]="breadcrumb.url">{{breadcrumb.name}}</a>
+  <a *ngIf="breadcrumb.routePath" [routerLink]="breadcrumb.routePath">{{breadcrumb.name}}</a>
 </ng-template>
 
 

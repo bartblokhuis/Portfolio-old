@@ -15,18 +15,19 @@ export class SeoSettingsComponent implements OnInit {
 
   model: SeoSettings = { title: '', defaultMetaDescription: '', defaultMetaKeywords: '', useOpenGraphMetaTags: false, useTwitterMetaTags: false}
 
-  constructor(private readonly BreadcrumbService: BreadcrumbsService, private readonly contentTitleService: ContentTitleService, private settingsService: SettingsService, private notificationService: NotificationService) { }
+  constructor(private readonly breadcrumbsService: BreadcrumbsService, private readonly contentTitleService: ContentTitleService, private settingsService: SettingsService, private notificationService: NotificationService) { }
 
   ngOnInit(): void {
-    this.BreadcrumbService.setBreadcrumb([
+    this.breadcrumbsService.setBreadcrumb([
+      this.breadcrumbsService.homeCrumb,
       {
         name: 'Settings',
-        path: undefined,
+        url: undefined,
         active: true
       },
       {
         name: 'SEO Settings',
-        path: undefined,
+        url: undefined,
         active: true
       }
     ]);
