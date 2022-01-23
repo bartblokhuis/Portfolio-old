@@ -7,11 +7,7 @@
         width: 16px;
         box-sizing: content-box;
         position: relative;
-        color: #fff;
-
-        &:hover{
-          color: #fff !important;
-        }
+        color: #000;
         
         i{
             position: absolute;
@@ -35,11 +31,21 @@
 }
 
 .dark-mode {
-    td a svg{
-        fill: #fff;
-    }
-}
 
+  .table {
+
+    .action {
+      color: #fff !important;
+      &:hover{
+        color: #fff !important;
+      }
+    }
+  }
+
+  td a svg{
+    fill: #fff;
+  } 
+}
   .col-xs {
     width: 2%;
   }
