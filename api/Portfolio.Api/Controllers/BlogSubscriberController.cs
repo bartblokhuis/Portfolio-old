@@ -34,6 +34,10 @@ public class BlogSubscriberController : ControllerBase
 
     #endregion
 
+    #region Utils
+
+    #endregion
+
     #region Methods
 
     #region Get
@@ -58,6 +62,67 @@ public class BlogSubscriberController : ControllerBase
             return Ok(await Result.FailAsync("Blog subscriber not found"));
 
         var result = await Result<BlogSubscriberDto>.SuccessAsync(_mapper.Map<BlogSubscriberDto>(subscriber));
+        return Ok(result);
+    }
+
+    [HttpGet("LoadBlogSubscriberStatistics")]
+    public async Task<IActionResult> LoadBlogSubscriberStatistics(string period)
+    {
+        var resultData = new List<object>();
+        var nowDt = DateTime.Now;
+
+        switch (period)
+        {
+            case "year":
+                var yearAgoDt = nowDt.AddYears(-1).AddMonths(1);
+                var searchYearDateUser = new DateTime(yearAgoDt.Year, yearAgoDt.Month, 1);
+
+                for (var i = 0; i <= 12; i++)
+                {
+                    resultData.Add(new
+                    {
+                        date = searchYearDateUser.Date.ToString("Y"),
+                        value = (await _blogSubscriberService.GetAllAsync(searchYearDateUser, searchYearDateUser.AddMonths(1), true)).TotalCount.ToString()
+                    });
+
+                    searchYearDateUser = searchYearDateUser.AddMonths(1);
+                }
+                break;
+
+            case "month":
+                var monthAgoDt = nowDt.AddDays(-30);
+                var searchMonthDateUser = new DateTime(monthAgoDt.Year, monthAgoDt.Month, monthAgoDt.Day);
+                for (var i = 0; i <= 30; i++)
+                {
+                    resultData.Add(new
+                    {
+                        date = searchMonthDateUser.Date.ToString("M"),
+                        value = (await _blogSubscriberService.GetAllAsync(searchMonthDateUser, searchMonthDateUser.AddDays(1), true)).TotalCount.ToString()
+                    });
+
+                    searchMonthDateUser = searchMonthDateUser.AddDays(1);
+                }
+
+                break;
+            case "week":
+            default:
+                //week statistics
+                var weekAgoDt = nowDt.AddDays(-7);
+                var searchWeekDateUser = new DateTime(weekAgoDt.Year, weekAgoDt.Month, weekAgoDt.Day);
+                for (var i = 0; i <= 7; i++)
+                {
+                    resultData.Add(new
+                    {
+                        date = searchWeekDateUser.Date.ToString("d dddd"),
+                        value = (await _blogSubscriberService.GetAllAsync(searchWeekDateUser, searchWeekDateUser.AddDays(1), true)).TotalCount.ToString()
+                    });
+
+                    searchWeekDateUser = searchWeekDateUser.AddDays(1);
+                }
+                break;
+        }
+
+        var result = await Result<List<Object>>.SuccessAsync(resultData);
         return Ok(result);
     }
 

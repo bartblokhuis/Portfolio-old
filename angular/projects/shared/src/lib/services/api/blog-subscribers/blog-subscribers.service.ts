@@ -23,6 +23,10 @@ export class BlogSubscribersService {
     return this.apiService.get<BlogSubscriber>(`${this.baseUrl}/GetById?id=${id}`);
   }
 
+  loadBlogSubscriberStatistics(period: string) {
+    return this.apiService.get<any[]>(`${this.baseUrl}/LoadBlogSubscriberStatistics?period=${period}`);
+  }
+
   subscribe(createBlogSubscriber: CreateBlogSubscriber): Observable<Result<ListBlogSubscriber>> {
     return this.apiService.post<ListBlogSubscriber>(this.baseUrl, createBlogSubscriber);
   }

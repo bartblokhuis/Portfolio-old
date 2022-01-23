@@ -1,5 +1,6 @@
 ﻿using Portfolio.Core.Interfaces.Common;
 using Portfolio.Domain.Models.Blogs;
+using Portfolio.Domain.Models.Common;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -26,9 +27,19 @@ public class BlogSubscriberService : IBlogSubscriberService
 
     #region Methods
 
-    public async Task<IEnumerable<BlogSubscriber>> GetAllAsync()
+    public async Task<IPagedList<BlogSubscriber>> GetAllAsync(DateTime? createdFromUtc = null, DateTime? createdToUtc = null, bool getOnlyTotalCount = false)
     {
-        return await _blogSubscriberRepository.GetAllAsync(query => query.Where(x => x.IsDeleted == false).OrderBy(x => x.CreatedAtUTC));
+        return await _blogSubscriberRepository.GetAllPagedAsync(query =>
+        {
+            if (createdFromUtc.HasValue)
+                query = query.Where(c => createdFromUtc.Value <= c.CreatedAtUTC);
+            if (createdToUtc.HasValue)
+                query = query.Where(c => createdToUtc.Value >= c.CreatedAtUTC);
+
+            query = query.Where(c => !c.IsDeleted);
+
+            return query;
+        }, getOnlyTotalCount: true);
     }
 
     public async Task<BlogSubscriber> GetByIdAsync(Guid id)
