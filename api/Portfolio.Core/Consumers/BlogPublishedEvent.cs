@@ -64,14 +64,7 @@ public class BlogPublishedEvent : IConsumer<EntityInsertedEvent<BlogPost, int>>,
 
             var body = _tokenizer.Replace(blogSettings.EmailOnPublishingTemplate, tokens, true);
 
-            var toAddress = new MailboxAddress(subscriber.EmailAddress, subscriber.EmailAddress);
-
-            var multipart = new Multipart("mixed")
-            {
-                new TextPart(TextFormat.Html) { Text = body }
-            };
-
-            await _emailService.SendEmail(toAddress, "New blog post", multipart);
+            await _emailService.SendEmail(subscriber.EmailAddress, subscriber.EmailAddress, "New blog post", body);
         }
     }
 

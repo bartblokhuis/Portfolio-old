@@ -102,10 +102,9 @@ public class SettingsController : Controller
     public async Task<IActionResult> SaveEmailSettings(EmailSettingsDto model)
     {
         //Test the new configuration before saving it.
-        if (!await _emailService.SendEmail(
-            new MailboxAddress(model.DisplayName, model.SendTestEmailTo), 
+        if (!await _emailService.SendEmail(model.DisplayName, model.SendTestEmailTo, 
             "Test email",
-            new TextPart("plain") { Text = "Test email" }, 
+            "Test email",
             _mapper.Map<EmailSettings>(model)))
         {
             return Ok(await Result.FailAsync("Test email failed"));
