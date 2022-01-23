@@ -11,7 +11,7 @@ import { NotificationService } from '../../../services/notification/notification
 })
 export class BlogSettingsComponent implements OnInit {
 
-  model: BlogSettings = { emailOnPublishingTemplate: '', emailOnSubscribingTemplate: '', isSendEmailOnPublishing: false, isSendEmailOnSubscribing: false }
+  model: BlogSettings = { emailOnPublishingTemplate: '', emailOnSubscribingTemplate: '', isSendEmailOnPublishing: false, isSendEmailOnSubscribing: false, emailOnPublishingSubjectTemplate: '', emailOnSubscribingSubjectTemplate: '' }
   form: any;
   error: string | undefined;
 
