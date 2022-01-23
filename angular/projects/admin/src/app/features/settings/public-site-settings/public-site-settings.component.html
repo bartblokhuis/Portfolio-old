@@ -1,0 +1,23 @@
+<div class="row">
+    <div class="col-12">
+        <div class="card">
+            <div class="card-header">
+                <h3 class="card-title">Email Settings</h3>
+            </div>
+            <div class="card-body">
+                <form id='public-site-settings-form'>
+                    <div class="form-group">
+                        <label class="col-form-label">Public site url</label>
+                        <input type="text" class="form-control" [(ngModel)]="model.publicSiteUrl" name="publicSiteUrl">
+                    </div>
+                    <div class="custom-error" *ngIf="error">
+                        <label>{{error}}</label>
+                    </div>
+                </form>
+            </div>
+            <div class="card-footer">
+                <button class="btn btn-primary" (click)="save()">Save</button>
+            </div>
+        </div>
+    </div>
+</div>

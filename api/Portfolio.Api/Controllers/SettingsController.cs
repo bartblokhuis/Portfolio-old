@@ -6,6 +6,7 @@ using MimeKit;
 using Portfolio.Core.Interfaces.Common;
 using Portfolio.Core.Services.Settings;
 using Portfolio.Domain.Dtos;
+using Portfolio.Domain.Dtos.Settings;
 using Portfolio.Domain.Models.Settings;
 using Portfolio.Domain.Wrapper;
 using System.Threading.Tasks;
@@ -23,6 +24,8 @@ public class SettingsController : Controller
     private readonly ISettingService<EmailSettings> _emailSettingsService;
     private readonly ISettingService<GeneralSettings> _generalSettings;
     private readonly ISettingService<SeoSettings> _seoSettings;
+    private readonly ISettingService<BlogSettings> _blogSettings;
+    private readonly ISettingService<PublicSiteSettings> _publicSiteSettings;
     private readonly IEmailService _emailService;
     private readonly IMapper _mapper;
 
@@ -30,12 +33,14 @@ public class SettingsController : Controller
 
     #region Constructor
 
-    public SettingsController(ILogger<SettingsController> logger, ISettingService<EmailSettings> emailSettingsService, ISettingService<GeneralSettings> generalSettings, ISettingService<SeoSettings> seoSettings, IEmailService emailService, IMapper mapper)
+    public SettingsController(ILogger<SettingsController> logger, ISettingService<EmailSettings> emailSettingsService, ISettingService<GeneralSettings> generalSettings, ISettingService<SeoSettings> seoSettings, ISettingService<BlogSettings> blogSettings, ISettingService<PublicSiteSettings> publicSiteSettings, IEmailService emailService, IMapper mapper)
     {
         _logger = logger;
         _emailSettingsService = emailSettingsService;
         _generalSettings = generalSettings;
         _seoSettings = seoSettings;
+        _blogSettings = blogSettings;
+        _publicSiteSettings = publicSiteSettings;
         _emailService = emailService;
         _mapper = mapper;
     }
@@ -97,10 +102,9 @@ public class SettingsController : Controller
     public async Task<IActionResult> SaveEmailSettings(EmailSettingsDto model)
     {
         //Test the new configuration before saving it.
-        if (!await _emailService.SendEmail(
-            new MailboxAddress(model.DisplayName, model.SendTestEmailTo), 
+        if (!await _emailService.SendEmail(model.DisplayName, model.SendTestEmailTo, 
             "Test email",
-            new TextPart("plain") { Text = "Test email" }, 
+            "Test email",
             _mapper.Map<EmailSettings>(model)))
         {
             return Ok(await Result.FailAsync("Test email failed"));
@@ -146,6 +150,68 @@ public class SettingsController : Controller
         await _seoSettings.Save(originalSettings);
 
         var result = await Result<SeoSettingsDto>.SuccessAsync(_mapper.Map<SeoSettingsDto>(originalSettings));
+        return Ok(result);
+    }
+
+    #endregion
+
+    #region BlogSettings
+
+    [HttpGet("BlogSettings")]
+    [AllowAnonymous]
+    public async Task<IActionResult> GetBlogSettings()
+    {
+        var settings = await _blogSettings.Get();
+
+        var dto = _mapper.Map<BlogSettingsDto>(settings);
+        dto ??= new BlogSettingsDto();
+
+        var result = await Result<BlogSettingsDto>.SuccessAsync(dto);
+        return Ok(result);
+    }
+
+    [HttpPost("BlogSettings")]
+    public async Task<IActionResult> SaveBlogSettings(BlogSettingsDto model)
+    {
+        var originalSettings = await _blogSettings.Get();
+
+        originalSettings ??= new BlogSettings();
+        _mapper.Map(model, originalSettings);
+
+        await _blogSettings.Save(originalSettings);
+
+        var result = await Result<BlogSettingsDto>.SuccessAsync(_mapper.Map<BlogSettingsDto>(originalSettings));
+        return Ok(result);
+    }
+
+    #endregion
+
+    #region PublicSiteSettings
+
+    [HttpGet("PublicSiteSettings")]
+    [AllowAnonymous]
+    public async Task<IActionResult> GetPublicSiteSettings()
+    {
+        var settings = await _publicSiteSettings.Get();
+
+        var dto = _mapper.Map<PublicSiteSettingsDto>(settings);
+        dto ??= new PublicSiteSettingsDto();
+
+        var result = await Result<PublicSiteSettingsDto>.SuccessAsync(dto);
+        return Ok(result);
+    }
+
+    [HttpPost("PublicSiteSettings")]
+    public async Task<IActionResult> SavePublicSiteSettings(PublicSiteSettingsDto model)
+    {
+        var originalSettings = await _publicSiteSettings.Get();
+
+        originalSettings ??= new PublicSiteSettings();
+        _mapper.Map(model, originalSettings);
+
+        await _publicSiteSettings.Save(originalSettings);
+
+        var result = await Result<PublicSiteSettingsDto>.SuccessAsync(_mapper.Map<PublicSiteSettingsDto>(originalSettings));
         return Ok(result);
     }
 

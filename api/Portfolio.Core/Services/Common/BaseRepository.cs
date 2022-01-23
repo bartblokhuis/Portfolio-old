@@ -93,6 +93,7 @@ public class BaseRepository<TEntity, TKey, TDbContext> : IBaseRepository<TEntity
         async Task<IList<TEntity>> getAllAsync()
         {
             var query = AddDeletedFilter(Table, includeDeleted);
+            query = query.AsNoTracking();
             query = func != null ? func(query) : query;
 
             return await query.ToListAsync();
@@ -157,7 +158,7 @@ public class BaseRepository<TEntity, TKey, TDbContext> : IBaseRepository<TEntity
     {
         async Task<TEntity> getEntityAsync()
         {
-            return await _dbSet.FirstAsync();
+            return await _dbSet.FirstOrDefaultAsync();
         }
 
         if (getCacheKey == null)
@@ -230,19 +231,18 @@ public class BaseRepository<TEntity, TKey, TDbContext> : IBaseRepository<TEntity
 
     public async Task UpdateAsync(TEntity entity)
     {
-        _dbSet.Update(entity);
-
         await _eventPublisher.EntityUpdatedAsync<TEntity, TKey>(entity);
+
+        _dbSet.Update(entity);
         await SaveChanges();
     }
 
     public async Task UpdateRangeAsync(IEnumerable<TEntity> entities)
     {
-        _dbSet.UpdateRange(entities);
-
         foreach (var entity in entities)
             await _eventPublisher.EntityUpdatedAsync<TEntity, TKey>(entity);
 
+        _dbSet.UpdateRange(entities);
         await SaveChanges();
     }
 

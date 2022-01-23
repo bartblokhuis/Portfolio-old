@@ -57,6 +57,12 @@ const routes: Routes = [
       },
       {
         path: '',
+        loadChildren: () => import('./features/blog-subscribers/blog-subscribers.module').then(
+          module => module.BlogSubscribersModule
+        ),
+      },
+      {
+        path: '',
         loadChildren: () => import('./features/pictures/pictures.module').then(
           module => module.PicturesModule
         ),

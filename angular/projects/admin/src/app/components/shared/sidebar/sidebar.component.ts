@@ -18,13 +18,18 @@ export class SidebarComponent {
     { name: "About me", path: "/about-me", icon: "nav-icon fas fa-male" }, 
     { name: "Skills", path: "/skills", icon: "nav-icon fas fa-trophy" }, 
     { name: "Projects", path: "/projects", icon: "nav-icon fas fa-tasks" },
-    { name: "Blog posts", path: "/blog", icon: "nav-icon fas fa-book" },
+    { name: "Blog posts", path: "", icon: "nav-icon fas fa-book", menuItems: [
+      { name: "Blog posts", path: "/blog/posts", icon: "far fa-circle nav-icon" },
+      { name: "Blog subscribers", path: "/blog/subscribers", icon: "far fa-circle nav-icon" },
+    ] },
     { name: "Messages", path: "/messages", icon: "nav-icon fas fa-inbox" },
     { name: "Pictures", path: "/pictures", icon: "nav-icon fas fa-image" },
     { name: 'Settings', path: '', icon: 'nav-icon fas fa-cog', menuItems: [
       { name: 'General settings', icon: "far fa-circle nav-icon", path: "/settings/general-settings" },
       { name: 'Seo settings', icon: "far fa-circle nav-icon", path: "/settings/seo-settings" },
       { name: 'Email settings', icon: "far fa-circle nav-icon", path: "/settings/email-settings" },
+      { name: 'Blog settings', icon: "far fa-circle nav-icon", path: "/settings/blog-settings" },
+      { name: 'Public site settings', icon: "far fa-circle nav-icon", path: "/settings/public-site-settings" },
     ]}];
 
   constructor(private messagesService: MessagesService) { 

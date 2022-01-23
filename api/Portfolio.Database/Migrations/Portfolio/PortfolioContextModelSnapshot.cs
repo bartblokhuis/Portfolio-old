@@ -41,7 +41,7 @@ namespace Portfolio.Database.Migrations
                     b.ToTable("AboutMes");
                 });
 
-            modelBuilder.Entity("Portfolio.Domain.Models.BlogPost", b =>
+            modelBuilder.Entity("Portfolio.Domain.Models.Blogs.BlogPost", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -91,7 +91,33 @@ namespace Portfolio.Database.Migrations
                     b.ToTable("BlogPosts");
                 });
 
-            modelBuilder.Entity("Portfolio.Domain.Models.Comment", b =>
+            modelBuilder.Entity("Portfolio.Domain.Models.Blogs.BlogSubscriber", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<DateTime>("CreatedAtUTC")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("EmailAddress")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("Name")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("UpdatedAtUtc")
+                        .HasColumnType("datetime2");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("BlogSubscribers");
+                });
+
+            modelBuilder.Entity("Portfolio.Domain.Models.Blogs.Comment", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -274,6 +300,37 @@ namespace Portfolio.Database.Migrations
                     b.ToTable("ProjectUrls");
                 });
 
+            modelBuilder.Entity("Portfolio.Domain.Models.Settings.BlogSettings", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+
+                    b.Property<string>("EmailOnPublishingSubjectTemplate")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("EmailOnPublishingTemplate")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("EmailOnSubscribingSubjectTemplate")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("EmailOnSubscribingTemplate")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<bool>("IsSendEmailOnPublishing")
+                        .HasColumnType("bit");
+
+                    b.Property<bool>("IsSendEmailOnSubscribing")
+                        .HasColumnType("bit");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("BlogSettings");
+                });
+
             modelBuilder.Entity("Portfolio.Domain.Models.Settings.EmailSettings", b =>
                 {
                     b.Property<int>("Id")
@@ -358,6 +415,22 @@ namespace Portfolio.Database.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("GeneralSettings");
+                });
+
+            modelBuilder.Entity("Portfolio.Domain.Models.Settings.PublicSiteSettings", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+
+                    b.Property<string>("PublicSiteUrl")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("PublicSiteSettings");
                 });
 
             modelBuilder.Entity("Portfolio.Domain.Models.Settings.SeoSettings", b =>
@@ -468,7 +541,7 @@ namespace Portfolio.Database.Migrations
                     b.ToTable("ProjectSkill");
                 });
 
-            modelBuilder.Entity("Portfolio.Domain.Models.BlogPost", b =>
+            modelBuilder.Entity("Portfolio.Domain.Models.Blogs.BlogPost", b =>
                 {
                     b.HasOne("Portfolio.Domain.Models.Picture", "BannerPicture")
                         .WithMany()
@@ -483,13 +556,13 @@ namespace Portfolio.Database.Migrations
                     b.Navigation("Thumbnail");
                 });
 
-            modelBuilder.Entity("Portfolio.Domain.Models.Comment", b =>
+            modelBuilder.Entity("Portfolio.Domain.Models.Blogs.Comment", b =>
                 {
-                    b.HasOne("Portfolio.Domain.Models.BlogPost", "BlogPost")
+                    b.HasOne("Portfolio.Domain.Models.Blogs.BlogPost", "BlogPost")
                         .WithMany("Comments")
                         .HasForeignKey("BlogPostId");
 
-                    b.HasOne("Portfolio.Domain.Models.Comment", "ParentComment")
+                    b.HasOne("Portfolio.Domain.Models.Blogs.Comment", "ParentComment")
                         .WithMany("Comments")
                         .HasForeignKey("ParentCommentId");
 
@@ -562,12 +635,12 @@ namespace Portfolio.Database.Migrations
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("Portfolio.Domain.Models.BlogPost", b =>
+            modelBuilder.Entity("Portfolio.Domain.Models.Blogs.BlogPost", b =>
                 {
                     b.Navigation("Comments");
                 });
 
-            modelBuilder.Entity("Portfolio.Domain.Models.Comment", b =>
+            modelBuilder.Entity("Portfolio.Domain.Models.Blogs.Comment", b =>
                 {
                     b.Navigation("Comments");
                 });

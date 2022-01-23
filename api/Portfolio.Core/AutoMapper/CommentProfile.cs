@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using Portfolio.Domain.Dtos.Comments;
 using Portfolio.Domain.Models;
+using Portfolio.Domain.Models.Blogs;
 using Portfolio.Domain.Wrapper;
 
 namespace Portfolio.Core.AutoMapper;

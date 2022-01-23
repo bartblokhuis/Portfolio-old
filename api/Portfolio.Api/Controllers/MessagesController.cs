@@ -88,9 +88,8 @@ public class MessagesController : ControllerBase
 
         var emailSettings = await _emailSettings.Get();
         if(emailSettings != null)
-        {
-            await _emailService.SendEmail(new MailboxAddress(emailSettings.DisplayName, emailSettings.SiteOwnerEmailAddress), "New message!", new TextPart("plain") { Text = message.MessageContent });
-        }
+            await _emailService.SendEmail(emailSettings.DisplayName, emailSettings.SiteOwnerEmailAddress, "New message!", message.MessageContent);
+        
         
         return Ok(Result.Success("Created the message"));
     }

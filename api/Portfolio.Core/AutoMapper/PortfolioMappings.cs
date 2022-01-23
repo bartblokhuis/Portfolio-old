@@ -17,15 +17,6 @@ public class PortfolioMappings : Profile
         CreateMap<AboutMe, AboutMeDto>();
         CreateMap<AboutMeDto, AboutMe>().ForMember(x => x.Id, options => options.Ignore());
 
-        CreateMap<EmailSettings, EmailSettingsDto>();
-        CreateMap<EmailSettingsDto, EmailSettings>().ForMember(x => x.Id, options => options.Ignore());
-
-        CreateMap<SeoSettings, SeoSettingsDto>();
-        CreateMap<SeoSettingsDto, SeoSettings>().ForMember(x => x.Id, options => options.Ignore());
-
-        CreateMap<GeneralSettings, GeneralSettingsDto>();
-        CreateMap<GeneralSettingsDto, GeneralSettings>().ForMember(x => x.Id, options => options.Ignore());
-
         CreateMap<Message, MessageDto>().ReverseMap();
 
         CreateMap<CreateSkillDto, Skill>();

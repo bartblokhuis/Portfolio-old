@@ -4,7 +4,7 @@ import { EditBlogPostComponent } from "./edit-blog-post/edit-blog-post.component
 import { ListBlogPostComponent } from "./list-blog-post/list-blog-post.component";
 
 export const BlogPostsRoutes: Routes = [{
-    path: 'blog',
+    path: 'blog/posts',
     component: ListBlogPostComponent
 },
 {

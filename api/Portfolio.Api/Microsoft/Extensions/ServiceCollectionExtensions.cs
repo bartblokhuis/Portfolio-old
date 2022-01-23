@@ -17,6 +17,7 @@ using Portfolio.Core.Interfaces;
 using Portfolio.Core.Interfaces.Common;
 using Portfolio.Core.Services;
 using Portfolio.Core.Services.Blogs;
+using Portfolio.Core.Services.BlogSubscribers;
 using Portfolio.Core.Services.Comments;
 using Portfolio.Core.Services.Common;
 using Portfolio.Core.Services.Messages;
@@ -24,6 +25,7 @@ using Portfolio.Core.Services.Projects;
 using Portfolio.Core.Services.Settings;
 using Portfolio.Core.Services.SkillGroups;
 using Portfolio.Core.Services.Skills;
+using Portfolio.Core.Services.Tokens;
 using Portfolio.Core.Services.Urls;
 using Portfolio.Database;
 using Portfolio.Domain.Models.Authentication;
@@ -116,9 +118,12 @@ public static class ServiceCollectionExtensions
             .AddScoped<IUrlService, UrlService>()
             .AddScoped<IBlogPostService, BlogPostService>()
             .AddScoped<IBlogPostCommentService, BlogPostCommentService>()
+            .AddScoped<IBlogSubscriberService, BlogSubscriberService>()
             .AddSingleton(new HostingConfig())
             .AddScoped<IWebHelper, WebHelper>()
             .AddScoped<IEmailService, EmailService>()
+            .AddScoped<ITokenizer, Tokenizer>()
+            .AddScoped<IMessageTokenProvider, MessageTokenProvider>()
             .AddScoped<IPictureService, PictureService>();
 
         return services;

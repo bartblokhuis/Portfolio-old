@@ -19,6 +19,7 @@ import { SettingsModule } from './features/settings/settings.module';
 import { SkillGroupsModule } from './features/skill-groups/skill-groups.module';
 import { UserModule } from './features/user/user.module';
 import { RichTextEditorModule } from './components/rich-text-editor/rich-text-editor.module';
+import { BlogSubscribersModule } from './features/blog-subscribers/blog-subscribers.module';
 
 @NgModule({
   declarations: [
@@ -38,6 +39,7 @@ import { RichTextEditorModule } from './components/rich-text-editor/rich-text-ed
     SettingsModule,
     PicturesModule,
     BlogPostsModule,
+    BlogSubscribersModule,
     SharedComponentsModule,
     RichTextEditorModule
   ],
