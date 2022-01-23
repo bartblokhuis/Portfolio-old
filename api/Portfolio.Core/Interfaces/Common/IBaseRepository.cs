@@ -1,6 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Portfolio.Core.Caching;
 using Portfolio.Database;
+using Portfolio.Domain.Models.Common;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -28,6 +29,9 @@ public interface IBaseRepository<TEntity, TKey, TDbContext>
 
     Task<IList<TEntity>> GetAllAsync(Func<IQueryable<TEntity>, IQueryable<TEntity>> func = null,
             Func<IStaticCacheManager, CacheKey> getCacheKey = null, bool includeDeleted = true);
+
+    Task<IPagedList<TEntity>> GetAllPagedAsync(Func<IQueryable<TEntity>, IQueryable<TEntity>> func = null,
+            int pageIndex = 0, int pageSize = int.MaxValue, bool getOnlyTotalCount = false, bool includeDeleted = true);
 
     Task InsertAsync(TEntity entuty);
 

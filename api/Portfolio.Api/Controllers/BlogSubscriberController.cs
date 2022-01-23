@@ -79,35 +79,25 @@ public class BlogSubscriberController : ControllerBase
 
                 for (var i = 0; i <= 12; i++)
                 {
-                    int min = 1;
-                    int max = 10;
-
-                    Random random = new Random();
-                    int number = random.Next(min, max);
                     resultData.Add(new
                     {
                         date = searchYearDateUser.Date.ToString("Y"),
-                        value = number
+                        value = (await _blogSubscriberService.GetAllAsync(searchYearDateUser, searchYearDateUser.AddMonths(1), true)).TotalCount.ToString()
                     });
 
                     searchYearDateUser = searchYearDateUser.AddMonths(1);
                 }
                 break;
-            case "month":
 
+            case "month":
                 var monthAgoDt = nowDt.AddDays(-30);
                 var searchMonthDateUser = new DateTime(monthAgoDt.Year, monthAgoDt.Month, monthAgoDt.Day);
                 for (var i = 0; i <= 30; i++)
                 {
-                    int min = 1;
-                    int max = 10;
-
-                    Random random = new Random();
-                    int number = random.Next(min, max);
                     resultData.Add(new
                     {
                         date = searchMonthDateUser.Date.ToString("M"),
-                        value = number
+                        value = (await _blogSubscriberService.GetAllAsync(searchMonthDateUser, searchMonthDateUser.AddDays(1), true)).TotalCount.ToString()
                     });
 
                     searchMonthDateUser = searchMonthDateUser.AddDays(1);
@@ -121,15 +111,10 @@ public class BlogSubscriberController : ControllerBase
                 var searchWeekDateUser = new DateTime(weekAgoDt.Year, weekAgoDt.Month, weekAgoDt.Day);
                 for (var i = 0; i <= 7; i++)
                 {
-                    int min = 1;
-                    int max = 10;
-
-                    Random random = new Random();
-                    int number = random.Next(min, max);
                     resultData.Add(new
                     {
                         date = searchWeekDateUser.Date.ToString("d dddd"),
-                        value = number
+                        value = (await _blogSubscriberService.GetAllAsync(searchWeekDateUser, searchWeekDateUser.AddDays(1), true)).TotalCount.ToString()
                     });
 
                     searchWeekDateUser = searchWeekDateUser.AddDays(1);

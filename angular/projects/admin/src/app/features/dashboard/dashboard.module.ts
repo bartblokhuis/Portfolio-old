@@ -7,7 +7,7 @@ import { DashboardMessagesComponent } from './dashboard-messages/dashboard-messa
 import { SharedComponentsModule } from '../../components/shared/shared-components.module';
 import { PipesModule } from '../../pipes/pipes.module';
 import { DashboardBlogSubscribersComponent } from './dashboard-blog-subscribers/dashboard-blog-subscribers.component';
-import { NgChartsModule } from 'ng2-charts';
+import { NgChartsModule, ThemeService } from 'ng2-charts';
 
 
 

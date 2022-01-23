@@ -1,13 +1,13 @@
 ﻿using Portfolio.Domain.Models.Blogs;
+using Portfolio.Domain.Models.Common;
 using System;
-using System.Collections.Generic;
 using System.Threading.Tasks;
 
 namespace Portfolio.Core.Services.BlogSubscribers;
 
 public interface IBlogSubscriberService
 {
-    Task<IEnumerable<BlogSubscriber>> GetAllAsync();
+    Task<IPagedList<BlogSubscriber>> GetAllAsync(DateTime? createdFromUtc = null, DateTime? createdToUtc = null, bool getOnlyTotalCount = false);
 
     Task<BlogSubscriber> GetByIdAsync(Guid id);
 

@@ -102,6 +102,16 @@ public class BaseRepository<TEntity, TKey, TDbContext> : IBaseRepository<TEntity
         return await GetEntitiesAsync(getAllAsync, getCacheKey);
     }
 
+    public virtual async Task<IPagedList<TEntity>> GetAllPagedAsync(Func<IQueryable<TEntity>, IQueryable<TEntity>> func = null,
+            int pageIndex = 0, int pageSize = int.MaxValue, bool getOnlyTotalCount = false, bool includeDeleted = true)
+    {
+        var query = AddDeletedFilter(Table, includeDeleted);
+
+        query = func != null ? func(query) : query;
+
+        return await query.ToPagedListAsync(pageIndex, pageSize, getOnlyTotalCount);
+    }
+
     public DbSet<TEntity> Table { get; }
 
     public async Task<TEntity> GetByIdAsync(TKey id, string includeProperties = "", Func<IStaticCacheManager, CacheKey> getCacheKey = null)
