@@ -1,4 +1,7 @@
-﻿using Portfolio.Domain.Models.Blogs;
+﻿using Portfolio.Core.Services.Settings;
+using Portfolio.Domain.Models.Blogs;
+using Portfolio.Domain.Models.Settings;
+using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
@@ -6,6 +9,37 @@ namespace Portfolio.Core.Services.Tokens;
 
 public class MessageTokenProvider : IMessageTokenProvider
 {
+    #region Fields
+
+    private readonly ISettingService<PublicSiteSettings> _publicSiteSettings;
+
+    #endregion
+
+    #region Constructor
+
+    public MessageTokenProvider(ISettingService<PublicSiteSettings> publicSiteSettings)
+    {
+        _publicSiteSettings = publicSiteSettings;
+    }
+
+    #endregion
+
+    #region Utils
+
+    protected async Task<string> GetPublicSiteUrl()
+    {
+        var publicSiteSettings = await _publicSiteSettings.Get();
+        if(publicSiteSettings == null)
+            throw new NullReferenceException(nameof(publicSiteSettings));
+
+        if (string.IsNullOrEmpty(publicSiteSettings.PublicSiteUrl))
+            return "/";
+
+        //Ensure that the site url ends with a /
+        return publicSiteSettings.PublicSiteUrl.EndsWith("/") ? publicSiteSettings.PublicSiteUrl : publicSiteSettings.PublicSiteUrl + "/";
+    }
+
+    #endregion
 
     #region Methods
 
@@ -29,21 +63,22 @@ public class MessageTokenProvider : IMessageTokenProvider
         tokens.Add(new Token("BlogPost.UpdatedAtUtc", blogPost.UpdatedAtUtc.ToShortDateString()));
     }
 
-    public Task AddBlogSubscriberTokensAsync(List<Token> tokens, BlogSubscriber subscriber)
+    public async Task AddBlogSubscriberTokensAsync(List<Token> tokens, BlogSubscriber subscriber)
     {
         if (tokens == null)
             tokens = new List<Token>();
 
         if (subscriber == null)
-            return Task.CompletedTask;
+            return;
 
-        tokens.Add(new Token("BlogPost.EmailAddress", subscriber.EmailAddress));
-        tokens.Add(new Token("BlogPost.Id", subscriber.Id));
-        tokens.Add(new Token("BlogPost.Name", subscriber.Name));
-        tokens.Add(new Token("BlogPost.CreatedAtUTC", subscriber.CreatedAtUTC.ToShortDateString()));
-        tokens.Add(new Token("BlogPost.UpdatedAtUtc", subscriber.UpdatedAtUtc.ToShortDateString()));
+        tokens.Add(new Token("BlogSubscriber.EmailAddress", subscriber.EmailAddress));
+        tokens.Add(new Token("BlogSubscriber.Id", subscriber.Id));
+        tokens.Add(new Token("BlogSubscriber.Name", subscriber.Name));
+        tokens.Add(new Token("BlogSubscriber.CreatedAtUTC", subscriber.CreatedAtUTC.ToShortDateString()));
+        tokens.Add(new Token("BlogSubscriber.UpdatedAtUtc", subscriber.UpdatedAtUtc.ToShortDateString()));
+        tokens.Add(new Token("BlogSubscriber.UnsubscribeURL", (await GetPublicSiteUrl()) + "blog/unsubscribe/" + subscriber.Id.ToString()));
 
-        return Task.CompletedTask;
+        return;
     }
 
     #endregion

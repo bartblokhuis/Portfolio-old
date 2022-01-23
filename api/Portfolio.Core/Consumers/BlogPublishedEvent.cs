@@ -62,9 +62,10 @@ public class BlogPublishedEvent : IConsumer<EntityInsertedEvent<BlogPost, int>>,
             await _messageTokenProvider.AddBlogTokensAsync(tokens, blogPost);
             await _messageTokenProvider.AddBlogSubscriberTokensAsync(tokens, subscriber);
 
+            var subject = _tokenizer.Replace(blogSettings.EmailOnPublishingSubjectTemplate, tokens, true);
             var body = _tokenizer.Replace(blogSettings.EmailOnPublishingTemplate, tokens, true);
 
-            await _emailService.SendEmail(subscriber.EmailAddress, subscriber.EmailAddress, "New blog post", body);
+            await _emailService.SendEmail(subscriber.EmailAddress, subscriber.EmailAddress, subject, body);
         }
     }
 
