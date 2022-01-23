@@ -21,6 +21,7 @@ using Portfolio.Core.Services.Comments;
 using Portfolio.Core.Services.Common;
 using Portfolio.Core.Services.Messages;
 using Portfolio.Core.Services.Projects;
+using Portfolio.Core.Services.QueuedEmails;
 using Portfolio.Core.Services.Settings;
 using Portfolio.Core.Services.SkillGroups;
 using Portfolio.Core.Services.Skills;
@@ -118,6 +119,7 @@ public static class ServiceCollectionExtensions
             .AddScoped<IBlogSubscriberService, BlogSubscriberService>()
             .AddSingleton(new HostingConfig())
             .AddScoped<IWebHelper, WebHelper>()
+            .AddScoped<IQueuedEmailService, QueuedEmailService>()
             .AddScoped<IEmailService, EmailService>()
             .AddScoped<ITokenizer, Tokenizer>()
             .AddScoped<IMessageTokenProvider, MessageTokenProvider>()

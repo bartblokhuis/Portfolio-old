@@ -224,14 +224,14 @@ public class BaseRepository<TEntity, TKey, TDbContext> : IBaseRepository<TEntity
         await SaveChanges();
     }
 
-    public async Task DeleteAsync(IEnumerable<TEntity> entities)
+    public async Task DeleteAsync(IList<TEntity> entities)
     {
         _dbSet.RemoveRange(entities);
 
         foreach (var entity in entities)
             await _eventPublisher.EntityDeletedAsync<TEntity, TKey>(entity);
 
-        SaveChanges();
+        await SaveChanges();
     }
 
     #endregion

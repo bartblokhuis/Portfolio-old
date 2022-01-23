@@ -43,7 +43,7 @@ public interface IBaseRepository<TEntity, TKey, TDbContext>
 
     Task DeleteAsync(TEntity entity);
 
-    Task DeleteAsync(IEnumerable<TEntity> entities);
+    Task DeleteAsync(IList<TEntity> entities);
 
     Task DeleteAsync(TKey id);
 
