@@ -1,0 +1,65 @@
+<div class="modal-header">
+    <h4 class="modal-title" id="modal-message-title">Edit queued email</h4>
+    <button type="button" class="close" aria-label="Close" (click)="modal?.close()">
+      <span aria-hidden="true">&times;</span>
+    </button>
+</div>
+<form id="editQueuedEmailForm">
+    <div class="modal-body" *ngIf="queuedEmail">
+        <div class="row">
+            <div class="col-sm-6">
+                <div class="form-group">
+                    <label>From</label>
+                    <input class="form-control" type="text" [(ngModel)]="queuedEmail.from" name="from" required />
+                </div>
+            </div>
+            <div class="col-sm-6">
+                <div class="form-group">
+                    <label>From name </label>
+                    <input class="form-control" type="text" [(ngModel)]="queuedEmail.fromName" name="fromName" />
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-sm-6">
+                <div class="form-group">
+                    <label>To</label>
+                    <input class="form-control" type="text" [(ngModel)]="queuedEmail.to" name="to" required />
+                </div>
+            </div>
+            <div class="col-sm-6">
+                <div class="form-group">
+                    <label>To name</label>
+                    <input class="form-control" type="text" [(ngModel)]="queuedEmail.toName" name="toName" />
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-sm-6">
+                <div class="form-group">
+                    <label>Sent tries</label>
+                    <input class="form-control" type="number" min="0" max="3" [(ngModel)]="queuedEmail.sentTries" name="sentTries" />
+                </div>
+            </div>
+            <div class="col-sm-12">
+                <div class="form-group">
+                    <label>Subject</label>
+                    <input class="form-control" type="text" [(ngModel)]="queuedEmail.subject" name="subject" required />
+                </div>
+            </div>
+            <div class="col-sm-12">
+                <div class="form-group">
+                    <label>Body</label>
+                    <app-rich-text-editor [(ngModel)]="queuedEmail.body" name="body"></app-rich-text-editor>
+                </div>
+            </div>
+            <div class="col-12" *ngIf="error">
+                <label class="custom-error">{{error}}</label>
+            </div>
+        </div>
+    </div>
+    <div class="modal-footer justify-content-between">
+        <button type="button" class="btn btn-default" (click)="modal?.close()">Cancel</button>
+        <button type="button" class="btn btn-primary" (click)="update()">Save</button>
+    </div>
+</form>

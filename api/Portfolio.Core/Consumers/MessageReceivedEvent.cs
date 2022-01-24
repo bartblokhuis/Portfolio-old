@@ -44,8 +44,8 @@ public class MessageReceivedEvent : IConsumer<EntityInsertedEvent<Message, int>>
 
         var siteOwnerEmail = new QueuedEmail
         {
-            Subject = $"You received a new message from ${eventMessage.Entity.FirstName}",
-            Body = $"You received a new message from ${eventMessage.Entity.FirstName}, containing the message: ${eventMessage.Entity.MessageContent}",
+            Subject = $"You received a new message from {eventMessage.Entity.FirstName}",
+            Body = $"You received a new message from {eventMessage.Entity.FirstName}, containing the message: {eventMessage.Entity.MessageContent}",
             CreatedAtUTC = DateTime.UtcNow,
             To = emailSettings.SendTestEmailTo,
             ToName = emailSettings.DisplayName,
@@ -56,7 +56,7 @@ public class MessageReceivedEvent : IConsumer<EntityInsertedEvent<Message, int>>
         var clientEmail = new QueuedEmail
         {
             Subject = $"Message received confirmation",
-            Body = $"Hi, ${eventMessage.Entity.FirstName}, I wanted to let you know that I have received your message and will respond back as soon as possible.",
+            Body = $"Hi, {eventMessage.Entity.FirstName}, I wanted to let you know that I have received your message and will respond back as soon as possible.",
             CreatedAtUTC = DateTime.UtcNow,
             To = eventMessage.Entity.Email,
             ToName = eventMessage.Entity.FirstName,

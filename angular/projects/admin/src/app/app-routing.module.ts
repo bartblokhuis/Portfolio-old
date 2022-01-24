@@ -66,6 +66,12 @@ const routes: Routes = [
         loadChildren: () => import('./features/pictures/pictures.module').then(
           module => module.PicturesModule
         ),
+      },
+      {
+        path: '',
+        loadChildren: () => import('./features/email-queue/email-queue.module').then(
+          module => module.EmailQueueModule
+        ),
       }
     ],
     canActivate: [AuthGuard]

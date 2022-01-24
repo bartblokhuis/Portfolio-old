@@ -1,59 +1,11 @@
-.table {
-
-    .action {
-        display: inline-block;
-        padding: 6px;
-        height: 16px;
-        width: 16px;
-        box-sizing: content-box;
-        position: relative;
-        color: #000;
-        
-        i{
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-        }
-
-        transition: opacity 200ms ease-in-out;
-
-        &:hover{
-            cursor: pointer;
-            opacity: 0.8;
-        }
-    }
-
-    td a svg {
-        height: 25px;
-        fill: #000;
-    }
+.col-xs {
+  width: 2%;
 }
 
-.dark-mode {
-
-  .table {
-
-    .action {
-      color: #fff !important;
-      &:hover{
-        color: #fff !important;
-      }
-    }
-  }
-
-  td a svg{
-    fill: #fff;
-  } 
+.col-sm {
+  width: 10%;
 }
-  .col-xs {
-    width: 2%;
-  }
-  
-  .col-sm {
-    width: 10%;
-  }
-  
-  .col-md {
-    width: 20%;
-  }
+
+.col-md {
+  width: 20%;
+}
