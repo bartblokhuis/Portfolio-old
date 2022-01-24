@@ -1,0 +1,23 @@
+<div class="row">
+    <div class="col-12">
+        <div class="card">
+            <div class="card-header">
+                <h3 class="card-title">API Settings</h3>
+            </div>
+            <div class="card-body">
+                <form id='api-settings-form'>
+                    <div class="form-group">
+                        <label class="col-form-label">API url</label>
+                        <input type="text" class="form-control" [(ngModel)]="model.apiUrl" name="apiUrl">
+                    </div>
+                    <div class="custom-error" *ngIf="error">
+                        <label>{{error}}</label>
+                    </div>
+                </form>
+            </div>
+            <div class="card-footer">
+                <button class="btn btn-primary" (click)="save()">Save</button>
+            </div>
+        </div>
+    </div>
+</div>

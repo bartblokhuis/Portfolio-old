@@ -7,6 +7,7 @@ import { SeoSettings } from 'projects/shared/src/lib/data/settings/seo-settings'
 import { ApiService } from '../api.service';
 import { BlogSettings } from '../../../data/settings/blog-settings';
 import { PublicSiteSettings } from '../../../data/settings/public-site-settings';
+import { ApiSettings } from '../../../data/settings/api-settings';
 
 @Injectable({
   providedIn: 'root'
@@ -53,5 +54,13 @@ export class SettingsService {
 
   savePublicSiteSettings(publicSiteSettings: PublicSiteSettings): Observable<Result> {
     return this.apiService.post("Settings/PublicSiteSettings", publicSiteSettings);
+  }
+
+  getApiSettings(): Observable<Result<ApiSettings>> {
+    return this.apiService.get<ApiSettings>("Settings/ApiSettings");
+  }
+
+  saveApiSettings(publicSiteSettings: ApiSettings): Observable<Result> {
+    return this.apiService.post("Settings/ApiSettings", publicSiteSettings);
   }
 }

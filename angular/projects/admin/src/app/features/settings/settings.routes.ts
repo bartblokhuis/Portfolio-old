@@ -1,4 +1,5 @@
 import { Routes } from "@angular/router";
+import { ApiSettingsComponent } from "./api-settings/api-settings.component";
 import { BlogSettingsComponent } from "./blog-settings/blog-settings.component";
 import { EmailSettingsComponent } from "./email-settings/email-settings.component";
 import { GeneralSettingsComponent } from "./general-settings/general-settings.component";
@@ -28,6 +29,10 @@ export const SettingRoutes: Routes = [
             {
                 path: 'public-site-settings',
                 component: PublicSiteSettingsComponent
+            },
+            {
+                path: 'api-settings',
+                component: ApiSettingsComponent
             }
         ]
     }
