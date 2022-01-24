@@ -61,6 +61,8 @@ public class PortfolioContext : DbContext
 
     public DbSet<ScheduleTask> ScheduleTasks { get; set; }
 
+    public DbSet<ApiSettings> ApiSettings { get; set; }
+
     #endregion
 
     #region Methods

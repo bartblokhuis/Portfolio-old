@@ -14,6 +14,8 @@ public class Program
 
     public static IHostBuilder CreateHostBuilder(string[] args) =>
         Host.CreateDefaultBuilder(args)
+        .UseDefaultServiceProvider(options =>
+            options.ValidateScopes = false)
         .ConfigureAppConfiguration((hostContext, config) =>
         {
             config.SetBasePath(PathExtensions.GetApplicationBasePath());

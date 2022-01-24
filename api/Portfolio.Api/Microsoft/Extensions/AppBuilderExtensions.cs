@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.FileProviders;
 using Portfolio.Core.Infrastructure;
+using Portfolio.Core.Services.Tasks;
 using System.IO;
 
 namespace Portfolio.Microsoft.Extensions;
@@ -16,6 +17,9 @@ public static class AppBuilderExtensions
 
         var engine = EngineContext.Current;
         engine.ConfigureRequestPipeline(app);
+
+        TaskManager.Instance.Initialize();
+        TaskManager.Instance.Start();
     }
 
     private static void UseOpenApi(this IApplicationBuilder app)
