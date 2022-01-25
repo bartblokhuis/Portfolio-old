@@ -2,7 +2,7 @@
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
-using Portfolio.Core.Interfaces;
+using Portfolio.Core.Services.AboutMeServices;
 using Portfolio.Domain.Dtos;
 using Portfolio.Domain.Models;
 using Portfolio.Domain.Wrapper;
@@ -38,7 +38,7 @@ public class AboutMeController : ControllerBase
     [HttpGet]
     public async Task<IActionResult> Get()
     {
-        var aboutMe = await _aboutMeService.GetAboutMe();
+        var aboutMe = await _aboutMeService.GetAsync();
         if (aboutMe == null)
             aboutMe = new AboutMe();
 
@@ -51,7 +51,7 @@ public class AboutMeController : ControllerBase
     public async Task<IActionResult> Save(AboutMeDto model)
     {
         var aboutMe = _mapper.Map<AboutMe>(model);
-        await _aboutMeService.SaveAboutMe(aboutMe);
+        await _aboutMeService.SaveAsync(aboutMe);
 
         var result = await Result<AboutMeDto>.SuccessAsync(_mapper.Map<AboutMeDto>(aboutMe));
         return Ok(result);

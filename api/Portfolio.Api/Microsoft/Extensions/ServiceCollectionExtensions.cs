@@ -15,6 +15,7 @@ using Portfolio.Core.Infrastructure;
 using Portfolio.Core.Interfaces;
 using Portfolio.Core.Interfaces.Common;
 using Portfolio.Core.Services;
+using Portfolio.Core.Services.AboutMeServices;
 using Portfolio.Core.Services.Blogs;
 using Portfolio.Core.Services.BlogSubscribers;
 using Portfolio.Core.Services.Comments;

@@ -1,9 +1,8 @@
-﻿using Portfolio.Core.Interfaces;
-using Portfolio.Core.Interfaces.Common;
+﻿using Portfolio.Core.Interfaces.Common;
 using Portfolio.Domain.Models;
 using System.Threading.Tasks;
 
-namespace Portfolio.Core.Services;
+namespace Portfolio.Core.Services.AboutMeServices;
 
 public class AboutMeService : IAboutMeService
 {
@@ -24,15 +23,15 @@ public class AboutMeService : IAboutMeService
 
     #region Methods
 
-    public async Task<AboutMe> GetAboutMe()
+    public async Task<AboutMe> GetAsync()
     {
         var aboutMe = await _aboutMeRepository.FirstAsync();
         return aboutMe;
     }
 
-    public async Task SaveAboutMe(AboutMe model)
+    public async Task SaveAsync(AboutMe model)
     {
-        var aboutMe = await GetAboutMe();
+        var aboutMe = await GetAsync();
         if(aboutMe == null)
             await _aboutMeRepository.InsertAsync(model);
         else
