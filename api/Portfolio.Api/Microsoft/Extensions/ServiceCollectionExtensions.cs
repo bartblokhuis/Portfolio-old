@@ -21,13 +21,16 @@ using Portfolio.Core.Services.Comments;
 using Portfolio.Core.Services.Common;
 using Portfolio.Core.Services.Messages;
 using Portfolio.Core.Services.Projects;
+using Portfolio.Core.Services.QueuedEmails;
 using Portfolio.Core.Services.Settings;
 using Portfolio.Core.Services.SkillGroups;
 using Portfolio.Core.Services.Skills;
+using Portfolio.Core.Services.Tasks;
 using Portfolio.Core.Services.Tokens;
 using Portfolio.Core.Services.Urls;
 using Portfolio.Database;
 using Portfolio.Domain.Models.Authentication;
+using System.Net.Http;
 using System.Text;
 
 namespace Portfolio.Microsoft.Extensions;
@@ -41,8 +44,11 @@ public static class ServiceCollectionExtensions
         CommonHelper.DefaultFileProvider = new PortfolioFileProvider(webHostEnvironment);
 
         services.AddControllers();
+        services.AddMvc();
         services.AddHttpContextAccessor()
             .AddFileProvider();
+
+        services.AddHttpClient("ScheduleTask");
 
         services.AddSettings(configuration)
             .AddDatabases(configuration)
@@ -68,6 +74,7 @@ public static class ServiceCollectionExtensions
     private static IServiceCollection AddCache(this IServiceCollection services)
     {
         services.AddMemoryCache()
+            .AddSingleton<ILocker, MemoryCacheManager>()
             .AddSingleton<IStaticCacheManager, MemoryCacheManager>();
         return services;
     }
@@ -112,12 +119,14 @@ public static class ServiceCollectionExtensions
             .AddScoped<ISkillService, SkillService>()
             .AddScoped<IAboutMeService, AboutMeService>()
             .AddScoped<IProjectService, ProjectService>()
+            .AddScoped<IScheduleTaskService, ScheduleTaskService>()
             .AddScoped<IUrlService, UrlService>()
             .AddScoped<IBlogPostService, BlogPostService>()
             .AddScoped<IBlogPostCommentService, BlogPostCommentService>()
             .AddScoped<IBlogSubscriberService, BlogSubscriberService>()
             .AddSingleton(new HostingConfig())
             .AddScoped<IWebHelper, WebHelper>()
+            .AddScoped<IQueuedEmailService, QueuedEmailService>()
             .AddScoped<IEmailService, EmailService>()
             .AddScoped<ITokenizer, Tokenizer>()
             .AddScoped<IMessageTokenProvider, MessageTokenProvider>()

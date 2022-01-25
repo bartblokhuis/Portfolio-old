@@ -1,0 +1,13 @@
+<div class="modal-header">
+    <h4 class="modal-title" id="modal-project-title">Delete queued email</h4>
+    <button type="button" class="close" aria-label="Close" (click)="modal?.close('canceled')">
+      <span aria-hidden="true">&times;</span>
+    </button>
+</div>
+<div class="modal-body">
+    <p>Are you sure you want to remove this queued email?</p>
+</div>
+<div class="modal-footer justify-content-between">
+  <button type="button" class="btn btn-default" (click)="modal?.close('canceled')">Cancel</button>
+  <button type="button" class="btn btn-danger" (click)="remove()">Remove</button>
+</div>

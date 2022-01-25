@@ -14,7 +14,7 @@ interface FooterDetails {
 })
 export class FooterComponent implements OnInit {
 
-  footerDetails: FooterDetails = { name: "Bart Blokhuis", url: "https://bartblokhuis.com", version: "1.1.0", year: new Date().getFullYear() }
+  footerDetails: FooterDetails = { name: "Bart Blokhuis", url: "https://bartblokhuis.com", version: "1.0.0 beta", year: new Date().getFullYear() }
 
   constructor() { }
 

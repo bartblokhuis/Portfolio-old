@@ -1,0 +1,46 @@
+<div class="modal-header">
+    <h4 class="modal-title" id="modal-message-title">Add schedule task</h4>
+    <button type="button" class="close" aria-label="Close" (click)="modal?.close()">
+      <span aria-hidden="true">&times;</span>
+    </button>
+</div>
+<form id="editScheduleTaskForm">
+    <div class="modal-body">
+        <div class="row">
+            <div class="col-sm-6">
+                <div class="form-group">
+                    <label>Name</label>
+                    <input class="form-control" type="text" [(ngModel)]="model.name" name="name" />
+                </div>
+            </div>
+            <div class="col-sm-6">
+                <div class="form-group">
+                    <label>Seconds</label>
+                    <input class="form-control" type="number" min="1" [(ngModel)]="model.seconds" name="seconds" />
+                </div>
+            </div>
+            <div class="col-sm-12">
+                <div class="form-group">
+                    <label>Type</label>
+                    <input class="form-control" type="text" [(ngModel)]="model.type" name="type" />
+                </div>
+            </div>
+            <div class="col-sm-12">
+                <div class="form-check">
+                    <input type="checkbox" class="form-check-input" [(ngModel)]="model.enabled" name="enabled" id="enabled">
+                    <label class="form-check-label" for="enabled">Enabled</label>
+                </div>
+            </div>
+            <div class="col-sm-12">
+                <div class="form-check">
+                    <input type="checkbox" class="form-check-input" [(ngModel)]="model.stopOnError" name="stopOnError" id="stopOnError">
+                    <label class="form-check-label" for="stopOnError">Stop on error</label>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal-footer justify-content-between">
+        <button type="button" class="btn btn-default" (click)="modal?.close()">Cancel</button>
+        <button type="button" class="btn btn-primary" (click)="save()">Save</button>
+    </div>
+</form>

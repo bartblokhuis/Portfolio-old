@@ -66,6 +66,18 @@ const routes: Routes = [
         loadChildren: () => import('./features/pictures/pictures.module').then(
           module => module.PicturesModule
         ),
+      },
+      {
+        path: '',
+        loadChildren: () => import('./features/email-queue/email-queue.module').then(
+          module => module.EmailQueueModule
+        ),
+      },
+      {
+        path: '',
+        loadChildren: () => import('./features/schedule-task/schedule-task.module').then(
+          module => module.ScheduleTaskModule
+        ),
       }
     ],
     canActivate: [AuthGuard]
@@ -75,7 +87,7 @@ const routes: Routes = [
     loadChildren: () => import('./features/user/user.module').then(
       module => module.UserModule
     )
-  }
+  },
 ];
 
 @NgModule({

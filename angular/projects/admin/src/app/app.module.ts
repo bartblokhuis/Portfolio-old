@@ -20,6 +20,8 @@ import { SkillGroupsModule } from './features/skill-groups/skill-groups.module';
 import { UserModule } from './features/user/user.module';
 import { RichTextEditorModule } from './components/rich-text-editor/rich-text-editor.module';
 import { BlogSubscribersModule } from './features/blog-subscribers/blog-subscribers.module';
+import { EmailQueueModule } from './features/email-queue/email-queue.module';
+import { ScheduleTaskModule } from './features/schedule-task/schedule-task.module';
 
 @NgModule({
   declarations: [
@@ -41,7 +43,9 @@ import { BlogSubscribersModule } from './features/blog-subscribers/blog-subscrib
     BlogPostsModule,
     BlogSubscribersModule,
     SharedComponentsModule,
-    RichTextEditorModule
+    RichTextEditorModule,
+    EmailQueueModule,
+    ScheduleTaskModule
   ],
   providers: [
     {

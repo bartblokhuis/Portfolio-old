@@ -25,6 +25,7 @@ public class SettingsController : Controller
     private readonly ISettingService<SeoSettings> _seoSettings;
     private readonly ISettingService<BlogSettings> _blogSettings;
     private readonly ISettingService<PublicSiteSettings> _publicSiteSettings;
+    private readonly ISettingService<ApiSettings> _apiSettings;
     private readonly IEmailService _emailService;
     private readonly IMapper _mapper;
 
@@ -32,7 +33,7 @@ public class SettingsController : Controller
 
     #region Constructor
 
-    public SettingsController(ILogger<SettingsController> logger, ISettingService<EmailSettings> emailSettingsService, ISettingService<GeneralSettings> generalSettings, ISettingService<SeoSettings> seoSettings, ISettingService<BlogSettings> blogSettings, ISettingService<PublicSiteSettings> publicSiteSettings, IEmailService emailService, IMapper mapper)
+    public SettingsController(ILogger<SettingsController> logger, ISettingService<EmailSettings> emailSettingsService, ISettingService<GeneralSettings> generalSettings, ISettingService<SeoSettings> seoSettings, ISettingService<BlogSettings> blogSettings, ISettingService<PublicSiteSettings> publicSiteSettings, IEmailService emailService, IMapper mapper, ISettingService<ApiSettings> apiSettings)
     {
         _logger = logger;
         _emailSettingsService = emailSettingsService;
@@ -42,6 +43,7 @@ public class SettingsController : Controller
         _publicSiteSettings = publicSiteSettings;
         _emailService = emailService;
         _mapper = mapper;
+        _apiSettings = apiSettings;
     }
 
     #endregion
@@ -211,6 +213,37 @@ public class SettingsController : Controller
         await _publicSiteSettings.Save(originalSettings);
 
         var result = await Result<PublicSiteSettingsDto>.SuccessAsync(_mapper.Map<PublicSiteSettingsDto>(originalSettings));
+        return Ok(result);
+    }
+
+    #endregion
+
+    #region ApiSettings
+
+    [HttpGet("ApiSettings")]
+    [AllowAnonymous]
+    public async Task<IActionResult> GetApiSettings()
+    {
+        var settings = await _apiSettings.Get();
+
+        var dto = _mapper.Map<ApiSettingsDto>(settings);
+        dto ??= new ApiSettingsDto();
+
+        var result = await Result<ApiSettingsDto>.SuccessAsync(dto);
+        return Ok(result);
+    }
+
+    [HttpPost("ApiSettings")]
+    public async Task<IActionResult> SaveApiSettings(ApiSettingsDto model)
+    {
+        var originalSettings = await _apiSettings.Get();
+
+        originalSettings ??= new ApiSettings();
+        _mapper.Map(model, originalSettings);
+
+        await _apiSettings.Save(originalSettings);
+
+        var result = await Result<ApiSettingsDto>.SuccessAsync(_mapper.Map<ApiSettingsDto>(originalSettings));
         return Ok(result);
     }
 

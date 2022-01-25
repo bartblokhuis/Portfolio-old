@@ -1,7 +1,9 @@
 ﻿using Portfolio.Core.Events;
 using Portfolio.Core.Interfaces.Common;
+using Portfolio.Core.Services.QueuedEmails;
 using Portfolio.Core.Services.Settings;
 using Portfolio.Core.Services.Tokens;
+using Portfolio.Domain.Models;
 using Portfolio.Domain.Models.Blogs;
 using Portfolio.Domain.Models.Settings;
 using System;
@@ -15,20 +17,22 @@ public class OnBlogSubscriberEvent : IConsumer<EntityInsertedEvent<BlogSubscribe
     #region Fields
 
     private readonly ISettingService<BlogSettings> _blogSettings;
+    private readonly ISettingService<EmailSettings> _emailSettings;
     private readonly IMessageTokenProvider _messageTokenProvider;
     private readonly ITokenizer _tokenizer;
-    private readonly IEmailService _emailService;
+    private readonly IQueuedEmailService _queuedEmailService;
 
     #endregion
 
     #region Constructor
 
-    public OnBlogSubscriberEvent(ISettingService<BlogSettings> blogSettings, IMessageTokenProvider messageTokenProvider, ITokenizer tokenizer, IEmailService emailService)
+    public OnBlogSubscriberEvent(ISettingService<BlogSettings> blogSettings, ISettingService<EmailSettings> emailSettings, IMessageTokenProvider messageTokenProvider, ITokenizer tokenizer, IQueuedEmailService queuedEmailService)
     {
         _blogSettings = blogSettings;
+        _emailSettings = emailSettings;
         _messageTokenProvider = messageTokenProvider;
         _tokenizer = tokenizer;
-        _emailService = emailService;
+        _queuedEmailService = queuedEmailService;
     }
 
     #endregion
@@ -37,7 +41,9 @@ public class OnBlogSubscriberEvent : IConsumer<EntityInsertedEvent<BlogSubscribe
     public async Task HandleEventAsync(EntityInsertedEvent<BlogSubscriber, Guid> eventMessage)
     {
         var blogSettings = await _blogSettings.Get();
-        if (blogSettings == null || !blogSettings.IsSendEmailOnSubscribing)
+        var emailSettings = await _emailSettings.Get();
+
+        if (blogSettings == null || !blogSettings.IsSendEmailOnSubscribing || emailSettings == null)
             return;
 
         if (eventMessage?.Entity == null)
@@ -52,7 +58,17 @@ public class OnBlogSubscriberEvent : IConsumer<EntityInsertedEvent<BlogSubscribe
         var subject = _tokenizer.Replace(blogSettings.EmailOnSubscribingSubjectTemplate, tokens, true);
         var body = _tokenizer.Replace(blogSettings.EmailOnSubscribingTemplate, tokens, true);
 
-        await _emailService.SendEmail(subscriber.EmailAddress, subscriber.EmailAddress, subject, body);
+        var queuedEmail = new QueuedEmail
+        {
+            Body = body,
+            Subject = subject,
+            FromName = emailSettings.DisplayName,
+            From = emailSettings.Email,
+            To = subscriber.EmailAddress,
+            ToName = subscriber.EmailAddress,
+        };
+
+        await _queuedEmailService.InsertAsync(queuedEmail);
 
     }
     #endregion

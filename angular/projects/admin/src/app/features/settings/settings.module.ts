@@ -9,6 +9,7 @@ import { FormsModule } from '@angular/forms';
 import { BlogSettingsComponent } from './blog-settings/blog-settings.component';
 import { PublicSiteSettingsComponent } from './public-site-settings/public-site-settings.component';
 import { RichTextEditorModule } from '../../components/rich-text-editor/rich-text-editor.module';
+import { ApiSettingsComponent } from './api-settings/api-settings.component';
 
 
 @NgModule({
@@ -17,7 +18,8 @@ import { RichTextEditorModule } from '../../components/rich-text-editor/rich-tex
     SeoSettingsComponent,
     EmailSettingsComponent,
     BlogSettingsComponent,
-    PublicSiteSettingsComponent
+    PublicSiteSettingsComponent,
+    ApiSettingsComponent
   ],
   imports: [
     CommonModule,

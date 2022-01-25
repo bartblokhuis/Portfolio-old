@@ -47,21 +47,14 @@ public class EmailService : IEmailService
 
         message.Body = multipart;
 
-        try
-        {
-            var client = new SmtpClient();
-            await client.ConnectAsync(emailSettings.Host, emailSettings.Port, emailSettings.EnableSsl);
+        var client = new SmtpClient();
+        await client.ConnectAsync(emailSettings.Host, emailSettings.Port, emailSettings.EnableSsl);
 
-            if (!string.IsNullOrEmpty(emailSettings.Username) && !string.IsNullOrEmpty(emailSettings.Password))
-                await client.AuthenticateAsync(emailSettings.Username, emailSettings.Password);
+        if (!string.IsNullOrEmpty(emailSettings.Username) && !string.IsNullOrEmpty(emailSettings.Password))
+            await client.AuthenticateAsync(emailSettings.Username, emailSettings.Password);
             
-            await client.SendAsync(message);
-            await client.DisconnectAsync(true);
-        }
-        catch (Exception ex)
-        {
-            return false;
-        }
+        await client.SendAsync(message);
+        await client.DisconnectAsync(true);
 
         return true;
     }
