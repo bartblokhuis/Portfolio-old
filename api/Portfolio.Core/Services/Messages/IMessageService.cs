@@ -7,15 +7,15 @@ namespace Portfolio.Core.Services.Messages;
 
 public interface IMessageService
 {
-    Task<IEnumerable<Message>> Get();
+    Task<IEnumerable<Message>> GetAllAsync();
 
-    Task<Message> Create(Message model);
+    Task<Message> InsertAsync(Message model);
 
-    Task<bool> IsAllowed(string ipAddress);
+    Task<bool> IsAllowedAsync(string ipAddress);
 
-    Task<Message> GetById(int messageId);
+    Task<Message> GetByIdAsync(int messageId);
 
-    Task UpdateMessageStatus(Message message, MessageStatus status);
+    Task UpdateMessageStatusAsync(Message message, MessageStatus status);
 
-    Task Delete(Message message);
+    Task DeleteAsync(Message message);
 }
