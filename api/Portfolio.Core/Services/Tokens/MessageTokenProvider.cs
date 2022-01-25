@@ -61,6 +61,7 @@ public class MessageTokenProvider : IMessageTokenProvider
         tokens.Add(new Token("BlogPost.MetaDescription", blogPost.MetaDescription));
         tokens.Add(new Token("BlogPost.CreatedAtUTC", blogPost.CreatedAtUTC.ToShortDateString()));
         tokens.Add(new Token("BlogPost.UpdatedAtUtc", blogPost.UpdatedAtUtc.ToShortDateString()));
+        tokens.Add(new Token("BlogPost.Url", (await GetPublicSiteUrl()) + "blog/" + blogPost.Title));
     }
 
     public async Task AddBlogSubscriberTokensAsync(List<Token> tokens, BlogSubscriber subscriber)
@@ -81,6 +82,18 @@ public class MessageTokenProvider : IMessageTokenProvider
         return;
     }
 
+    public async Task AddBlogPostCommentTokensAsync(List<Token> tokens, Comment comment)
+    {
+        if (tokens == null)
+            tokens = new List<Token>();
+
+        if (comment == null)
+            return;
+
+        tokens.Add(new Token("Comment.Name", comment.Name));
+        tokens.Add(new Token("Comment.Content", comment.Content));
+    }
+
     #endregion
-    
+
 }
