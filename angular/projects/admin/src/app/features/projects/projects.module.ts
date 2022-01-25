@@ -16,6 +16,7 @@ import { ListProjectPicturesComponent } from './pictures/list-project-pictures/l
 import { EditProjectPictureComponent } from './pictures/edit-project-picture/edit-project-picture.component';
 import { AddProjectPictureComponent } from './pictures/add-project-picture/add-project-picture.component';
 import { DeleteProjectPictureComponent } from './pictures/delete-project-picture/delete-project-picture.component';
+import { RichTextEditorModule } from '../../components/rich-text-editor/rich-text-editor.module';
 
 @NgModule({
   declarations: [
@@ -36,6 +37,7 @@ import { DeleteProjectPictureComponent } from './pictures/delete-project-picture
     CommonModule,
     QuillModule,
     FormsModule,
+    RichTextEditorModule,
     RouterModule.forChild(ProjectRoutes),
   ]
 })
