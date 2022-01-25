@@ -10,27 +10,27 @@ public interface IProjectService
 
     Task<IEnumerable<Project>> GetAllPublishedAsync();
 
-    Task<Project> GetById(int id);
+    Task<Project> GetByIdAsync(int id);
 
     Task<IEnumerable<Url>> GetProjectUrlsByIdAsync(int id);
 
     Task<IEnumerable<ProjectPicture>> GetProjectPicturesByIdAsync(int id);
 
-    Task Create(Project model);
+    Task InsertAsync(Project model);
 
-    Task CreateProjectUrlAsync(Project project, Url url);
+    Task InsertProjectUrlAsync(Project project, Url url);
 
-    Task CreateProjectPictureAsync(Project project, Picture picture);
+    Task InsertProjectPictureAsync(Project project, Picture picture);
 
-    Task<Project> Update(Project model);
+    Task<Project> UpdateAsync(Project model);
 
-    Task<Project> UpdateSkills(int projectId, IEnumerable<Skill> skills);
+    Task<Project> UpdateSkillsAsync(int projectId, IEnumerable<Skill> skills);
 
     Task UpdateProjectPictureAsync(ProjectPicture picture);
 
-    Task Delete(int id);
+    Task DeleteAsync(int id);
 
-    Task DeleteUrl(Project project, int urlId);
+    Task DeleteProjectUrlAsync(Project project, int urlId);
 
     Task DeleteProjectPictureAsync(ProjectPicture projectPicture);
 
