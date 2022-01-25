@@ -51,7 +51,7 @@ public class ProjectService : IProjectService
         return projects;
     }
 
-    public async Task<Project> GetById(int id)
+    public async Task<Project> GetByIdAsync(int id)
     {
         var projects = await _projectRepository.GetAllAsync(query => query.Include(x => x.Skills).Include(x => x.ProjectUrls).ThenInclude(x => x.Url).Include(x => x.ProjectPictures.OrderBy(x => x.DisplayNumber)).ThenInclude(x => x.Picture).Where(x => x.Id == id));
         return projects == null ? null : projects.First();
@@ -59,14 +59,14 @@ public class ProjectService : IProjectService
 
     public async Task<IEnumerable<Url>> GetProjectUrlsByIdAsync(int id)
     {
-        var project = await GetById(id);
+        var project = await GetByIdAsync(id);
 
         return project == null ? null : project.ProjectUrls.Select(x => x.Url);
     }
 
     public async Task<IEnumerable<ProjectPicture>> GetProjectPicturesByIdAsync(int id)
     {
-        var project = await GetById(id);
+        var project = await GetByIdAsync(id);
         return project == null ? null : project.ProjectPictures;
     }
 
@@ -74,18 +74,18 @@ public class ProjectService : IProjectService
 
     #region Create
 
-    public async Task Create(Project model)
+    public async Task InsertAsync(Project model)
     {
         await _projectRepository.InsertAsync(model);
     }
 
-    public async Task CreateProjectUrlAsync(Project project, Url url)
+    public async Task InsertProjectUrlAsync(Project project, Url url)
     {
         var projectUrl = new ProjectUrls(project, url);
         await _projectUrlsRepository.InsertAsync(projectUrl);
     }
 
-    public async Task CreateProjectPictureAsync(Project project, Picture picture)
+    public async Task InsertProjectPictureAsync(Project project, Picture picture)
     {
         var projectPicture = new ProjectPicture(project, picture);
         await _projectPictureRepository.InsertAsync(projectPicture);
@@ -95,13 +95,13 @@ public class ProjectService : IProjectService
 
     #region Update
 
-    public async Task<Project> Update(Project model)
+    public async Task<Project> UpdateAsync(Project model)
     {
         await _projectRepository.UpdateAsync(model);
         return model;
     }
 
-    public async Task<Project> UpdateSkills(int projectId, IEnumerable<Skill> skills)
+    public async Task<Project> UpdateSkillsAsync(int projectId, IEnumerable<Skill> skills)
     {
         var project = _projectRepository.Table.Include(x => x.Skills).FirstOrDefault(x => x.Id == projectId);
         if (project == null)
@@ -134,13 +134,13 @@ public class ProjectService : IProjectService
 
     #region Delete
 
-    public async Task Delete(int id)
+    public async Task DeleteAsync(int id)
     {
         await _projectRepository.DeleteAsync(id);
         return;
     }
 
-    public async Task DeleteUrl(Project project, int urlId)
+    public async Task DeleteProjectUrlAsync(Project project, int urlId)
     {
         if (project == null)
             throw new ArgumentNullException(nameof(project));
@@ -149,7 +149,7 @@ public class ProjectService : IProjectService
             return;
 
         project.ProjectUrls = project.ProjectUrls.Where(x => x.UrlId != urlId).ToList();
-        await Update(project);
+        await UpdateAsync(project);
 
         await _urlService.DeleteAsync(urlId);
     }

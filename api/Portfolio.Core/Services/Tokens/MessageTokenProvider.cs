@@ -29,7 +29,7 @@ public class MessageTokenProvider : IMessageTokenProvider
 
     protected async Task<string> GetPublicSiteUrl()
     {
-        var publicSiteSettings = await _publicSiteSettings.Get();
+        var publicSiteSettings = await _publicSiteSettings.GetAsync();
         if(publicSiteSettings == null)
             throw new NullReferenceException(nameof(publicSiteSettings));
 

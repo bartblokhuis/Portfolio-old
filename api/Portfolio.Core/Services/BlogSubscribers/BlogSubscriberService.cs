@@ -47,7 +47,7 @@ public class BlogSubscriberService : IBlogSubscriberService
         return blogSubscribers == null || !blogSubscribers.Any() ? null : blogSubscribers.First();
     }
 
-    public async Task<bool> Exists(string email)
+    public async Task<bool> ExistsAsync(string email)
     {
         var blogSubscribers = await _blogSubscriberRepository.GetAllAsync(query => query.Where(x => x.IsDeleted == false && x.EmailAddress.ToLower() == email.ToLower()));
         return blogSubscribers != null && blogSubscribers.Any();

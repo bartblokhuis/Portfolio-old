@@ -22,13 +22,13 @@ public class SettingsService<T> : ISettingService<T> where T: BaseEntity, ISetti
 
     #region Methods
 
-    public async Task<T> Get()
+    public async Task<T> GetAsync()
     {
         var setting = await _repository.FirstAsync(cache => cache.PrepareKeyForDefaultCache(SettingsDefaults.SettingsCacheKey, typeof(T).Name));
         return setting;
     }
 
-    public async Task Save(T setting)
+    public async Task SaveAsync(T setting)
     {
         if (setting.Id == 0)
             await _repository.InsertAsync(setting);

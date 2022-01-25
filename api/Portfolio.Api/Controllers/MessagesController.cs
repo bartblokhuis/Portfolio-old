@@ -48,7 +48,7 @@ public class MessagesController : ControllerBase
     [HttpGet]
     public async Task<IActionResult> Get()
     {
-        var messages = (await _messageService.Get()).ToListResult();
+        var messages = (await _messageService.GetAllAsync()).ToListResult();
 
         var result = _mapper.Map<ListResult<MessageDto>>(messages);
         result.Succeeded = true;
@@ -61,7 +61,7 @@ public class MessagesController : ControllerBase
     {
         var ipAddress = _webHelper.GetCurrentIpAddress();
 
-        if (!await _messageService.IsAllowed(ipAddress))
+        if (!await _messageService.IsAllowedAsync(ipAddress))
             return Ok(Result.Fail("Please wait 2 minuted between messages"));
 
         var message = new Message
@@ -78,19 +78,19 @@ public class MessagesController : ControllerBase
             IsDeleted = false
         };
 
-        await _messageService.Create(message);
+        await _messageService.InsertAsync(message);
         return Ok(Result.Success("Created the message"));
     }
 
     [HttpPut]
     public async Task<IActionResult> UpdateMessageStatus(UpdateMessageStatusDto model)
     {
-        var message = await _messageService.GetById(model.Id);
+        var message = await _messageService.GetByIdAsync(model.Id);
         if (message == null)
             return Ok(await Result.FailAsync("Message not found"));
         
 
-        await _messageService.UpdateMessageStatus(message, model.MessageStatus);
+        await _messageService.UpdateMessageStatusAsync(message, model.MessageStatus);
 
         var result = await Result<MessageDto>.SuccessAsync(_mapper.Map<MessageDto>(message));
         return Ok(result);
@@ -99,11 +99,11 @@ public class MessagesController : ControllerBase
     [HttpDelete]
     public async Task<IActionResult> Delete(int id)
     {
-        var message = await _messageService.GetById(id);
+        var message = await _messageService.GetByIdAsync(id);
         if (message == null)
             return Ok(await Result.FailAsync("Message not found"));
 
-        await _messageService.Delete(message);
+        await _messageService.DeleteAsync(message);
         return Ok(await Result.SuccessAsync("Message removed"));
     }
 

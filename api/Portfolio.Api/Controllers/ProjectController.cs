@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using Portfolio.Core.Interfaces;
+using Portfolio.Core.Services.Pictures;
 using Portfolio.Core.Services.Projects;
 using Portfolio.Core.Services.Skills;
 using Portfolio.Domain.Dtos.Projects;
@@ -81,7 +82,7 @@ public class ProjectController : ControllerBase
     [HttpGet("GetById")]
     public async Task<IActionResult> GetById(int id)
     {
-        var project = (await _projectService.GetById(id));
+        var project = (await _projectService.GetByIdAsync(id));
 
         var result = await Result<ProjectDto>.SuccessAsync(_mapper.Map<ProjectDto>(project));
         result.Succeeded = true;
@@ -114,7 +115,7 @@ public class ProjectController : ControllerBase
     public async Task<IActionResult> Create(CreateUpdateProject model)
     {
         var project = _mapper.Map<Project>(model);
-        await _projectService.Create(project);
+        await _projectService.InsertAsync(project);
 
         var result = await Result<ProjectDto>.SuccessAsync(_mapper.Map<ProjectDto>(project));
         return Ok(result);
@@ -126,12 +127,12 @@ public class ProjectController : ControllerBase
         if(model == null)
             throw new ArgumentNullException(nameof(model));
 
-        var project = await _projectService.GetById(model.ProjectId);
+        var project = await _projectService.GetByIdAsync(model.ProjectId);
         if (project == null)
             return Ok(await Result.FailAsync("Project not found"));
 
         var url = _mapper.Map<Url>(model);
-        await _projectService.CreateProjectUrlAsync(project, url);
+        await _projectService.InsertProjectUrlAsync(project, url);
 
         var result = await Result.SuccessAsync();
         return Ok(result);
@@ -143,18 +144,18 @@ public class ProjectController : ControllerBase
         if (model == null)
             throw new ArgumentNullException(nameof(model));
 
-        var project = await _projectService.GetById(model.ProjectId);
+        var project = await _projectService.GetByIdAsync(model.ProjectId);
         if (project == null)
             return Ok(await Result.FailAsync("Project not found"));
 
         if (project.ProjectPictures != null && project.ProjectPictures.Any(x => x.PictureId == model.PictureId))
             return Ok(await Result.FailAsync("Picture has already been added to the project"));
 
-        var picture = await _pictureService.GetById(model.PictureId);
+        var picture = await _pictureService.GetByIdAsync(model.PictureId);
         if (picture == null)
             return Ok(await Result.FailAsync("Picture not found"));
 
-        await _projectService.CreateProjectPictureAsync(project, picture);
+        await _projectService.InsertProjectPictureAsync(project, picture);
         var result = await Result.SuccessAsync();
         return Ok(result);
     }
@@ -167,7 +168,7 @@ public class ProjectController : ControllerBase
     public async Task<IActionResult> Update(CreateUpdateProject model)
     {
         var project = _mapper.Map<Project>(model);
-        project = await _projectService.Update(project);
+        project = await _projectService.UpdateAsync(project);
 
         if (project.Skills != null)
             foreach (var skill in project.Skills)
@@ -180,8 +181,8 @@ public class ProjectController : ControllerBase
     [HttpPut("UpdateSkills")]
     public async Task<IActionResult> UpdateSkills(UpdateProjectSkills model)
     {
-        var skills = await _skillService.GetSkillsByIds(model.SkillIds);
-        var project = await _projectService.UpdateSkills(model.ProjectId, skills);
+        var skills = await _skillService.GetSkillsByIdsAsync(model.SkillIds);
+        var project = await _projectService.UpdateSkillsAsync(model.ProjectId, skills);
 
         if (project == null)
             BadRequest("Project not found");
@@ -196,7 +197,7 @@ public class ProjectController : ControllerBase
     [HttpPut("Pictures/")]
     public async Task<IActionResult> UpdatePicture(UpdateProjectPictureDto model)
     {
-        var project = await _projectService.GetById(model.ProjectId);
+        var project = await _projectService.GetByIdAsync(model.ProjectId);
         if (project == null)
             return Ok(await Result.FailAsync("Project not found"));
 
@@ -212,7 +213,7 @@ public class ProjectController : ControllerBase
             if (project.ProjectPictures != null && project.ProjectPictures.Any(x => x.PictureId == model.NewPictureId))
                 return Ok(await Result.FailAsync("Picture has already been added to the project"));
 
-            var picture = await _pictureService.GetById(model.NewPictureId);
+            var picture = await _pictureService.GetByIdAsync(model.NewPictureId);
             if (picture == null)
                 return Ok(await Result.FailAsync("Picture not found"));
 
@@ -233,7 +234,7 @@ public class ProjectController : ControllerBase
     [HttpDelete]
     public async Task<IActionResult> Delete(int id)
     {
-        await _projectService.Delete(id);
+        await _projectService.DeleteAsync(id);
 
         return Ok(await Result.SuccessAsync("Removed project"));
     }
@@ -241,18 +242,18 @@ public class ProjectController : ControllerBase
     [HttpDelete("Url/Delete")]
     public async Task<IActionResult> DeleteURL(int projectId, int urlId)
     {
-        var project = await _projectService.GetById(projectId);
+        var project = await _projectService.GetByIdAsync(projectId);
         if(project == null)
             return Ok(await Result.FailAsync("Project not found"));
 
-        await _projectService.DeleteUrl(project, urlId);
+        await _projectService.DeleteProjectUrlAsync(project, urlId);
         return Ok(await Result.SuccessAsync("Removed project url"));
     }
 
     [HttpDelete("Pictures/")]
     public async Task<IActionResult> DeletePicture(int projectId, int pictureId)
     {
-        var project = await _projectService.GetById(projectId);
+        var project = await _projectService.GetByIdAsync(projectId);
         if (project == null)
             return Ok(await Result.FailAsync("Project not found"));
 

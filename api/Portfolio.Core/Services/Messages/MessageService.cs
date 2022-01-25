@@ -28,35 +28,35 @@ public class MessageService : IMessageService
 
         #region Methods
 
-        public async Task<Message> Create(Message message)
+        public async Task<Message> InsertAsync(Message message)
         {
             await _messageRepository.InsertAsync(message);
             return message;
         }
 
-        public async Task<IEnumerable<Message>> Get()
+        public async Task<IEnumerable<Message>> GetAllAsync()
         {
             var messages = await _messageRepository.GetAllAsync(includeDeleted: false);
             return messages.OrderByDescending(x => x.CreatedAtUTC);
         }
 
-        public Task<bool> IsAllowed(string ipAddress)
+        public Task<bool> IsAllowedAsync(string ipAddress)
         {
             var minTime = DateTime.UtcNow.AddMinutes(-2);
             return _messageRepository.Table.Where(x => x.IpAddress == ipAddress).AllAsync(x => x.CreatedAtUTC <= minTime);
         }
 
-        public Task<Message> GetById(int messageId)
+        public Task<Message> GetByIdAsync(int messageId)
         {
             return _messageRepository.GetByIdAsync(messageId);
         }
 
-        public Task Delete(Message message)
+        public Task DeleteAsync(Message message)
         {
             return _messageRepository.DeleteAsync(message);
         }
 
-        public Task UpdateMessageStatus(Message message, MessageStatus status)
+        public Task UpdateMessageStatusAsync(Message message, MessageStatus status)
         {
             message.MessageStatus = status;
             return _messageRepository.UpdateAsync(message);

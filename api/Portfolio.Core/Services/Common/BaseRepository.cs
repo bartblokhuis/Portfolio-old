@@ -186,7 +186,7 @@ public class BaseRepository<TEntity, TKey, TDbContext> : IBaseRepository<TEntity
 
     #endregion
 
-    #region Create
+    #region Insert
 
     public async Task InsertAsync(TEntity entity)
     {

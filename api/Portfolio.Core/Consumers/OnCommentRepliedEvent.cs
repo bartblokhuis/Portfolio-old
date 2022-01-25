@@ -47,8 +47,8 @@ public class OnCommentRepliedEvent : IConsumer<EntityInsertedEvent<Comment, int>
     #region Methods
     public async Task HandleEventAsync(EntityInsertedEvent<Comment, int> eventMessage)
     {
-        var blogSettings = await _blogSettings.Get();
-        var emailSettings = await _emailSettings.Get();
+        var blogSettings = await _blogSettings.GetAsync();
+        var emailSettings = await _emailSettings.GetAsync();
 
         if (blogSettings == null || !blogSettings.IsSendEmailOnCommentReply || emailSettings == null)
             return;
@@ -56,7 +56,7 @@ public class OnCommentRepliedEvent : IConsumer<EntityInsertedEvent<Comment, int>
         if (eventMessage?.Entity?.ParentCommentId == null)
             return;
 
-        var parentComment = await _blogPostCommentService.GetParentComment(eventMessage.Entity);
+        var parentComment = await _blogPostCommentService.GetParentCommentAsync(eventMessage.Entity);
         if (parentComment == null || string.IsNullOrEmpty(parentComment.Email))
             return;
 
@@ -65,7 +65,7 @@ public class OnCommentRepliedEvent : IConsumer<EntityInsertedEvent<Comment, int>
 
         if (parentComment.BlogPostId.HasValue)
         {
-            var blogPost = await _blogPostService.GetById((int)parentComment.BlogPostId, true);
+            var blogPost = await _blogPostService.GetByIdAsync((int)parentComment.BlogPostId, true);
 
             if (blogPost != null)
                 await _messageTokenProvider.AddBlogTokensAsync(tokens, blogPost);

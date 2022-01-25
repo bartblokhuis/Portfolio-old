@@ -47,7 +47,7 @@ public class SkillGroupController : ControllerBase
     [HttpGet]
     public async Task<IActionResult> Get()
     {
-        var skillGroups = (await _skillGroupService.GetAll()).ToListResult();
+        var skillGroups = (await _skillGroupService.GetAllAsync()).ToListResult();
 
         if(skillGroups.Data != null)
             foreach (var skill in skillGroups.Data.SelectMany(x => x.Skills))
@@ -64,11 +64,11 @@ public class SkillGroupController : ControllerBase
         if (!ModelState.IsValid)
             throw new Exception("Invalid model");
 
-        if (await _skillGroupService.IsExistingTitle(model.Title))
+        if (await _skillGroupService.IsExistingTitleAsync(model.Title))
             return Ok(await Result.FailAsync("There is already a skill group with the same title"));
 
         var skillGroup = _mapper.Map<SkillGroup>(model);
-        await _skillGroupService.Insert(skillGroup);
+        await _skillGroupService.InsertAsync(skillGroup);
 
         var result = await Result<SkillGroupDto>.SuccessAsync(_mapper.Map<SkillGroupDto>(skillGroup));
         return Ok(result);
@@ -80,16 +80,16 @@ public class SkillGroupController : ControllerBase
         if (!ModelState.IsValid)
             throw new Exception("Invalid model");
 
-        if (!await _skillGroupService.Exists(model.Id))
+        if (!await _skillGroupService.ExistsAsync(model.Id))
             return Ok(await Result.FailAsync($"No skill group for id: {model.Id} found"));
 
-        if (await _skillGroupService.IsExistingTitle(model.Title, model.Id))
+        if (await _skillGroupService.IsExistingTitleAsync(model.Title, model.Id))
             return Ok(await Result.FailAsync("There is already a skill group with the same title"));
 
         var skillGroup = _mapper.Map<SkillGroup>(model);
-        await _skillGroupService.Update(skillGroup);
+        await _skillGroupService.UpdateAsync(skillGroup);
         
-        skillGroup.Skills = (await _skillService.GetBySkillGroupId(skillGroup.Id)).ToList();
+        skillGroup.Skills = (await _skillService.GetBySkillGroupIdAsync(skillGroup.Id)).ToList();
 
         var result = await Result<SkillGroupDto>.SuccessAsync(_mapper.Map<SkillGroupDto>(skillGroup));
         return Ok(result);
@@ -98,11 +98,11 @@ public class SkillGroupController : ControllerBase
     [HttpDelete]
     public async Task<IActionResult> Delete(int id)
     {
-        var skillGroup = await _skillGroupService.GetById(id);
+        var skillGroup = await _skillGroupService.GetByIdAsync(id);
         if (skillGroup == null)
             return Ok(await Result.FailAsync("Skill group not found"));
 
-        await _skillGroupService.Delete(skillGroup);
+        await _skillGroupService.DeleteAsync(skillGroup);
 
         var result = await Result.SuccessAsync("Removed the skill group");
         return Ok(result);

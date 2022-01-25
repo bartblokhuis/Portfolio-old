@@ -6,6 +6,7 @@ using Portfolio.Core.Helpers;
 using Portfolio.Core.Interfaces;
 using Portfolio.Core.Services.Blogs;
 using Portfolio.Core.Services.Comments;
+using Portfolio.Core.Services.Pictures;
 using Portfolio.Domain.Dtos.BlogPosts;
 using Portfolio.Domain.Dtos.Comments;
 using Portfolio.Domain.Models.Blogs;
@@ -74,7 +75,7 @@ namespace Portfolio.Controllers
             if (includeUnPublished && !_httpContextAccessor.HttpContext.User.Identity.IsAuthenticated)
                 return Ok(await Result.FailAsync("Unauthorized"));
 
-            var post = (await _blogPostService.GetById(id, includeUnPublished));
+            var post = (await _blogPostService.GetByIdAsync(id, includeUnPublished));
 
             if (post == null)
                 return Ok(await Result.FailAsync("Blog post not found"));
@@ -90,7 +91,7 @@ namespace Portfolio.Controllers
             if (includeUnPublished && !_httpContextAccessor.HttpContext.User.Identity.IsAuthenticated)
                 return Ok(await Result.FailAsync("Unauthorized"));
 
-            var post = (await _blogPostService.GetByTitle(title, includeUnPublished));
+            var post = (await _blogPostService.GetByTitleAsync(title, includeUnPublished));
 
             if (post == null)
                 return Ok(await Result.FailAsync("Blog post not found"));
@@ -102,7 +103,7 @@ namespace Portfolio.Controllers
         [HttpGet("Comments/GetByBlogPostId")]
         public async Task<IActionResult> GetCommentsByBlogPostId(int blogPostId)
         {
-            var post = (await _blogPostService.GetById(blogPostId, true));
+            var post = (await _blogPostService.GetByIdAsync(blogPostId, true));
 
             if (post == null)
                 return Ok(await Result.FailAsync("Blog post not found"));
@@ -126,11 +127,11 @@ namespace Portfolio.Controllers
             if (!ModelState.IsValid)
                 throw new Exception("Invalid model");
 
-            if (await _blogPostService.IsExistingTitle(dto.Title))
+            if (await _blogPostService.IsExistingTitleAsync(dto.Title))
                 return Ok(await Result.FailAsync("There is already a blog post with the same title"));
 
             var blogPost = _mapper.Map<BlogPost>(dto);
-            await _blogPostService.Create(blogPost);
+            await _blogPostService.InsertAsync(blogPost);
 
             var result = await Result<ListBlogPostDto>.SuccessAsync(_mapper.Map<ListBlogPostDto>(blogPost));
             return Ok(result);
@@ -163,7 +164,7 @@ namespace Portfolio.Controllers
             //Ensure that the blog post exists.
             if(dto.BlogPostId != null)
             {
-                var blogPost = await _blogPostService.GetById((int)dto.BlogPostId, includeUnPublished);
+                var blogPost = await _blogPostService.GetByIdAsync((int)dto.BlogPostId, includeUnPublished);
                 if (blogPost == null)
                     return Ok(await Result.FailAsync($"No blog post with id: {dto.BlogPostId} found"));
             }
@@ -181,7 +182,7 @@ namespace Portfolio.Controllers
             //Currently there is only one user (admin), therefore if client is authenticated it must be the author.
             comment.IsAuthor = _httpContextAccessor.HttpContext.User.Identity.IsAuthenticated;
 
-            await _blogPostCommentService.CreateAsync(comment);
+            await _blogPostCommentService.InsertAsync(comment);
             var result = await Result<CommentDto>.SuccessAsync(_mapper.Map<CommentDto>(comment));
             return Ok(result);
         }
@@ -196,15 +197,15 @@ namespace Portfolio.Controllers
             if (!ModelState.IsValid)
                 throw new Exception("Invalid model");
 
-            var blogPost = await _blogPostService.GetById(dto.Id, true);
+            var blogPost = await _blogPostService.GetByIdAsync(dto.Id, true);
             if (blogPost == null)
                 return Ok(await Result.FailAsync($"No blog post with id: {dto.Id} found"));
 
-            if (await _blogPostService.IsExistingTitle(dto.Title, dto.Id))
+            if (await _blogPostService.IsExistingTitleAsync(dto.Title, dto.Id))
                 return Ok(await Result.FailAsync("There is already a blog post with the same title"));
 
             _mapper.Map(dto, blogPost);
-            await _blogPostService.Update(blogPost);
+            await _blogPostService.UpdateAsync(blogPost);
 
             var result = await Result<ListBlogPostDto>.SuccessAsync(_mapper.Map<ListBlogPostDto>(blogPost));
             return Ok(result);
@@ -216,18 +217,18 @@ namespace Portfolio.Controllers
             if (!ModelState.IsValid)
                 throw new Exception("Invalid model");
 
-            var blogPost = await _blogPostService.GetById(dto.BlogPostId, true);
+            var blogPost = await _blogPostService.GetByIdAsync(dto.BlogPostId, true);
             if (blogPost == null)
                 return Ok(await Result.FailAsync($"No blog post with id: {dto.BlogPostId} found"));
 
-            var picture = await _pictureService.GetById(dto.PictureId);
+            var picture = await _pictureService.GetByIdAsync(dto.PictureId);
             if (picture == null)
                 return Ok(await Result.FailAsync($"No picture with id: {dto.PictureId} found"));
 
             blogPost.BannerPicture = picture;
             blogPost.BannerPictureId = dto.PictureId;
 
-            await _blogPostService.Update(blogPost);
+            await _blogPostService.UpdateAsync(blogPost);
 
             var result = await Result<BlogPostDto>.SuccessAsync(_mapper.Map<BlogPostDto>(blogPost));
             return Ok(result);
@@ -239,18 +240,18 @@ namespace Portfolio.Controllers
             if (!ModelState.IsValid)
                 throw new Exception("Invalid model");
 
-            var blogPost = await _blogPostService.GetById(dto.BlogPostId, true);
+            var blogPost = await _blogPostService.GetByIdAsync(dto.BlogPostId, true);
             if (blogPost == null)
                 return Ok(await Result.FailAsync($"No blog post with id: {dto.BlogPostId} found"));
 
-            var picture = await _pictureService.GetById(dto.PictureId);
+            var picture = await _pictureService.GetByIdAsync(dto.PictureId);
             if (picture == null)
                 return Ok(await Result.FailAsync($"No picture with id: {dto.PictureId} found"));
 
             blogPost.Thumbnail = picture;
             blogPost.ThumbnailId = dto.PictureId;
 
-            await _blogPostService.Update(blogPost);
+            await _blogPostService.UpdateAsync(blogPost);
 
             var result = await Result<BlogPostDto>.SuccessAsync(_mapper.Map<BlogPostDto>(blogPost));
             return Ok(result);
@@ -263,11 +264,11 @@ namespace Portfolio.Controllers
         [HttpDelete]
         public async Task<IActionResult> Delete(int id)
         {
-            var blogPost = await _blogPostService.GetById(id, true);
+            var blogPost = await _blogPostService.GetByIdAsync(id, true);
             if (blogPost == null)
                 return Ok(await Result.FailAsync("Blog post not found"));
 
-            await _blogPostService.Delete(blogPost);
+            await _blogPostService.DeleteAsync(blogPost);
 
             var result = await Result.SuccessAsync("Removed the blog post");
             return Ok(result);

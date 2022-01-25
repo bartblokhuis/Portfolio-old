@@ -42,11 +42,11 @@ public class MessageReceivedEvent : IConsumer<EntityInsertedEvent<Message, int>>
         if (eventMessage == null || eventMessage.Entity == null)
             return;
 
-        var emailSettings = await _emailSettings.Get();
+        var emailSettings = await _emailSettings.GetAsync();
         if (emailSettings == null)
             return;
 
-        var messageSettings = await _messageSettings.Get();
+        var messageSettings = await _messageSettings.GetAsync();
         if (messageSettings == null || (!messageSettings.IsSendSiteOwnerEmail && !messageSettings.IsSendConfirmationEmail))
             return;
 

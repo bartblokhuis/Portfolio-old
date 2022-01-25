@@ -26,7 +26,7 @@ public class SkillGroupService : ISkillGroupService
 
     #region Methods
 
-    public async Task<IEnumerable<SkillGroup>> GetAll()
+    public async Task<IEnumerable<SkillGroup>> GetAllAsync()
     {
         var skillGroups = await _skillGroupRepository.GetAllAsync(query => query.OrderByDescending(x => x.DisplayNumber).Include(x => x.Skills),
             cache => cache.PrepareKeyForDefaultCache(SkillGroupDefaults.AllSkillGroupsCacheKey));
@@ -34,46 +34,42 @@ public class SkillGroupService : ISkillGroupService
         return skillGroups;
     }
 
-    public async Task<SkillGroup> GetById(int id)
+    public async Task<SkillGroup> GetByIdAsync(int id)
     {
         var skillGroup = await _skillGroupRepository.GetByIdAsync(id);
         return skillGroup;
     }
 
-    public async Task Insert(SkillGroup skillGroupDto)
+    public async Task InsertAsync(SkillGroup skillGroupDto)
     {
         await _skillGroupRepository.InsertAsync(skillGroupDto);
     }
 
-    public async Task Update(SkillGroup skillGroupDto)
+    public async Task UpdateAsync(SkillGroup skillGroupDto)
     {
         await _skillGroupRepository.UpdateAsync(skillGroupDto);
     }
 
-    public async Task Update(IQueryable<SkillGroup> skillGroupsDto)
+    public async Task UpdateAsync(IQueryable<SkillGroup> skillGroupsDto)
     {
         await _skillGroupRepository.UpdateRangeAsync(skillGroupsDto);
     }
         
-    public async Task Delete(SkillGroup skillGroup)
+    public async Task DeleteAsync(SkillGroup skillGroup)
     {
         await _skillGroupRepository.DeleteAsync(skillGroup);
     }
 
-    #region Utils
-
-    public Task<bool> IsExistingTitle(string title, int idToIgnore = 0)
+    public Task<bool> IsExistingTitleAsync(string title, int idToIgnore = 0)
     {
-        return _skillGroupRepository.Table.AnyAsync(skillGroup => skillGroup.Title.ToLower() == title.ToLower() 
+        return _skillGroupRepository.Table.AnyAsync(skillGroup => skillGroup.Title.ToLower() == title.ToLower()
                 && (idToIgnore == 0 || skillGroup.Id == idToIgnore));
     }
 
-    public Task<bool> Exists(int id)
+    public Task<bool> ExistsAsync(int id)
     {
         return _skillGroupRepository.Table.AnyAsync(skillGroup => skillGroup.Id == id);
     }
-
-    #endregion
 
     #endregion
 }

@@ -8,7 +8,7 @@ using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
-namespace Portfolio.Core.Services
+namespace Portfolio.Core.Services.Pictures
 {
     public class PictureService : IPictureService
     {
@@ -31,25 +31,25 @@ namespace Portfolio.Core.Services
 
         #region Methods
 
-        public async Task<IEnumerable<Picture>> GetAll()
+        public async Task<IEnumerable<Picture>> GetAllAsync()
         {
             var pictures = await _pictureRepository.GetAllAsync();
             return pictures;
         }
 
-        public async Task<Picture> GetById(int pictureId)
+        public async Task<Picture> GetByIdAsync(int pictureId)
         {
             var picture = await _pictureRepository.GetByIdAsync(pictureId);
             return picture;
         }
 
-        public async Task<Picture> CreatePictureFromFile(IFormFile file, string titleAttribute, string altAttribute)
+        public async Task<Picture> CreatePictureFromFileAsync(IFormFile file, string titleAttribute, string altAttribute)
         {
             var errorMessage = _uploadImageHelper.ValidateImage(file);
             if (!string.IsNullOrEmpty(errorMessage))
                 throw new Exception(errorMessage);
 
-            var path = await _uploadImageHelper.UploadImage(file);
+            var path = await _uploadImageHelper.UploadImageAsync(file);
 
             var picture = new Picture
             {
@@ -63,7 +63,7 @@ namespace Portfolio.Core.Services
             return picture;
         }
 
-        public async Task<Picture> UpdatePictureFromFile(Picture picture, IFormFile file, string titleAttribute, string altAttribute)
+        public async Task<Picture> UpdatePictureFromFileAsync(Picture picture, IFormFile file, string titleAttribute, string altAttribute)
         {
             if(picture == null)
                 throw new ArgumentNullException(nameof(picture));
@@ -74,7 +74,7 @@ namespace Portfolio.Core.Services
                 if (!string.IsNullOrEmpty(errorMessage))
                     throw new Exception(errorMessage);
 
-                var path = await _uploadImageHelper.UploadImage(file);
+                var path = await _uploadImageHelper.UploadImageAsync(file);
                 picture.Path = path;
             }
             
@@ -86,7 +86,7 @@ namespace Portfolio.Core.Services
             return picture;
         }
 
-        public async Task<string> Delete(Picture picture)
+        public async Task<string> DeleteAsync(Picture picture)
         {
             if (picture == null)
                 throw new ArgumentNullException(nameof(picture));

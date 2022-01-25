@@ -5,7 +5,7 @@ namespace Portfolio.Core.Services.Settings;
 
 public interface ISettingService<T> where T : BaseEntity, ISetting
 {
-    Task<T> Get();
+    Task<T> GetAsync();
 
-    Task Save(T settings);
+    Task SaveAsync(T settings);
 }

@@ -29,7 +29,7 @@ public class BlogPostCommentService : IBlogPostCommentService
         return _commentRepository.GetByIdAsync(id);
     }
 
-    public async Task<Comment> GetParentComment(Comment comment)
+    public async Task<Comment> GetParentCommentAsync(Comment comment)
     {
         if (comment == null || !comment.ParentCommentId.HasValue)
             return null;
@@ -43,7 +43,7 @@ public class BlogPostCommentService : IBlogPostCommentService
         return parentComment == null ? null : parentComment.FirstOrDefault();
     }
 
-    public Task CreateAsync(Comment comment)
+    public Task InsertAsync(Comment comment)
     {
         return _commentRepository.InsertAsync(comment);
     }

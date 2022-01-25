@@ -140,7 +140,7 @@ public class BlogSubscriberController : ControllerBase
         if(string.IsNullOrEmpty(dto.EmailAddress) || !CommonHelper.IsValidEmail(dto.EmailAddress))
             return Ok(await Result.FailAsync("Please enter a real email address"));
 
-        if (await _blogSubscriberService.Exists(dto.EmailAddress))
+        if (await _blogSubscriberService.ExistsAsync(dto.EmailAddress))
             return Ok(await Result.FailAsync("Email is already subscribed"));
 
         var blogSubscriber = _mapper.Map<BlogSubscriber>(dto);

@@ -46,7 +46,7 @@ public class SkillController : ControllerBase
     [HttpGet]
     public async Task<IActionResult> Get()
     {
-        var skills = (await _skillService.GetAll()).ToListResult();
+        var skills = (await _skillService.GetAllAsync()).ToListResult();
 
         var result = _mapper.Map<ListResult<SkillDto>>(skills);
         return Ok(result);
@@ -56,7 +56,7 @@ public class SkillController : ControllerBase
     [HttpGet("GetBySkillGroupId/{skillGroupId}")]
     public async Task<IActionResult> GetBySkillGroupId(int skillGroupId)
     {
-        var skills = (await _skillService.GetBySkillGroupId(skillGroupId)).ToListResult();
+        var skills = (await _skillService.GetBySkillGroupIdAsync(skillGroupId)).ToListResult();
 
         var result = _mapper.Map<ListResult<SkillDto>>(skills);
         return Ok(result);
@@ -68,14 +68,14 @@ public class SkillController : ControllerBase
         if (!ModelState.IsValid)
             return Ok(await Result.FailAsync("Invalid model"));
 
-        if (!await _skillGroupService.Exists(model.SkillGroupId))
+        if (!await _skillGroupService.ExistsAsync(model.SkillGroupId))
             return Ok(await Result.FailAsync("Skill group not found"));
 
-        if (await _skillService.IsExistingSkill(model.Name, model.SkillGroupId))
+        if (await _skillService.IsExistingSkillAsync(model.Name, model.SkillGroupId))
             return Ok(await Result.FailAsync("There already is a skill with the same name"));
 
         var skill = _mapper.Map<Skill>(model);
-        await _skillService.Insert(skill);
+        await _skillService.InsertAsync(skill);
 
         var result = await Result<SkillDto>.SuccessAsync(_mapper.Map<SkillDto>(skill));
         return Ok(result);
@@ -84,7 +84,7 @@ public class SkillController : ControllerBase
     [HttpPut("SaveSkillImage/{skillId}")]
     public async Task<IActionResult> SaveSkillImage(int skillId, IFormFile icon)
     {
-        var skill = await _skillService.GetById(skillId);
+        var skill = await _skillService.GetByIdAsync(skillId);
         if (skill == null)
             return Ok(await Result.FailAsync("No skill found with the provided id"));
 
@@ -92,8 +92,8 @@ public class SkillController : ControllerBase
         if (!string.IsNullOrEmpty(errorMessage))
             return Ok(await Result.FailAsync(errorMessage));
 
-        skill.IconPath = await _uploadImageHelper.UploadImage(icon);
-        await _skillService.Update(skill);
+        skill.IconPath = await _uploadImageHelper.UploadImageAsync(icon);
+        await _skillService.UpdateAsync(skill);
 
         var result = await Result<SkillDto>.SuccessAsync(_mapper.Map<SkillDto>(skill));
         return Ok(result);
@@ -105,20 +105,20 @@ public class SkillController : ControllerBase
         if (!ModelState.IsValid)
             return Ok(await Result.FailAsync("Invalid model"));
 
-        var skill = await _skillService.GetById(model.Id);
+        var skill = await _skillService.GetByIdAsync(model.Id);
         if (skill == null)
             return Ok(await Result.FailAsync("Skill not found"));
 
-        if (!await _skillGroupService.Exists(model.SkillGroupId))
+        if (!await _skillGroupService.ExistsAsync(model.SkillGroupId))
             return Ok(await Result.FailAsync("Skill group not found"));
 
-        if (await _skillService.IsExistingSkill(model.Name, model.SkillGroupId, skill))
+        if (await _skillService.IsExistingSkillAsync(model.Name, model.SkillGroupId, skill))
             return Ok(await Result.FailAsync("There already is a skill with the same name"));
 
         model.IconPath = skill.IconPath;
 
         _mapper.Map(model, skill);
-        await _skillService.Update(skill);
+        await _skillService.UpdateAsync(skill);
 
         var result = await Result<SkillDto>.SuccessAsync(_mapper.Map<SkillDto>(skill));
         return Ok(result);
@@ -127,10 +127,10 @@ public class SkillController : ControllerBase
     [HttpDelete]
     public async Task<IActionResult> Delete(int id)
     {
-        if (!await _skillService.Exists(id))
+        if (!await _skillService.ExistsAsync(id))
             return Ok(await Result.FailAsync("Skill not found"));
 
-        await _skillService.Delete(id);
+        await _skillService.DeleteAsync(id);
 
         return Ok(await Result.SuccessAsync("Removed the skill"));
     }

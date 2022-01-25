@@ -31,7 +31,7 @@ public class EmailService : IEmailService
     public async Task<bool> SendEmail(string toName, string toEmailAddress, string subject, string body, EmailSettings emailSettings = null)
     {
         if(emailSettings == null)
-            emailSettings = await _emailSettingsService.Get();
+            emailSettings = await _emailSettingsService.GetAsync();
 
         var toAddress = new MailboxAddress(toName, toEmailAddress);
         var message = new MimeMessage();
