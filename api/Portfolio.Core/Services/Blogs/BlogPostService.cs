@@ -39,7 +39,7 @@ public class BlogPostService : IBlogPostService
             cache => cache.PrepareKeyForDefaultCache(BlogPostDefaults.PublishedBlogPostsCacheKey));
     }
 
-    public async Task<BlogPost> GetById(int id, bool includeUnPublished = false)
+    public async Task<BlogPost> GetByIdAsync(int id, bool includeUnPublished = false)
     {
         var blogPosts = await _blogPostRepository.GetAllAsync(query => query
             .Include(x => x.Thumbnail)
@@ -62,7 +62,7 @@ public class BlogPostService : IBlogPostService
         return blogPost;
     }
 
-    public async Task<BlogPost> GetByTitle(string title, bool includeUnPublished = false)
+    public async Task<BlogPost> GetByTitleAsync(string title, bool includeUnPublished = false)
     {
         //TODO: Add support for more child comments.
         var blogPosts = await _blogPostRepository.GetAllAsync(query => query
@@ -86,26 +86,22 @@ public class BlogPostService : IBlogPostService
         return blogPost;
     }
 
-    public async Task Create(BlogPost model)
+    public async Task InsertAsync(BlogPost model)
     {
         await _blogPostRepository.InsertAsync(model);
     }
 
-    public async Task Update(BlogPost blogPost)
+    public async Task UpdateAsync(BlogPost blogPost)
     {
         await _blogPostRepository.UpdateAsync(blogPost);
     }
 
-    public async Task Delete(BlogPost blogPost)
+    public async Task DeleteAsync(BlogPost blogPost)
     {
         await _blogPostRepository.DeleteAsync(blogPost);
     }
 
-    #endregion
-
-    #region Utils
-
-    public Task<bool> IsExistingTitle(string title, int idToIgnore = 0)
+    public Task<bool> IsExistingTitleAsync(string title, int idToIgnore = 0)
     {
         return _blogPostRepository.Table.AnyAsync(blogPost => blogPost.Title.ToLower() == title.ToLower()
                 && (idToIgnore == 0 || blogPost.Id != idToIgnore));

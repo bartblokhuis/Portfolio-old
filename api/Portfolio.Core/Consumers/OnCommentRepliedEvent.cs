@@ -65,7 +65,7 @@ public class OnCommentRepliedEvent : IConsumer<EntityInsertedEvent<Comment, int>
 
         if (parentComment.BlogPostId.HasValue)
         {
-            var blogPost = await _blogPostService.GetById((int)parentComment.BlogPostId, true);
+            var blogPost = await _blogPostService.GetByIdAsync((int)parentComment.BlogPostId, true);
 
             if (blogPost != null)
                 await _messageTokenProvider.AddBlogTokensAsync(tokens, blogPost);

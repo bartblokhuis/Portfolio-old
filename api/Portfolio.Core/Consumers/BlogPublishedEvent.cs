@@ -98,7 +98,7 @@ public class BlogPublishedEvent : IConsumer<EntityInsertedEvent<BlogPost, int>>,
         if (blogPost == null || blogPost.Entity == null || !blogPost.Entity.IsPublished)
             return;
 
-        var originalBlogPost = await _blogPostService.GetById(blogPost.Entity.Id, true);
+        var originalBlogPost = await _blogPostService.GetByIdAsync(blogPost.Entity.Id, true);
         if(originalBlogPost == null)
             throw new NullReferenceException(nameof(originalBlogPost));
 
