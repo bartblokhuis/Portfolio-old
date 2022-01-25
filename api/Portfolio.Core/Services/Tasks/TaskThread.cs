@@ -32,7 +32,7 @@ public class TaskThread : IDisposable
 
     static TaskThread()
     {
-        _scheduleTaskUrl = $"{EngineContext.Current.Resolve<ISettingService<ApiSettings>>().Get().Result.ApiUrl.TrimEnd('/')}/scheduletask/runtask";
+        _scheduleTaskUrl = $"{EngineContext.Current.Resolve<ISettingService<ApiSettings>>().GetAsync().Result.ApiUrl.TrimEnd('/')}/scheduletask/runtask";
         _timeout = 30;
     }
 

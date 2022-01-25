@@ -58,7 +58,7 @@ public class SettingsController : Controller
     [AllowAnonymous]
     public async Task<IActionResult> GetGeneralSettings()
     {
-        var settings = await _generalSettings.Get();
+        var settings = await _generalSettings.GetAsync();
 
         var dto = _mapper.Map<GeneralSettingsDto>(settings);
         dto ??= new GeneralSettingsDto();
@@ -70,12 +70,12 @@ public class SettingsController : Controller
     [HttpPost("GeneralSettings")]
     public async Task<IActionResult> SaveGeneralSettings(GeneralSettingsDto model)
     {
-        var originalSettings = await _generalSettings.Get();
+        var originalSettings = await _generalSettings.GetAsync();
 
         originalSettings ??= new GeneralSettings();
         _mapper.Map(model, originalSettings);
 
-        await _generalSettings.Save(originalSettings);
+        await _generalSettings.SaveAsync(originalSettings);
 
         var result = await Result<GeneralSettingsDto>.SuccessAsync(_mapper.Map<GeneralSettingsDto>(originalSettings));
         return Ok(result);
@@ -88,7 +88,7 @@ public class SettingsController : Controller
     [HttpGet("EmailSettings")]
     public async Task<IActionResult> GetEmailSettings()
     {
-        var settings = await _emailSettingsService.Get();
+        var settings = await _emailSettingsService.GetAsync();
 
         //We don't want to send the password in the get method.
         if (settings != null)
@@ -114,12 +114,12 @@ public class SettingsController : Controller
         }
 
 
-        var originalSettings = await _emailSettingsService.Get();
+        var originalSettings = await _emailSettingsService.GetAsync();
 
         originalSettings ??= new EmailSettings();
         _mapper.Map(model, originalSettings);
 
-        await _emailSettingsService.Save(originalSettings);
+        await _emailSettingsService.SaveAsync(originalSettings);
 
         var result = await Result<EmailSettingsDto>.SuccessAsync(_mapper.Map<EmailSettingsDto>(originalSettings));
         return Ok(result);
@@ -133,7 +133,7 @@ public class SettingsController : Controller
     [AllowAnonymous]
     public async Task<IActionResult> GetSeoSettings()
     {
-        var settings = await _seoSettings.Get();
+        var settings = await _seoSettings.GetAsync();
 
         var dto = _mapper.Map<SeoSettingsDto>(settings);
         dto ??= new SeoSettingsDto();
@@ -145,12 +145,12 @@ public class SettingsController : Controller
     [HttpPost("SeoSettings")]
     public async Task<IActionResult> SaveSeoSettings(SeoSettingsDto model)
     {
-        var originalSettings = await _seoSettings.Get();
+        var originalSettings = await _seoSettings.GetAsync();
 
         originalSettings ??= new SeoSettings();
         _mapper.Map(model, originalSettings);
 
-        await _seoSettings.Save(originalSettings);
+        await _seoSettings.SaveAsync(originalSettings);
 
         var result = await Result<SeoSettingsDto>.SuccessAsync(_mapper.Map<SeoSettingsDto>(originalSettings));
         return Ok(result);
@@ -164,7 +164,7 @@ public class SettingsController : Controller
     [AllowAnonymous]
     public async Task<IActionResult> GetBlogSettings()
     {
-        var settings = await _blogSettings.Get();
+        var settings = await _blogSettings.GetAsync();
 
         var dto = _mapper.Map<BlogSettingsDto>(settings);
         dto ??= new BlogSettingsDto();
@@ -176,12 +176,12 @@ public class SettingsController : Controller
     [HttpPost("BlogSettings")]
     public async Task<IActionResult> SaveBlogSettings(BlogSettingsDto model)
     {
-        var originalSettings = await _blogSettings.Get();
+        var originalSettings = await _blogSettings.GetAsync();
 
         originalSettings ??= new BlogSettings();
         _mapper.Map(model, originalSettings);
 
-        await _blogSettings.Save(originalSettings);
+        await _blogSettings.SaveAsync(originalSettings);
 
         var result = await Result<BlogSettingsDto>.SuccessAsync(_mapper.Map<BlogSettingsDto>(originalSettings));
         return Ok(result);
@@ -195,7 +195,7 @@ public class SettingsController : Controller
     [AllowAnonymous]
     public async Task<IActionResult> GetPublicSiteSettings()
     {
-        var settings = await _publicSiteSettings.Get();
+        var settings = await _publicSiteSettings.GetAsync();
 
         var dto = _mapper.Map<PublicSiteSettingsDto>(settings);
         dto ??= new PublicSiteSettingsDto();
@@ -207,12 +207,12 @@ public class SettingsController : Controller
     [HttpPost("PublicSiteSettings")]
     public async Task<IActionResult> SavePublicSiteSettings(PublicSiteSettingsDto model)
     {
-        var originalSettings = await _publicSiteSettings.Get();
+        var originalSettings = await _publicSiteSettings.GetAsync();
 
         originalSettings ??= new PublicSiteSettings();
         _mapper.Map(model, originalSettings);
 
-        await _publicSiteSettings.Save(originalSettings);
+        await _publicSiteSettings.SaveAsync(originalSettings);
 
         var result = await Result<PublicSiteSettingsDto>.SuccessAsync(_mapper.Map<PublicSiteSettingsDto>(originalSettings));
         return Ok(result);
@@ -226,7 +226,7 @@ public class SettingsController : Controller
     [AllowAnonymous]
     public async Task<IActionResult> GetApiSettings()
     {
-        var settings = await _apiSettings.Get();
+        var settings = await _apiSettings.GetAsync();
 
         var dto = _mapper.Map<ApiSettingsDto>(settings);
         dto ??= new ApiSettingsDto();
@@ -238,12 +238,12 @@ public class SettingsController : Controller
     [HttpPost("ApiSettings")]
     public async Task<IActionResult> SaveApiSettings(ApiSettingsDto model)
     {
-        var originalSettings = await _apiSettings.Get();
+        var originalSettings = await _apiSettings.GetAsync();
 
         originalSettings ??= new ApiSettings();
         _mapper.Map(model, originalSettings);
 
-        await _apiSettings.Save(originalSettings);
+        await _apiSettings.SaveAsync(originalSettings);
 
         var result = await Result<ApiSettingsDto>.SuccessAsync(_mapper.Map<ApiSettingsDto>(originalSettings));
         return Ok(result);
@@ -257,7 +257,7 @@ public class SettingsController : Controller
     [AllowAnonymous]
     public async Task<IActionResult> GetMessageSettings()
     {
-        var settings = await _messageSettings.Get();
+        var settings = await _messageSettings.GetAsync();
 
         var dto = _mapper.Map<MessageSettingsDto>(settings);
         dto ??= new MessageSettingsDto();
@@ -269,12 +269,12 @@ public class SettingsController : Controller
     [HttpPost("MessageSettings")]
     public async Task<IActionResult> SaveMessageSettings(MessageSettingsDto model)
     {
-        var originalSettings = await _messageSettings.Get();
+        var originalSettings = await _messageSettings.GetAsync();
 
         originalSettings ??= new MessageSettings();
         _mapper.Map(model, originalSettings);
 
-        await _messageSettings.Save(originalSettings);
+        await _messageSettings.SaveAsync(originalSettings);
 
         var result = await Result<MessageSettingsDto>.SuccessAsync(_mapper.Map<MessageSettingsDto>(originalSettings));
         return Ok(result);

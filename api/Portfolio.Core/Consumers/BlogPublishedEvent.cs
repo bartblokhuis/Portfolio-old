@@ -48,8 +48,8 @@ public class BlogPublishedEvent : IConsumer<EntityInsertedEvent<BlogPost, int>>,
 
     public async Task PublishBlog(BlogPost blogPost)
     {
-        var blogSettings = await _blogSettings.Get();
-        var emailSettings = await _emailSettings.Get();
+        var blogSettings = await _blogSettings.GetAsync();
+        var emailSettings = await _emailSettings.GetAsync();
         if (blogSettings == null || !blogSettings.IsSendEmailOnPublishing || emailSettings == null)
             return;
 

@@ -40,8 +40,8 @@ public class OnBlogSubscriberEvent : IConsumer<EntityInsertedEvent<BlogSubscribe
     #region Methods
     public async Task HandleEventAsync(EntityInsertedEvent<BlogSubscriber, Guid> eventMessage)
     {
-        var blogSettings = await _blogSettings.Get();
-        var emailSettings = await _emailSettings.Get();
+        var blogSettings = await _blogSettings.GetAsync();
+        var emailSettings = await _emailSettings.GetAsync();
 
         if (blogSettings == null || !blogSettings.IsSendEmailOnSubscribing || emailSettings == null)
             return;
