@@ -35,6 +35,7 @@ export class SidebarComponent {
     ]},
     { name: 'System', icon: 'fas fa-server nav-icon', menuItems: [
       { name: 'Email Queue', icon: "far fa-circle nav-icon", path: "/system/email-queue" },
+      { name: 'Schedule tasks', icon: "far fa-circle nav-icon", path: "/system/schedule-tasks" },
     ]}
   ];
 

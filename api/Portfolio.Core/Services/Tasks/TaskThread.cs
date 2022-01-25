@@ -32,7 +32,7 @@ public class TaskThread : IDisposable
 
     static TaskThread()
     {
-        _scheduleTaskUrl = $"{EngineContext.Current.Resolve<ISettingService<ApiSettings>>().Get().Result.ApiUrl.TrimEnd('/')}/scheduletask";
+        _scheduleTaskUrl = $"{EngineContext.Current.Resolve<ISettingService<ApiSettings>>().Get().Result.ApiUrl.TrimEnd('/')}/scheduletask/runtask";
         _timeout = 30;
     }
 
@@ -66,7 +66,7 @@ public class TaskThread : IDisposable
                     client.Timeout = TimeSpan.FromSeconds(_timeout.Value);
 
                 //send post data
-                var dto = new ScheduleTaskDto
+                var dto = new RunScheduleTaskDto
                 {
                     TaskType = taskType
                 };
