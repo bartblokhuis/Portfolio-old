@@ -5,21 +5,21 @@ using System.Threading.Tasks;
 namespace Portfolio.Core.Services.Skills;
 public interface ISkillService
 {
-    Task<IEnumerable<Skill>> GetAll();
+    Task<IEnumerable<Skill>> GetAllAsync();
 
-    Task<IEnumerable<Skill>> GetBySkillGroupId(int skillGroupId);
+    Task<IEnumerable<Skill>> GetBySkillGroupIdAsync(int skillGroupId);
 
-    Task Insert(Skill skillDto);
+    Task InsertAsync(Skill skillDto);
 
-    Task Update(Skill skillDto);
+    Task UpdateAsync(Skill skillDto);
 
-    Task Delete(int id);
+    Task DeleteAsync(int id);
 
-    Task<bool> Exists(int id);
+    Task<bool> ExistsAsync(int id);
 
-    Task<Skill> GetById(int id);
+    Task<Skill> GetByIdAsync(int id);
 
-    Task<bool> IsExistingSkill(string name, int skillGroup, Skill skillToIgnor = null);
+    Task<bool> IsExistingSkillAsync(string name, int skillGroup, Skill skillToIgnor = null);
 
-    Task<IEnumerable<Skill>> GetSkillsByIds(IEnumerable<int> ids);
+    Task<IEnumerable<Skill>> GetSkillsByIdsAsync(IEnumerable<int> ids);
 }

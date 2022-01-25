@@ -180,7 +180,7 @@ public class ProjectController : ControllerBase
     [HttpPut("UpdateSkills")]
     public async Task<IActionResult> UpdateSkills(UpdateProjectSkills model)
     {
-        var skills = await _skillService.GetSkillsByIds(model.SkillIds);
+        var skills = await _skillService.GetSkillsByIdsAsync(model.SkillIds);
         var project = await _projectService.UpdateSkillsAsync(model.ProjectId, skills);
 
         if (project == null)

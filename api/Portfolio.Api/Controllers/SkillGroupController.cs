@@ -89,7 +89,7 @@ public class SkillGroupController : ControllerBase
         var skillGroup = _mapper.Map<SkillGroup>(model);
         await _skillGroupService.UpdateAsync(skillGroup);
         
-        skillGroup.Skills = (await _skillService.GetBySkillGroupId(skillGroup.Id)).ToList();
+        skillGroup.Skills = (await _skillService.GetBySkillGroupIdAsync(skillGroup.Id)).ToList();
 
         var result = await Result<SkillGroupDto>.SuccessAsync(_mapper.Map<SkillGroupDto>(skillGroup));
         return Ok(result);
