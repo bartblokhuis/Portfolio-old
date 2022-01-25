@@ -8,6 +8,7 @@ import { ApiService } from '../api.service';
 import { BlogSettings } from '../../../data/settings/blog-settings';
 import { PublicSiteSettings } from '../../../data/settings/public-site-settings';
 import { ApiSettings } from '../../../data/settings/api-settings';
+import { MessageSettings } from '../../../data/settings/message-settings';
 
 @Injectable({
   providedIn: 'root'
@@ -62,5 +63,13 @@ export class SettingsService {
 
   saveApiSettings(publicSiteSettings: ApiSettings): Observable<Result> {
     return this.apiService.post("Settings/ApiSettings", publicSiteSettings);
+  }
+
+  getMessageSettings(): Observable<Result<MessageSettings>> {
+    return this.apiService.get<MessageSettings>("Settings/MessageSettings");
+  }
+
+  saveMessageSettings(messageSettings: MessageSettings): Observable<Result> {
+    return this.apiService.post("Settings/MessageSettings", messageSettings);
   }
 }

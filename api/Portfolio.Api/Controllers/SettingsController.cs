@@ -26,6 +26,7 @@ public class SettingsController : Controller
     private readonly ISettingService<BlogSettings> _blogSettings;
     private readonly ISettingService<PublicSiteSettings> _publicSiteSettings;
     private readonly ISettingService<ApiSettings> _apiSettings;
+    private readonly ISettingService<MessageSettings> _messageSettings;
     private readonly IEmailService _emailService;
     private readonly IMapper _mapper;
 
@@ -33,7 +34,7 @@ public class SettingsController : Controller
 
     #region Constructor
 
-    public SettingsController(ILogger<SettingsController> logger, ISettingService<EmailSettings> emailSettingsService, ISettingService<GeneralSettings> generalSettings, ISettingService<SeoSettings> seoSettings, ISettingService<BlogSettings> blogSettings, ISettingService<PublicSiteSettings> publicSiteSettings, IEmailService emailService, IMapper mapper, ISettingService<ApiSettings> apiSettings)
+    public SettingsController(ILogger<SettingsController> logger, ISettingService<EmailSettings> emailSettingsService, ISettingService<GeneralSettings> generalSettings, ISettingService<SeoSettings> seoSettings, ISettingService<BlogSettings> blogSettings, ISettingService<PublicSiteSettings> publicSiteSettings, IEmailService emailService, IMapper mapper, ISettingService<ApiSettings> apiSettings, ISettingService<MessageSettings> messageSettings)
     {
         _logger = logger;
         _emailSettingsService = emailSettingsService;
@@ -44,6 +45,7 @@ public class SettingsController : Controller
         _emailService = emailService;
         _mapper = mapper;
         _apiSettings = apiSettings;
+        _messageSettings = messageSettings;
     }
 
     #endregion
@@ -244,6 +246,37 @@ public class SettingsController : Controller
         await _apiSettings.Save(originalSettings);
 
         var result = await Result<ApiSettingsDto>.SuccessAsync(_mapper.Map<ApiSettingsDto>(originalSettings));
+        return Ok(result);
+    }
+
+    #endregion
+
+    #region Message Settings
+
+    [HttpGet("MessageSettings")]
+    [AllowAnonymous]
+    public async Task<IActionResult> GetMessageSettings()
+    {
+        var settings = await _messageSettings.Get();
+
+        var dto = _mapper.Map<MessageSettingsDto>(settings);
+        dto ??= new MessageSettingsDto();
+
+        var result = await Result<MessageSettingsDto>.SuccessAsync(dto);
+        return Ok(result);
+    }
+
+    [HttpPost("MessageSettings")]
+    public async Task<IActionResult> SaveMessageSettings(MessageSettingsDto model)
+    {
+        var originalSettings = await _messageSettings.Get();
+
+        originalSettings ??= new MessageSettings();
+        _mapper.Map(model, originalSettings);
+
+        await _messageSettings.Save(originalSettings);
+
+        var result = await Result<MessageSettingsDto>.SuccessAsync(_mapper.Map<MessageSettingsDto>(originalSettings));
         return Ok(result);
     }
 
