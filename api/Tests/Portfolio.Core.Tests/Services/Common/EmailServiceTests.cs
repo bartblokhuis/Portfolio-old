@@ -1,8 +1,8 @@
 ﻿using Moq;
-using Portfolio.Core.Services.Common;
-using Portfolio.Core.Services.Settings;
 using Portfolio.Core.Tests.Attributes;
 using Portfolio.Domain.Models.Settings;
+using Portfolio.Services.Common;
+using Portfolio.Services.Settings;
 using System.Threading.Tasks;
 using Xunit;
 
@@ -15,7 +15,7 @@ public class EmailServiceTests
     public async Task Send_Mail_Valid(EmailSettings settings, bool expectedResult)
     {
         var settingsService = new Mock<ISettingService<EmailSettings>>();
-        settingsService.Setup(service => service.Get()).Returns(() => Task.FromResult(settings));
+        settingsService.Setup(service => service.GetAsync()).Returns(() => Task.FromResult(settings));
 
         EmailService emailService = new EmailService(settingsService.Object);
 
@@ -28,7 +28,7 @@ public class EmailServiceTests
     public async Task Send_Mail_Invalid_Password(EmailSettings settings, bool expectedResult)
     {
         var settingsService = new Mock<ISettingService<EmailSettings>>();
-        settingsService.Setup(service => service.Get()).Returns(() => Task.FromResult(settings));
+        settingsService.Setup(service => service.GetAsync()).Returns(() => Task.FromResult(settings));
 
         EmailService emailService = new EmailService(settingsService.Object);
 
