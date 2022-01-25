@@ -68,7 +68,7 @@ public class SkillController : ControllerBase
         if (!ModelState.IsValid)
             return Ok(await Result.FailAsync("Invalid model"));
 
-        if (!await _skillGroupService.Exists(model.SkillGroupId))
+        if (!await _skillGroupService.ExistsAsync(model.SkillGroupId))
             return Ok(await Result.FailAsync("Skill group not found"));
 
         if (await _skillService.IsExistingSkill(model.Name, model.SkillGroupId))
@@ -109,7 +109,7 @@ public class SkillController : ControllerBase
         if (skill == null)
             return Ok(await Result.FailAsync("Skill not found"));
 
-        if (!await _skillGroupService.Exists(model.SkillGroupId))
+        if (!await _skillGroupService.ExistsAsync(model.SkillGroupId))
             return Ok(await Result.FailAsync("Skill group not found"));
 
         if (await _skillService.IsExistingSkill(model.Name, model.SkillGroupId, skill))

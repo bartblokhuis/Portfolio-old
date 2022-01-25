@@ -7,19 +7,19 @@ namespace Portfolio.Core.Services.SkillGroups;
 
 public interface ISkillGroupService
 {
-    Task<IEnumerable<SkillGroup>> GetAll();
+    Task<IEnumerable<SkillGroup>> GetAllAsync();
 
-    Task Insert(SkillGroup skillGroupDto);
+    Task InsertAsync(SkillGroup skillGroupDto);
 
-    Task Update(SkillGroup skillGroupDto);
+    Task UpdateAsync(SkillGroup skillGroupDto);
 
-    Task Update(IQueryable<SkillGroup> skillGroupDto);
+    Task UpdateAsync(IQueryable<SkillGroup> skillGroupDto);
 
-    Task Delete(SkillGroup skill);
+    Task DeleteAsync(SkillGroup skill);
 
-    Task<bool> IsExistingTitle(string title, int idToIgnore = 0);
+    Task<bool> IsExistingTitleAsync(string title, int idToIgnore = 0);
 
-    Task<bool> Exists(int id);
+    Task<bool> ExistsAsync(int id);
 
-    Task<SkillGroup> GetById(int id);
+    Task<SkillGroup> GetByIdAsync(int id);
 }
