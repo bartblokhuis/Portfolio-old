@@ -2,10 +2,9 @@
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
-using Portfolio.Core.Interfaces;
-using Portfolio.Core.Services.Pictures;
-using Portfolio.Core.Services.Projects;
-using Portfolio.Core.Services.Skills;
+using Portfolio.Services.Pictures;
+using Portfolio.Services.Projects;
+using Portfolio.Services.Skills;
 using Portfolio.Domain.Dtos.Projects;
 using Portfolio.Domain.Models;
 using Portfolio.Domain.Wrapper;

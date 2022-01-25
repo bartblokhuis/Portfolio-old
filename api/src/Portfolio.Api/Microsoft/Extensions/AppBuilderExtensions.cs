@@ -2,7 +2,7 @@
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.FileProviders;
 using Portfolio.Core.Infrastructure;
-using Portfolio.Core.Services.Tasks;
+using Portfolio.Services.Tasks;
 using System.IO;
 
 namespace Portfolio.Microsoft.Extensions;

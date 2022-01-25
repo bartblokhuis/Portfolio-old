@@ -2,8 +2,8 @@
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
-using Portfolio.Core.Interfaces.Common;
-using Portfolio.Core.Services.Settings;
+using Portfolio.Services.Common;
+using Portfolio.Services.Settings;
 using Portfolio.Domain.Dtos;
 using Portfolio.Domain.Dtos.Settings;
 using Portfolio.Domain.Models.Settings;

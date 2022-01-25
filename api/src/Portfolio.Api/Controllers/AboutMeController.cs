@@ -2,7 +2,7 @@
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
-using Portfolio.Core.Services.AboutMeServices;
+using Portfolio.Services.AboutMeServices;
 using Portfolio.Domain.Dtos;
 using Portfolio.Domain.Models;
 using Portfolio.Domain.Wrapper;

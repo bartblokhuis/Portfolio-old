@@ -2,7 +2,7 @@
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Portfolio.Core.Helpers;
-using Portfolio.Core.Services.BlogSubscribers;
+using Portfolio.Services.BlogSubscribers;
 using Portfolio.Domain.Dtos.BlogSubscribers;
 using Portfolio.Domain.Models.Blogs;
 using Portfolio.Domain.Wrapper;

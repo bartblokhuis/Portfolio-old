@@ -1,7 +1,7 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Portfolio.Core.Helpers;
-using Portfolio.Core.Services.Urls;
+using Portfolio.Services.Urls;
 using Portfolio.Domain.Models;
 using Portfolio.Domain.Wrapper;
 using System.Threading.Tasks;

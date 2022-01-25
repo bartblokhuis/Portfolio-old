@@ -2,7 +2,7 @@
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Portfolio.Core.Helpers;
-using Portfolio.Core.Services.QueuedEmails;
+using Portfolio.Services.QueuedEmails;
 using Portfolio.Domain.Dtos.QueuedEmails;
 using Portfolio.Domain.Wrapper;
 using System.Collections.Generic;

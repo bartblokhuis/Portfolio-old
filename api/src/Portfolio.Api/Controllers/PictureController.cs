@@ -1,8 +1,7 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using Portfolio.Core.Interfaces;
-using Portfolio.Core.Services.Pictures;
+using Portfolio.Services.Pictures;
 using Portfolio.Domain.Models;
 using Portfolio.Domain.Wrapper;
 using System.Collections.Generic;

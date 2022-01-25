@@ -18,6 +18,7 @@
 
     <ItemGroup>
       <Folder Include="Caching\" />
+      <Folder Include="Services\" />
     </ItemGroup>
 
     <ItemGroup>

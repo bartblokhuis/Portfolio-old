@@ -19,9 +19,9 @@
     <PackageReference Include="Swashbuckle.AspNetCore" Version="6.2.3" />
   </ItemGroup>
 
-    <ItemGroup>
-      <ProjectReference Include="..\Portfolio.Core\Portfolio.Core.csproj" />
-    </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Portfolio.Services\Portfolio.Services.csproj" />
+  </ItemGroup>
 
     <ItemGroup>
       <Folder Update="wwwroot\uploads\">

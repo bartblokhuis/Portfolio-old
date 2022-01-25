@@ -2,9 +2,9 @@
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using Portfolio.Core.Interfaces.Common;
-using Portfolio.Core.Services.SkillGroups;
-using Portfolio.Core.Services.Skills;
+using Portfolio.Services.Common;
+using Portfolio.Services.SkillGroups;
+using Portfolio.Services.Skills;
 using Portfolio.Domain.Dtos;
 using Portfolio.Domain.Dtos.Skills;
 using Portfolio.Domain.Models;
