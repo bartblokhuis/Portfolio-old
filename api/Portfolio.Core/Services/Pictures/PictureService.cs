@@ -6,6 +6,7 @@ using Portfolio.Core.Interfaces.Common;
 using Portfolio.Domain.Models;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Threading.Tasks;
 
 namespace Portfolio.Core.Services.Pictures
@@ -56,7 +57,7 @@ namespace Portfolio.Core.Services.Pictures
                 Path = path,
                 AltAttribute = altAttribute,
                 TitleAttribute = titleAttribute,
-                MimeType = GetMimeType(path)
+                MimeType = GetMimeType(Path.GetExtension(path))
             };
 
             await _pictureRepository.InsertAsync(picture);
