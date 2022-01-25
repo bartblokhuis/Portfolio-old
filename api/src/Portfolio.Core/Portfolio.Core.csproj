@@ -9,15 +9,19 @@
 	</ItemGroup>
 
     <ItemGroup>
-      <ProjectReference Include="..\Portfolio.Database\Portfolio.Database.csproj" />
-    </ItemGroup>
-
-    <ItemGroup>
       <PackageReference Include="AutoMapper" Version="10.1.1" />
       <PackageReference Include="AutoMapper.Extensions.Microsoft.DependencyInjection" Version="8.1.1" />
       <PackageReference Include="MailKit" Version="3.0.0" />
       <PackageReference Include="Microsoft.AspNetCore.Http.Abstractions" Version="2.2.0" />
       <PackageReference Include="System.Linq.Dynamic.Core" Version="1.2.15" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <Folder Include="Caching\" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <ProjectReference Include="..\Portfolio.Database\Portfolio.Database.csproj" />
     </ItemGroup>
 
 </Project>
