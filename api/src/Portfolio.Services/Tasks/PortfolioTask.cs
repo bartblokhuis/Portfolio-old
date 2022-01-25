@@ -1,9 +1,6 @@
 ﻿using Portfolio.Core.Caching;
 using Portfolio.Core.Infrastructure;
 using Portfolio.Domain.Models;
-using System;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace Portfolio.Services.Tasks;
 

@@ -1,6 +1,4 @@
-﻿using System.Collections.Generic;
-
-namespace Portfolio.Services.Tokens;
+﻿namespace Portfolio.Services.Tokens;
 
 public interface ITokenizer
 {

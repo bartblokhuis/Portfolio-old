@@ -1,11 +1,5 @@
-﻿using Portfolio.Services.Common;
-using Portfolio.Services.QueuedEmails;
+﻿using Portfolio.Services.QueuedEmails;
 using Portfolio.Services.Tasks;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Portfolio.Services.Common;
 

@@ -1,14 +1,9 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Portfolio.Core.Caching;
 using Portfolio.Core.Events;
-using Portfolio.Services.Common;
 using Portfolio.Database;
 using Portfolio.Domain.Models.Common;
-using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Linq.Expressions;
-using System.Threading.Tasks;
 
 namespace Portfolio.Services.Repository;
 

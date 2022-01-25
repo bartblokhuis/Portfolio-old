@@ -1,9 +1,9 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Portfolio.Core.Helpers;
-using Portfolio.Services.Urls;
 using Portfolio.Domain.Models;
 using Portfolio.Domain.Wrapper;
+using Portfolio.Services.Urls;
 using System.Threading.Tasks;
 
 namespace Portfolio.Controllers;

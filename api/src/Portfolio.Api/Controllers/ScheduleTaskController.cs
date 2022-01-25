@@ -1,10 +1,10 @@
 ﻿using AutoMapper;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using Portfolio.Services.Tasks;
 using Portfolio.Domain.Dtos.ScheduleTasks;
 using Portfolio.Domain.Models;
 using Portfolio.Domain.Wrapper;
+using Portfolio.Services.Tasks;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 

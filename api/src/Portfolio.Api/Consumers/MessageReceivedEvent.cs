@@ -1,10 +1,9 @@
 ﻿using Portfolio.Core.Events;
+using Portfolio.Domain.Models;
+using Portfolio.Domain.Models.Settings;
 using Portfolio.Services.QueuedEmails;
 using Portfolio.Services.Settings;
 using Portfolio.Services.Tokens;
-using Portfolio.Domain.Models;
-using Portfolio.Domain.Models.Settings;
-using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 

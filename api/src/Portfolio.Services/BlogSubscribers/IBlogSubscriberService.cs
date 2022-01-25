@@ -1,7 +1,5 @@
 ﻿using Portfolio.Domain.Models.Blogs;
 using Portfolio.Domain.Models.Common;
-using System;
-using System.Threading.Tasks;
 
 namespace Portfolio.Services.BlogSubscribers;
 

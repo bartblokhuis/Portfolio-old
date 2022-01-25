@@ -1,9 +1,6 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Primitives;
 using Portfolio.Core.Configuration;
-using Portfolio.Services.Common;
-using System;
-using System.Linq;
 using System.Net;
 
 namespace Portfolio.Services.Common;

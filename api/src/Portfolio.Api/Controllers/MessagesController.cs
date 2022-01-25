@@ -2,15 +2,12 @@
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
-using Portfolio.Services.Common;
-using Portfolio.Services.Messages;
-using Portfolio.Services.QueuedEmails;
-using Portfolio.Services.Settings;
 using Portfolio.Domain.Dtos;
 using Portfolio.Domain.Dtos.Messages;
 using Portfolio.Domain.Models;
-using Portfolio.Domain.Models.Settings;
 using Portfolio.Domain.Wrapper;
+using Portfolio.Services.Common;
+using Portfolio.Services.Messages;
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;

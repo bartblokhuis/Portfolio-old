@@ -2,13 +2,13 @@
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using Portfolio.Services.Common;
-using Portfolio.Services.SkillGroups;
-using Portfolio.Services.Skills;
 using Portfolio.Domain.Dtos;
 using Portfolio.Domain.Dtos.Skills;
 using Portfolio.Domain.Models;
 using Portfolio.Domain.Wrapper;
+using Portfolio.Services.Common;
+using Portfolio.Services.SkillGroups;
+using Portfolio.Services.Skills;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 

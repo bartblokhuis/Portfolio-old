@@ -1,16 +1,13 @@
 ﻿using Portfolio.Core.Events;
+using Portfolio.Domain.Models;
+using Portfolio.Domain.Models.Blogs;
+using Portfolio.Domain.Models.Settings;
 using Portfolio.Services.Blogs;
 using Portfolio.Services.Comments;
 using Portfolio.Services.QueuedEmails;
 using Portfolio.Services.Settings;
 using Portfolio.Services.Tokens;
-using Portfolio.Domain.Models;
-using Portfolio.Domain.Models.Blogs;
-using Portfolio.Domain.Models.Settings;
-using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace Portfolio.Core.Consumers;

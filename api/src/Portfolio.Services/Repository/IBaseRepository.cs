@@ -2,11 +2,7 @@
 using Portfolio.Core.Caching;
 using Portfolio.Database;
 using Portfolio.Domain.Models.Common;
-using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Linq.Expressions;
-using System.Threading.Tasks;
 
 namespace Portfolio.Services.Repository;
 

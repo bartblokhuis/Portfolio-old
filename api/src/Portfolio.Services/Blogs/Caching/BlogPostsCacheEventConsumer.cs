@@ -1,6 +1,5 @@
 ﻿using Portfolio.Core.Caching;
 using Portfolio.Domain.Models.Blogs;
-using System.Threading.Tasks;
 
 namespace Portfolio.Services.Blogs.Caching;
 

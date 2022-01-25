@@ -1,7 +1,4 @@
-﻿using Portfolio.Services.Common;
-using Portfolio.Domain.Models.Blogs;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using Portfolio.Domain.Models.Blogs;
 using Portfolio.Services.Repository;
 
 namespace Portfolio.Services.Comments;

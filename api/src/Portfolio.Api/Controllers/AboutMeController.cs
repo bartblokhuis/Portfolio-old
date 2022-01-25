@@ -2,10 +2,10 @@
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
-using Portfolio.Services.AboutMeServices;
 using Portfolio.Domain.Dtos;
 using Portfolio.Domain.Models;
 using Portfolio.Domain.Wrapper;
+using Portfolio.Services.AboutMeServices;
 using System.Threading.Tasks;
 
 namespace Portfolio.Controllers;

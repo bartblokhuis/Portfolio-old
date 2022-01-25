@@ -1,12 +1,7 @@
 using Microsoft.EntityFrameworkCore;
-using Portfolio.Services.Common;
-using Portfolio.Services.Urls;
 using Portfolio.Domain.Models;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using Portfolio.Services.Repository;
+using Portfolio.Services.Urls;
 
 namespace Portfolio.Services.Projects;
 

@@ -1,5 +1,4 @@
 ﻿using Portfolio.Domain.Models;
-using System.Threading.Tasks;
 
 namespace Portfolio.Services.Urls;
 

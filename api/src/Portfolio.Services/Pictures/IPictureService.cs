@@ -1,7 +1,5 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Portfolio.Domain.Models;
-using System.Collections.Generic;
-using System.Threading.Tasks;
 
 namespace Portfolio.Services.Pictures;
 

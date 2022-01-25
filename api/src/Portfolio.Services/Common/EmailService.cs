@@ -1,11 +1,8 @@
 ﻿using MailKit.Net.Smtp;
 using MimeKit;
 using MimeKit.Text;
-using Portfolio.Services.Common;
-using Portfolio.Services.Settings;
 using Portfolio.Domain.Models.Settings;
-using System;
-using System.Threading.Tasks;
+using Portfolio.Services.Settings;
 
 namespace Portfolio.Services.Common;
 

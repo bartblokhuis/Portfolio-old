@@ -1,10 +1,6 @@
 using AutoMapper;
 using Microsoft.EntityFrameworkCore;
-using Portfolio.Services.Common;
 using Portfolio.Domain.Models;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using Portfolio.Services.Repository;
 
 namespace Portfolio.Services.Skills;

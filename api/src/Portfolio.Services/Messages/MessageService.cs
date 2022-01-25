@@ -1,11 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using Portfolio.Services.Common;
 using Portfolio.Domain.Enums;
 using Portfolio.Domain.Models;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using Portfolio.Services.Repository;
 
 namespace Portfolio.Services.Messages;

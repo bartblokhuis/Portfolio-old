@@ -1,17 +1,12 @@
-﻿using Microsoft.AspNetCore.Http;
-using Microsoft.Extensions.DependencyInjection;
+﻿using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Portfolio.Core.Infrastructure;
-using Portfolio.Services.Settings;
 using Portfolio.Domain.Dtos.ScheduleTasks;
 using Portfolio.Domain.Models;
 using Portfolio.Domain.Models.Settings;
-using System;
-using System.Collections.Generic;
-using System.Net.Http;
+using Portfolio.Services.Settings;
 using System.Text;
 using System.Text.Json;
-using System.Threading;
 
 namespace Portfolio.Services.Tasks;
 

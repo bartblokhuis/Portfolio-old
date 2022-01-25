@@ -1,6 +1,4 @@
-﻿using Portfolio.Services.Common;
-using Portfolio.Domain.Models;
-using System.Threading.Tasks;
+﻿using Portfolio.Domain.Models;
 using Portfolio.Services.Repository;
 
 namespace Portfolio.Services.Urls;

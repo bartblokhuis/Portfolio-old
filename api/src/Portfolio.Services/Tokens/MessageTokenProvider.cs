@@ -1,10 +1,7 @@
-﻿using Portfolio.Services.Settings;
-using Portfolio.Domain.Models;
+﻿using Portfolio.Domain.Models;
 using Portfolio.Domain.Models.Blogs;
 using Portfolio.Domain.Models.Settings;
-using System;
-using System.Collections.Generic;
-using System.Threading.Tasks;
+using Portfolio.Services.Settings;
 
 namespace Portfolio.Services.Tokens;
 

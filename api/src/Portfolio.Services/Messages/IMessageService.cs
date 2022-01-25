@@ -1,7 +1,5 @@
 ﻿using Portfolio.Domain.Enums;
 using Portfolio.Domain.Models;
-using System.Collections.Generic;
-using System.Threading.Tasks;
 
 namespace Portfolio.Services.Messages;
 

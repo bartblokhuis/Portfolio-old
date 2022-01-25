@@ -1,13 +1,9 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.Data.SqlClient;
 using Microsoft.EntityFrameworkCore;
-using Portfolio.Services.Repository;
-using Portfolio.Services.Common;
 using Portfolio.Domain.Models;
-using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Threading.Tasks;
+using Portfolio.Services.Common;
+using Portfolio.Services.Repository;
 
 namespace Portfolio.Services.Pictures
 {

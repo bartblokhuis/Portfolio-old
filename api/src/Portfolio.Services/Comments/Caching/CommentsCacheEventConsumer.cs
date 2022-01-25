@@ -1,7 +1,6 @@
 ﻿using Portfolio.Core.Caching;
-using Portfolio.Services.Blogs;
 using Portfolio.Domain.Models.Blogs;
-using System.Threading.Tasks;
+using Portfolio.Services.Blogs;
 
 namespace Portfolio.Services.Comments.Caching;
 public class CommentsCacheEventConsumer : CacheEventConsumer<Comment, int>

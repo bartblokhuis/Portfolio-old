@@ -2,12 +2,12 @@
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
-using Portfolio.Services.SkillGroups;
-using Portfolio.Services.Skills;
 using Portfolio.Domain.Dtos;
 using Portfolio.Domain.Dtos.SkillGroup;
 using Portfolio.Domain.Models;
 using Portfolio.Domain.Wrapper;
+using Portfolio.Services.SkillGroups;
+using Portfolio.Services.Skills;
 using System;
 using System.Collections.Generic;
 using System.Linq;

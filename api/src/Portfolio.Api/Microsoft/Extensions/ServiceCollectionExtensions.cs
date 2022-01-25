@@ -12,6 +12,8 @@ using Portfolio.Core.Configuration;
 using Portfolio.Core.Events;
 using Portfolio.Core.Helpers;
 using Portfolio.Core.Infrastructure;
+using Portfolio.Database;
+using Portfolio.Domain.Models.Authentication;
 using Portfolio.Services.AboutMeServices;
 using Portfolio.Services.Blogs;
 using Portfolio.Services.BlogSubscribers;
@@ -21,17 +23,14 @@ using Portfolio.Services.Messages;
 using Portfolio.Services.Pictures;
 using Portfolio.Services.Projects;
 using Portfolio.Services.QueuedEmails;
+using Portfolio.Services.Repository;
 using Portfolio.Services.Settings;
 using Portfolio.Services.SkillGroups;
 using Portfolio.Services.Skills;
 using Portfolio.Services.Tasks;
 using Portfolio.Services.Tokens;
 using Portfolio.Services.Urls;
-using Portfolio.Database;
-using Portfolio.Domain.Models.Authentication;
-using System.Net.Http;
 using System.Text;
-using Portfolio.Services.Repository;
 
 namespace Portfolio.Microsoft.Extensions;
 

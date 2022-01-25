@@ -1,8 +1,5 @@
 ﻿using Portfolio.Domain.Models;
 using Portfolio.Domain.Models.Common;
-using System;
-using System.Collections.Generic;
-using System.Threading.Tasks;
 
 namespace Portfolio.Services.QueuedEmails;
 

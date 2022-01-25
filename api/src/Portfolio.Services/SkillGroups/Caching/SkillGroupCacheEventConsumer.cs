@@ -1,6 +1,5 @@
 ﻿using Portfolio.Core.Caching;
 using Portfolio.Domain.Models;
-using System.Threading.Tasks;
 
 namespace Portfolio.Services.SkillGroups.Caching;
 

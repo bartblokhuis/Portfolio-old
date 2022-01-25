@@ -1,5 +1,4 @@
 ﻿using Portfolio.Domain.Models.Settings;
-using System.Threading.Tasks;
 
 namespace Portfolio.Services.Common;
 
