@@ -4,7 +4,6 @@ import { ListBlogPostComponent } from './list-blog-post/list-blog-post.component
 import { BlogPostsRoutes } from './blog-posts.routes';
 import { RouterModule } from '@angular/router';
 import { AddBlogPostComponent } from './add-blog-post/add-blog-post.component';
-import { QuillModule } from 'ngx-quill';
 import { FormsModule } from '@angular/forms';
 import { EditBlogPostComponent } from './edit-blog-post/edit-blog-post.component';
 import { DeleteBlogPostComponent } from './delete-blog-post/delete-blog-post.component';
@@ -28,7 +27,6 @@ import { PipesModule } from '../../pipes/pipes.module';
   ],
   imports: [
     CommonModule,
-    QuillModule,
     FormsModule,
     SharedComponentsModule,
     RichTextEditorModule,

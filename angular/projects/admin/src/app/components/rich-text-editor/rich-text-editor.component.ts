@@ -20,6 +20,7 @@ import { GridPictureComponent } from '../../features/pictures/grid-picture/grid-
 export class RichTextEditorComponent implements OnInit {
 
   @Output() onEditorCreated: EventEmitter<any> = new EventEmitter();
+  @Output() onContentChanged: EventEmitter<any> = new EventEmitter();
 
   content: any = "";
   myToolbar= [
