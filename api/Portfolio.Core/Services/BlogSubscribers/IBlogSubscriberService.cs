@@ -11,7 +11,7 @@ public interface IBlogSubscriberService
 
     Task<BlogSubscriber> GetByIdAsync(Guid id);
 
-    Task<bool> Exists(string email);
+    Task<bool> ExistsAsync(string email);
 
     Task SubscribeAsync(BlogSubscriber blogSubscriber);
 
