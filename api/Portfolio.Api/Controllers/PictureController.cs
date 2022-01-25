@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Portfolio.Core.Interfaces;
+using Portfolio.Core.Services.Pictures;
 using Portfolio.Domain.Models;
 using Portfolio.Domain.Wrapper;
 using System.Collections.Generic;
@@ -36,7 +37,7 @@ namespace Portfolio.Controllers
         [HttpGet]
         public async Task<IActionResult> GetAll()
         {
-            var pictures = await _pictureService.GetAll();
+            var pictures = await _pictureService.GetAllAsync();
             var result = await Result<IEnumerable<Picture>>.SuccessAsync(pictures);
             return Ok(result);
         }
@@ -51,7 +52,7 @@ namespace Portfolio.Controllers
             if(file == null)
                 return Ok(await Result.FailAsync($"Please provide the picture file"));
             
-            var picture = await _pictureService.CreatePictureFromFile(file, titleAttribute, altAttribute);
+            var picture = await _pictureService.CreatePictureFromFileAsync(file, titleAttribute, altAttribute);
             var result = await Result<Picture>.SuccessAsync(picture);
             return Ok(result);
         }
@@ -63,12 +64,12 @@ namespace Portfolio.Controllers
         [HttpPut()]
         public async Task<IActionResult> UpdatePicture(string titleAttribute, string altAttribute, int pictureId, IFormFile file = null)
         {
-            var picture = await _pictureService.GetById(pictureId);
+            var picture = await _pictureService.GetByIdAsync(pictureId);
 
             if(picture == null)
                 return Ok(await Result.FailAsync($"There is no picture with the id: ${pictureId}"));
 
-            await _pictureService.UpdatePictureFromFile(picture, file, titleAttribute, altAttribute);
+            await _pictureService.UpdatePictureFromFileAsync(picture, file, titleAttribute, altAttribute);
             var result = await Result<Picture>.SuccessAsync(picture);
             return Ok(result);
         }
@@ -80,12 +81,12 @@ namespace Portfolio.Controllers
         [HttpDelete()]
         public async Task<IActionResult> Delete(int pictureId)
         {
-            var picture = await _pictureService.GetById(pictureId);
+            var picture = await _pictureService.GetByIdAsync(pictureId);
 
             if (picture == null)
                 return Ok(await Result.FailAsync($"There is no picture with the id: ${pictureId}"));
 
-            var error = await _pictureService.Delete(picture);
+            var error = await _pictureService.DeleteAsync(picture);
 
             return string.IsNullOrEmpty(error) ?
                 Ok(await Result.SuccessAsync("Removed the picture")) : 

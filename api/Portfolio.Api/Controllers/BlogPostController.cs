@@ -6,6 +6,7 @@ using Portfolio.Core.Helpers;
 using Portfolio.Core.Interfaces;
 using Portfolio.Core.Services.Blogs;
 using Portfolio.Core.Services.Comments;
+using Portfolio.Core.Services.Pictures;
 using Portfolio.Domain.Dtos.BlogPosts;
 using Portfolio.Domain.Dtos.Comments;
 using Portfolio.Domain.Models.Blogs;
@@ -220,7 +221,7 @@ namespace Portfolio.Controllers
             if (blogPost == null)
                 return Ok(await Result.FailAsync($"No blog post with id: {dto.BlogPostId} found"));
 
-            var picture = await _pictureService.GetById(dto.PictureId);
+            var picture = await _pictureService.GetByIdAsync(dto.PictureId);
             if (picture == null)
                 return Ok(await Result.FailAsync($"No picture with id: {dto.PictureId} found"));
 
@@ -243,7 +244,7 @@ namespace Portfolio.Controllers
             if (blogPost == null)
                 return Ok(await Result.FailAsync($"No blog post with id: {dto.BlogPostId} found"));
 
-            var picture = await _pictureService.GetById(dto.PictureId);
+            var picture = await _pictureService.GetByIdAsync(dto.PictureId);
             if (picture == null)
                 return Ok(await Result.FailAsync($"No picture with id: {dto.PictureId} found"));
 

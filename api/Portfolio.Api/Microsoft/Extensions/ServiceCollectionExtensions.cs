@@ -21,6 +21,7 @@ using Portfolio.Core.Services.BlogSubscribers;
 using Portfolio.Core.Services.Comments;
 using Portfolio.Core.Services.Common;
 using Portfolio.Core.Services.Messages;
+using Portfolio.Core.Services.Pictures;
 using Portfolio.Core.Services.Projects;
 using Portfolio.Core.Services.QueuedEmails;
 using Portfolio.Core.Services.Settings;

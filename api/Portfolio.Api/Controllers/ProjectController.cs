@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using Portfolio.Core.Interfaces;
+using Portfolio.Core.Services.Pictures;
 using Portfolio.Core.Services.Projects;
 using Portfolio.Core.Services.Skills;
 using Portfolio.Domain.Dtos.Projects;
@@ -150,7 +151,7 @@ public class ProjectController : ControllerBase
         if (project.ProjectPictures != null && project.ProjectPictures.Any(x => x.PictureId == model.PictureId))
             return Ok(await Result.FailAsync("Picture has already been added to the project"));
 
-        var picture = await _pictureService.GetById(model.PictureId);
+        var picture = await _pictureService.GetByIdAsync(model.PictureId);
         if (picture == null)
             return Ok(await Result.FailAsync("Picture not found"));
 
@@ -212,7 +213,7 @@ public class ProjectController : ControllerBase
             if (project.ProjectPictures != null && project.ProjectPictures.Any(x => x.PictureId == model.NewPictureId))
                 return Ok(await Result.FailAsync("Picture has already been added to the project"));
 
-            var picture = await _pictureService.GetById(model.NewPictureId);
+            var picture = await _pictureService.GetByIdAsync(model.NewPictureId);
             if (picture == null)
                 return Ok(await Result.FailAsync("Picture not found"));
 
