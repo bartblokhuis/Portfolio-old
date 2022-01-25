@@ -16,5 +16,11 @@ public class BlogSettingsDto
 
     public string EmailOnPublishingTemplate { get; set; }
 
+    public bool IsSendEmailOnCommentReply { get; set; }
+
+    public string EmailOnCommentReplySubjectTemplate { get; set; }
+
+    public string EmailOnCommentReplyTemplate { get; set; }
+
     #endregion
 }

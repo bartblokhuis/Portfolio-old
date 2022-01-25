@@ -5,4 +5,7 @@ export interface BlogSettings {
     isSendEmailOnPublishing: boolean;
     emailOnPublishingSubjectTemplate: string;
     emailOnPublishingTemplate: string;
+    isSendEmailOnCommentReply: boolean;
+    emailOnCommentReplySubjectTemplate: string;
+    emailOnCommentReplyTemplate: string;
 }
