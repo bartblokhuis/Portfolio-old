@@ -7,9 +7,9 @@ public  interface IBlogPostCommentService
 {
     Task<Comment> GetByIdAsync(int id);
 
-    Task<Comment> GetParentComment(Comment comment);
+    Task<Comment> GetParentCommentAsync(Comment comment);
 
-    Task CreateAsync(Comment comment);
+    Task InsertAsync(Comment comment);
 
     Task DeleteAsync(int id);
 }

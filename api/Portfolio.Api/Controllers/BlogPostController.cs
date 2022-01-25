@@ -181,7 +181,7 @@ namespace Portfolio.Controllers
             //Currently there is only one user (admin), therefore if client is authenticated it must be the author.
             comment.IsAuthor = _httpContextAccessor.HttpContext.User.Identity.IsAuthenticated;
 
-            await _blogPostCommentService.CreateAsync(comment);
+            await _blogPostCommentService.InsertAsync(comment);
             var result = await Result<CommentDto>.SuccessAsync(_mapper.Map<CommentDto>(comment));
             return Ok(result);
         }

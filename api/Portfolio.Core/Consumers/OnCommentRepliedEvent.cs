@@ -56,7 +56,7 @@ public class OnCommentRepliedEvent : IConsumer<EntityInsertedEvent<Comment, int>
         if (eventMessage?.Entity?.ParentCommentId == null)
             return;
 
-        var parentComment = await _blogPostCommentService.GetParentComment(eventMessage.Entity);
+        var parentComment = await _blogPostCommentService.GetParentCommentAsync(eventMessage.Entity);
         if (parentComment == null || string.IsNullOrEmpty(parentComment.Email))
             return;
 
