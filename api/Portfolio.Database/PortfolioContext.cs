@@ -1,4 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using Portfolio.Database.Configurations;
 using Portfolio.Domain.Models;
 using Portfolio.Domain.Models.Blogs;
 using Portfolio.Domain.Models.Common;
@@ -68,6 +69,12 @@ public class PortfolioContext : DbContext
     #endregion
 
     #region Methods
+
+    protected override void OnModelCreating(ModelBuilder modelBuilder)
+    {
+        modelBuilder.ApplyConfigurationsFromAssembly(typeof(ScheduleTaskConfiguration).Assembly);
+        base.OnModelCreating(modelBuilder);
+    }
 
     /// <summary>
     /// Used to update auditable entities.
