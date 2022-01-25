@@ -4,7 +4,6 @@ import { ListProjectsComponent } from './list-projects/list-projects.component';
 import { ProjectRoutes } from './projects.routes';
 import { RouterModule } from '@angular/router';
 import { AddProjectComponent } from './add-project/add-project.component';
-import { QuillModule } from 'ngx-quill';
 import { FormsModule } from '@angular/forms';
 import { EditProjectComponent } from './edit-project/edit-project.component';
 import { DeleteProjectComponent } from './delete-project/delete-project.component';
@@ -16,6 +15,7 @@ import { ListProjectPicturesComponent } from './pictures/list-project-pictures/l
 import { EditProjectPictureComponent } from './pictures/edit-project-picture/edit-project-picture.component';
 import { AddProjectPictureComponent } from './pictures/add-project-picture/add-project-picture.component';
 import { DeleteProjectPictureComponent } from './pictures/delete-project-picture/delete-project-picture.component';
+import { RichTextEditorModule } from '../../components/rich-text-editor/rich-text-editor.module';
 
 @NgModule({
   declarations: [
@@ -34,8 +34,8 @@ import { DeleteProjectPictureComponent } from './pictures/delete-project-picture
   ],
   imports: [
     CommonModule,
-    QuillModule,
     FormsModule,
+    RichTextEditorModule,
     RouterModule.forChild(ProjectRoutes),
   ]
 })

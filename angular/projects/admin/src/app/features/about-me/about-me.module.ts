@@ -3,8 +3,8 @@ import { CommonModule } from '@angular/common';
 import { AboutMeComponent } from './about-me/about-me.component';
 import { RouterModule } from '@angular/router';
 import { AboutMeRoutes } from './about-me.routes';
-import { QuillModule } from 'ngx-quill';
 import { FormsModule } from '@angular/forms';
+import { RichTextEditorModule } from '../../components/rich-text-editor/rich-text-editor.module';
 
 
 
@@ -14,8 +14,8 @@ import { FormsModule } from '@angular/forms';
   ],
   imports: [
     CommonModule,
-    QuillModule,
     FormsModule,
+    RichTextEditorModule,
     RouterModule.forChild(AboutMeRoutes),
   ]
 })

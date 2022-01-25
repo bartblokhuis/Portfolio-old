@@ -12,7 +12,7 @@
                     </div>
                     <div class="form-group">
                         <label class="col-form-label">Content</label>
-                        <quill-editor (onContentChanged)="textChanged($event)" [(ngModel)]="aboutMe.content" name="content"></quill-editor>  
+                        <app-rich-text-editor (onContentChanged)="textChanged($event)" [(ngModel)]="aboutMe.content" name="content"></app-rich-text-editor>  
                     </div>
                 </form>
             </div>
