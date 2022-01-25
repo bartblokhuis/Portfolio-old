@@ -10,6 +10,7 @@ import { BlogSettingsComponent } from './blog-settings/blog-settings.component';
 import { PublicSiteSettingsComponent } from './public-site-settings/public-site-settings.component';
 import { RichTextEditorModule } from '../../components/rich-text-editor/rich-text-editor.module';
 import { ApiSettingsComponent } from './api-settings/api-settings.component';
+import { MessageSettingsComponent } from './message-settings/message-settings.component';
 
 
 @NgModule({
@@ -19,7 +20,8 @@ import { ApiSettingsComponent } from './api-settings/api-settings.component';
     EmailSettingsComponent,
     BlogSettingsComponent,
     PublicSiteSettingsComponent,
-    ApiSettingsComponent
+    ApiSettingsComponent,
+    MessageSettingsComponent
   ],
   imports: [
     CommonModule,

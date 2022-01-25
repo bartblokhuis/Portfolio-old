@@ -1,4 +1,5 @@
 ﻿using Portfolio.Core.Services.Settings;
+using Portfolio.Domain.Models;
 using Portfolio.Domain.Models.Blogs;
 using Portfolio.Domain.Models.Settings;
 using System;
@@ -94,6 +95,17 @@ public class MessageTokenProvider : IMessageTokenProvider
         tokens.Add(new Token("Comment.Content", comment.Content));
     }
 
+    public async Task AddMessageTokensAsync(List<Token> tokens, Message message)
+    {
+        if (tokens == null)
+            tokens = new List<Token>();
+
+        if (message == null)
+            return;
+
+        tokens.Add(new Token("Message.Name", message.FirstName));
+        tokens.Add(new Token("Message.MessageContent", message.MessageContent));
+    }
     #endregion
 
 }

@@ -63,6 +63,8 @@ public class PortfolioContext : DbContext
 
     public DbSet<ApiSettings> ApiSettings { get; set; }
 
+    public DbSet<MessageSettings> MessageSettings { get; set; }
+
     #endregion
 
     #region Methods

@@ -32,6 +32,7 @@ export class SidebarComponent {
       { name: 'Blog settings', icon: "far fa-circle nav-icon", path: "/settings/blog-settings" },
       { name: 'Public site settings', icon: "far fa-circle nav-icon", path: "/settings/public-site-settings" },
       { name: 'API settings', icon: "far fa-circle nav-icon", path: "/settings/api-settings" },
+      { name: 'Message settings', icon: "far fa-circle nav-icon", path: "/settings/message-settings" },
     ]},
     { name: 'System', icon: 'fas fa-server nav-icon', menuItems: [
       { name: 'Email Queue', icon: "far fa-circle nav-icon", path: "/system/email-queue" },

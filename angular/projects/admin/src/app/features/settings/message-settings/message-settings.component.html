@@ -1,0 +1,62 @@
+<form id='blog-settings'>
+    <div class="row">
+        <div class="col-12">
+            <div class="card">
+                <div class="card-header">
+                    <h3 class="card-title">On message received owner notification</h3>
+                    <div class="card-tools">
+                        <button type="button" class="btn btn-tool" data-card-widget="collapse">
+                        <i class="fas fa-minus"></i>
+                        </button>
+                    </div>
+                </div>
+                <div class="card-body">
+                    <div class="form-check">
+                        <input type="checkbox" class="form-check-input" [(ngModel)]="model.isSendSiteOwnerEmail" name="isSendSiteOwnerEmail" id="isSendSiteOwnerEmail">
+                        <label class="form-check-label" for="isSendSiteOwnerEmail">Send site owner notification on message</label>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-form-label" for="siteOwnerSubjectTemplate">Site owner notification subject template</label>
+                        <input type="text" class="form-control" [(ngModel)]="model.siteOwnerSubjectTemplate" name="siteOwnerSubjectTemplate">
+                    </div>
+                    <div class="form-group">
+                        <label class="col-form-label">Site owner notification template</label>
+                        <app-rich-text-editor [(ngModel)]="model.siteOwnerTemplate" name="siteOwnerTemplate"></app-rich-text-editor>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-12">
+            <div class="card">
+                <div class="card-header">
+                    <h3 class="card-title">On message send confirmation mail</h3>
+                    <div class="card-tools">
+                        <button type="button" class="btn btn-tool" data-card-widget="collapse">
+                        <i class="fas fa-minus"></i>
+                        </button>
+                    </div>
+                </div>
+                <div class="card-body">
+                    <div class="form-check">
+                        <input type="checkbox" class="form-check-input" [(ngModel)]="model.isSendConfirmationEmail" name="isSendConfirmationEmail" id="isSendConfirmationEmail">
+                        <label class="form-check-label" for="isSendConfirmationEmail">Send confirmation mail on message send</label>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-form-label" for="confirmationEmailSubjectTemplate">Confirmation email subject template</label>
+                        <input type="text" class="form-control"  [(ngModel)]="model.confirmationEmailSubjectTemplate" name="confirmationEmailSubjectTemplate">
+                    </div>
+                    <div class="form-group">
+                        <label class="col-form-label" for="confirmationEmailTemplate">Confirmation email template</label>
+                        <app-rich-text-editor [(ngModel)]="model.confirmationEmailTemplate" name="confirmationEmailTemplate"></app-rich-text-editor>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-12">
+            <div class="custom-error" *ngIf="error">
+                <label>{{error}}</label>
+            </div>
+            <button class="btn btn-primary" (click)="save()">Save</button>
+        </div>
+    </div>
+</form>

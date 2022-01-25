@@ -1,4 +1,5 @@
-﻿using Portfolio.Domain.Models.Blogs;
+﻿using Portfolio.Domain.Models;
+using Portfolio.Domain.Models.Blogs;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
@@ -11,4 +12,6 @@ public interface IMessageTokenProvider
     Task AddBlogSubscriberTokensAsync(List<Token> tokens, BlogSubscriber subscriber);
 
     Task AddBlogPostCommentTokensAsync(List<Token> tokens, Comment comment);
+
+    Task AddMessageTokensAsync(List<Token> tokens, Message message);
 }
