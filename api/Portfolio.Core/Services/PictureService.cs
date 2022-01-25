@@ -49,7 +49,7 @@ namespace Portfolio.Core.Services
             if (!string.IsNullOrEmpty(errorMessage))
                 throw new Exception(errorMessage);
 
-            var path = await _uploadImageHelper.UploadImage(file);
+            var path = await _uploadImageHelper.UploadImageAsync(file);
 
             var picture = new Picture
             {
@@ -74,7 +74,7 @@ namespace Portfolio.Core.Services
                 if (!string.IsNullOrEmpty(errorMessage))
                     throw new Exception(errorMessage);
 
-                var path = await _uploadImageHelper.UploadImage(file);
+                var path = await _uploadImageHelper.UploadImageAsync(file);
                 picture.Path = path;
             }
             

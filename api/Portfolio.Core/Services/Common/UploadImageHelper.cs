@@ -40,7 +40,7 @@ public class UploadImageHelper : IUploadImageHelper
         return errorMessage;
     }
 
-    public async Task<string> UploadImage(IFormFile image)
+    public async Task<string> UploadImageAsync(IFormFile image)
     {
         var fileExtension = Path.GetExtension(image.FileName);
         var uniqueFileName = Path.GetRandomFileName() + fileExtension;

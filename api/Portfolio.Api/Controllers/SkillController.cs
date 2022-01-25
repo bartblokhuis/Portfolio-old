@@ -92,7 +92,7 @@ public class SkillController : ControllerBase
         if (!string.IsNullOrEmpty(errorMessage))
             return Ok(await Result.FailAsync(errorMessage));
 
-        skill.IconPath = await _uploadImageHelper.UploadImage(icon);
+        skill.IconPath = await _uploadImageHelper.UploadImageAsync(icon);
         await _skillService.Update(skill);
 
         var result = await Result<SkillDto>.SuccessAsync(_mapper.Map<SkillDto>(skill));
