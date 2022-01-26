@@ -1,7 +1,13 @@
 table {
     height: 300px;
+    overflow-y: auto;
 }
 
 img {
     height: 2rem;
+}
+
+.skill-list {
+    max-height: 340px;
+    overflow: auto;
 }
