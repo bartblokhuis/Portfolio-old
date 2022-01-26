@@ -66,6 +66,12 @@ public class ProjectService : IProjectService
         return project == null ? null : project.ProjectPictures;
     }
 
+    public Task<bool> IsExistingTitleAsync(string title, int idToIgnore = 0)
+    {
+        return _projectRepository.Table.AnyAsync(project => project.Title.ToLower() == title.ToLower()
+                && (idToIgnore == 0 || project.Id != idToIgnore));
+    }
+
     #endregion
 
     #region Create
