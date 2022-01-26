@@ -16,8 +16,7 @@ export class CreateSkillGroupComponent implements OnInit {
 
   model: CreateUpdateSkillGroup = { title: '', displayNumber: 0, id: 0 }
   form: any;
-
-  error: string | undefined;
+  error: string | null = null;
   
   constructor(private skillGroupsService: SkillGroupsService, private readonly notificationService: NotificationService) { }
 
@@ -57,17 +56,19 @@ export class CreateSkillGroupComponent implements OnInit {
   }
 
   save(openNewSkillModal: boolean): void {
+    this.error = null;
     if(!this.form.valid()) return;
     
     this.skillGroupsService.create(this.model).subscribe((result) => {
 
       if(result.succeeded) {
-        this.notificationService.success("Created the skill group")
+        this.notificationService.success("Created the skill group");
+        const event: CreateSkillGroupCreatedEvent = { skillGroup: result.data, openNewSkillModal: openNewSkillModal};
+        this.onCreated.emit(event);
       }
-      
-
-      const event: CreateSkillGroupCreatedEvent = { skillGroup: result.data, openNewSkillModal: openNewSkillModal};
-      this.onCreated.emit(event);
+      else{
+        this.error = result.messages[0];
+      }
     }, error => this.error = error);
   }
 

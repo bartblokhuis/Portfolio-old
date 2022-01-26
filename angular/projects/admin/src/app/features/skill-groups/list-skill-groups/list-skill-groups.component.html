@@ -21,6 +21,7 @@
                     <div class="float-left">
                         <form [id]="'edit-form-' + skillGroup.id">
                             <input type="text" class="form-control" [id]="'edit-title-' + skillGroup.id" [value]="skillGroup.title" name="title">
+                            <span class="custom-error" *ngIf="editError">{{ editError }}</span>
                         </form>
                     </div>
                     <div class="float-right">

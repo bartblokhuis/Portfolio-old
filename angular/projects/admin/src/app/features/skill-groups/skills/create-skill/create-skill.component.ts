@@ -23,7 +23,7 @@ export class CreateSkillComponent implements OnInit {
   currentFileName: string = '';
   formData: FormData | undefined;
   form: any;
-  error: string | undefined;
+  error: string | null = null;
 
   constructor(private skillsService: SkillsService, private notificationService: NotificationService) {
   }
@@ -46,19 +46,32 @@ export class CreateSkillComponent implements OnInit {
   }
 
   submit() : void {
+    this.error = null;
     if(!this.form.valid()) return;
 
     this.skillsService.create(this.model).subscribe((result: Result<Skill>) => {
 
       if(this.formData) {
         this.skillsService.saveSkillImage(result.data.id, this.formData).subscribe((resultWithImage: Result<Skill>) => {
-          if(result.succeeded) this.notificationService.success("Created the new skill");
-          this.modalRef?.close(resultWithImage.data);
+          if(result.succeeded) {
+            this.notificationService.success("Created the new skill");
+            this.modalRef?.close(resultWithImage.data);
+          }
+          else {
+            this.error = result.messages[0];
+          }
+          
         });
       }
       else {
-        if(result.succeeded) this.notificationService.success("Created the new skill");
-        this.modalRef?.close(result.data);
+        if(result.succeeded) {
+          this.notificationService.success("Created the new skill");
+          this.modalRef?.close(result.data);
+        }
+        else {
+          this.error = result.messages[0];
+        }
+        
       }
     }, error => this.error = error);
   }

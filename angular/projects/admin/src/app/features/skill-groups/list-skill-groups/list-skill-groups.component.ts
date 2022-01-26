@@ -21,6 +21,7 @@ export class ListSkillGroupsComponent implements OnInit {
 
   skillGroups: ListSkillGroup[] | undefined;
   showCreateSkillGroup: boolean = false;
+  editError: string | null = null;
 
   constructor(private skillGroupsService: SkillGroupsService, private modalService: NgbModal, private readonly notificationService: NotificationService) { }
 
@@ -83,11 +84,16 @@ export class ListSkillGroupsComponent implements OnInit {
 
     const editSkillGroup: CreateUpdateSkillGroup = { displayNumber: 0, id: skillGroupId, title: editTitle.value };
     this.skillGroupsService.edit(editSkillGroup).subscribe((result) => {
-      if(!this.skillGroups || !result.succeeded) return;
+      if(!result.succeeded) {
+        this.editError = result.messages[0];
+      }
+      else if(this.skillGroups) {
+        this.notificationService.success("Updated the skill group");
+        const skillGroupIndex = this.skillGroups.findIndex((skillGroup => skillGroup.id == skillGroupId));
+        this.skillGroups[skillGroupIndex] = new ListSkillGroup(result.data);
+      }
 
-      this.notificationService.success("Updated the skill group");
-      const skillGroupIndex = this.skillGroups.findIndex((skillGroup => skillGroup.id == skillGroupId));
-      this.skillGroups[skillGroupIndex] = new ListSkillGroup(result.data);
+      
     });
   }
 

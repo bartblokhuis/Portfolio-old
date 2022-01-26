@@ -9,7 +9,6 @@
         <div class="form-group">
             <label>Name</label>
             <input class="form-control" type="text" required [(ngModel)]="model.name" name="name"/>
-            <span class="custom-error" *ngIf="error">{{error}}</span>
         </div>
         <div class="form-group">
             <label>Demo image</label>
@@ -17,7 +16,10 @@
               <input type="file" class="form-control" id="file" name="file" (change)="onFileChange($event)"/>
               <label class="custom-file-label" for="file">{{ currentFileName }}</label>
             </div>
-          </div>
+         </div>
+         <div>
+          <span class="custom-error" *ngIf="error">{{error}}</span>
+         </div>
     </div>
     <div class="modal-footer justify-content-between">
         <button type="button" class="btn btn-default" (click)="modal?.close()">Cancel</button>
