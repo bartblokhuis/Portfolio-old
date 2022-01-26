@@ -8,7 +8,7 @@ using Portfolio.Database;
 
 #nullable disable
 
-namespace Portfolio.Database.Migrations
+namespace Portfolio.Database.Migrations.Portfolio
 {
     [DbContext(typeof(PortfolioContext))]
     partial class PortfolioContextModelSnapshot : ModelSnapshot
@@ -31,14 +31,25 @@ namespace Portfolio.Database.Migrations
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
 
                     b.Property<string>("Content")
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(256)
+                        .HasColumnType("nvarchar(256)");
 
                     b.Property<string>("Title")
-                        .HasColumnType("nvarchar(max)");
+                        .IsRequired()
+                        .HasMaxLength(128)
+                        .HasColumnType("nvarchar(128)");
 
                     b.HasKey("Id");
 
                     b.ToTable("AboutMes");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            Content = "",
+                            Title = "Hi, welcome on my portfolio"
+                        });
                 });
 
             modelBuilder.Entity("Portfolio.Domain.Models.Blogs.BlogPost", b =>
@@ -68,16 +79,20 @@ namespace Portfolio.Database.Migrations
                         .HasColumnType("bit");
 
                     b.Property<string>("MetaDescription")
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(256)
+                        .HasColumnType("nvarchar(256)");
 
                     b.Property<string>("MetaTitle")
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(256)
+                        .HasColumnType("nvarchar(256)");
 
                     b.Property<int?>("ThumbnailId")
                         .HasColumnType("int");
 
                     b.Property<string>("Title")
-                        .HasColumnType("nvarchar(max)");
+                        .IsRequired()
+                        .HasMaxLength(64)
+                        .HasColumnType("nvarchar(64)");
 
                     b.Property<DateTime>("UpdatedAtUtc")
                         .HasColumnType("datetime2");
@@ -87,6 +102,9 @@ namespace Portfolio.Database.Migrations
                     b.HasIndex("BannerPictureId");
 
                     b.HasIndex("ThumbnailId");
+
+                    b.HasIndex("Title")
+                        .IsUnique();
 
                     b.ToTable("BlogPosts");
                 });
@@ -101,18 +119,24 @@ namespace Portfolio.Database.Migrations
                         .HasColumnType("datetime2");
 
                     b.Property<string>("EmailAddress")
-                        .HasColumnType("nvarchar(max)");
+                        .IsRequired()
+                        .HasMaxLength(128)
+                        .HasColumnType("nvarchar(128)");
 
                     b.Property<bool>("IsDeleted")
                         .HasColumnType("bit");
 
                     b.Property<string>("Name")
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(64)
+                        .HasColumnType("nvarchar(64)");
 
                     b.Property<DateTime>("UpdatedAtUtc")
                         .HasColumnType("datetime2");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("EmailAddress")
+                        .IsUnique();
 
                     b.ToTable("BlogSubscribers");
                 });
@@ -129,19 +153,24 @@ namespace Portfolio.Database.Migrations
                         .HasColumnType("int");
 
                     b.Property<string>("Content")
-                        .HasColumnType("nvarchar(max)");
+                        .IsRequired()
+                        .HasMaxLength(512)
+                        .HasColumnType("nvarchar(512)");
 
                     b.Property<DateTime>("CreatedAtUTC")
                         .HasColumnType("datetime2");
 
                     b.Property<string>("Email")
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(128)
+                        .HasColumnType("nvarchar(128)");
 
                     b.Property<bool>("IsAuthor")
                         .HasColumnType("bit");
 
                     b.Property<string>("Name")
-                        .HasColumnType("nvarchar(max)");
+                        .IsRequired()
+                        .HasMaxLength(64)
+                        .HasColumnType("nvarchar(64)");
 
                     b.Property<int?>("ParentCommentId")
                         .HasColumnType("int");
@@ -170,25 +199,30 @@ namespace Portfolio.Database.Migrations
                         .HasColumnType("datetime2");
 
                     b.Property<string>("Email")
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(128)
+                        .HasColumnType("nvarchar(128)");
 
                     b.Property<string>("FirstName")
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(64)
+                        .HasColumnType("nvarchar(64)");
 
                     b.Property<bool>("HasSentNotification")
                         .HasColumnType("bit");
 
                     b.Property<string>("IpAddress")
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(45)
+                        .HasColumnType("nvarchar(45)");
 
                     b.Property<bool>("IsDeleted")
                         .HasColumnType("bit");
 
                     b.Property<string>("LastName")
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(64)
+                        .HasColumnType("nvarchar(64)");
 
                     b.Property<string>("MessageContent")
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(512)
+                        .HasColumnType("nvarchar(512)");
 
                     b.Property<int>("MessageStatus")
                         .HasColumnType("int");
@@ -199,6 +233,20 @@ namespace Portfolio.Database.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Messages");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            CreatedAtUTC = new DateTime(2022, 1, 26, 23, 35, 22, 41, DateTimeKind.Utc).AddTicks(5792),
+                            Email = "info@bartblokhuis.com",
+                            FirstName = "Bart",
+                            HasSentNotification = false,
+                            IsDeleted = false,
+                            MessageContent = "This is an example message",
+                            MessageStatus = 0,
+                            UpdatedAtUtc = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
+                        });
                 });
 
             modelBuilder.Entity("Portfolio.Domain.Models.Picture", b =>
@@ -210,16 +258,20 @@ namespace Portfolio.Database.Migrations
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
 
                     b.Property<string>("AltAttribute")
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(256)
+                        .HasColumnType("nvarchar(256)");
 
                     b.Property<string>("MimeType")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Path")
-                        .HasColumnType("nvarchar(max)");
+                        .IsRequired()
+                        .HasMaxLength(256)
+                        .HasColumnType("nvarchar(256)");
 
                     b.Property<string>("TitleAttribute")
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(512)
+                        .HasColumnType("nvarchar(512)");
 
                     b.HasKey("Id");
 
@@ -235,7 +287,8 @@ namespace Portfolio.Database.Migrations
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
 
                     b.Property<string>("Description")
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(512)
+                        .HasColumnType("nvarchar(512)");
 
                     b.Property<int>("DisplayNumber")
                         .HasColumnType("int");
@@ -244,11 +297,26 @@ namespace Portfolio.Database.Migrations
                         .HasColumnType("bit");
 
                     b.Property<string>("Title")
-                        .HasColumnType("nvarchar(max)");
+                        .IsRequired()
+                        .HasMaxLength(64)
+                        .HasColumnType("nvarchar(64)");
 
                     b.HasKey("Id");
 
+                    b.HasIndex("Title")
+                        .IsUnique();
+
                     b.ToTable("Projects");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            Description = "This is an example project",
+                            DisplayNumber = 0,
+                            IsPublished = true,
+                            Title = "Example Project"
+                        });
                 });
 
             modelBuilder.Entity("Portfolio.Domain.Models.ProjectPicture", b =>
@@ -315,10 +383,12 @@ namespace Portfolio.Database.Migrations
                         .HasColumnType("datetime2");
 
                     b.Property<string>("From")
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(128)
+                        .HasColumnType("nvarchar(128)");
 
                     b.Property<string>("FromName")
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(128)
+                        .HasColumnType("nvarchar(128)");
 
                     b.Property<DateTime?>("SentOnUtc")
                         .HasColumnType("datetime2");
@@ -327,13 +397,16 @@ namespace Portfolio.Database.Migrations
                         .HasColumnType("int");
 
                     b.Property<string>("Subject")
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(128)
+                        .HasColumnType("nvarchar(128)");
 
                     b.Property<string>("To")
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(128)
+                        .HasColumnType("nvarchar(128)");
 
                     b.Property<string>("ToName")
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(128)
+                        .HasColumnType("nvarchar(128)");
 
                     b.HasKey("Id");
 
@@ -361,7 +434,9 @@ namespace Portfolio.Database.Migrations
                         .HasColumnType("datetime2");
 
                     b.Property<string>("Name")
-                        .HasColumnType("nvarchar(max)");
+                        .IsRequired()
+                        .HasMaxLength(128)
+                        .HasColumnType("nvarchar(128)");
 
                     b.Property<int>("Seconds")
                         .HasColumnType("int");
@@ -370,9 +445,13 @@ namespace Portfolio.Database.Migrations
                         .HasColumnType("bit");
 
                     b.Property<string>("Type")
-                        .HasColumnType("nvarchar(max)");
+                        .IsRequired()
+                        .HasColumnType("nvarchar(450)");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("Type")
+                        .IsUnique();
 
                     b.ToTable("ScheduleTasks");
 
@@ -384,7 +463,7 @@ namespace Portfolio.Database.Migrations
                             Name = "Keep alive",
                             Seconds = 300,
                             StopOnError = false,
-                            Type = "Portfolio.Core.Services.Common.KeepAliveTask, Portfolio.Core"
+                            Type = "Portfolio.Services.Common.KeepAliveTask, Portfolio.Services"
                         },
                         new
                         {
@@ -393,7 +472,7 @@ namespace Portfolio.Database.Migrations
                             Name = "Send queued emails",
                             Seconds = 30,
                             StopOnError = false,
-                            Type = "Portfolio.Core.Services.Common.QueuedMessagesSendTask, Portfolio.Core"
+                            Type = "Portfolio.Services.Common.QueuedMessagesSendTask, Portfolio.Services"
                         });
                 });
 
@@ -406,11 +485,20 @@ namespace Portfolio.Database.Migrations
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
 
                     b.Property<string>("ApiUrl")
-                        .HasColumnType("nvarchar(max)");
+                        .IsRequired()
+                        .HasMaxLength(64)
+                        .HasColumnType("nvarchar(64)");
 
                     b.HasKey("Id");
 
                     b.ToTable("ApiSettings");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            ApiUrl = "http://localhost:44301"
+                        });
                 });
 
             modelBuilder.Entity("Portfolio.Domain.Models.Settings.BlogSettings", b =>
@@ -451,6 +539,21 @@ namespace Portfolio.Database.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("BlogSettings");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            EmailOnCommentReplySubjectTemplate = "%Comment.Name% replied to your comment",
+                            EmailOnCommentReplyTemplate = "%Comment.Name% replied with:' %Comment.MessageContent%', to the comment that you left on the blog post <a href=\"%BlogPost.Url\">%BlogPost.Title%</a>",
+                            EmailOnPublishingSubjectTemplate = "%BlogPost.Title% just got released!",
+                            EmailOnPublishingTemplate = "My new blog post titled: %BlogPost.Title% just got released visit this link to read it. %BlogPost.Url%",
+                            EmailOnSubscribingSubjectTemplate = "Thanks for subscribing to my blog!",
+                            EmailOnSubscribingTemplate = "Thanks for subscribing to my blog, you will now receive an email every time i publish a new blog, if you ever wish to unsubscribe click this link: %BlogSubscriber.UnsubscribeURL%",
+                            IsSendEmailOnCommentReply = true,
+                            IsSendEmailOnPublishing = true,
+                            IsSendEmailOnSubscribing = true
+                        });
                 });
 
             modelBuilder.Entity("Portfolio.Domain.Models.Settings.EmailSettings", b =>
@@ -462,16 +565,22 @@ namespace Portfolio.Database.Migrations
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
 
                     b.Property<string>("DisplayName")
-                        .HasColumnType("nvarchar(max)");
+                        .IsRequired()
+                        .HasMaxLength(64)
+                        .HasColumnType("nvarchar(64)");
 
                     b.Property<string>("Email")
-                        .HasColumnType("nvarchar(max)");
+                        .IsRequired()
+                        .HasMaxLength(128)
+                        .HasColumnType("nvarchar(128)");
 
                     b.Property<bool>("EnableSsl")
                         .HasColumnType("bit");
 
                     b.Property<string>("Host")
-                        .HasColumnType("nvarchar(max)");
+                        .IsRequired()
+                        .HasMaxLength(128)
+                        .HasColumnType("nvarchar(128)");
 
                     b.Property<string>("Password")
                         .HasColumnType("nvarchar(max)");
@@ -480,10 +589,14 @@ namespace Portfolio.Database.Migrations
                         .HasColumnType("int");
 
                     b.Property<string>("SendTestEmailTo")
-                        .HasColumnType("nvarchar(max)");
+                        .IsRequired()
+                        .HasMaxLength(128)
+                        .HasColumnType("nvarchar(128)");
 
                     b.Property<string>("SiteOwnerEmailAddress")
-                        .HasColumnType("nvarchar(max)");
+                        .IsRequired()
+                        .HasMaxLength(128)
+                        .HasColumnType("nvarchar(128)");
 
                     b.Property<bool>("UseDefaultCredentials")
                         .HasColumnType("bit");
@@ -537,6 +650,19 @@ namespace Portfolio.Database.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("GeneralSettings");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            CallToActionText = "About Me",
+                            FooterText = "My name",
+                            FooterTextBetweenCopyRightAndYear = true,
+                            LandingDescription = "Welcome on my portfolio website",
+                            LandingTitle = "Welcome!",
+                            ShowContactMeForm = true,
+                            ShowCopyRightInFooter = true
+                        });
                 });
 
             modelBuilder.Entity("Portfolio.Domain.Models.Settings.MessageSettings", b =>
@@ -568,6 +694,18 @@ namespace Portfolio.Database.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("MessageSettings");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            ConfirmationEmailSubjectTemplate = "Thanks for sending me a message!",
+                            ConfirmationEmailTemplate = "Thanks for reaching out %Message.Name%, I received your message and will respond as soon as possible",
+                            IsSendConfirmationEmail = true,
+                            IsSendSiteOwnerEmail = true,
+                            SiteOwnerSubjectTemplate = "Someone send you a message",
+                            SiteOwnerTemplate = "%Message.Name%, has sent you the following message: %Message.MessageContent%"
+                        });
                 });
 
             modelBuilder.Entity("Portfolio.Domain.Models.Settings.PublicSiteSettings", b =>
@@ -584,6 +722,13 @@ namespace Portfolio.Database.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("PublicSiteSettings");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            PublicSiteUrl = "http://localhost:4200"
+                        });
                 });
 
             modelBuilder.Entity("Portfolio.Domain.Models.Settings.SeoSettings", b =>
@@ -601,7 +746,9 @@ namespace Portfolio.Database.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Title")
-                        .HasColumnType("nvarchar(max)");
+                        .IsRequired()
+                        .HasMaxLength(64)
+                        .HasColumnType("nvarchar(64)");
 
                     b.Property<bool>("UseOpenGraphMetaTags")
                         .HasColumnType("bit");
@@ -612,6 +759,15 @@ namespace Portfolio.Database.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("SeoSettings");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            Title = "My portfolio",
+                            UseOpenGraphMetaTags = false,
+                            UseTwitterMetaTags = false
+                        });
                 });
 
             modelBuilder.Entity("Portfolio.Domain.Models.Skill", b =>
@@ -629,7 +785,9 @@ namespace Portfolio.Database.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Name")
-                        .HasColumnType("nvarchar(max)");
+                        .IsRequired()
+                        .HasMaxLength(64)
+                        .HasColumnType("nvarchar(64)");
 
                     b.Property<int>("SkillGroupId")
                         .HasColumnType("int");
@@ -653,9 +811,14 @@ namespace Portfolio.Database.Migrations
                         .HasColumnType("int");
 
                     b.Property<string>("Title")
-                        .HasColumnType("nvarchar(max)");
+                        .IsRequired()
+                        .HasMaxLength(64)
+                        .HasColumnType("nvarchar(64)");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("Title")
+                        .IsUnique();
 
                     b.ToTable("SkillGroups");
                 });
@@ -672,7 +835,9 @@ namespace Portfolio.Database.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("FullUrl")
-                        .HasColumnType("nvarchar(max)");
+                        .IsRequired()
+                        .HasMaxLength(64)
+                        .HasColumnType("nvarchar(64)");
 
                     b.HasKey("Id");
 
