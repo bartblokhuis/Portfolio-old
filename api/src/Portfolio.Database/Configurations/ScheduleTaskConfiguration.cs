@@ -8,8 +8,18 @@ internal class ScheduleTaskConfiguration : IEntityTypeConfiguration<ScheduleTask
 {
     public void Configure(EntityTypeBuilder<ScheduleTask> builder)
     {
+        builder.Property(t => t.Type)
+            .IsRequired();
+
+        builder.HasIndex(t => t.Type)
+            .IsUnique(true);
+
+        builder.Property(t => t.Name)
+            .IsRequired()
+            .HasMaxLength(128);
+
         builder.HasData(
-            new ScheduleTask { Id = 1, Name = "Keep alive", Seconds = 300, Type = "Portfolio.Core.Services.Common.KeepAliveTask, Portfolio.Core", Enabled = true, StopOnError = false },
-            new ScheduleTask { Id = 2, Name = "Send queued emails", Seconds = 30, Type = "Portfolio.Core.Services.Common.QueuedMessagesSendTask, Portfolio.Core", Enabled = true, StopOnError = false });
+            new ScheduleTask { Id = 1, Name = "Keep alive", Seconds = 300, Type = "Portfolio.Services.Common.KeepAliveTask, Portfolio.Services", Enabled = true, StopOnError = false },
+            new ScheduleTask { Id = 2, Name = "Send queued emails", Seconds = 30, Type = "Portfolio.Services.Common.QueuedMessagesSendTask, Portfolio.Services", Enabled = true, StopOnError = false });
     }
 }
