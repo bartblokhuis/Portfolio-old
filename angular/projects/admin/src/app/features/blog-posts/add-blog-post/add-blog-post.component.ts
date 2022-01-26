@@ -20,6 +20,7 @@ export class AddBlogPostComponent implements OnInit {
 
   model: CreateBlog = { title: '', content: '', description: '', displayNumber: 0, isPublished: false, metaDescription: '', metaTitle: '' };
   form: any;
+  apiError: string | null = null;
 
   constructor(private contentTitleService: ContentTitleService, private blogPostsService: BlogPostsService, private router: Router, private readonly breadcrumbsService: BreadcrumbsService, private notificationService: NotificationService) { }
 
@@ -39,13 +40,16 @@ export class AddBlogPostComponent implements OnInit {
   }
 
   createBlog() {
-
+    this.apiError = null;
     if(!this.form.valid()) return;
 
     this.blogPostsService.createBlogPost(this.model).subscribe((result: Result<ListBlog>) => {
       if(result.succeeded) {
         this.notificationService.success("Created the new blog post");
         this.router.navigate([`blog/edit/${result.data.id}`]);
+      }
+      else {
+        this.apiError = result.messages[0];
       }
       
     });

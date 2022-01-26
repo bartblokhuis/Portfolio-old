@@ -53,6 +53,11 @@
                     </div>
                 </div>
             </div>
+            <div class="row">
+                <div class="col-12">
+                  <label *ngIf="apiError" class="custom-error">{{ apiError }}</label>
+                </div>
+            </div>
             <button class="btn btn-primary saveBlog" (click)="createBlog()">Add blog post</button>
         </div>
     </div>

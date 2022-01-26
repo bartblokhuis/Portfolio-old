@@ -30,7 +30,7 @@ export class EditBlogPostComponent implements OnInit{
   bannerPicture: Picture = { altAttribute: '', id: null, mimeType: '', path: '', titleAttribute: '' };
   thumbnailPicture: Picture = { altAttribute: '', id: null, mimeType: '', path: '', titleAttribute: '' };
   form: any;
-  titleError: string | null = null;
+  apiError: string | null = null;
 
   constructor(private route: ActivatedRoute, private blogPostsService: BlogPostsService, private contentTitleService: ContentTitleService, private router: Router, 
     private notificationService: NotificationService, private modalService: NgbModal, private readonly commentsService: CommentsService, private readonly breadcrumbsService: BreadcrumbsService) { }
@@ -67,7 +67,7 @@ export class EditBlogPostComponent implements OnInit{
   }
 
   editBlogPost() {
-    this.titleError = null;
+    this.apiError = null;
 
     if(!this.form.valid()) return;
 
@@ -77,8 +77,9 @@ export class EditBlogPostComponent implements OnInit{
         this.notificationService.success("Updated the blog post");
         this.router.navigate(['blog']);
       } 
-
-      this.titleError = result.messages[0];
+      else {
+        this.apiError = result.messages[0];
+      }
     });
   }
 
