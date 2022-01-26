@@ -52,10 +52,12 @@ export class CreateSkillComponent implements OnInit {
 
       if(this.formData) {
         this.skillsService.saveSkillImage(result.data.id, this.formData).subscribe((resultWithImage: Result<Skill>) => {
+          if(result.succeeded) this.notificationService.success("Created the new skill");
           this.modalRef?.close(resultWithImage.data);
         });
       }
       else {
+        if(result.succeeded) this.notificationService.success("Created the new skill");
         this.modalRef?.close(result.data);
       }
     }, error => this.error = error);

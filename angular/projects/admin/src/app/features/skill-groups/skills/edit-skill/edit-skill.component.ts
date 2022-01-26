@@ -5,6 +5,7 @@ import { Result } from 'projects/shared/src/lib/data/common/Result';
 import { EditSkill } from 'projects/shared/src/lib/data/skills/edit-skill';
 import { Skill } from 'projects/shared/src/lib/data/skills/skill';
 import { validateSkillForm } from '../helpers/skill-helpers';
+import { NotificationService } from 'projects/admin/src/app/services/notification/notification.service';
 
 declare var $: any;
 @Component({
@@ -24,7 +25,7 @@ export class EditSkillComponent implements OnInit {
   formData: FormData | undefined;
   error: string | undefined;
 
-  constructor(private skillsService: SkillsService) { }
+  constructor(private skillsService: SkillsService, private notificationService: NotificationService) { }
 
   ngOnInit(): void {
     this.currentFileName = this.skill?.iconPath ?? "";
@@ -44,10 +45,12 @@ export class EditSkillComponent implements OnInit {
 
       if(this.formData) {
         this.skillsService.saveSkillImage(result.data.id, this.formData).subscribe((resultWithImage: Result<Skill>) => {
+          if(result.succeeded) this.notificationService.success("Update the skill");
           this.modal?.close(resultWithImage.data);
         });
       }
       else {
+        if(result.succeeded) this.notificationService.success("Update the skill");
         this.modal?.close(result.data);
       }
     }, error => this.error = error);

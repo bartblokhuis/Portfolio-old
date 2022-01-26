@@ -2,6 +2,7 @@ import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 import { CreateUpdateSkillGroup } from 'projects/shared/src/lib/data/skill-groups/create-update-skill-group';
 import { CreateSkillGroupCreatedEvent } from 'projects/shared/src/lib/data/skill-groups/events/create-skill-group-created-event';
 import { SkillGroupsService } from 'projects/shared/src/lib/services/api/skill-groups/skill-groups.service';
+import { NotificationService } from '../../../services/notification/notification.service';
 
 declare var $: any;
 @Component({
@@ -18,7 +19,7 @@ export class CreateSkillGroupComponent implements OnInit {
 
   error: string | undefined;
   
-  constructor(private skillGroupsService: SkillGroupsService) { }
+  constructor(private skillGroupsService: SkillGroupsService, private readonly notificationService: NotificationService) { }
 
   ngOnInit(): void { 
     this.form = $('#createForm');
@@ -59,6 +60,12 @@ export class CreateSkillGroupComponent implements OnInit {
     if(!this.form.valid()) return;
     
     this.skillGroupsService.create(this.model).subscribe((result) => {
+
+      if(result.succeeded) {
+        this.notificationService.success("Created the skill group")
+      }
+      
+
       const event: CreateSkillGroupCreatedEvent = { skillGroup: result.data, openNewSkillModal: openNewSkillModal};
       this.onCreated.emit(event);
     }, error => this.error = error);
