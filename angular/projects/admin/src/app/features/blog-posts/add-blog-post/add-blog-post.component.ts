@@ -6,6 +6,7 @@ import { Result } from 'projects/shared/src/lib/data/common/Result';
 import { BlogPostsService } from 'projects/shared/src/lib/services/api/blog-posts/blog-posts.service';
 import { BreadcrumbsService } from '../../../services/breadcrumbs/breadcrumbs.service';
 import { ContentTitleService } from '../../../services/content-title/content-title.service';
+import { NotificationService } from '../../../services/notification/notification.service';
 import { validateBlogForm } from '../helpers/blog-helper';
 
 declare var $:any;
@@ -20,7 +21,7 @@ export class AddBlogPostComponent implements OnInit {
   model: CreateBlog = { title: '', content: '', description: '', displayNumber: 0, isPublished: false, metaDescription: '', metaTitle: '' };
   form: any;
 
-  constructor(private contentTitleService: ContentTitleService, private blogPostsService: BlogPostsService, private router: Router, private readonly breadcrumbsService: BreadcrumbsService) { }
+  constructor(private contentTitleService: ContentTitleService, private blogPostsService: BlogPostsService, private router: Router, private readonly breadcrumbsService: BreadcrumbsService, private notificationService: NotificationService) { }
 
   ngOnInit(): void {
     this.contentTitleService.title.next("Add blog post");
@@ -42,7 +43,11 @@ export class AddBlogPostComponent implements OnInit {
     if(!this.form.valid()) return;
 
     this.blogPostsService.createBlogPost(this.model).subscribe((result: Result<ListBlog>) => {
-      this.router.navigate([`blog/edit/${result.data.id}`]);
+      if(result.succeeded) {
+        this.notificationService.success("Created the new blog post");
+        this.router.navigate([`blog/edit/${result.data.id}`]);
+      }
+      
     });
 
   }

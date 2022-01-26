@@ -3,6 +3,7 @@ import { NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
 import { CommentsService } from 'projects/shared/src/lib/services/api/comments/comments.service';
 import { BlogComment } from 'projects/shared/src/lib/data/blog/comment';
 import { CreateBlogComent } from 'projects/shared/src/lib/data/blog/create-blog-comment';
+import { NotificationService } from 'projects/admin/src/app/services/notification/notification.service';
 
 @Component({
   selector: 'app-reply-comment',
@@ -15,14 +16,12 @@ export class ReplyCommentComponent implements OnInit, AfterViewInit {
   @Input() comment: BlogComment = { comments: [], content:'', id: 0, isAuthor: true, name: '' };
   model: CreateBlogComent = { blogPostId: null, content: '', email: null, name: 'Author', parentCommentId: null}
   
-  constructor(private readonly commentsService: CommentsService) { }
+  constructor(private readonly commentsService: CommentsService, private notificationService: NotificationService) { }
 
   ngOnInit(): void {
     if(this.comment.id == null || this.comment.id == 0) this.modal?.close();
 
     this.model.parentCommentId = this.comment?.id;
-
-    
   }
 
   ngAfterViewInit(): void {
@@ -30,7 +29,10 @@ export class ReplyCommentComponent implements OnInit, AfterViewInit {
 
   reply() {
     this.commentsService.postComment(this.model).subscribe((result) => {
-      if(result.succeeded) this.modal?.close();
+      if(result.succeeded) {
+        this.notificationService.success("Replied to the comment")
+        this.modal?.close();
+      }
     })
   }
 
