@@ -207,20 +207,15 @@ public class ProjectController : ControllerBase
         if (projectPicture == null)
             return Ok(await Result.FailAsync("Current picture not found"));
 
-        if(model.CurrentPictureId != model.NewPictureId)
-        {
-            if (project.ProjectPictures != null && project.ProjectPictures.Any(x => x.PictureId == model.NewPictureId))
-                return Ok(await Result.FailAsync("Picture has already been added to the project"));
+        if (model.CurrentPictureId == model.NewPictureId || (project.ProjectPictures != null && project.ProjectPictures.Any(x => x.PictureId == model.NewPictureId)))
+            return Ok(await Result.FailAsync("Picture has already been added to the project"));
 
-            var picture = await _pictureService.GetByIdAsync(model.NewPictureId);
-            if (picture == null)
-                return Ok(await Result.FailAsync("Picture not found"));
+        var picture = await _pictureService.GetByIdAsync(model.NewPictureId);
+        if (picture == null)
+            return Ok(await Result.FailAsync("Picture not found"));
 
-            projectPicture.PictureId = model.NewPictureId;
-        }
-
+        projectPicture.PictureId = model.NewPictureId;
         projectPicture.DisplayNumber = model.DisplayNumber;
-      
         await _projectService.UpdateProjectPictureAsync(projectPicture);
 
         return Ok(await Result.SuccessAsync());

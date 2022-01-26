@@ -10,13 +10,10 @@ public class ProjectPicture : BaseEntity, IHasDisplayNumber
 
     }
 
-    public ProjectPicture(Project project, Picture picture)
+    public ProjectPicture(int projectId, int pictureId)
     {
-        Project = project;
-        ProjectId = project.Id;
-
-        Picture = picture;
-        PictureId = picture.Id;
+        ProjectId = projectId;
+        PictureId = pictureId;
     }
 
     #endregion

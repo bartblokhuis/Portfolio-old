@@ -77,13 +77,15 @@ public class ProjectService : IProjectService
 
     public async Task InsertProjectUrlAsync(Project project, Url url)
     {
-        var projectUrl = new ProjectUrls(project, url);
+        await _urlService.InsertAsync(url);
+
+        var projectUrl = new ProjectUrls(project.Id, url.Id);
         await _projectUrlsRepository.InsertAsync(projectUrl);
     }
 
     public async Task InsertProjectPictureAsync(Project project, Picture picture)
     {
-        var projectPicture = new ProjectPicture(project, picture);
+        var projectPicture = new ProjectPicture(project.Id, picture.Id);
         await _projectPictureRepository.InsertAsync(projectPicture);
     }
 
@@ -123,6 +125,12 @@ public class ProjectService : IProjectService
 
     public Task UpdateProjectPictureAsync(ProjectPicture picture)
     {
+        if(picture == null)
+            throw new ArgumentNullException(nameof(picture));
+
+        picture.Project = null;
+        picture.Picture = null;
+
         return _projectPictureRepository.UpdateAsync(picture);
     }
 
@@ -141,13 +149,20 @@ public class ProjectService : IProjectService
         if (project == null)
             throw new ArgumentNullException(nameof(project));
 
-        if (project.ProjectUrls == null)
+        var projectUrl = await _projectUrlsRepository.FirstOrDefaultAsync(x => x.ProjectId == project.Id && x.UrlId == urlId);
+        if (projectUrl == null)
             return;
 
-        project.ProjectUrls = project.ProjectUrls.Where(x => x.UrlId != urlId).ToList();
-        await UpdateAsync(project);
+        await _projectUrlsRepository.DeleteAsync(projectUrl);
 
-        await _urlService.DeleteAsync(urlId);
+        try
+        {
+            await _urlService.DeleteAsync(urlId);
+        }
+        catch (Exception ex)
+        {
+
+        }
     }
 
     public Task DeleteProjectPictureAsync(ProjectPicture projectPicture)
