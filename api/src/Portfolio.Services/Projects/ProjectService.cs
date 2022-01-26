@@ -85,7 +85,7 @@ public class ProjectService : IProjectService
 
     public async Task InsertProjectPictureAsync(Project project, Picture picture)
     {
-        var projectPicture = new ProjectPicture(project, picture);
+        var projectPicture = new ProjectPicture(project.Id, picture.Id);
         await _projectPictureRepository.InsertAsync(projectPicture);
     }
 
