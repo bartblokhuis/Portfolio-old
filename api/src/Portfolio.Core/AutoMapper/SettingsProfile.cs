@@ -23,6 +23,7 @@ public class SettingsProfile : Profile
         CreateMap<PublicSiteSettingsDto, PublicSiteSettings>().ForMember(x => x.Id, options => options.Ignore()).ReverseMap();
         CreateMap<BlogSettingsDto, BlogSettings>().ForMember(x => x.Id, options => options.Ignore()).ReverseMap();
         CreateMap<MessageSettingsDto, MessageSettings>().ForMember(x => x.Id, options => options.Ignore()).ReverseMap();
+        CreateMap<ApiSettingsDto, ApiSettings>().ForMember(x => x.Id, options => options.Ignore()).ReverseMap();
     }
 
     #endregion
