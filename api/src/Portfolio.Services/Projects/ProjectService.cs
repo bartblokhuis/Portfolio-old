@@ -143,13 +143,20 @@ public class ProjectService : IProjectService
         if (project == null)
             throw new ArgumentNullException(nameof(project));
 
-        if (project.ProjectUrls == null)
+        var projectUrl = await _projectUrlsRepository.FirstOrDefaultAsync(x => x.ProjectId == project.Id && x.UrlId == urlId);
+        if (projectUrl == null)
             return;
 
-        project.ProjectUrls = project.ProjectUrls.Where(x => x.UrlId != urlId).ToList();
-        await UpdateAsync(project);
+        await _projectUrlsRepository.DeleteAsync(projectUrl);
 
-        await _urlService.DeleteAsync(urlId);
+        try
+        {
+            await _urlService.DeleteAsync(urlId);
+        }
+        catch (Exception ex)
+        {
+
+        }
     }
 
     public Task DeleteProjectPictureAsync(ProjectPicture projectPicture)
