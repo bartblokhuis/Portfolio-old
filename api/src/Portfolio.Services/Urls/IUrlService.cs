@@ -4,6 +4,7 @@ namespace Portfolio.Services.Urls;
 
 public interface IUrlService
 {
+    Task InsertAsync(Url url);
 
     Task UpdateAsync(Url url);
 

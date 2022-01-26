@@ -77,7 +77,9 @@ public class ProjectService : IProjectService
 
     public async Task InsertProjectUrlAsync(Project project, Url url)
     {
-        var projectUrl = new ProjectUrls(project, url);
+        await _urlService.InsertAsync(url);
+
+        var projectUrl = new ProjectUrls(project.Id, url.Id);
         await _projectUrlsRepository.InsertAsync(projectUrl);
     }
 

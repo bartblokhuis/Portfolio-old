@@ -32,6 +32,11 @@ public class UrlService : IUrlService
         return _urlRepository.UpdateAsync(url);
     }
 
+    public async Task InsertAsync(Url url)
+    {
+        await _urlRepository.InsertAsync(url);
+    }
+
     #endregion
 }
 

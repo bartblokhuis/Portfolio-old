@@ -12,13 +12,10 @@ public class ProjectUrls : BaseEntity
 
     }
 
-    public ProjectUrls(Project project, Url url)
+    public ProjectUrls(int projectId, int urlId)
     {
-        Project = project;
-        ProjectId = project.Id;
-        
-        Url = url;
-        UrlId = url.Id;
+        ProjectId = projectId;
+        UrlId = urlId;
     }
 
     #endregion
