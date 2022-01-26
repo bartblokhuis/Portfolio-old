@@ -1,9 +1,6 @@
 export interface AddUpdateProject {
-    title: string,
-    description: string,
-    displayNumber: number,
-    isPublished: boolean,
-    githubUrl? :string,
-    demoUrl?: string,
-    id?: number
+    title: string;
+    description: string;
+    isPublished: boolean;
+    displayNumber: number;
 }

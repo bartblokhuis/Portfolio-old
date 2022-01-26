@@ -12,6 +12,7 @@ import { ContentTitleService } from '../../../services/content-title/content-tit
 import { NotificationService } from '../../../services/notification/notification.service';
 import { formatProjectSkillsSelect, validateProjectForm } from '../helpers/project-helpers';
 import { BreadcrumbsService } from '../../../services/breadcrumbs/breadcrumbs.service';
+import { UpdateProject } from 'projects/shared/src/lib/data/projects/update-project';
 
 declare var $:any;
 
@@ -26,11 +27,12 @@ export class EditProjectComponent implements OnInit {
 
   project: Project | null = null;
   skillIds: number[] = [];
-  model: AddUpdateProject = { description: '', displayNumber: 0, isPublished: false, title: '', demoUrl: '',githubUrl: '' }
+  model: UpdateProject = { description: '', displayNumber: 0, isPublished: false, title: '', id: 0 }
   skillModel: UpdateProjectSkills = {projectId: 0, skillIds: undefined }
   skillGroups: SkillGroup[] | undefined = undefined;
   editProjectForm: any;
   projectTitle: string = '';
+  apiError: string | null = null;
   
   constructor(private readonly route: ActivatedRoute, private projectsService: ProjectsService, private skillGroupsService: SkillGroupsService, private notificationService: NotificationService, 
     private readonly router: Router, private readonly contentTitleService: ContentTitleService, private breadcrumbsService: BreadcrumbsService) { }
@@ -84,6 +86,7 @@ export class EditProjectComponent implements OnInit {
   }
 
   submit() {
+    this.apiError = null;
     if(!this.editProjectForm.valid() || !this.project) return;
 
     let observables: Observable<any>[] = [];
@@ -94,7 +97,11 @@ export class EditProjectComponent implements OnInit {
       observables.push(this.projectsService.updateProjectSkills(this.skillModel));
     }
 
-    combineLatest(observables).subscribe(() => {
+    combineLatest(observables).subscribe((result) => {
+      if(!result[0].succeeded) {
+        this.apiError = result[0].messages[0];
+        return;
+      }
       this.notify()
       return;
     })
