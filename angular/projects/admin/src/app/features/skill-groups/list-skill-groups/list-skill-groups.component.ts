@@ -6,6 +6,7 @@ import { CreateSkillGroupCreatedEvent } from 'projects/shared/src/lib/data/skill
 import { ListSkillGroup, SkillGroup } from 'projects/shared/src/lib/data/skill-groups/skill-group';
 import { Skill } from 'projects/shared/src/lib/data/skills/skill';
 import { SkillGroupsService } from 'projects/shared/src/lib/services/api/skill-groups/skill-groups.service';
+import { NotificationService } from '../../../services/notification/notification.service';
 import { DeleteSkillGroupComponent } from '../delete-skill-group/delete-skill-group.component';
 import { CreateSkillComponent } from '../skills/create-skill/create-skill.component';
 
@@ -21,7 +22,7 @@ export class ListSkillGroupsComponent implements OnInit {
   skillGroups: ListSkillGroup[] | undefined;
   showCreateSkillGroup: boolean = false;
 
-  constructor(private skillGroupsService: SkillGroupsService, private modalService: NgbModal) { }
+  constructor(private skillGroupsService: SkillGroupsService, private modalService: NgbModal, private readonly notificationService: NotificationService) { }
 
   ngOnInit(): void {
     this.loadSkillGroups();
@@ -84,6 +85,7 @@ export class ListSkillGroupsComponent implements OnInit {
     this.skillGroupsService.edit(editSkillGroup).subscribe((result) => {
       if(!this.skillGroups || !result.succeeded) return;
 
+      this.notificationService.success("Updated the skill group");
       const skillGroupIndex = this.skillGroups.findIndex((skillGroup => skillGroup.id == skillGroupId));
       this.skillGroups[skillGroupIndex] = new ListSkillGroup(result.data);
     });

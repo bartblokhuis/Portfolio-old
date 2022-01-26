@@ -72,7 +72,11 @@ export class EditBlogPostComponent implements OnInit{
     if(!this.form.valid()) return;
 
     this.blogPostsService.editBlogPost(this.model).subscribe((result: Result<EditBlog>) => {
-      if(result.succeeded) this.router.navigate(['blog']);
+
+      if(result.succeeded) {
+        this.notificationService.success("Updated the blog post");
+        this.router.navigate(['blog']);
+      } 
 
       this.titleError = result.messages[0];
     });
@@ -99,7 +103,6 @@ export class EditBlogPostComponent implements OnInit{
   deleteComment(comment: BlogComment) {
     const modalRef = this.modalService.open(DeleteCommentComponent, { size: 'lg' });
 
-    //const editBlogPost: ListBlog = { createdAtUTC: blog.createdAtUTC, description: blog.description, displayNumber: blog.displayNumber, id: blog.id, isPublished: blog.isPublished, title: blog.title, updatedAtUtc: blog.updatedAtUtc };
     modalRef.componentInstance.comment = comment
     modalRef.componentInstance.modal = modalRef;
     
@@ -111,7 +114,6 @@ export class EditBlogPostComponent implements OnInit{
   replyToComment(comment: BlogComment) {
     const modalRef = this.modalService.open(ReplyCommentComponent, { size: 'lg' });
 
-    //const editBlogPost: ListBlog = { createdAtUTC: blog.createdAtUTC, description: blog.description, displayNumber: blog.displayNumber, id: blog.id, isPublished: blog.isPublished, title: blog.title, updatedAtUtc: blog.updatedAtUtc };
     modalRef.componentInstance.comment = comment;
     modalRef.componentInstance.modal = modalRef;
     

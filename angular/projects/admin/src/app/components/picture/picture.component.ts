@@ -1,8 +1,9 @@
 import { AfterViewInit, Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
-import { Observable } from 'rxjs';
+import { map, Observable } from 'rxjs';
 import { Picture } from 'projects/shared/src/lib/data/common/picture';
 import { Result } from 'projects/shared/src/lib/data/common/Result';
 import { PicturesService } from 'projects/shared/src/lib/services/api/pictures/pictures.service';
+import { NotificationService } from '../../services/notification/notification.service';
 
 
 declare var $: any;
@@ -21,7 +22,7 @@ export class PictureComponent implements OnInit, AfterViewInit {
   formData: FormData | null = null;
   form: any;
 
-  constructor(private picturesService: PicturesService) { }
+  constructor(private picturesService: PicturesService, private notificationService: NotificationService) { }
   
   ngOnInit(): void {
     
@@ -82,7 +83,12 @@ export class PictureComponent implements OnInit, AfterViewInit {
       url += `&altAttribute=${this.picture.altAttribute}`;
     }
 
-    return this.picturesService.create(url, this.formData);
+    return this.picturesService.create(url, this.formData).pipe(map((result) => {
+      if(result.succeeded) {
+        this.notificationService.success("Craated the picture");
+      }
+      return result;
+    }));
   }
 
   updatePicture(): Observable<Result<Picture>> {
@@ -96,7 +102,12 @@ export class PictureComponent implements OnInit, AfterViewInit {
 
     if(!this.formData) this.formData = new FormData();
 
-    return this.picturesService.edit(url, this.formData);
+    return this.picturesService.edit(url, this.formData).pipe(map((result) => {
+      if(result.succeeded) {
+        this.notificationService.success("Updated the picture");
+      }
+      return result;
+    }));
   }
 
   validatePictureForm(form: any): void {
