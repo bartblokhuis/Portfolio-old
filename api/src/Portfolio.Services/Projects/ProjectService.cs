@@ -125,6 +125,12 @@ public class ProjectService : IProjectService
 
     public Task UpdateProjectPictureAsync(ProjectPicture picture)
     {
+        if(picture == null)
+            throw new ArgumentNullException(nameof(picture));
+
+        picture.Project = null;
+        picture.Picture = null;
+
         return _projectPictureRepository.UpdateAsync(picture);
     }
 
