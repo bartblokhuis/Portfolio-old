@@ -60,7 +60,7 @@ public class SkillGroupService : ISkillGroupService
     public Task<bool> IsExistingTitleAsync(string title, int idToIgnore = 0)
     {
         return _skillGroupRepository.Table.AnyAsync(skillGroup => skillGroup.Title.ToLower() == title.ToLower()
-                && (idToIgnore == 0 || skillGroup.Id == idToIgnore));
+                && (idToIgnore == 0 || skillGroup.Id != idToIgnore));
     }
 
     public Task<bool> ExistsAsync(int id)
