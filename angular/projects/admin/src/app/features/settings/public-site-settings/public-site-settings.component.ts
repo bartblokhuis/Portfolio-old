@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { PublicSiteSettings } from 'projects/shared/src/lib/data/settings/public-site-settings';
 import { SettingsService } from 'projects/shared/src/lib/services/api/settings/settings.service';
 import { BreadcrumbsService } from '../../../services/breadcrumbs/breadcrumbs.service';
+import { ContentTitleService } from '../../../services/content-title/content-title.service';
 import { NotificationService } from '../../../services/notification/notification.service';
 
 declare var $: any;
@@ -16,13 +17,15 @@ export class PublicSiteSettingsComponent implements OnInit {
   form: any;
   error: string | undefined;
 
-  constructor(private readonly breadcrumbsService: BreadcrumbsService, private readonly settingsService: SettingsService, private readonly notificationService: NotificationService) { }
+  constructor(private readonly breadcrumbsService: BreadcrumbsService, private readonly settingsService: SettingsService, private readonly notificationService: NotificationService, private readonly contentTitleService: ContentTitleService) { }
 
   ngOnInit(): void {
     this.loadSettings();
 
     this.form = $("#public-site-settings-form");
     this.validateForm();
+
+    this.contentTitleService.title.next('Public site settings')
 
     this.breadcrumbsService.setBreadcrumb([
       this.breadcrumbsService.homeCrumb,
