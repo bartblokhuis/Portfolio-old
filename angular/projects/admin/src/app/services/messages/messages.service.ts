@@ -27,19 +27,21 @@ export class MessagesService {
     );
   }
 
-  update(id: number, status: MessageStatus): Observable<any> {
+  update(id: number, status: MessageStatus): Observable<Result<Message>> {
     const updateMessage: UpdateMessage = { id : id, messageStatus: parseInt(status.toString())}
 
-    return this.apiService.put('Messages', updateMessage).pipe(
-      map(() => {
+    return this.apiService.put<Message>('Messages', updateMessage).pipe(
+      map((result) => {
         const cachedMessages = this.messages.value;
         const index = cachedMessages.findIndex(x => x.id == updateMessage.id);
 
         //Update the message status in the behaviour subject messages.
-        if(index === -1) return;
+        if(index === -1) return result;
         cachedMessages[index].messageStatus = updateMessage.messageStatus;
 
         this.messages.next(cachedMessages);
+
+        return result;
       })
     )
   }

@@ -24,7 +24,7 @@ export class DeleteMessageComponent implements OnInit {
     if(!this.message) return;
 
     this.messagesService.deleteMessage(this.message).subscribe(() => {
-      this.notificationService.success(`rRemoved ${this.message?.firstName} ${this.message?.lastName}'s message.'`);
+      this.notificationService.success(`Removed ${this.message?.firstName} ${this.message?.lastName}'s message.'`);
       this.modal?.close();
     })
   }

@@ -3,6 +3,7 @@ import { NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
 import { Message } from 'projects/shared/src/lib/data/messages/message';
 import { MessageStatus, MessageStatusToLabelMapping } from 'projects/shared/src/lib/data/messages/message-status';
 import { MessagesService } from '../../../services/messages/messages.service';
+import { NotificationService } from '../../../services/notification/notification.service';
 
 
 declare var $:any;
@@ -19,7 +20,7 @@ export class EditMessageComponent implements OnInit, AfterViewInit{
 
   messageStatus: MessageStatus | undefined = undefined;
 
-  constructor(private messagesService: MessagesService) { }
+  constructor(private messagesService: MessagesService, private notificationService: NotificationService) { }
 
   ngOnInit(): void {
     this.messageStatus = this.message?.messageStatus;
@@ -34,7 +35,10 @@ export class EditMessageComponent implements OnInit, AfterViewInit{
   edit(){
     if(!this.message || !this.messageStatus) return;
 
-    this.messagesService.update(this.message.id, this.messageStatus).subscribe(() => {
+    this.messagesService.update(this.message.id, this.messageStatus).subscribe((result) => {
+      if (result.succeeded){
+        this.notificationService.success("Updated the message")
+      }
       this.modal?.close('success');
     });
   }
