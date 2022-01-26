@@ -12,6 +12,7 @@ import { ContentTitleService } from '../../../services/content-title/content-tit
 import { NotificationService } from '../../../services/notification/notification.service';
 import { formatProjectSkillsSelect, validateProjectForm } from '../helpers/project-helpers';
 import { BreadcrumbsService } from '../../../services/breadcrumbs/breadcrumbs.service';
+import { AddProject } from 'projects/shared/src/lib/data/projects/add-project';
 
 declare var $:any;
 
@@ -22,9 +23,10 @@ declare var $:any;
 })
 export class AddProjectComponent implements OnInit {
 
-  model: AddUpdateProject = { description: '', displayNumber: 0, isPublished: false, title: '', demoUrl: '',githubUrl: '' }
+  model: AddProject = { description: '', displayNumber: 0, isPublished: false, title: '' }
   skillModel: UpdateProjectSkills = {projectId: 0, skillIds: undefined }
   skillGroups: SkillGroup[] = [];
+  apiError: string | null = null;
 
   addProjectForm: any;
 
@@ -53,11 +55,13 @@ export class AddProjectComponent implements OnInit {
   }
   
   submit(): void {
+    this.apiError = null;
     if(!this.addProjectForm.valid()) return;
 
     this.projectsService.createProject(this.model).subscribe((result: Result<Project>) => {
 
       if(!result.succeeded) {
+        this.apiError = result.messages[0];
         return;
       }
 

@@ -14,6 +14,8 @@ public interface IProjectService
 
     Task<IEnumerable<ProjectPicture>> GetProjectPicturesByIdAsync(int id);
 
+    Task<bool> IsExistingTitleAsync(string title, int idToIgnore = 0);
+
     Task InsertAsync(Project model);
 
     Task InsertProjectUrlAsync(Project project, Url url);

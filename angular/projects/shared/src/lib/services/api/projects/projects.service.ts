@@ -10,6 +10,8 @@ import { UpdateProjectPicture } from 'projects/shared/src/lib/data/projects/upda
 import { UpdateProjectSkills } from 'projects/shared/src/lib/data/projects/update-project-skills';
 import { Url } from 'projects/shared/src/lib/data/url';
 import { ApiService } from '../api.service';
+import { AddProject } from '../../../data/projects/add-project';
+import { UpdateProject } from '../../../data/projects/update-project';
 
 @Injectable({
   providedIn: 'root'
@@ -38,7 +40,7 @@ export class ProjectsService {
     return this.apiService.get<ProjectPicture[]>(`Project/Pictures/GetByProjectId?projectId=${id}`)
   }
 
-  createProject(project: AddUpdateProject): Observable<Result<Project>> {
+  createProject(project: AddProject): Observable<Result<Project>> {
     return this.apiService.post<Project>("Project", project)
   }
 
@@ -50,7 +52,7 @@ export class ProjectsService {
     return this.apiService.post("Project/Pictures", createProjectPicture);
   }
 
-  updateProject(project: AddUpdateProject) {
+  updateProject(project: UpdateProject) {
     return this.apiService.put<Project>("Project", project);
   }
 

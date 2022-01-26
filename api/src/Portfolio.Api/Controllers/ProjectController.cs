@@ -43,6 +43,21 @@ public class ProjectController : ControllerBase
 
     #endregion
 
+    #region Utils
+
+    private async Task<string> Validate(CreateUpdateProjectDto dto, int projectId = 0)
+    {
+        if (string.IsNullOrEmpty(dto.Title))
+            return "Please enter the projects title";
+
+        if (await _projectService.IsExistingTitleAsync(dto.Title, projectId))
+            return "There is already a project with the same title";
+
+        return "";
+    }
+
+    #endregion
+
     #region Methods
 
     #region Get
@@ -111,8 +126,13 @@ public class ProjectController : ControllerBase
     #region Post
 
     [HttpPost]
-    public async Task<IActionResult> Create(CreateUpdateProject model)
+    public async Task<IActionResult> Create(CreateProjectDto model)
     {
+        var error = await Validate(model);
+
+        if (!string.IsNullOrEmpty(error))
+            return Ok(await Result.FailAsync(error));
+
         var project = _mapper.Map<Project>(model);
         await _projectService.InsertAsync(project);
 
@@ -164,8 +184,13 @@ public class ProjectController : ControllerBase
     #region Put
 
     [HttpPut]
-    public async Task<IActionResult> Update(CreateUpdateProject model)
+    public async Task<IActionResult> Update(UpdateProjectDto model)
     {
+        var error = await Validate(model, model.Id);
+
+        if (!string.IsNullOrEmpty(error))
+            return Ok(await Result.FailAsync(error));
+
         var project = _mapper.Map<Project>(model);
         project = await _projectService.UpdateAsync(project);
 

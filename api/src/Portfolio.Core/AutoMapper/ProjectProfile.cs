@@ -17,7 +17,9 @@ public class ProjectProfile : Profile
                     DisplayNumber = x.DisplayNumber, MimeType = x.Picture.MimeType, 
                     Path = x.Picture.Path, PictureId = x.PictureId, TitleAttribute = x.Picture.TitleAttribute}));
 
-        CreateMap<CreateUpdateProject, Project>();
+        CreateMap<CreateProjectDto, Project>();
+        CreateMap<UpdateProjectDto, Project>();
+        CreateMap<CreateUpdateProjectDto, Project>();
 
         CreateMap<CreateProjectUrlDto, Url>().ForMember(x => x.Id, options => options.Ignore());
         CreateMap<ProjectPicture, ProjectPictureDto>()
