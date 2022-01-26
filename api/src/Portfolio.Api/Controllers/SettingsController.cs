@@ -8,6 +8,7 @@ using Portfolio.Domain.Models.Settings;
 using Portfolio.Domain.Wrapper;
 using Portfolio.Services.Common;
 using Portfolio.Services.Settings;
+using System;
 using System.Threading.Tasks;
 
 namespace Portfolio.Controllers;
@@ -105,10 +106,14 @@ public class SettingsController : Controller
     public async Task<IActionResult> SaveEmailSettings(EmailSettingsDto model)
     {
         //Test the new configuration before saving it.
-        if (!await _emailService.SendEmail(model.DisplayName, model.SendTestEmailTo, 
-            "Test email",
-            "Test email",
-            _mapper.Map<EmailSettings>(model)))
+        try
+        {
+            await _emailService.SendEmail(model.DisplayName, model.SendTestEmailTo,
+                        "Test email",
+                        "Test email",
+                        _mapper.Map<EmailSettings>(model));
+        }
+        catch (Exception e)
         {
             return Ok(await Result.FailAsync("Test email failed"));
         }

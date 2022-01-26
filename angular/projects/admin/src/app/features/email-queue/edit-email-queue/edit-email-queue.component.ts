@@ -2,6 +2,7 @@ import { Component, Input, OnInit } from '@angular/core';
 import { NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
 import { UpdateQueuedEmail } from 'projects/shared/src/lib/data/queued-email/update-queued-email';
 import { QueuedEmailsService } from 'projects/shared/src/lib/services/api/queued-emails/queued-emails.service';
+import { NotificationService } from '../../../services/notification/notification.service';
 
 declare var $: any;
 
@@ -18,7 +19,7 @@ export class EditEmailQueueComponent implements OnInit {
   form: any;
   error!: string;
 
-  constructor(private readonly queuedEmailsService: QueuedEmailsService) { }
+  constructor(private readonly queuedEmailsService: QueuedEmailsService, private notificationService: NotificationService) { }
 
   ngOnInit(): void {
     if(!this.queuedEmail){
@@ -45,6 +46,7 @@ export class EditEmailQueueComponent implements OnInit {
         return;
       }
 
+      this.notificationService.success("Updated the queued email")
       this.modal?.close();
     })
 
