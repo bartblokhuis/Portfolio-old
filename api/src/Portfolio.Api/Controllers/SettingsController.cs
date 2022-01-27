@@ -243,6 +243,19 @@ public class SettingsController : Controller
     [HttpPost("ApiSettings")]
     public async Task<IActionResult> SaveApiSettings(ApiSettingsDto model)
     {
+        var error = "";
+        if (model == null)
+            error = "Unkown error";
+
+        if (string.IsNullOrEmpty(model.ApiUrl))
+            error = "Please enter the api url";
+
+        if (model.ApiUrl.Length > 128)
+            error = "Please use an api url with less than 128 charachters";
+
+        if (!string.IsNullOrEmpty(error))
+            return Ok(await Result.FailAsync(error));
+
         var originalSettings = await _apiSettings.GetAsync();
 
         originalSettings ??= new ApiSettings();
