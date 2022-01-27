@@ -13,13 +13,13 @@
         <div class="col-4">
             <div class="form-group">
                 <label>{{ label }} title attribute</label>
-                <input class="form-control" type="text" [(ngModel)]="picture.titleAttribute" name="titleAttribute"/>
+                <input class="form-control" type="text" [(ngModel)]="picture.titleAttribute" name="titleAttribute" maxlength="256"/>
             </div>
         </div>
         <div class="col-4">
             <div class="form-group">
                 <label>{{ label }} alt attribute</label>
-                <input class="form-control" type="text" [(ngModel)]="picture.altAttribute" name="altAttribute"/>
+                <input class="form-control" type="text" [(ngModel)]="picture.altAttribute" name="altAttribute" maxlength="512"/>
             </div>
         </div>
         <div class="col-12">
