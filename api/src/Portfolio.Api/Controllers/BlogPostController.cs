@@ -44,6 +44,33 @@ namespace Portfolio.Controllers
 
         #endregion
 
+        #region Utils
+
+        private async Task<string> Validate(CreateUpdateBlogPostDto dto, int blogPostId = 0)
+        {
+            if (dto == null)
+                return "Unkown error";
+
+            if (string.IsNullOrEmpty(dto.Title))
+                return "Please enter the blog post title";
+
+            if (dto.Title.Length > 64)
+                return "Please don't use a title that has more than 64 charachters";
+
+            if (await _blogPostService.IsExistingTitleAsync(dto.Title, blogPostId))
+                return "This title is already used in a previous blog post";
+
+            if (dto.MetaTitle.Length > 256)
+                return "Please don't use a meta title that has more than 256 charachters";
+
+            if (dto.MetaDescription.Length > 256)
+                return "Please don't use a meta description that has more than 256 charachters";
+
+            return "";
+        }
+
+        #endregion
+
         #region Methods
 
         #region Get
@@ -123,11 +150,9 @@ namespace Portfolio.Controllers
         [HttpPost]
         public async Task<IActionResult> Create(CreateBlogPostDto dto)
         {
-            if (!ModelState.IsValid)
-                throw new Exception("Invalid model");
-
-            if (await _blogPostService.IsExistingTitleAsync(dto.Title))
-                return Ok(await Result.FailAsync("There is already a blog post with the same title"));
+            var error = await Validate(dto);
+            if(!string.IsNullOrEmpty(error))
+                return Ok(await Result.FailAsync(error));
 
             var blogPost = _mapper.Map<BlogPost>(dto);
             await _blogPostService.InsertAsync(blogPost);
@@ -193,15 +218,13 @@ namespace Portfolio.Controllers
         [HttpPut]
         public async Task<IActionResult> Update(UpdateBlogPostDto dto)
         {
-            if (!ModelState.IsValid)
-                throw new Exception("Invalid model");
+            var error = await Validate(dto, dto.Id);
+            if (!string.IsNullOrEmpty(error))
+                return Ok(await Result.FailAsync(error));
 
             var blogPost = await _blogPostService.GetByIdAsync(dto.Id, true);
             if (blogPost == null)
                 return Ok(await Result.FailAsync($"No blog post with id: {dto.Id} found"));
-
-            if (await _blogPostService.IsExistingTitleAsync(dto.Title, dto.Id))
-                return Ok(await Result.FailAsync("There is already a blog post with the same title"));
 
             _mapper.Map(dto, blogPost);
             await _blogPostService.UpdateAsync(blogPost);
