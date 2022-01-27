@@ -35,11 +35,11 @@ export class ContactComponent implements OnInit {
 
     let error = false;
     if(this.model.firstName.length < 3){
-      this.firstNameError = "Please enter a name with more than 3 charachters";
+      this.firstNameError = "Please enter a name with more than 3 characters";
       error = true;;
     }
     else if(this.model.firstName.length > 28) {
-      this.firstNameError = "Please enter a name with less than 128 charachters";
+      this.firstNameError = "Please enter a name with less than 128 characters";
     }
     
     if(this.model.email.length === 0) {
@@ -56,7 +56,7 @@ export class ContactComponent implements OnInit {
       error = true;
     }
     else if(this.model.messageContent.length > 512){
-      this.messageError = "Please don't use more than 512 charachters in your message";
+      this.messageError = "Please don't use more than 512 characters in your message";
       error = true;
     }
 

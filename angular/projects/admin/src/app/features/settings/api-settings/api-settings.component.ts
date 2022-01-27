@@ -71,7 +71,7 @@ export class ApiSettingsComponent implements OnInit {
       messages: {
         apiUrl: {
           required: "Please enter the API site's url",
-          maxlength: "Please use an api url with less than 128 charachters"
+          maxlength: "Please use an api url with less than 128 characters"
         }
       },
       errorElement: 'span',

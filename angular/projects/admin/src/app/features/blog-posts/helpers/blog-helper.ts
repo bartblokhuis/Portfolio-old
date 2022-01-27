@@ -19,10 +19,10 @@ export function validateBlogForm(form: any) {
             required: "Please enter a title",
           },
           metaDescription: {
-            maxlength: "Please don't use more than 256 charachters in the meta description"
+            maxlength: "Please don't use more than 256 characters in the meta description"
           },
           metaTitle: {
-            maxlength: "Please don't use more than 256 charachter in the meta title"
+            maxlength: "Please don't use more than 256 characters in the meta title"
           }
         },
         errorElement: 'span',

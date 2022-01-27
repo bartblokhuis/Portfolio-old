@@ -41,7 +41,7 @@ public class AboutMeController : ControllerBase
             return "Please enter a title";
 
         if (dto.Title.Length > 128)
-            return "Please don't use more than 128 charachter in the title";
+            return "Please don't use more than 128 character in the title";
 
         return "";
     }

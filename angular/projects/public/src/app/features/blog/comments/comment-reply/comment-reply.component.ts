@@ -44,7 +44,7 @@ export class CommentReplyComponent implements OnInit {
     }
 
     if(this.model.name.length > 64){
-      this.nameError = "Please enter a name that has less than 65 charachters";
+      this.nameError = "Please enter a name that has less than 65 characters";
       hasError = true;
     }
 
@@ -58,7 +58,7 @@ export class CommentReplyComponent implements OnInit {
       hasError = true;
     }
     if(this.model.content.length > 512){
-      this.commentError = "Please don't enter a comment with more than 512 charachters";
+      this.commentError = "Please don't enter a comment with more than 512 characters";
       hasError = true;
     }
 

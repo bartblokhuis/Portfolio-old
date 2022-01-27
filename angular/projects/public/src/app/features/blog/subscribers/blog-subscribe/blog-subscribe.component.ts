@@ -30,7 +30,7 @@ export class BlogSubscribeComponent implements OnInit {
       return;
     }
     if(emailAddres.length > 128){
-      this.error = "Please use an email address with less than 128 charachters";
+      this.error = "Please use an email address with less than 128 characters";
     }
 
     if(!isValidEmail(emailAddres)){

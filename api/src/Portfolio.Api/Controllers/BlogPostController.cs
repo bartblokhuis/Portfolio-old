@@ -55,16 +55,16 @@ namespace Portfolio.Controllers
                 return "Please enter the blog post title";
 
             if (dto.Title.Length > 64)
-                return "Please don't use a title that has more than 64 charachters";
+                return "Please don't use a title that has more than 64 characters";
 
             if (await _blogPostService.IsExistingTitleAsync(dto.Title, blogPostId))
                 return "This title is already used in a previous blog post";
 
             if (dto.MetaTitle?.Length > 256)
-                return "Please don't use a meta title that has more than 256 charachters";
+                return "Please don't use a meta title that has more than 256 characters";
 
             if (dto.MetaDescription?.Length > 256)
-                return "Please don't use a meta description that has more than 256 charachters";
+                return "Please don't use a meta description that has more than 256 characters";
 
             return "";
         }
@@ -81,13 +81,13 @@ namespace Portfolio.Controllers
                 return "Please use a valid email address";
 
             if (dto.Email?.Length > 128)
-                return "Please don't enter an email that has more than 256 charachters";
+                return "Please don't enter an email that has more than 256 characters";
 
             if (string.IsNullOrEmpty(dto.Content))
                 return "Please enter the comment";
 
             if (dto.Content.Length > 512)
-                return "Please don't enter a comment with more than 512 charachters";
+                return "Please don't enter a comment with more than 512 characters";
 
             return "";
         }
