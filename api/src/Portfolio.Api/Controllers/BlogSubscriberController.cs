@@ -143,6 +143,12 @@ public class BlogSubscriberController : ControllerBase
         if (await _blogSubscriberService.ExistsAsync(dto.EmailAddress))
             return Ok(await Result.FailAsync("Email is already subscribed"));
 
+        if (dto.EmailAddress.Length > 128)
+            return Ok(await Result.FailAsync("Please use an email address with less than 128 characters"));
+
+        if (dto.Name.Length > 64)
+            return Ok(await Result.FailAsync("Please use a name with less than 64 characters"));
+
         var blogSubscriber = _mapper.Map<BlogSubscriber>(dto);
         await _blogSubscriberService.SubscribeAsync(blogSubscriber);
 

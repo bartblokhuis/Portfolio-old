@@ -10,8 +10,8 @@
                         <label class="col-form-label">API url</label>
                         <input type="text" class="form-control" [(ngModel)]="model.apiUrl" name="apiUrl">
                     </div>
-                    <div class="custom-error" *ngIf="error">
-                        <label>{{error}}</label>
+                    <div class="custom-error" *ngIf="apiError">
+                        <label>{{apiError}}</label>
                     </div>
                 </form>
             </div>

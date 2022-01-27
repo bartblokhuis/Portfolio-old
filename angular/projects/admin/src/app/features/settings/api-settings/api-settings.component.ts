@@ -16,6 +16,7 @@ export class ApiSettingsComponent implements OnInit {
   model: ApiSettings = { apiUrl: '' }
   form: any;
   error: string | undefined;
+  apiError: string | null = null;
 
   constructor(private readonly breadcrumbsService: BreadcrumbsService, private readonly settingsService: SettingsService, private readonly notificationService: NotificationService) { }
 
@@ -48,10 +49,14 @@ export class ApiSettingsComponent implements OnInit {
 
   save(): void {
 
+    this.apiError = null;
     if(!this.form.valid()) return;
 
     this.settingsService.saveApiSettings(this.model).subscribe((result) => {
       if (result.succeeded) this.notificationService.success('Saved the API settings');
+      else{
+        this.apiError = result.messages[0];
+      }
     });
   }
 
@@ -60,11 +65,13 @@ export class ApiSettingsComponent implements OnInit {
       rules: {
         apiUrl: {
           required: true,
+          maxlength: 128
         }
       },
       messages: {
         apiUrl: {
           required: "Please enter the API site's url",
+          maxlength: "Please use an api url with less than 128 characters"
         }
       },
       errorElement: 'span',

@@ -47,12 +47,15 @@ export class EmailSettingsComponent implements OnInit {
         email: {
           required: true,
           email: true,
+          maxlength: 128
         },
         displayName: {
-          required: true
+          required: true,
+          maxlength: 64
         },
         host: {
-          required: true
+          required: true,
+          maxlength: 128
         },
         port: {
           required: true
@@ -60,33 +63,40 @@ export class EmailSettingsComponent implements OnInit {
         sendTestEmailTo: {
           required: true,
           email: true,
+          maxlength: 128
         },
         siteOwnerEmailAddress: {
           required: true,
-          email: true
+          email: true,
+          maxlength: 128
         }
       },
       messages: {
         email: {
           required: "Please enter a email address",
-          email: "Please enter a valid email address"
+          email: "Please enter a valid email address",
+          maxlength: "Please use an email with less than 128 characters"
         },
         displayName: {
-          required: "Please enter a display name"
+          required: "Please enter a display name",
+          maxlength: "Please use a name with less than 64 characters"
         },
         host: {
-          required: "Please enter the email server host"
+          required: "Please enter the email server host",
+          maxlength: "Please use a host with less than 128 characters"
         },
         port: {
           required: "Please enter the email server port"
         },
         sendTestEmailTo: {
           required: "Please enter a test email address",
-          email: "Please enter a valid email address"
+          email: "Please enter a valid email address",
+          maxlength: "Please use an email with less than 128 characters"
         },
         siteOwnerEmailAddress: {
           required: "Please enter your email address",
-          email: "Please enter a valid email address"
+          email: "Please enter a valid email address",
+          maxlength: "Please use an email with less than 128 characters"
         }
       },
       errorElement: 'span',

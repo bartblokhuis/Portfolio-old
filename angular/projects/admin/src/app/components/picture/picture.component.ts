@@ -114,6 +114,12 @@ export class PictureComponent implements OnInit, AfterViewInit {
 
     let validation = {
       rules: {
+        titleAttribute: {
+          maxlength: 256
+        },
+        altAttribute: {
+          maxlength: 512
+        }
       },
       messages: {
       },

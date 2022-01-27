@@ -45,6 +45,9 @@ public class ScheduleTaskController : ControllerBase
         if (string.IsNullOrEmpty(dto.Name))
             return "Please enter the schedule task name";
 
+        if (dto.Name.Length > 128)
+            return "Please don't enter a name with more than 128 character";
+
         if (dto.Seconds < 1)
             return "The run time can't be less than one second";
 

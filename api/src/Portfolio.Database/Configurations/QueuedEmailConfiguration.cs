@@ -19,6 +19,5 @@ internal class QueuedEmailConfiguration : IEntityTypeConfiguration<QueuedEmail>
             .HasMaxLength(128);
         builder.Property(t => t.ToName)
             .HasMaxLength(128);
-
     }
 }

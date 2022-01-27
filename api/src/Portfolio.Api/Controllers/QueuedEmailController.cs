@@ -71,17 +71,32 @@ public class QueuedEmailController : ControllerBase
         if(string.IsNullOrEmpty(dto.From))
             return Ok(await Result.FailAsync("Please enter a from email address"));
 
+        if (dto.From.Length > 128)
+            return Ok(await Result.FailAsync("Please don't enter a from address with more than 128 character"));
+
         if (!CommonHelper.IsValidEmail(dto.From))
             return Ok(await Result.FailAsync("Please enter a valid from email address"));
+
+        if (!string.IsNullOrEmpty(dto.FromName) && dto.FromName.Length > 128)
+            return Ok(await Result.FailAsync("Please don't enter a from name with more than 128 character"));
 
         if (string.IsNullOrEmpty(dto.To))
             return Ok(await Result.FailAsync("Please enter a to email address"));
 
+        if (dto.To.Length > 128)
+            return Ok(await Result.FailAsync("Please don't enter a to address with more than 128 character"));
+
         if (!CommonHelper.IsValidEmail(dto.To))
             return Ok(await Result.FailAsync("Please enter a valid to email address"));
 
+        if(!string.IsNullOrEmpty(dto.ToName) && dto.ToName.Length > 128)
+            return Ok(await Result.FailAsync("Please don't enter a to name with more than 128 character"));
+
         if (string.IsNullOrEmpty(dto.Subject))
             return Ok(await Result.FailAsync("Please enter the email subject"));
+
+        if (!string.IsNullOrEmpty(dto.Subject) && dto.Subject.Length > 128)
+            return Ok(await Result.FailAsync("Please don't enter a subject with more than 128 character"));
 
         if (string.IsNullOrEmpty(dto.Body))
             return Ok(await Result.FailAsync("Please enter the email content"));

@@ -2,7 +2,7 @@
     <div class="card-header">
         <div class="float-left">
             <form id="createForm">
-                <input type="text" class="form-control" id="tite" name="title"  [(ngModel)]="model.title">
+                <input type="text" class="form-control" id="tite" name="title" [(ngModel)]="model.title" maxlength="64">
                 <span class="custom-error" *ngIf="error">{{ error }}</span>
             </form>
         </div>

@@ -29,9 +29,12 @@ export class BlogSubscribeComponent implements OnInit {
       this.error = "Please enter an email";
       return;
     }
+    if(emailAddres.length > 128){
+      this.error = "Please use an email address with less than 128 characters";
+    }
 
-    if(!emailAddres || !isValidEmail(emailAddres)){
-      
+    if(!isValidEmail(emailAddres)){
+      this.error = "Please use a valid email address"
     }
 
     const model: CreateBlogSubscriber = { emailAddress: emailAddres, name: '' }
@@ -42,7 +45,6 @@ export class BlogSubscribeComponent implements OnInit {
         this.success = "Thanks for subscribing!";
         return;
       }
-
       this.error = result.messages[0];
       
     })

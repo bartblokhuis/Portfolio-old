@@ -6,7 +6,7 @@
     </div>
     <div class="card-body">
         <label>Subscribe now and don't miss any new blog posts.</label>
-        <input type="email" name="email" #emailAddress autocomplete="email" placeholder="Enter email address">
+        <input type="email" name="email" #emailAddress autocomplete="email" placeholder="Enter email address" maxlength="128">
         <label class="error" *ngIf="error">{{error}}</label>
         <label class="success" *ngIf="success">{{success}}</label>
     </div>

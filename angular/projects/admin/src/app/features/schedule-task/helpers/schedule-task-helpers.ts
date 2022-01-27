@@ -5,6 +5,7 @@ export function validateScheduleTaskForm(form: any) {
         rules: {
           name: {
             required: true,
+            maxlength: 128
           },
           seconds: {
             required: true,
@@ -18,6 +19,7 @@ export function validateScheduleTaskForm(form: any) {
         messages: {
           name: {
             required: "Please enter the task name",
+            maxlength: "Please don't enter a name with more than 128 character"
           },
           seconds: {
             required: "Please enter the tasks tun time",

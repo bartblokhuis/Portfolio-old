@@ -32,14 +32,19 @@ export class CommentReplyComponent implements OnInit {
 
   createComment() {
 
+    this.error = null;
+    this.nameError = null;
+    this.commentError = null;
+    this.emailError = null;
+
     let hasError: boolean = false;
     if(!this.model.name || this.model.name.length < 1){
       this.nameError = "Please enter a name";
       hasError = true;
     }
 
-    if(this.model.name.length > 16){
-      this.nameError = "Please enter a name that has less than 16 charachters";
+    if(this.model.name.length > 64){
+      this.nameError = "Please enter a name that has less than 65 characters";
       hasError = true;
     }
 
@@ -50,6 +55,10 @@ export class CommentReplyComponent implements OnInit {
 
     if(!this.model.content || this.model.content.length < 1){
       this.commentError = "Please enter your comment";
+      hasError = true;
+    }
+    if(this.model.content.length > 512){
+      this.commentError = "Please don't enter a comment with more than 512 characters";
       hasError = true;
     }
 

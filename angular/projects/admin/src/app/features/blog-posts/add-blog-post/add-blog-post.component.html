@@ -11,7 +11,7 @@
                 <div class="card-body">
                     <div class="form-group">
                         <label>Title</label>
-                        <input class="form-control" type="text" [(ngModel)]="model.title" name="title"/>
+                        <input class="form-control" type="text" [(ngModel)]="model.title" name="title" maxlength="64"/>
                     </div>
                     <div class="form-group">
                         <label>Description</label>
@@ -45,11 +45,11 @@
                 <div class="card-body">
                     <div class="form-group">
                         <label>Meta title</label>
-                        <input class="form-control" type="text" [(ngModel)]="model.metaTitle" name="metaTitle"/>
+                        <input class="form-control" type="text" [(ngModel)]="model.metaTitle" name="metaTitle" maxlength="256"/>
                     </div>
                     <div class="form-group">
                         <label>Meta description</label>
-                        <input class="form-control" type="text" [(ngModel)]="model.metaDescription" name="metaDescription"/>
+                        <input class="form-control" type="text" [(ngModel)]="model.metaDescription" name="metaDescription" maxlength="256"/>
                     </div>
                 </div>
             </div>

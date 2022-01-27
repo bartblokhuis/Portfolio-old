@@ -38,7 +38,7 @@ export class CommentNewComponent implements OnInit {
     }
 
     if(this.model.name.length > 16){
-      this.nameError = "Please enter a name that has less than 16 charachters";
+      this.nameError = "Please enter a name that has less than 16 characters";
       hasError = true;
     }
 

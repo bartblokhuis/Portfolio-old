@@ -7,6 +7,10 @@ export function validateProjectForm(form: any) {
         rules: {
           title: {
             required: true,
+            maxlength: 64
+          },
+          description: {
+            maxlength: 512
           },
           file: {
             accept: "image/jpeg, image/pjpeg, image/png, image/svg+xml, image/tiff, image/webp"
@@ -15,6 +19,10 @@ export function validateProjectForm(form: any) {
         messages: {
           title: {
             required: "Please enter a title",
+            maxlength: "Please don't enter a title with more than 64 character"
+          },
+          description: {
+            maxlength: "Please don't enter a description with more than 512 character"
           },
           file: {
             accept: "Please enter an image"

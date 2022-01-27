@@ -7,6 +7,7 @@ public abstract class CreateUpdateSkill
     #region Properties
 
     [Required(AllowEmptyStrings = false)]
+    [MaxLength(64)]
     public string Name { get; set; }
 
     [Required]

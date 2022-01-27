@@ -30,11 +30,13 @@ export class CreateSkillGroupComponent implements OnInit {
       rules: {
         title: {
           required: true,
+          maxlength: 64
         },
       },
       messages: {
         title: {
-          required: "Please enter a title"
+          required: "Please enter a title",
+          maxlength: "Please don't enter a title with more than 64 characters"
         }
       },
       errorElement: 'span',

@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
+using Portfolio.Core.Helpers;
 using Portfolio.Domain.Dtos;
 using Portfolio.Domain.Dtos.Settings;
 using Portfolio.Domain.Models.Settings;
@@ -47,6 +48,71 @@ public class SettingsController : Controller
         _mapper = mapper;
         _apiSettings = apiSettings;
         _messageSettings = messageSettings;
+    }
+
+    #endregion
+
+    #region Utils
+
+    private string ValidteEmailSettings(EmailSettingsDto dto)
+    {
+        if (dto == null)
+            return "Unkown error";
+
+        if (string.IsNullOrEmpty(dto.DisplayName))
+            return "Please enter a display name";
+
+        if (dto.DisplayName.Length > 64)
+            return "Please enter a display name with less than 65 characters";
+
+        if (string.IsNullOrEmpty(dto.Email))
+            return "Please enter a email address";
+
+        if (!CommonHelper.IsValidEmail(dto.SiteOwnerEmailAddress))
+            return "Please enter a valid email address";
+
+        if (dto.Email.Length > 128)
+            return "Please enter a email address with less than 128 characters";
+
+        if (string.IsNullOrEmpty(dto.SendTestEmailTo))
+            return "Please enter a test email address";
+
+        if (!CommonHelper.IsValidEmail(dto.SendTestEmailTo))
+            return "Please enter a valid test email address";
+
+        if (dto.SendTestEmailTo.Length > 128)
+            return "Please enter a test email address with less than 128 characters";
+
+        if (string.IsNullOrEmpty(dto.SiteOwnerEmailAddress))
+            return "Please enter the site owner email address";
+
+        if (!CommonHelper.IsValidEmail(dto.SiteOwnerEmailAddress))
+            return "Please enter a valid site owner email address";
+
+        if (dto.SiteOwnerEmailAddress.Length > 128)
+            return "Please enter a site owner email address with less than 128 characters";
+
+        if (string.IsNullOrEmpty(dto.Host))
+            return "Please enter a host";
+
+        if (dto.Host.Length > 128)
+            return "Please use an host with less than 128 characters";
+
+        return "";
+    }
+
+    private string ValidateSeoSettings(SeoSettingsDto dto)
+    {
+        if (dto == null)
+            return "Unkown error";
+
+        if (string.IsNullOrEmpty(dto.Title))
+            return "Please enter a title";
+
+        if (dto.Title.Length > 64)
+            return "Please don't enter a title with more than 64 characters";
+
+        return "";
     }
 
     #endregion
@@ -105,6 +171,10 @@ public class SettingsController : Controller
     [HttpPost("EmailSettings")]
     public async Task<IActionResult> SaveEmailSettings(EmailSettingsDto model)
     {
+        var error = ValidteEmailSettings(model);
+        if(string.IsNullOrEmpty(error))
+            return Ok(await Result.FailAsync(error));
+
         //Test the new configuration before saving it.
         try
         {
@@ -150,6 +220,10 @@ public class SettingsController : Controller
     [HttpPost("SeoSettings")]
     public async Task<IActionResult> SaveSeoSettings(SeoSettingsDto model)
     {
+        var error = ValidateSeoSettings(model);
+        if (!string.IsNullOrEmpty(error))
+            return Ok(await Result.FailAsync(error));
+
         var originalSettings = await _seoSettings.GetAsync();
 
         originalSettings ??= new SeoSettings();
@@ -243,6 +317,19 @@ public class SettingsController : Controller
     [HttpPost("ApiSettings")]
     public async Task<IActionResult> SaveApiSettings(ApiSettingsDto model)
     {
+        var error = "";
+        if (model == null)
+            error = "Unkown error";
+
+        if (string.IsNullOrEmpty(model.ApiUrl))
+            error = "Please enter the api url";
+
+        if (model.ApiUrl.Length > 128)
+            error = "Please use an api url with less than 128 characters";
+
+        if (!string.IsNullOrEmpty(error))
+            return Ok(await Result.FailAsync(error));
+
         var originalSettings = await _apiSettings.GetAsync();
 
         originalSettings ??= new ApiSettings();
