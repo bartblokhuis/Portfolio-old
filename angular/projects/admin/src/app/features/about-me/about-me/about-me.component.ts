@@ -14,6 +14,7 @@ export class AboutMeComponent implements OnInit {
 
   aboutMe : AboutMe = { title: '', content: '' }
   aboutMeForm: any;
+  apiError: string | null = null;
 
   constructor(private aboutMeService: AboutMeService, private notificationService: NotificationService) { }
 
@@ -22,7 +23,12 @@ export class AboutMeComponent implements OnInit {
     this.validateAboutMe();
 
     this.aboutMeService.get().subscribe((result: Result<AboutMe>) => {
-      if(result.succeeded) this.aboutMe = result.data;
+      if(result.succeeded) {
+        this.aboutMe = result.data;
+      }
+      else {
+        this.apiError = result.messages[0];
+      }
     });
   }
 
@@ -46,11 +52,13 @@ export class AboutMeComponent implements OnInit {
       rules: {
         title: {
           required: true,
+          maxlength: 128
         },
       },
       messages: {
         title: {
           required: "Please enter a title",
+          maxlength: "Please don't use more than 128 charachter in the title"
         },
       },
       errorElement: 'span',

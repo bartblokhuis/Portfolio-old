@@ -33,6 +33,21 @@ public class AboutMeController : ControllerBase
 
     #endregion
 
+    #region Utils
+
+    private string Validate(AboutMeDto dto)
+    {
+        if (string.IsNullOrEmpty(dto.Title))
+            return "Please enter a title";
+
+        if (dto.Title.Length > 128)
+            return "Please don't use more than 128 charachter in the title";
+
+        return "";
+    }
+
+    #endregion
+
     #region Methods
 
     [HttpGet]
@@ -50,6 +65,10 @@ public class AboutMeController : ControllerBase
     [HttpPost]
     public async Task<IActionResult> Save(AboutMeDto model)
     {
+        var error = Validate(model);
+        if (!string.IsNullOrEmpty(error))
+            return Ok(await Result.FailAsync(error));
+
         var aboutMe = _mapper.Map<AboutMe>(model);
         await _aboutMeService.SaveAsync(aboutMe);
 
