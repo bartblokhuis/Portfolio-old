@@ -91,7 +91,6 @@ namespace Portfolio.Controllers
             if (!string.IsNullOrEmpty(error))
                 return Ok(await Result.FailAsync(error));
 
-
             await _pictureService.UpdatePictureFromFileAsync(picture, file, titleAttribute, altAttribute);
             var result = await Result<Picture>.SuccessAsync(picture);
             return Ok(result);
