@@ -101,6 +101,20 @@ public class SettingsController : Controller
         return "";
     }
 
+    private string ValidateSeoSettings(SeoSettingsDto dto)
+    {
+        if (dto == null)
+            return "Unkown error";
+
+        if (string.IsNullOrEmpty(dto.Title))
+            return "Please enter a title";
+
+        if (dto.Title.Length > 64)
+            return "Please don't enter a title with more than 64 characters";
+
+        return "";
+    }
+
     #endregion
 
     #region Methods
@@ -206,6 +220,10 @@ public class SettingsController : Controller
     [HttpPost("SeoSettings")]
     public async Task<IActionResult> SaveSeoSettings(SeoSettingsDto model)
     {
+        var error = ValidateSeoSettings(model);
+        if (!string.IsNullOrEmpty(error))
+            return Ok(await Result.FailAsync(error));
+
         var originalSettings = await _seoSettings.GetAsync();
 
         originalSettings ??= new SeoSettings();
