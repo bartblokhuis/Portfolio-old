@@ -60,11 +60,34 @@ namespace Portfolio.Controllers
             if (await _blogPostService.IsExistingTitleAsync(dto.Title, blogPostId))
                 return "This title is already used in a previous blog post";
 
-            if (dto.MetaTitle.Length > 256)
+            if (dto.MetaTitle?.Length > 256)
                 return "Please don't use a meta title that has more than 256 charachters";
 
-            if (dto.MetaDescription.Length > 256)
+            if (dto.MetaDescription?.Length > 256)
                 return "Please don't use a meta description that has more than 256 charachters";
+
+            return "";
+        }
+
+        private string ValidateComment(CreateCommentDto dto)
+        {
+            if (dto == null)
+                return "Unkown error";
+
+            if (string.IsNullOrEmpty(dto.Name))
+                return "Please enter your name";
+
+            if (!string.IsNullOrEmpty(dto.Email) && !CommonHelper.IsValidEmail(dto.Email))
+                return "Please use a valid email address";
+
+            if (dto.Email?.Length > 128)
+                return "Please don't enter an email that has more than 256 charachters";
+
+            if (string.IsNullOrEmpty(dto.Content))
+                return "Please enter the comment";
+
+            if (dto.Content.Length > 512)
+                return "Please don't enter a comment with more than 512 charachters";
 
             return "";
         }
@@ -172,14 +195,9 @@ namespace Portfolio.Controllers
             var includeUnPublished = _httpContextAccessor.HttpContext.User.Identity.IsAuthenticated;
 
             //Email address is optional however, if the client provides an email ensure that it's a valid email.
-            if(!string.IsNullOrEmpty(dto.Email) && !CommonHelper.IsValidEmail(dto.Email))
-                return Ok(await Result.FailAsync($"Please use a real email address"));
-
-            if(string.IsNullOrEmpty(dto.Content))
-                return Ok(await Result.FailAsync($"Please enter your comment"));
-
-            if(dto.Content.Length > 512)
-                return Ok(await Result.FailAsync($"Please don't use more than 512 charachters in your comment"));
+            var error = ValidateComment(dto);
+            if (!string.IsNullOrEmpty(error))
+                return Ok(await Result.FailAsync(error));
 
             //Ensures that the comment doesn't create an unnecesary relation to the blog post.
             if (dto.BlogPostId != null && dto.ParentCommentId != null)

@@ -3,7 +3,7 @@
         <div class="form-group small">
             <label for="name">Name <span class="required">*</span></label>
             <input type="text" autocomplete="name" required="required" name="name" [(ngModel)]="model.name" 
-                minlength="1" maxlength="16">
+                minlength="1" maxlength="65">
             <div *ngIf="nameError" class="alert">
                 <span class="input-error">{{ nameError }}</span>
             </div>
