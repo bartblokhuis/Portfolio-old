@@ -10,6 +10,7 @@ using Portfolio.Services.Common;
 using Portfolio.Services.SkillGroups;
 using Portfolio.Services.Skills;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace Portfolio.Controllers;
@@ -66,7 +67,7 @@ public class SkillController : ControllerBase
     public async Task<IActionResult> Create(CreateSkillDto model)
     {
         if (!ModelState.IsValid)
-            return Ok(await Result.FailAsync("Invalid model"));
+            return Ok(await Result.FailAsync(ModelState.Select(x => x.Value.Errors.ToString()).FirstOrDefault()));
 
         if (!await _skillGroupService.ExistsAsync(model.SkillGroupId))
             return Ok(await Result.FailAsync("Skill group not found"));

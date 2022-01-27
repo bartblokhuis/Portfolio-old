@@ -6,6 +6,7 @@ export function validateSkillForm(form: any) {
         rules: {
           name: {
             required: true,
+            maxlength: 64
           },
           file: {
             accept: "image/jpeg, image/pjpeg, image/png, image/svg+xml, image/tiff, image/webp"
@@ -14,6 +15,7 @@ export function validateSkillForm(form: any) {
         messages: {
           name: {
             required: "Please enter a title",
+            maxlength: "Please don't enter a name with more than 64 characters"
           },
           file: {
             accept: "Please enter an image"
