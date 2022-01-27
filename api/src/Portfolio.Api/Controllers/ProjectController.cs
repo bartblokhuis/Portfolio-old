@@ -50,8 +50,14 @@ public class ProjectController : ControllerBase
         if (string.IsNullOrEmpty(dto.Title))
             return "Please enter the projects title";
 
+        if (dto.Title.Length > 64)
+            return "Please don't enter a title with more than 64 character";
+
         if (await _projectService.IsExistingTitleAsync(dto.Title, projectId))
             return "There is already a project with the same title";
+
+        if (dto.Description?.Length > 512)
+            return "Please don't enter a description with more than 512 character";
 
         return "";
     }
