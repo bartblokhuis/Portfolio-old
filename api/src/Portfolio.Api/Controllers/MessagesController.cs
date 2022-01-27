@@ -40,6 +40,36 @@ public class MessagesController : ControllerBase
 
     #endregion
 
+    #region Utils
+
+    private string Validate(CreateMessageDto dto)
+    {
+        if (dto == null)
+            return "Unkown error";
+
+        if (dto.FirstName?.Length > 64)
+            return "Please don't enter a name with more than 64 character";
+
+        if (dto.LastName?.Length > 64)
+            return "Please don't enter a name with more than 64 character";
+
+        if (string.IsNullOrEmpty(dto.Email))
+            return "Please enter your email address";
+
+        if (string.IsNullOrEmpty(dto.MessageContent))
+            return "Please enter your message";
+
+        if (dto.MessageContent.Length > 512)
+            return "Please don't use more than 512 charachters in your message";
+
+        if (dto.Email.Length > 64)
+            return "";
+
+        return "";
+    }
+
+    #endregion
+
     #region Methods
 
     [HttpGet]
@@ -56,6 +86,10 @@ public class MessagesController : ControllerBase
     [HttpPost]
     public async Task<IActionResult> Create(CreateMessageDto messageDto)
     {
+        var error = Validate(messageDto);
+        if(!string.IsNullOrEmpty(error))
+            return Ok(await Result.FailAsync(error));
+
         var ipAddress = _webHelper.GetCurrentIpAddress();
 
         if (!await _messageService.IsAllowedAsync(ipAddress))

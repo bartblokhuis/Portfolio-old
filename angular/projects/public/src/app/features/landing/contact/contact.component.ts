@@ -38,7 +38,7 @@ export class ContactComponent implements OnInit {
       this.firstNameError = "Please enter a name with more than 3 characters";
       error = true;;
     }
-    else if(this.model.firstName.length > 28) {
+    else if(this.model.firstName.length > 128) {
       this.firstNameError = "Please enter a name with less than 128 characters";
     }
     
