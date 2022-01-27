@@ -10,13 +10,13 @@
             <div class="col-sm-6">
                 <div class="form-group">
                     <label>From</label>
-                    <input class="form-control" type="text" [(ngModel)]="queuedEmail.from" name="from" required />
+                    <input class="form-control" type="text" [(ngModel)]="queuedEmail.from" name="from" required maxlength="128" />
                 </div>
             </div>
             <div class="col-sm-6">
                 <div class="form-group">
                     <label>From name </label>
-                    <input class="form-control" type="text" [(ngModel)]="queuedEmail.fromName" name="fromName" />
+                    <input class="form-control" type="text" [(ngModel)]="queuedEmail.fromName" name="fromName"  maxlength="128" />
                 </div>
             </div>
         </div>
@@ -24,13 +24,13 @@
             <div class="col-sm-6">
                 <div class="form-group">
                     <label>To</label>
-                    <input class="form-control" type="text" [(ngModel)]="queuedEmail.to" name="to" required />
+                    <input class="form-control" type="text" [(ngModel)]="queuedEmail.to" name="to" required  maxlength="128" />
                 </div>
             </div>
             <div class="col-sm-6">
                 <div class="form-group">
                     <label>To name</label>
-                    <input class="form-control" type="text" [(ngModel)]="queuedEmail.toName" name="toName" />
+                    <input class="form-control" type="text" [(ngModel)]="queuedEmail.toName" name="toName"  maxlength="128" />
                 </div>
             </div>
         </div>

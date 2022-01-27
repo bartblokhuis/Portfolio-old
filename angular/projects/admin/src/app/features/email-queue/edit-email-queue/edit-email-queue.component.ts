@@ -58,13 +58,22 @@ export class EditEmailQueueComponent implements OnInit {
         from: {
           required: true,
           email: true,
+          maxlength: 128
+        },
+        fromName: {
+          maxlength: 128
         },
         to: {
           required: true,
           email: true,
+          maxlength: 128
+        },
+        toName: {
+          maxlength: 128
         },
         subject: {
-          required: true
+          required: true,
+          maxlength: 128
         },
         body: {
           required: true
@@ -80,13 +89,22 @@ export class EditEmailQueueComponent implements OnInit {
         from: {
           required: "Please enter a from email address",
           email:  "Please enter a valid email address",
+          maxlength: "Please don't enter a from address with more than 128 character"
+        },
+        fromName: {
+          maxlength: "Please don't enter a from name with more than 128 character"
         },
         to: {
           required: "Please enter a to email address",
           email: "Please enter a valid email address",
+          maxlength: "Please don't enter a to address with more than 128 character"
+        },
+        toName: {
+          maxlength: "Please don't enter a to name with more than 128 character"
         },
         subject: {
-          required: "Please enter the email's subject"
+          required: "Please enter the email's subject",
+          maxlength: "Please don't enter a subject with more than 128 character"
         },
         body: {
           required: "Please enter the email's content"
