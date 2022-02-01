@@ -10,6 +10,7 @@ export class AntiAuthGuard implements CanActivate {
     ) { }
 
     canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot) {
+
         const currentUser = this.authenticationService.currentUserValue;
         if (!currentUser) {
             // not logged in so return true
