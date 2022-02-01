@@ -9,16 +9,14 @@ public class SkillService : ISkillService
     #region Fields
 
     private readonly IBaseRepository<Skill> _skillRepository;
-    private readonly IMapper _mapper;
 
     #endregion
 
     #region Constructor
 
-    public SkillService(IBaseRepository<Skill> skillRepository, IMapper mapper)
+    public SkillService(IBaseRepository<Skill> skillRepository)
     {
         _skillRepository = skillRepository;
-        _mapper = mapper;
     }
 
     #endregion
