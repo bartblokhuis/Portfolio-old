@@ -1,5 +1,5 @@
-import { DOCUMENT } from '@angular/common';
-import { AfterViewInit, Component, Inject, OnInit, ViewEncapsulation } from '@angular/core';
+import { DOCUMENT, isPlatformBrowser } from '@angular/common';
+import { AfterViewInit, Component, Inject, OnInit, PLATFORM_ID, ViewEncapsulation } from '@angular/core';
 import { NavigationEnd, Router } from '@angular/router';
 
 declare var AOS: any;
@@ -12,9 +12,11 @@ declare var AOS: any;
 })
 export class LandingComponent implements OnInit, AfterViewInit {
 
-  constructor(private router: Router, @Inject(DOCUMENT) private document: Document) { }
+  constructor(private router: Router, @Inject(DOCUMENT) private document: Document, @Inject(PLATFORM_ID) private platformId: Object) { }
   ngAfterViewInit(): void {
-    if(AOS) AOS.init();
+    if (isPlatformBrowser(this.platformId)){
+      if(AOS) AOS.init();
+    }
   }
 
   // @HostListener("window:load", []) onWindowLoad() {
