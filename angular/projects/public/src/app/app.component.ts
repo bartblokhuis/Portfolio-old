@@ -31,7 +31,7 @@ export class AppComponent implements OnInit {
 
     let title: string = "";
     combineLatest(observables).subscribe((result) => {
-      this.seoSettings = result[0];
+      this.seoSettings = result[0].data;
       if(this.seoSettings) {
 
         if(this.seoSettings.title) {
