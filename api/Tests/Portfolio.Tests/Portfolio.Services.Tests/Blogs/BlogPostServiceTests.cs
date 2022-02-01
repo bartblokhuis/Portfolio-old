@@ -55,4 +55,32 @@ public class BlogPostServiceTests : BasePortfolioTest
         var blogPosts = await _blogPostService.GetPublishedBlogPostsAsync();
         blogPosts.Count().Should().Be(1);
     }
+
+    [Test]
+    public async Task CanGetAllBlogPosts()
+    {
+        var blogPosts = await _blogPostService.GetAllBlogPostsAsync();
+        blogPosts.Count().Should().Be(2);
+    }
+
+    [Test]
+    public async Task ShouldHaveExistingTitle()
+    {
+        var isExistingTitle = await _blogPostService.IsExistingTitleAsync("Test blog 1");
+        isExistingTitle.Should().BeTrue();
+    }
+
+    [Test]
+    public async Task ShouldNotHaveExistingTitleBecauseIgnoredId()
+    {
+        var isExistingTitle = await _blogPostService.IsExistingTitleAsync("Test blog 1", 1);
+        isExistingTitle.Should().BeFalse();
+    }
+
+    [Test]
+    public async Task ShouldNotHaveExistingTitleBecauseUniqueTitle()
+    {
+        var isExistingTitle = await _blogPostService.IsExistingTitleAsync(Guid.NewGuid().ToString());
+        isExistingTitle.Should().BeFalse();
+    }
 }
