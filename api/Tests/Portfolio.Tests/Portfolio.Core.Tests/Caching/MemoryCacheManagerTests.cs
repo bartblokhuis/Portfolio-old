@@ -54,7 +54,7 @@ public class MemoryCacheManagerTests : BasePortfolioTest
     [Test]
     public void CanPerformLock()
     {
-        var key = new CacheKey("Nop.Task");
+        var key = new CacheKey("Portfolio.Task");
         var expiration = TimeSpan.FromMinutes(2);
 
         var actionCount = 0;
