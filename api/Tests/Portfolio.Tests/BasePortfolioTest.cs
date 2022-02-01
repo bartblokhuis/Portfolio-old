@@ -1,6 +1,5 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.InMemory;
 using Microsoft.Extensions.Caching.Memory;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Net.Http.Headers;
@@ -10,7 +9,6 @@ using Portfolio.Core.Configuration;
 using Portfolio.Core.Events;
 using Portfolio.Core.Infrastructure;
 using Portfolio.Database;
-using Portfolio.Domain.Models.Blogs;
 using Portfolio.Services.AboutMeServices;
 using Portfolio.Services.Blogs;
 using Portfolio.Services.BlogSubscribers;

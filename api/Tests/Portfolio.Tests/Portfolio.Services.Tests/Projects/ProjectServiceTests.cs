@@ -38,15 +38,15 @@ public class ProjectServiceTests : BasePortfolioTest
     [Test]
     public async Task CanGetAllPublishedProjects()
     {
-        var blogPosts = await _projectService.GetAllPublishedAsync();
-        blogPosts.Count().Should().Be(1);
+        var projects = await _projectService.GetAllPublishedAsync();
+        projects.Count().Should().Be(1);
     }
 
     [Test]
     public async Task CanGetAllBlogPosts()
     {
-        var blogPosts = await _projectService.GetAllAsync();
-        blogPosts.Count().Should().Be(2);
+        var projects = await _projectService.GetAllAsync();
+        projects.Count().Should().Be(2);
     }
 
     [Test]

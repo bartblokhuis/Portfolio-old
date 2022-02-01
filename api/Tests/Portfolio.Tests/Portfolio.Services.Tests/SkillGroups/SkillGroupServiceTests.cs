@@ -3,9 +3,7 @@ using NUnit.Framework;
 using Portfolio.Domain.Models;
 using Portfolio.Services.SkillGroups;
 using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace Portfolio.Tests.Portfolio.Services.Tests.SkillGroups;
@@ -33,10 +31,10 @@ public class SkillGroupServiceTests : BasePortfolioTest
     }
 
     [Test]
-    public async Task CanGetAllBlogPosts()
+    public async Task CanGetAllSkillGroups()
     {
-        var blogPosts = await skillGroupService.GetAllAsync();
-        blogPosts.Count().Should().Be(2);
+        var skillGroups = await skillGroupService.GetAllAsync();
+        skillGroups.Count().Should().Be(2);
     }
 
     [Test]

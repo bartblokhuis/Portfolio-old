@@ -3,9 +3,7 @@ using NUnit.Framework;
 using Portfolio.Domain.Models.Blogs;
 using Portfolio.Services.Blogs;
 using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace Portfolio.Tests.Portfolio.Services.Tests.Blogs;
