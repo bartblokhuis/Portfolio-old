@@ -17,6 +17,7 @@ export class EditScheduleTaskComponent implements OnInit {
   @Input() modal: NgbModalRef | null = null;
   @Input() model: UpdateScheduleTask = { enabled: false, name: '', seconds: 0, stopOnError: false, type: '', id: 0 };
   form: any;
+  apiError: string | null = null;
 
   constructor(private readonly scheduleTasksService: ScheduleTasksService, private notificationService: NotificationService) { }
 
@@ -28,12 +29,16 @@ export class EditScheduleTaskComponent implements OnInit {
   }
 
   save(): void {
+    this.apiError = null;
     if(!this.form.valid()) return;
 
     this.scheduleTasksService.update(this.model).subscribe((result) => {
       if(result.succeeded) {
         this.notificationService.success("Updated the schedule task");
         this.modal?.close();
+      }
+      else{
+        this.apiError = result.messages[0];
       }
     })
   }

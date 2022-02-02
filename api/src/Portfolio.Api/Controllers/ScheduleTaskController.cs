@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Portfolio.Core.Configuration;
 using Portfolio.Domain.Dtos.ScheduleTasks;
 using Portfolio.Domain.Models;
 using Portfolio.Domain.Wrapper;
@@ -19,15 +20,17 @@ public class ScheduleTaskController : ControllerBase
 
     private readonly IScheduleTaskService _scheduleTaskService;
     private readonly IMapper _mapper;
+    private readonly AppSettings _appSettings;
 
     #endregion
 
     #region Constructors
 
-    public ScheduleTaskController(IScheduleTaskService scheduleTaskService, IMapper mapper)
+    public ScheduleTaskController(IScheduleTaskService scheduleTaskService, IMapper mapper, AppSettings appSettings)
     {
         _scheduleTaskService = scheduleTaskService;
         _mapper = mapper;
+        _appSettings = appSettings;
     }
 
     #endregion
@@ -77,6 +80,9 @@ public class ScheduleTaskController : ControllerBase
     [HttpPost]
     public async Task<IActionResult> Create(CreateScheduleTaskDto dto)
     {
+        if (_appSettings.IsDemo)
+            return Ok(await Result.FailAsync("Creating a schedule task is not allowed in the demo application"));
+
         var error = Validate(dto);
         if (!string.IsNullOrEmpty(error))
             return Ok(await Result.FailAsync(error));
@@ -115,6 +121,9 @@ public class ScheduleTaskController : ControllerBase
     [HttpPut]
     public async Task<IActionResult> Edit(UpdateScheduleTaskDto dto)
     {
+        if (_appSettings.IsDemo)
+            return Ok(await Result.FailAsync("Updating a schedule task is not allowed in the demo application"));
+
         var error = Validate(dto);
         if(!string.IsNullOrEmpty(error))
             return Ok(await Result.FailAsync(error));
@@ -141,6 +150,9 @@ public class ScheduleTaskController : ControllerBase
     [HttpDelete]
     public async Task<IActionResult> Delete(int id)
     {
+        if (_appSettings.IsDemo)
+            return Ok(await Result.FailAsync("Deleting a schedule task is not allowed in the demo application"));
+
         var scheduleTask = await _scheduleTaskService.GetTaskByIdAsync(id);
         if (scheduleTask == null)
             return Ok(await Result.FailAsync("Task not found"));
