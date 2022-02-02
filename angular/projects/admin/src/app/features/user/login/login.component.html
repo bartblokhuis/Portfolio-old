@@ -8,6 +8,7 @@
         </div>
       <div class="card-body">
         <p class="login-box-msg">Sign in to start your session</p>
+        <p class="login-box-msg" *ngIf="demo">Use the following credentials to sign in <br/> Username: Admin <br/> Password: Admin</p>
         <form id="loginForm">
           <div class="input-group mb-3">
             <input type="text" [(ngModel)]="model.username" name="username" class="form-control" placeholder="Username">

@@ -2,6 +2,7 @@ import { Component, OnInit, ViewEncapsulation } from '@angular/core';
 import { first } from 'rxjs/operators';
 import { AuthenticationService } from 'projects/shared/src/lib/services/api/authentication/authentication.service';
 import { BodyService } from '../../../services/theming/body.service';
+import { environment } from 'projects/admin/src/environments/environment';
 
 declare var $: any;
 
@@ -22,6 +23,7 @@ export class LoginComponent implements OnInit {
   model: loginDetails = { username: '', password: '', rememberMe: false };
   loginForm: any;
   error: string | undefined = undefined;
+  demo: boolean = environment.demo;
 
   constructor(private bodyService: BodyService, private authenticationService: AuthenticationService) { }
 
@@ -29,6 +31,7 @@ export class LoginComponent implements OnInit {
     this.loginForm = $('#loginForm');
     this.loginValidaitonRules();
     this.bodyService.setCustomClasses("hold-transition login-page");
+    console.log(this.demo);
   }
 
   loginValidaitonRules(): void{

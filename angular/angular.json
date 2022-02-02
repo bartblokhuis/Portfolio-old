@@ -82,9 +82,44 @@
               "extractLicenses": false,
               "sourceMap": true,
               "namedChunks": true
+            },
+            "demo": {
+              "buildOptimizer": false,
+              "optimization": false,
+              "vendorChunk": true,
+              "extractLicenses": false,
+              "sourceMap": true,
+              "namedChunks": true,
+              "fileReplacements": [
+                {
+                  "replace": "projects/admin/src/environments/environment.ts",
+                  "with": "projects/admin/src/environments/environment.demo.ts"
+                }
+              ]
+            },
+            "demoproduction": {
+              "budgets": [
+                {
+                  "type": "initial",
+                  "maximumWarning": "500kb",
+                  "maximumError": "5mb"
+                },
+                {
+                  "type": "anyComponentStyle",
+                  "maximumWarning": "2kb",
+                  "maximumError": "200kb"
+                }
+              ],
+              "fileReplacements": [
+                {
+                  "replace": "projects/admin/src/environments/environment.ts",
+                  "with": "projects/admin/src/environments/environment.demo.prod.ts"
+                }
+              ],
+              "outputHashing": "all"
             }
           },
-          "defaultConfiguration": "production"
+          "defaultConfiguration": "demo"
         },
         "serve": {
           "builder": "@angular-devkit/build-angular:dev-server",
@@ -94,6 +129,12 @@
             },
             "development": {
               "browserTarget": "admin:build:development"
+            },
+            "demo": {
+              "browserTarget": "admin:build:demo"
+            },
+            "demoproduction": {
+              "browserTarget": "admin:build:demoproduction"
             }
           },
           "defaultConfiguration": "development"
