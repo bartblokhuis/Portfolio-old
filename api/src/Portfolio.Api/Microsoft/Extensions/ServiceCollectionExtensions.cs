@@ -147,7 +147,7 @@ public static class ServiceCollectionExtensions
     {
         services
             .AddDatabase<PortfolioContext>(configuration["ConnectionString:DefaultConnection"])
-            .AddDatabase<AuthenticationDbContext>(configuration["ConnectionString:DefaultConnection"]);
+            .AddDatabase<AuthenticationDbContext>(configuration["ConnectionString:IdentityConnection"]);
 
         return services;
     }

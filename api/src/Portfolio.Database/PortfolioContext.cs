@@ -101,7 +101,7 @@ public class PortfolioContext : DbContext
             if (change.State != EntityState.Added || !HasCreationTime(change.Entity))
                 continue;
 
-            if (change.Entity is IHasCreationDate creationTime)
+            if (change.Entity is IHasCreationDate creationTime && creationTime.CreatedAtUTC.Year == 1)
                 creationTime.CreatedAtUTC = DateTime.UtcNow;
         }
 
