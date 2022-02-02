@@ -41,6 +41,10 @@ internal class ResetDatabaseTask : IScheduleTask
 
     public async Task ExecuteAsync()
     {
+        //Reseting the database should only be possible for the demo application
+        if (!_appSettings.IsDemo)
+            return;
+
         var apiSettings = await _apiSettings.GetAsync();
 
         //Reset the database to it's original state
