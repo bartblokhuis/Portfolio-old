@@ -6,8 +6,8 @@
                     Blog posts
                 </h3>
             </div>
-            <div class="card-body table-responsive p-0">
-                <table class="table table-hover text-nowrap">
+            <div class="card-body">
+                <table datatable [dtOptions]="dtOptions" [dtTrigger]="dtTrigger" class="table table-bordered table-hover">
                     <thead>
                         <tr>
                           <th>Title</th>
