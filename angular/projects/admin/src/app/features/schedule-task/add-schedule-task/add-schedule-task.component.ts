@@ -18,6 +18,7 @@ export class AddScheduleTaskComponent implements OnInit {
 
   model: CreateScheduleTask = { enabled: false, name: '', seconds: 1, stopOnError: false, type: '' };
   form: any;
+  apiError: string | null = null;
 
   constructor(private readonly scheduleTasksService: ScheduleTasksService, private notificationService: NotificationService) { }
 
@@ -28,12 +29,16 @@ export class AddScheduleTaskComponent implements OnInit {
   }
 
   add() {
+    this.apiError = null;
     if(!this.form.valid()) return;
 
     this.scheduleTasksService.create(this.model).subscribe((result) => {
       if(result.succeeded) {
         this.notificationService.success("Created the new schedule task");
         this.modal?.close();
+      }
+      else{
+        this.apiError = result.messages[0];
       }
     })
   }

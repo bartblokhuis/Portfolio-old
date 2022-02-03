@@ -37,6 +37,9 @@
                     <label class="form-check-label" for="stopOnError">Stop on error</label>
                 </div>
             </div>
+            <div class="custom-error" *ngIf="apiError">
+                <label>{{apiError}}</label>
+            </div>
         </div>
     </div>
     <div class="modal-footer justify-content-between">

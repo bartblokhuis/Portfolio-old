@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
+using Portfolio.Core.Configuration;
 using Portfolio.Core.Helpers;
 using Portfolio.Domain.Dtos;
 using Portfolio.Domain.Dtos.Settings;
@@ -31,12 +32,13 @@ public class SettingsController : Controller
     private readonly ISettingService<MessageSettings> _messageSettings;
     private readonly IEmailService _emailService;
     private readonly IMapper _mapper;
+    private readonly AppSettings _appSettings;
 
     #endregion
 
     #region Constructor
 
-    public SettingsController(ILogger<SettingsController> logger, ISettingService<EmailSettings> emailSettingsService, ISettingService<GeneralSettings> generalSettings, ISettingService<SeoSettings> seoSettings, ISettingService<BlogSettings> blogSettings, ISettingService<PublicSiteSettings> publicSiteSettings, IEmailService emailService, IMapper mapper, ISettingService<ApiSettings> apiSettings, ISettingService<MessageSettings> messageSettings)
+    public SettingsController(ILogger<SettingsController> logger, ISettingService<EmailSettings> emailSettingsService, ISettingService<GeneralSettings> generalSettings, ISettingService<SeoSettings> seoSettings, ISettingService<BlogSettings> blogSettings, ISettingService<PublicSiteSettings> publicSiteSettings, IEmailService emailService, IMapper mapper, ISettingService<ApiSettings> apiSettings, ISettingService<MessageSettings> messageSettings, AppSettings appSettings)
     {
         _logger = logger;
         _emailSettingsService = emailSettingsService;
@@ -48,6 +50,7 @@ public class SettingsController : Controller
         _mapper = mapper;
         _apiSettings = apiSettings;
         _messageSettings = messageSettings;
+        _appSettings = appSettings;
     }
 
     #endregion
@@ -220,6 +223,9 @@ public class SettingsController : Controller
     [HttpPost("SeoSettings")]
     public async Task<IActionResult> SaveSeoSettings(SeoSettingsDto model)
     {
+        if (_appSettings.IsDemo)
+            return Ok(await Result.FailAsync("Updating the public site settings is not allowed in the demo application"));
+
         var error = ValidateSeoSettings(model);
         if (!string.IsNullOrEmpty(error))
             return Ok(await Result.FailAsync(error));
@@ -317,6 +323,9 @@ public class SettingsController : Controller
     [HttpPost("ApiSettings")]
     public async Task<IActionResult> SaveApiSettings(ApiSettingsDto model)
     {
+        if(_appSettings.IsDemo)
+            return Ok(await Result.FailAsync("Updating the API settings is not allowed in the demo application"));
+
         var error = "";
         if (model == null)
             error = "Unkown error";

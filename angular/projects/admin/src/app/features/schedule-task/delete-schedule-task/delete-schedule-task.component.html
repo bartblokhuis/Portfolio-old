@@ -6,6 +6,9 @@
 </div>
 <div class="modal-body">
     <p>Are you sure you want to remove <b>{{ model?.name}}</b>, this action can not be undone.</p>
+    <div class="custom-error" *ngIf="apiError">
+      <label>{{apiError}}</label>
+  </div>
 </div>
 <div class="modal-footer justify-content-between">
   <button type="button" class="btn btn-default" (click)="modal?.close()">Cancel</button>

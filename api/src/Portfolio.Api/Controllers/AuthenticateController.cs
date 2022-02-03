@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.IdentityModel.Tokens;
+using Portfolio.Core.Configuration;
 using Portfolio.Domain.Dtos.Authentication;
 using Portfolio.Domain.Models.Authentication;
 using Portfolio.Domain.Wrapper;
@@ -25,37 +26,24 @@ public class AuthenticateController : ControllerBase
     private readonly RoleManager<IdentityRole> _roleManager;
     private readonly IConfiguration _configuration;
     private readonly IHttpContextAccessor _httpContextAccessor;
+    private readonly AppSettings _appSettings;
 
     #endregion
 
     #region Constructor
 
-    public AuthenticateController(UserManager<ApplicationUser> userManager, RoleManager<IdentityRole> roleManager, IConfiguration configuration, IHttpContextAccessor httpContextAccessor)
+    public AuthenticateController(UserManager<ApplicationUser> userManager, RoleManager<IdentityRole> roleManager, IConfiguration configuration, IHttpContextAccessor httpContextAccessor, AppSettings appSettings)
     {
         _userManager = userManager;
         _roleManager = roleManager;
         _configuration = configuration;
         _httpContextAccessor = httpContextAccessor;
+        _appSettings = appSettings;
     }
 
     #endregion
 
-    #region Methods
-
-    [HttpPost]
-    [Route("login")]
-    public async Task<IActionResult> Login([FromBody] LoginModel model)
-    {
-        var user = await _userManager.FindByNameAsync(model.Username);
-        if (user == null || !await _userManager.CheckPasswordAsync(user, model.Password))
-            return Ok(await Result.FailAsync("Invalid username or password."));
-            
-
-        var token = await GetJwtSecurityToken(user, model.RememberMe);
-        var response = new Response(new JwtSecurityTokenHandler().WriteToken(token), token.ValidTo, user.Id);
-        
-        return Ok(await Result<Response>.SuccessAsync(response));
-    }
+    #region Utils
 
     private async Task<JwtSecurityToken> GetJwtSecurityToken(ApplicationUser user, bool rememberMe)
     {
@@ -85,6 +73,22 @@ public class AuthenticateController : ControllerBase
             );
     }
 
+    private Task<ApplicationUser> GetUserFromContext()
+    {
+        var currentUserName = _httpContextAccessor.HttpContext.User.FindFirst(ClaimTypes.Name)?.Value;
+
+        if (string.IsNullOrEmpty(currentUserName))
+            return null;
+
+        return _userManager.FindByNameAsync(currentUserName);
+    }
+
+    #endregion
+
+    #region Methods
+
+    #region Get
+
     [HttpGet]
     [Route("user/details")]
     [Authorize()]
@@ -107,11 +111,37 @@ public class AuthenticateController : ControllerBase
         }));
     }
 
+    #endregion
+
+    #region Post
+
+    [HttpPost]
+    [Route("login")]
+    public async Task<IActionResult> Login([FromBody] LoginModel model)
+    {
+        var user = await _userManager.FindByNameAsync(model.Username);
+        if (user == null || !await _userManager.CheckPasswordAsync(user, model.Password))
+            return Ok(await Result.FailAsync("Invalid username or password."));
+
+
+        var token = await GetJwtSecurityToken(user, model.RememberMe);
+        var response = new Response(new JwtSecurityTokenHandler().WriteToken(token), token.ValidTo, user.Id);
+
+        return Ok(await Result<Response>.SuccessAsync(response));
+    }
+
+    #endregion
+
+    #region Put
+
     [HttpPut]
     [Route("user/details")]
     [Authorize()]
     public async Task<IActionResult> UpdateUserDetails([FromBody] UpdateUserDetailsDto model)
     {
+        if (_appSettings.IsDemo)
+            return Ok(await Result.FailAsync("Updating the user details is not allowed in the demo application"));
+
         if (!ModelState.IsValid)
             return Ok(await Result.FailAsync("Invalid model"));
 
@@ -134,10 +164,12 @@ public class AuthenticateController : ControllerBase
     [Authorize()]
     public async Task<IActionResult> UpdatePassword([FromBody] UpdatePasswordDto model)
     {
+        if (_appSettings.IsDemo)
+            return Ok(await Result.FailAsync("Updating the user password is not allowed in the demo application"));
+
         if (!ModelState.IsValid)
-        {
             return Ok(await Result.FailAsync("Invalid model"));
-        }
+        
 
         var user = await GetUserFromContext();
         if (user == null || !await _userManager.CheckPasswordAsync(user, model.OldPassword))
@@ -146,24 +178,12 @@ public class AuthenticateController : ControllerBase
         var result = await _userManager.ChangePasswordAsync(user, model.OldPassword, model.Password);
         if (!result.Succeeded)
             return Ok(await Result.FailAsync(result.Errors.Select(x => x.Description).ToList()));
-        
+
 
         return Ok(await Result.SuccessAsync("Updated the password"));
     }
 
     #endregion
-
-    #region Utils
-
-    private Task<ApplicationUser> GetUserFromContext()
-    {
-        var currentUserName = _httpContextAccessor.HttpContext.User.FindFirst(ClaimTypes.Name)?.Value;
-
-        if (string.IsNullOrEmpty(currentUserName))
-            return null;
-
-        return _userManager.FindByNameAsync(currentUserName);
-    }
 
     #endregion
 }

@@ -13,6 +13,7 @@ export class DeleteScheduleTaskComponent implements OnInit {
   
   @Input() modal: NgbModalRef | null = null;
   @Input() model!: UpdateScheduleTask;
+  apiError: string | null = null;
 
   constructor(private readonly scheduleTasksService: ScheduleTasksService, private notificationService: NotificationService) { }
 
@@ -21,9 +22,14 @@ export class DeleteScheduleTaskComponent implements OnInit {
   }
 
   remove() {
+    this.apiError = null;
     if(!this.model) return;
 
     this.scheduleTasksService.delete(this.model.id).subscribe((result) => {
+      if(!result.succeeded){
+        this.apiError = result.messages[0];
+        return;
+      }
       this.notificationService.success("Removed the schedule task")
       this.modal?.close();
     });
