@@ -23,6 +23,7 @@ internal class ResetDatabaseTask : IScheduleTask
     private readonly IStaticCacheManager _staticCacheManager;
     private readonly IScheduleTaskService _scheduleTaskService;
     private readonly ISettingService<ApiSettings> _apiSettings;
+    private readonly ISettingService<PublicSiteSettings> _publicSiteSettings;
     private readonly AppSettings _appSettings;
     private readonly ISkillGroupService _skillGroupService;
     private readonly ISkillService _skillService;
@@ -32,12 +33,13 @@ internal class ResetDatabaseTask : IScheduleTask
 
     #region Constructor
 
-    public ResetDatabaseTask(PortfolioContext context, IStaticCacheManager staticCacheManager, ISettingService<ApiSettings> apiSettings, IScheduleTaskService scheduleTaskService, AppSettings appSettings, ISkillGroupService skillGroupService, ISkillService skillService, IBlogSubscriberService blogSubscriberService, IBlogPostService blogPostService)
+    public ResetDatabaseTask(PortfolioContext context, IStaticCacheManager staticCacheManager, ISettingService<ApiSettings> apiSettings, ISettingService<PublicSiteSettings> publicSiteSettings, IScheduleTaskService scheduleTaskService, AppSettings appSettings, ISkillGroupService skillGroupService, ISkillService skillService, IBlogSubscriberService blogSubscriberService, IBlogPostService blogPostService)
     {
         _context = context;
         _staticCacheManager = staticCacheManager;
         _scheduleTaskService = scheduleTaskService;
         _apiSettings = apiSettings;
+        _publicSiteSettings = publicSiteSettings;
         _appSettings = appSettings;
         _skillGroupService = skillGroupService;
         _skillService = skillService;
@@ -54,6 +56,7 @@ internal class ResetDatabaseTask : IScheduleTask
             return;
 
         var apiSettings = await _apiSettings.GetAsync();
+        var publicSiteSettings = await _publicSiteSettings.GetAsync();
 
         //Reset the database to it's original state
         var context = EngineContext.Current.Resolve<PortfolioContext>();
@@ -68,6 +71,7 @@ internal class ResetDatabaseTask : IScheduleTask
         await _staticCacheManager.ClearAsync();
 
         await _apiSettings.SaveAsync(apiSettings);
+        await _publicSiteSettings.SaveAsync(publicSiteSettings);
 
         //Data seeding
         await _scheduleTaskService.InsertTaskAsync(new ScheduleTask

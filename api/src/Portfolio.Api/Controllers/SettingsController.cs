@@ -223,6 +223,9 @@ public class SettingsController : Controller
     [HttpPost("SeoSettings")]
     public async Task<IActionResult> SaveSeoSettings(SeoSettingsDto model)
     {
+        if (_appSettings.IsDemo)
+            return Ok(await Result.FailAsync("Updating the public site settings is not allowed in the demo application"));
+
         var error = ValidateSeoSettings(model);
         if (!string.IsNullOrEmpty(error))
             return Ok(await Result.FailAsync(error));
