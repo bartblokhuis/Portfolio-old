@@ -7,6 +7,7 @@ import { EditMessageComponent } from './edit-message/edit-message.component';
 import { DeleteMessageComponent } from './delete-message/delete-message.component';
 import { SharedComponentsModule } from '../../components/shared/shared-components.module';
 import { PipesModule } from '../../pipes/pipes.module';
+import { DataTablesModule } from 'angular-datatables';
 
 
 
@@ -20,6 +21,7 @@ import { PipesModule } from '../../pipes/pipes.module';
     CommonModule,
     SharedComponentsModule,
     PipesModule,
+    DataTablesModule,
     RouterModule.forChild(MessageRoutes),
   ]
 })

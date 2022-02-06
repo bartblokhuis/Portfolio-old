@@ -3,13 +3,16 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using Portfolio.Domain.Dtos;
+using Portfolio.Domain.Dtos.Common;
 using Portfolio.Domain.Dtos.Messages;
+using Portfolio.Domain.Extensions;
 using Portfolio.Domain.Models;
 using Portfolio.Domain.Wrapper;
 using Portfolio.Services.Common;
 using Portfolio.Services.Messages;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace Portfolio.Controllers;
@@ -79,6 +82,20 @@ public class MessagesController : ControllerBase
 
         var result = _mapper.Map<ListResult<MessageDto>>(messages);
         result.Succeeded = true;
+        return Ok(result);
+    }
+
+    [HttpPost("List")]
+    public async Task<IActionResult> List(BaseSearchModel baseSearchModel)
+    {
+        var blogPosts = await _messageService.GetAllMessagesAsync(pageIndex: baseSearchModel.Page - 1, pageSize: baseSearchModel.PageSize);
+
+        var model = await new MessagesListDto().PrepareToGridAsync(baseSearchModel, blogPosts, () =>
+        {
+            return blogPosts.ToAsyncEnumerable().SelectAwait(async plogPost => _mapper.Map<MessageDto>(plogPost));
+        });
+
+        var result = await Result<MessagesListDto>.SuccessAsync(model);
         return Ok(result);
     }
 
