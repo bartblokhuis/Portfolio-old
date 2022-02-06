@@ -12,6 +12,8 @@ import { Url } from 'projects/shared/src/lib/data/url';
 import { ApiService } from '../api.service';
 import { AddProject } from '../../../data/projects/add-project';
 import { UpdateProject } from '../../../data/projects/update-project';
+import { BaseSearchModel } from '../../../data/common/base-search-model';
+import { ProjectList } from '../../../data/projects/project-list';
 
 @Injectable({
   providedIn: 'root'
@@ -38,6 +40,10 @@ export class ProjectsService {
 
   getProjectPicturesByProjectId(id: number): Observable<Result<ProjectPicture[]>> {
     return this.apiService.get<ProjectPicture[]>(`Project/Pictures/GetByProjectId?projectId=${id}`)
+  }
+
+  list(searchModel: BaseSearchModel): Observable<Result<ProjectList>> {
+    return this.apiService.post("Project/List", searchModel);
   }
 
   createProject(project: AddProject): Observable<Result<Project>> {

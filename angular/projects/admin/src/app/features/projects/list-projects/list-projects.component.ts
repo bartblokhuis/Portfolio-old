@@ -1,8 +1,12 @@
-import { Component, OnInit, ViewEncapsulation } from '@angular/core';
+import { AfterViewInit, Component, OnDestroy, OnInit, ViewChild, ViewEncapsulation } from '@angular/core';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { DataTableDirective } from 'angular-datatables';
+import { BaseSearchModel } from 'projects/shared/src/lib/data/common/base-search-model';
 import { Result } from 'projects/shared/src/lib/data/common/Result';
 import { Project } from 'projects/shared/src/lib/data/projects/project';
 import { ProjectsService } from 'projects/shared/src/lib/services/api/projects/projects.service';
+import { Subject } from 'rxjs';
+import { availablePageSizes, baseDataTableOptions } from '../../../helpers/datatable-helper';
 import { AddProjectComponent } from '../add-project/add-project.component';
 import { DeleteProjectComponent } from '../delete-project/delete-project.component';
 import { EditProjectComponent } from '../edit-project/edit-project.component';
@@ -13,14 +17,38 @@ import { EditProjectComponent } from '../edit-project/edit-project.component';
   styleUrls: ['./list-projects.component.scss'],
   encapsulation: ViewEncapsulation.None
 })
-export class ListProjectsComponent implements OnInit {
+export class ListProjectsComponent implements OnInit, AfterViewInit, OnDestroy {
 
+  @ViewChild(DataTableDirective, { static: false })
+  dtElement!: DataTableDirective;
+  
   projects: Project[] = [];
+  dtOptions: object = {};
+  dtTrigger: Subject<any> = new Subject<any>();
+
 
   constructor(private projectsService: ProjectsService, private modalService: NgbModal) { }
 
   ngOnInit(): void {
-    this.loadProjects();
+    const ajaxOptions = {  
+      ajax: (dataTablesParameters: BaseSearchModel, callback: any) => {  
+        const model : BaseSearchModel = { availablePageSizes: availablePageSizes.toString(), draw: dataTablesParameters.draw.toString(), length: dataTablesParameters.length, page: 0, pageSize: dataTablesParameters.length, start: dataTablesParameters.start }
+        this.projectsService.list(model).subscribe((result) => {
+          this.projects = result.data.data;
+          callback({
+            recordsTotal: result.data.recordsTotal,
+            recordsFiltered: result.data.recordsFiltered,
+            draw: result.data.draw
+          });
+        });
+      }
+    }
+
+    this.dtOptions = {...baseDataTableOptions, ...ajaxOptions}
+  }
+
+  ngAfterViewInit(): void {
+    this.dtTrigger.next(this.dtOptions);
   }
 
   addProject() {
@@ -46,13 +74,19 @@ export class ListProjectsComponent implements OnInit {
     modalRef.componentInstance.modalRef = modalRef;
     
     modalRef.result.then(() => {
-      this.loadProjects();
+      this.refresh();
     });
   }
 
-  loadProjects() {
-    this.projectsService.getAll().subscribe((result: Result<Project[]>) => {
-      if(result.succeeded) this.projects = result.data;
+  refresh(): void {
+    this.dtElement?.dtInstance.then((dtInstance: DataTables.Api) => {
+      dtInstance.destroy();
+
+      this.dtTrigger.next(this.dtOptions);
     })
+  }
+
+  ngOnDestroy(): void {
+    this.dtTrigger.unsubscribe();
   }
 }

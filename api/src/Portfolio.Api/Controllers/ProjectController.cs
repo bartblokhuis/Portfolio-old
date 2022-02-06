@@ -2,7 +2,9 @@
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
+using Portfolio.Domain.Dtos.Common;
 using Portfolio.Domain.Dtos.Projects;
+using Portfolio.Domain.Extensions;
 using Portfolio.Domain.Models;
 using Portfolio.Domain.Wrapper;
 using Portfolio.Services.Pictures;
@@ -130,6 +132,21 @@ public class ProjectController : ControllerBase
     #endregion
 
     #region Post
+
+    [HttpPost("List")]
+    public async Task<IActionResult> List(BaseSearchModel baseSearchModel)
+    {
+        var blogPosts = await _projectService.GetAllProjectsAsync(pageIndex: baseSearchModel.Page - 1, pageSize: baseSearchModel.PageSize);
+
+        var model = await new ProjectListDto().PrepareToGridAsync(baseSearchModel, blogPosts, () =>
+        {
+            return blogPosts.ToAsyncEnumerable().SelectAwait(async plogPost => _mapper.Map<ProjectDto>(plogPost));
+        });
+
+        var result = await Result<ProjectListDto>.SuccessAsync(model);
+        return Ok(result);
+    }
+
 
     [HttpPost]
     public async Task<IActionResult> Create(CreateProjectDto model)
