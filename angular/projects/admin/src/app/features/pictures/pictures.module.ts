@@ -9,6 +9,7 @@ import { DeletePictureComponent } from './delete-picture/delete-picture.componen
 import { GridPictureComponent } from './grid-picture/grid-picture.component';
 import { SharedComponentsModule } from '../../components/shared/shared-components.module';
 import { PictureModule } from '../../components/picture/picture.module';
+import { DataTablesModule } from 'angular-datatables';
 
 @NgModule({
   declarations: [
@@ -22,6 +23,7 @@ import { PictureModule } from '../../components/picture/picture.module';
     CommonModule,
     SharedComponentsModule,
     PictureModule,
+    DataTablesModule,
     RouterModule.forChild(PicturesRoutes),
   ]
 })

@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { AfterViewChecked, AfterViewInit, Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { NgbModal, NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
 import { DataTableDirective } from 'angular-datatables';
 import { BaseSearchModel } from 'projects/shared/src/lib/data/common/base-search-model';
@@ -14,7 +14,7 @@ import { EditMessageComponent } from '../edit-message/edit-message.component';
   templateUrl: './list-messages.component.html',
   styleUrls: ['./list-messages.component.scss']
 })
-export class ListMessagesComponent implements OnInit {
+export class ListMessagesComponent implements OnInit, AfterViewInit, OnDestroy {
 
   @ViewChild(DataTableDirective, { static: false })
   dtElement!: DataTableDirective;
