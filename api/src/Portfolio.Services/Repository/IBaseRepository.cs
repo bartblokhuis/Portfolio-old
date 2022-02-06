@@ -27,7 +27,7 @@ public interface IBaseRepository<TEntity, TKey, TDbContext>
             Func<IStaticCacheManager, CacheKey> getCacheKey = null, bool includeDeleted = true);
 
     Task<IPagedList<TEntity>> GetAllPagedAsync(Func<IQueryable<TEntity>, IQueryable<TEntity>> func = null,
-            int pageIndex = 0, int pageSize = int.MaxValue, bool getOnlyTotalCount = false, bool includeDeleted = true);
+            int pageIndex = 0, int pageSize = int.MaxValue, bool getOnlyTotalCount = false, bool includeDeleted = true, bool sortByDisplayNumber = true);
 
     Task InsertAsync(TEntity entuty);
 

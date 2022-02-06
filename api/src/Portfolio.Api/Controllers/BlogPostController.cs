@@ -5,6 +5,8 @@ using Microsoft.AspNetCore.Mvc;
 using Portfolio.Core.Helpers;
 using Portfolio.Domain.Dtos.BlogPosts;
 using Portfolio.Domain.Dtos.Comments;
+using Portfolio.Domain.Dtos.Common;
+using Portfolio.Domain.Extensions;
 using Portfolio.Domain.Models.Blogs;
 using Portfolio.Domain.Wrapper;
 using Portfolio.Services.Blogs;
@@ -12,6 +14,7 @@ using Portfolio.Services.Comments;
 using Portfolio.Services.Pictures;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace Portfolio.Controllers
@@ -169,6 +172,20 @@ namespace Portfolio.Controllers
         #endregion
 
         #region Post
+
+        [HttpPost("List")]
+        public async Task<IActionResult> List(BaseSearchModel baseSearchModel)
+        {
+            var blogPosts = await _blogPostService.GetAllBlogPostsAsync(pageIndex: baseSearchModel.Page -1, pageSize: baseSearchModel.PageSize);
+
+             var model = await new BlogPostListModel().PrepareToGridAsync(baseSearchModel, blogPosts, () =>
+             {
+                 return blogPosts.ToAsyncEnumerable().SelectAwait(async plogPost => _mapper.Map<ListBlogPostDto>(plogPost));
+             });
+
+            var result = await Result<BlogPostListModel>.SuccessAsync(model);
+            return Ok(result);
+        }
 
         [HttpPost]
         public async Task<IActionResult> Create(CreateBlogPostDto dto)

@@ -7,7 +7,7 @@
                 </h3>
             </div>
             <div class="card-body">
-                <table datatable [dtOptions]="dtOptions" [dtTrigger]="dtTrigger" class="table table-bordered table-hover">
+                <table datatable [dtOptions]="dtOptions" class="table table-bordered table-hover">
                     <thead>
                         <tr>
                           <th>Title</th>
@@ -18,7 +18,7 @@
                           <th>Actions</th>
                         </tr>
                       </thead>
-                      <tbody>
+                      <tbody *ngIf="blogPosts?.length != 0">
                         <tr *ngFor="let post of blogPosts">
                           <td>{{post.title}}</td>
                           <td [innerHtml]="post.description"></td>
@@ -42,6 +42,11 @@
                                 </div>
                               </div>
                           </td>
+                        </tr>
+                      </tbody>
+                      <tbody *ngIf="blogPosts?.length == 0">
+                        <tr>
+                          <td colspan="3" class="no-data-available">No data!</td>
                         </tr>
                       </tbody>
                 </table>

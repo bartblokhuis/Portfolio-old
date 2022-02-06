@@ -64,6 +64,17 @@ public class BaseRepository<TEntity, TKey, TDbContext> : IBaseRepository<TEntity
         return query.OfType<ISoftDelete>().Where(entry => !entry.IsDeleted).OfType<TEntity>();
     }
 
+    protected virtual IQueryable<TEntity> AddDisplayNumberFilter(IQueryable<TEntity> query, in bool sortByDisplayNumber)
+    {
+        if (!sortByDisplayNumber)
+            return query;
+
+        if (typeof(TEntity).GetInterface(nameof(IHasDisplayNumber)) == null)
+            return query;
+
+        return query.OfType<IHasDisplayNumber>().OrderByDescending(entry => entry.DisplayNumber).OfType<TEntity>();
+    }
+
     #endregion
 
     #region Methods
@@ -97,9 +108,10 @@ public class BaseRepository<TEntity, TKey, TDbContext> : IBaseRepository<TEntity
     }
 
     public virtual async Task<IPagedList<TEntity>> GetAllPagedAsync(Func<IQueryable<TEntity>, IQueryable<TEntity>> func = null,
-            int pageIndex = 0, int pageSize = int.MaxValue, bool getOnlyTotalCount = false, bool includeDeleted = true)
+            int pageIndex = 0, int pageSize = int.MaxValue, bool getOnlyTotalCount = false, bool includeDeleted = true, bool sortByDisplayNumber = true)
     {
         var query = AddDeletedFilter(Table, includeDeleted);
+        query = AddDeletedFilter(query, sortByDisplayNumber);
 
         query = func != null ? func(query) : query;
 

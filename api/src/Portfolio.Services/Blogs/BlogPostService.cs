@@ -1,5 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Portfolio.Domain.Models.Blogs;
+using Portfolio.Domain.Models.Common;
 using Portfolio.Services.Repository;
 
 namespace Portfolio.Services.Blogs;
@@ -34,6 +35,16 @@ public class BlogPostService : IBlogPostService
     {
         return await _blogPostRepository.GetAllAsync(query => query.Where(x => x.IsPublished).Include(x => x.Thumbnail).Include(x => x.BannerPicture).OrderByDescending(x => x.DisplayNumber).ThenBy(x => x.CreatedAtUTC),
             cache => cache.PrepareKeyForDefaultCache(BlogPostDefaults.PublishedBlogPostsCacheKey));
+    }
+
+    public async Task<IPagedList<BlogPost>> GetAllBlogPostsAsync(int pageIndex = 0, int pageSize = int.MaxValue)
+    {
+        return await _blogPostRepository.GetAllPagedAsync(query =>
+        {
+            query = query.OrderByDescending(b => b.CreatedAtUTC);
+            return query;
+
+        }, pageIndex, pageSize);
     }
 
     public async Task<BlogPost> GetByIdAsync(int id, bool includeUnPublished = false)
