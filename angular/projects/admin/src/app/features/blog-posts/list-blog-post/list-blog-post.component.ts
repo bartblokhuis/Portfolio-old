@@ -1,11 +1,9 @@
-import { Component, OnInit } from '@angular/core';
+import { AfterViewInit, Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
-import { ADTSettings } from 'angular-datatables/src/models/settings';
-import { data } from 'jquery';
+import { DataTableDirective } from 'angular-datatables';
 import { ListBlog } from 'projects/shared/src/lib/data/blog/list-blog';
 import { BaseSearchModel } from 'projects/shared/src/lib/data/common/base-search-model';
-import { Result } from 'projects/shared/src/lib/data/common/Result';
 import { BlogPostsService } from 'projects/shared/src/lib/services/api/blog-posts/blog-posts.service';
 import { Subject } from 'rxjs';
 import { availablePageSizes, baseDataTableOptions } from '../../../helpers/datatable-helper';
@@ -17,18 +15,19 @@ import { DeleteBlogPostComponent } from '../delete-blog-post/delete-blog-post.co
   templateUrl: './list-blog-post.component.html',
   styleUrls: ['./list-blog-post.component.scss']
 })
-export class ListBlogPostComponent implements OnInit {
+export class ListBlogPostComponent implements OnInit, AfterViewInit, OnDestroy {
 
-  //d: ADTSettings
+  @ViewChild(DataTableDirective, { static: false })
+  dtElement!: DataTableDirective;
+
   blogPosts: ListBlog[] = [];
   dtOptions: object = {};
   dtTrigger: Subject<any> = new Subject<any>();
-  x: BaseSearchModel = {availablePageSizes: "10,20", draw: "", length: 10, page: 0, pageSize: 10, start: 0};
 
   constructor(private blogPostsService: BlogPostsService, private router: Router, private modalService: NgbModal, private readonly breadcrumbsService: BreadcrumbsService) { }
 
   ngOnInit(): void {
-
+    
     const ajaxOptions = {  
       ajax: (dataTablesParameters: BaseSearchModel, callback: any) => {  
         const model : BaseSearchModel = { availablePageSizes: availablePageSizes.toString(), draw: dataTablesParameters.draw.toString(), length: dataTablesParameters.length, page: 0, pageSize: dataTablesParameters.length, start: dataTablesParameters.start }
@@ -36,14 +35,14 @@ export class ListBlogPostComponent implements OnInit {
           this.blogPosts = result.data.data;
           callback({
             recordsTotal: result.data.recordsTotal,
-            recordsFiltered: result.data.recordsFiltered
+            recordsFiltered: result.data.recordsFiltered,
+            draw: result.data.draw
           });
         });
       }
     }
 
     this.dtOptions = {...baseDataTableOptions, ...ajaxOptions}
-    this.dtTrigger.next(this.dtOptions);
 
     this.breadcrumbsService.setBreadcrumb([
       this.breadcrumbsService.homeCrumb,
@@ -52,16 +51,8 @@ export class ListBlogPostComponent implements OnInit {
     ]);
   }
 
-  loadBlog() : void {
-    this.blogPostsService.getAll().subscribe((result: Result<ListBlog[]>) => {
-      this.blogPosts = result.data;
-
+  ngAfterViewInit(): void {
       this.dtTrigger.next(this.dtOptions);
-    });
-
-    this.blogPostsService.list(this.x).subscribe((result) => {
-      console.log(result);
-    })
   }
 
   editBlogPost(id: number) {
@@ -76,7 +67,19 @@ export class ListBlogPostComponent implements OnInit {
     modalRef.componentInstance.modal = modalRef;
     
     modalRef.result.then(() => {
-      this.loadBlog();
+      this.refresh();
     });
+  }
+
+  ngOnDestroy(): void {
+    this.dtTrigger.unsubscribe();
+  }
+
+  refresh(): void {
+    this.dtElement?.dtInstance.then((dtInstance: DataTables.Api) => {
+      dtInstance.destroy();
+
+      this.dtTrigger.next(this.dtOptions);
+    })
   }
 }
