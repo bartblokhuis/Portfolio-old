@@ -3,11 +3,14 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Portfolio.Core.Helpers;
 using Portfolio.Domain.Dtos.BlogSubscribers;
+using Portfolio.Domain.Dtos.Common;
+using Portfolio.Domain.Extensions;
 using Portfolio.Domain.Models.Blogs;
 using Portfolio.Domain.Wrapper;
 using Portfolio.Services.BlogSubscribers;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace Portfolio.Controllers;
@@ -129,6 +132,20 @@ public class BlogSubscriberController : ControllerBase
     #endregion
 
     #region Post
+
+    [HttpPost("List")]
+    public async Task<IActionResult> List(BaseSearchModel baseSearchModel)
+    {
+        var blogPosts = await _blogSubscriberService.GetAllSubscribersAsync(pageIndex: baseSearchModel.Page - 1, pageSize: baseSearchModel.PageSize);
+
+        var model = await new BlogSubscriberListDto().PrepareToGridAsync(baseSearchModel, blogPosts, () =>
+        {
+            return blogPosts.ToAsyncEnumerable().SelectAwait(async plogPost => _mapper.Map<ListBlogSubscriberDto>(plogPost));
+        });
+
+        var result = await Result<BlogSubscriberListDto>.SuccessAsync(model);
+        return Ok(result);
+    }
 
     [HttpPost]
     [AllowAnonymous]

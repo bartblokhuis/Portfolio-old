@@ -1,8 +1,10 @@
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { BlogSubscriber } from '../../../data/blog-subscribers/blog-subscriber';
+import { BlogSubscriberList } from '../../../data/blog-subscribers/blog-subscriber-list';
 import { CreateBlogSubscriber } from '../../../data/blog-subscribers/create-blog-subscriber';
 import { ListBlogSubscriber } from '../../../data/blog-subscribers/list-blog-subscriber';
+import { BaseSearchModel } from '../../../data/common/base-search-model';
 import { Result } from '../../../data/common/Result';
 import { ApiService } from '../api.service';
 
@@ -25,6 +27,10 @@ export class BlogSubscribersService {
 
   loadBlogSubscriberStatistics(period: string) {
     return this.apiService.get<any[]>(`${this.baseUrl}/LoadBlogSubscriberStatistics?period=${period}`);
+  }
+
+  list(searchModel: BaseSearchModel): Observable<Result<BlogSubscriberList>> {
+    return this.apiService.post(this.baseUrl + "/List", searchModel);
   }
 
   subscribe(createBlogSubscriber: CreateBlogSubscriber): Observable<Result<ListBlogSubscriber>> {

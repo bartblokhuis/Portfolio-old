@@ -38,6 +38,16 @@ public class BlogSubscriberService : IBlogSubscriberService
         }, getOnlyTotalCount: getOnlyTotalCount);
     }
 
+    public async Task<IPagedList<BlogSubscriber>> GetAllSubscribersAsync(int pageIndex = 0, int pageSize = int.MaxValue)
+    {
+        return await _blogSubscriberRepository.GetAllPagedAsync(query =>
+        {
+            query = query.OrderByDescending(b => b.CreatedAtUTC);
+            return query;
+
+        }, pageIndex, pageSize);
+    }
+
     public async Task<BlogSubscriber> GetByIdAsync(Guid id)
     {
         var blogSubscribers = await _blogSubscriberRepository.GetAllAsync(query => query.Where(x => x.IsDeleted == false && x.Id == id));
