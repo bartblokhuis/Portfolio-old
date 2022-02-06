@@ -8,6 +8,7 @@ import { BaseSearchModel } from 'projects/shared/src/lib/data/common/base-search
 import { Result } from 'projects/shared/src/lib/data/common/Result';
 import { BlogPostsService } from 'projects/shared/src/lib/services/api/blog-posts/blog-posts.service';
 import { Subject } from 'rxjs';
+import { availablePageSizes, baseDataTableOptions } from '../../../helpers/datatable-helper';
 import { BreadcrumbsService } from '../../../services/breadcrumbs/breadcrumbs.service';
 import { DeleteBlogPostComponent } from '../delete-blog-post/delete-blog-post.component';
 
@@ -28,20 +29,9 @@ export class ListBlogPostComponent implements OnInit {
 
   ngOnInit(): void {
 
-    const baseOptions = {
-      responsive: false,
-      autoWidth: false,
-      searching: false,
-      orderMulti: false,
-      ordering: false,
-      serverSide: true,
-      processing: true,
-      lengthMenu: new Array<string>("10", "25", "50", "100"),
-    }
-
     const ajaxOptions = {  
       ajax: (dataTablesParameters: BaseSearchModel, callback: any) => {  
-        const model : BaseSearchModel = { availablePageSizes: "10,25, 50, 100", draw: dataTablesParameters.draw.toString(), length: dataTablesParameters.length, page: 0, pageSize: dataTablesParameters.length, start: dataTablesParameters.start }
+        const model : BaseSearchModel = { availablePageSizes: availablePageSizes.toString(), draw: dataTablesParameters.draw.toString(), length: dataTablesParameters.length, page: 0, pageSize: dataTablesParameters.length, start: dataTablesParameters.start }
         this.blogPostsService.list(model).subscribe((result) => {
           this.blogPosts = result.data.data;
           callback({
@@ -52,11 +42,8 @@ export class ListBlogPostComponent implements OnInit {
       }
     }
 
-    this.dtOptions = {...baseOptions, ...ajaxOptions}
-    console.log(this.dtOptions);
-
+    this.dtOptions = {...baseDataTableOptions, ...ajaxOptions}
     this.dtTrigger.next(this.dtOptions);
-    //this.loadBlog();
 
     this.breadcrumbsService.setBreadcrumb([
       this.breadcrumbsService.homeCrumb,
