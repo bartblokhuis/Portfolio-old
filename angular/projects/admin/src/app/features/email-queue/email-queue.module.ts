@@ -2,6 +2,7 @@ import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
+import { DataTablesModule } from 'angular-datatables';
 import { RichTextEditorModule } from '../../components/rich-text-editor/rich-text-editor.module';
 import { PipesModule } from '../../pipes/pipes.module';
 import { DeleteAllEmailQueueComponent } from './delete-all-email-queue/delete-all-email-queue.component';
@@ -23,6 +24,7 @@ import { ListEmailQueueComponent } from './list-email-queue/list-email-queue.com
     PipesModule,
     FormsModule,
     RichTextEditorModule,
+    DataTablesModule,
     RouterModule.forChild(EmailQueueRoutes)
   ]
 })
