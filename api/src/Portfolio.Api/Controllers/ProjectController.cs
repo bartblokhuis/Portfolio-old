@@ -161,6 +161,20 @@ public class ProjectController : ControllerBase
         return Ok(result);
     }
 
+    [HttpPost("Urls/List")]
+    public async Task<IActionResult> UrlsList(ProjectUrlSearchDto searchModel)
+    {
+        var projects = await _projectService.GetAllProjectUrlsAsync(searchModel.ProjectId, pageIndex: searchModel.Page - 1, pageSize: searchModel.PageSize);
+
+        var model = await new ProjectUrlListDto().PrepareToGridAsync(searchModel, projects, () =>
+        {
+            return projects.ToAsyncEnumerable().SelectAwait(async project => project.Url);
+        });
+
+        var result = await Result<ProjectUrlListDto>.SuccessAsync(model);
+        return Ok(result);
+    }
+
     [HttpPost]
     public async Task<IActionResult> Create(CreateProjectDto model)
     {

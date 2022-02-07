@@ -16,6 +16,8 @@ import { BaseSearchModel } from '../../../data/common/base-search-model';
 import { ProjectList } from '../../../data/projects/project-list';
 import { ProjectPictureSearch } from '../../../data/projects/project-picture-search';
 import { ProjectPictureList } from '../../../data/projects/project-picture-list';
+import { ProjectUrlList } from '../../../data/projects/project-url-list';
+import { ProjectUrlSearch } from '../../../data/projects/project-url-search';
 
 @Injectable({
   providedIn: 'root'
@@ -50,6 +52,10 @@ export class ProjectsService {
 
   projectPictureList(searchModel: ProjectPictureSearch): Observable<Result<ProjectPictureList>> {
     return this.apiService.post("Project/Pictures/List", searchModel);
+  }
+
+  projectUrlList(searchModel: ProjectUrlSearch): Observable<Result<ProjectUrlList>> {
+    return this.apiService.post("Project/Urls/List", searchModel);
   }
 
   createProject(project: AddProject): Observable<Result<Project>> {
