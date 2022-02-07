@@ -2,7 +2,9 @@
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
+using Portfolio.Domain.Dtos.Common;
 using Portfolio.Domain.Dtos.Projects;
+using Portfolio.Domain.Extensions;
 using Portfolio.Domain.Models;
 using Portfolio.Domain.Wrapper;
 using Portfolio.Services.Pictures;
@@ -130,6 +132,48 @@ public class ProjectController : ControllerBase
     #endregion
 
     #region Post
+
+    [HttpPost("List")]
+    public async Task<IActionResult> List(BaseSearchModel baseSearchModel)
+    {
+        var projects = await _projectService.GetAllProjectsAsync(pageIndex: baseSearchModel.Page - 1, pageSize: baseSearchModel.PageSize);
+
+        var model = await new ProjectListDto().PrepareToGridAsync(baseSearchModel, projects, () =>
+        {
+            return projects.ToAsyncEnumerable().SelectAwait(async project => _mapper.Map<ProjectDto>(project));
+        });
+
+        var result = await Result<ProjectListDto>.SuccessAsync(model);
+        return Ok(result);
+    }
+
+    [HttpPost("Pictures/List")]
+    public async Task<IActionResult> PicturesList(ProjectPictureSearchModel searchModel)
+    {
+        var projects = await _projectService.GetAllProjectPicturesAsync(searchModel.ProjectId, pageIndex: searchModel.Page - 1, pageSize: searchModel.PageSize);
+
+        var model = await new ProjectPictureListDto().PrepareToGridAsync(searchModel, projects, () =>
+        {
+            return projects.ToAsyncEnumerable().SelectAwait(async project => _mapper.Map<ProjectPictureDto>(project));
+        });
+
+        var result = await Result<ProjectPictureListDto>.SuccessAsync(model);
+        return Ok(result);
+    }
+
+    [HttpPost("Urls/List")]
+    public async Task<IActionResult> UrlsList(ProjectUrlSearchDto searchModel)
+    {
+        var projects = await _projectService.GetAllProjectUrlsAsync(searchModel.ProjectId, pageIndex: searchModel.Page - 1, pageSize: searchModel.PageSize);
+
+        var model = await new ProjectUrlListDto().PrepareToGridAsync(searchModel, projects, () =>
+        {
+            return projects.ToAsyncEnumerable().SelectAwait(async project => project.Url);
+        });
+
+        var result = await Result<ProjectUrlListDto>.SuccessAsync(model);
+        return Ok(result);
+    }
 
     [HttpPost]
     public async Task<IActionResult> Create(CreateProjectDto model)

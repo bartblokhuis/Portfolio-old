@@ -8,6 +8,7 @@ import { RouterModule } from '@angular/router';
 import { ScheduleTaskRoutes } from './schedule-task.routes';
 import { PipesModule } from '../../pipes/pipes.module';
 import { FormsModule } from '@angular/forms';
+import { DataTablesModule } from 'angular-datatables';
 
 
 
@@ -22,6 +23,7 @@ import { FormsModule } from '@angular/forms';
     CommonModule,
     PipesModule,
     FormsModule,
+    DataTablesModule,
     RouterModule.forChild(ScheduleTaskRoutes)
   ]
 })

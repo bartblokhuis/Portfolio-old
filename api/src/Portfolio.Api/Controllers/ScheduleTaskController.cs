@@ -2,11 +2,14 @@
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Portfolio.Core.Configuration;
+using Portfolio.Domain.Dtos.Common;
 using Portfolio.Domain.Dtos.ScheduleTasks;
+using Portfolio.Domain.Extensions;
 using Portfolio.Domain.Models;
 using Portfolio.Domain.Wrapper;
 using Portfolio.Services.Tasks;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace Portfolio.Controllers;
@@ -76,6 +79,20 @@ public class ScheduleTaskController : ControllerBase
     #endregion
 
     #region Post
+
+    [HttpPost("List")]
+    public async Task<IActionResult> List(BaseSearchModel baseSearchModel)
+    {
+        var tasks = await _scheduleTaskService.GetAllScheduleTasksAsync(pageIndex: baseSearchModel.Page - 1, pageSize: baseSearchModel.PageSize);
+
+        var model = await new ScheduleTaskListDto().PrepareToGridAsync(baseSearchModel, tasks, () =>
+        {
+            return tasks.ToAsyncEnumerable().SelectAwait(async subscriber => _mapper.Map<ListScheduleTaskDto>(subscriber));
+        });
+
+        var result = await Result<ScheduleTaskListDto>.SuccessAsync(model);
+        return Ok(result);
+    }
 
     [HttpPost]
     public async Task<IActionResult> Create(CreateScheduleTaskDto dto)

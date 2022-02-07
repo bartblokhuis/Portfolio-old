@@ -6,6 +6,8 @@ import { ListBlog } from 'projects/shared/src/lib/data/blog/list-blog';
 import { UpdateBlogPicture } from 'projects/shared/src/lib/data/blog/update-blog-picture';
 import { Result } from 'projects/shared/src/lib/data/common/Result';
 import { ApiService } from '../api.service';
+import { BlogPostListModel } from '../../../data/blog/blog-post-list-model';
+import { BaseSearchModel } from '../../../data/common/base-search-model';
 
 @Injectable({
   providedIn: 'root'
@@ -20,6 +22,10 @@ export class BlogPostsService {
 
   getById(id: number): Observable<Result<EditBlog>> {
     return this.apiService.get<EditBlog>(`BlogPost/GetById/?id=${id}&includeUnPublished=true`);
+  }
+
+  list(searchModel: BaseSearchModel): Observable<Result<BlogPostListModel>> {
+    return this.apiService.post('BlogPost/List', searchModel);
   }
 
   createBlogPost(blogPost: CreateBlog): Observable<Result<ListBlog>> {

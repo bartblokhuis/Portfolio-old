@@ -52,8 +52,8 @@
       </div>
     </div>
   </div>
-  <app-list-project-pictures [pictures]="project?.pictures ?? []" [projectId]="project?.id ?? 0"></app-list-project-pictures>
-  <app-list-url [urls]="project?.urls ?? []" [projectId]="project?.id ?? 0"></app-list-url>
+  <app-list-project-pictures [project]="projectSubject"></app-list-project-pictures>
+  <app-list-url [project]="projectSubject"></app-list-url>
 
   <div class="row">
     <div class="col-12">

@@ -13,6 +13,7 @@ import { PictureModule } from '../../components/picture/picture.module';
 import { RichTextEditorModule } from '../../components/rich-text-editor/rich-text-editor.module';
 import { SharedComponentsModule } from '../../components/shared/shared-components.module';
 import { PipesModule } from '../../pipes/pipes.module';
+import { DataTablesModule } from 'angular-datatables';
 
 
 
@@ -32,6 +33,7 @@ import { PipesModule } from '../../pipes/pipes.module';
     RichTextEditorModule,
     PictureModule,
     PipesModule,
+    DataTablesModule,
     RouterModule.forChild(BlogPostsRoutes),
   ]
 })

@@ -2,6 +2,7 @@
 using Microsoft.Data.SqlClient;
 using Microsoft.EntityFrameworkCore;
 using Portfolio.Domain.Models;
+using Portfolio.Domain.Models.Common;
 using Portfolio.Services.Common;
 using Portfolio.Services.Repository;
 
@@ -32,6 +33,14 @@ namespace Portfolio.Services.Pictures
         {
             var pictures = await _pictureRepository.GetAllAsync();
             return pictures;
+        }
+
+        public async Task<IPagedList<Picture>> GetAllPicturesAsync(int pageIndex = 0, int pageSize = int.MaxValue)
+        {
+            return await _pictureRepository.GetAllPagedAsync(query =>
+            {
+                return query;
+            }, pageIndex, pageSize);
         }
 
         public async Task<Picture> GetByIdAsync(int pictureId)

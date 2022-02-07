@@ -1,4 +1,5 @@
 ﻿using Portfolio.Domain.Models.Blogs;
+using Portfolio.Domain.Models.Common;
 
 namespace Portfolio.Services.Blogs;
 
@@ -6,6 +7,8 @@ public interface IBlogPostService
 {
     Task<IEnumerable<BlogPost>> GetAllBlogPostsAsync();
     Task<IEnumerable<BlogPost>> GetPublishedBlogPostsAsync();
+
+    Task<IPagedList<BlogPost>> GetAllBlogPostsAsync(int pageIndex = 0, int pageSize = int.MaxValue);
 
     Task InsertAsync(BlogPost blogPost);
 

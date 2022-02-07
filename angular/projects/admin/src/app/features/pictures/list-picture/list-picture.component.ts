@@ -1,9 +1,13 @@
-import { Component, OnInit } from '@angular/core';
+import { AfterViewInit, Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { DataTableDirective } from 'angular-datatables';
 import { environment } from 'projects/admin/src/environments/environment';
+import { BaseSearchModel } from 'projects/shared/src/lib/data/common/base-search-model';
 import { Picture } from 'projects/shared/src/lib/data/common/picture';
 import { Result } from 'projects/shared/src/lib/data/common/Result';
 import { PicturesService } from 'projects/shared/src/lib/services/api/pictures/pictures.service';
+import { Subject } from 'rxjs';
+import { availablePageSizes, baseDataTableOptions } from '../../../helpers/datatable-helper';
 import { NotificationService } from '../../../services/notification/notification.service';
 import { AddPictureComponent } from '../add-picture/add-picture.component';
 import { DeletePictureComponent } from '../delete-picture/delete-picture.component';
@@ -14,31 +18,49 @@ import { EditPictureComponent } from '../edit-picture/edit-picture.component';
   templateUrl: './list-picture.component.html',
   styleUrls: ['./list-picture.component.scss']
 })
-export class ListPictureComponent implements OnInit {
+export class ListPictureComponent implements OnInit, AfterViewInit, OnDestroy {
 
+  @ViewChild(DataTableDirective, { static: false })
+  dtElement!: DataTableDirective;
+  
   baseUrl: string = environment.baseApiUrl;
   pictures: Picture[] | null = null;
+  dtOptions: object = {};
+  dtTrigger: Subject<any> = new Subject<any>();
   
   constructor(private picturesService: PicturesService, private modalService: NgbModal, private notificationService: NotificationService) { }
 
   ngOnInit(): void {
-    this.loadPictures();
+    const ajaxOptions = {  
+      ajax: (dataTablesParameters: BaseSearchModel, callback: any) => {  
+        const model : BaseSearchModel = { availablePageSizes: availablePageSizes.toString(), draw: dataTablesParameters.draw.toString(), length: dataTablesParameters.length, page: 0, pageSize: dataTablesParameters.length, start: dataTablesParameters.start }
+        this.picturesService.list(model).subscribe((result) => {
+          this.pictures = result.data.data;
+          callback({
+            recordsTotal: result.data.recordsTotal,
+            recordsFiltered: result.data.recordsFiltered,
+            draw: result.data.draw
+          });
+        });
+      }
+    }
+
+    this.dtOptions = {...baseDataTableOptions, ...ajaxOptions}
   }
 
-  loadPictures(): void {
-    this.picturesService.getAll().subscribe(result => this.pictures = result.data);
+  ngAfterViewInit(): void {
+    this.dtTrigger.next(this.dtOptions);
   }
-
 
   uploadPicture() {
     this.openModal(AddPictureComponent).then(() => {
-      this.loadPictures();
+      this.refresh();
     });
   }
 
   editPicture(picture: Picture) {
     this.openModal(EditPictureComponent, picture).then(() => {
-      this.loadPictures();
+      this.refresh();
     });;
   }
 
@@ -48,7 +70,7 @@ export class ListPictureComponent implements OnInit {
         this.notificationService.error(result.messages[0])
       }
       else{
-        this.loadPictures();
+        this.refresh();
       }
     });
   }
@@ -66,6 +88,16 @@ export class ListPictureComponent implements OnInit {
     return modalRef.result;
   }
 
+  refresh(): void {
+    this.dtElement?.dtInstance.then((dtInstance: DataTables.Api) => {
+      dtInstance.destroy();
 
+      this.dtTrigger.next(this.dtOptions);
+    })
+  }
+
+  ngOnDestroy(): void {
+    this.dtTrigger.unsubscribe();
+  }
 
 }

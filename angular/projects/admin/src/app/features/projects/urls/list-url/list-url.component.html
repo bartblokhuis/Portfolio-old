@@ -4,8 +4,8 @@
         URL's
       </h3>
     </div>
-    <div class="card-body table-responsive p-0">
-      <table class="table table-hover text-nowrap">
+    <div class="card-body">
+      <table datatable [dtOptions]="dtOptions" [dtTrigger]="dtTrigger" class="table table-bordered table-hover">
           <thead>
               <tr>
                 <th>Url</th>
@@ -13,7 +13,7 @@
                 <th>Actions</th>
               </tr>
             </thead>
-            <tbody>
+            <tbody *ngIf="urls?.length != 0">
               <tr *ngFor="let url of urls">
                 <td>{{url.fullUrl}}</td>
                 <td [innerHtml]="url.friendlyName"></td>
@@ -27,6 +27,11 @@
                     </div>
                   </div>
                 </td>
+              </tr>
+            </tbody>
+            <tbody *ngIf="urls?.length == 0">
+              <tr>
+                <td colspan="3" class="no-data-available">No data!</td>
               </tr>
             </tbody>
       </table>

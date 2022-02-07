@@ -1,10 +1,15 @@
-﻿using Microsoft.AspNetCore.Authorization;
+﻿using AutoMapper;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Portfolio.Domain.Dtos.Common;
+using Portfolio.Domain.Dtos.Pictures;
+using Portfolio.Domain.Extensions;
 using Portfolio.Domain.Models;
 using Portfolio.Domain.Wrapper;
 using Portfolio.Services.Pictures;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace Portfolio.Controllers
@@ -17,6 +22,7 @@ namespace Portfolio.Controllers
         #region Fields
 
         private readonly IPictureService _pictureService;
+        private readonly IMapper _mapper;
 
         #endregion
 
@@ -59,6 +65,20 @@ namespace Portfolio.Controllers
         #endregion
 
         #region Post
+
+        [HttpPost("List")]
+        public async Task<IActionResult> List(BaseSearchModel baseSearchModel)
+        {
+            var picutres = await _pictureService.GetAllPicturesAsync(pageIndex: baseSearchModel.Page - 1, pageSize: baseSearchModel.PageSize);
+
+            var model = await new PictureListDto().PrepareToGridAsync(baseSearchModel, picutres, () =>
+            {
+                return picutres.ToAsyncEnumerable().SelectAwait(async picture => picture);
+            });
+
+            var result = await Result<PictureListDto>.SuccessAsync(model);
+            return Ok(result);
+        }
 
         [HttpPost()]
         public async Task<IActionResult> UploadPicture(IFormFile file, string titleAttribute, string altAttribute)

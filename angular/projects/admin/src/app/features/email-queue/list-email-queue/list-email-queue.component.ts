@@ -1,8 +1,12 @@
-import { Component, OnInit } from '@angular/core';
+import { AfterViewInit, Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { DataTableDirective } from 'angular-datatables';
+import { BaseSearchModel } from 'projects/shared/src/lib/data/common/base-search-model';
 import { QueuedEmail } from 'projects/shared/src/lib/data/queued-email/queued-email';
 import { UpdateQueuedEmail } from 'projects/shared/src/lib/data/queued-email/update-queued-email';
 import { QueuedEmailsService } from 'projects/shared/src/lib/services/api/queued-emails/queued-emails.service';
+import { Subject } from 'rxjs';
+import { availablePageSizes, baseDataTableOptions } from '../../../helpers/datatable-helper';
 import { BreadcrumbsService } from '../../../services/breadcrumbs/breadcrumbs.service';
 import { DeleteAllEmailQueueComponent } from '../delete-all-email-queue/delete-all-email-queue.component';
 import { DeleteEmailQueueComponent } from '../delete-email-queue/delete-email-queue.component';
@@ -13,20 +17,34 @@ import { EditEmailQueueComponent } from '../edit-email-queue/edit-email-queue.co
   templateUrl: './list-email-queue.component.html',
   styleUrls: ['./list-email-queue.component.scss']
 })
-export class ListEmailQueueComponent implements OnInit {
+export class ListEmailQueueComponent implements OnInit, AfterViewInit, OnDestroy {
 
+  @ViewChild(DataTableDirective, { static: false })
+  dtElement!: DataTableDirective;
+  
   queuedEmails: QueuedEmail[] = [];
+  dtOptions: object = {};
+  dtTrigger: Subject<any> = new Subject<any>();
 
   constructor(private readonly queuedEmailsService: QueuedEmailsService, private modalService: NgbModal, private readonly breadcrumbsService: BreadcrumbsService) { }
 
   ngOnInit(): void {
-    this.loadQueuedEmail();
-  }
 
-  loadQueuedEmail() {
-    this.queuedEmailsService.getAll().subscribe((result) => {
-      if(result.succeeded) this.queuedEmails = result.data;
-    })
+    const ajaxOptions = {  
+      ajax: (dataTablesParameters: BaseSearchModel, callback: any) => {  
+        const model : BaseSearchModel = { availablePageSizes: availablePageSizes.toString(), draw: dataTablesParameters.draw.toString(), length: dataTablesParameters.length, page: 0, pageSize: dataTablesParameters.length, start: dataTablesParameters.start }
+        this.queuedEmailsService.list(model).subscribe((result) => {
+          this.queuedEmails = result.data.data;
+          callback({
+            recordsTotal: result.data.recordsTotal,
+            recordsFiltered: result.data.recordsFiltered,
+            draw: result.data.draw
+          });
+        });
+      }
+    }
+
+    this.dtOptions = {...baseDataTableOptions, ...ajaxOptions}
 
     this.breadcrumbsService.setBreadcrumb([
       this.breadcrumbsService.homeCrumb,
@@ -41,6 +59,10 @@ export class ListEmailQueueComponent implements OnInit {
         active: true
       }
     ]);
+  }
+
+  ngAfterViewInit(): void {
+    this.dtTrigger.next(this.dtOptions);
   }
 
   edit(queuedEmail: QueuedEmail) {
@@ -66,8 +88,20 @@ export class ListEmailQueueComponent implements OnInit {
     modalRef.componentInstance.modal = modalRef;
     
     modalRef.result.then(() => {
-      this.loadQueuedEmail();
+      this.refresh();
     });
+  }
+
+  refresh(): void {
+    this.dtElement?.dtInstance.then((dtInstance: DataTables.Api) => {
+      dtInstance.destroy();
+
+      this.dtTrigger.next(this.dtOptions);
+    })
+  }
+
+  ngOnDestroy(): void {
+    this.dtTrigger.unsubscribe();
   }
 
 }

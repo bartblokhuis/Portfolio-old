@@ -16,6 +16,7 @@ import { EditProjectPictureComponent } from './pictures/edit-project-picture/edi
 import { AddProjectPictureComponent } from './pictures/add-project-picture/add-project-picture.component';
 import { DeleteProjectPictureComponent } from './pictures/delete-project-picture/delete-project-picture.component';
 import { RichTextEditorModule } from '../../components/rich-text-editor/rich-text-editor.module';
+import { DataTablesModule } from 'angular-datatables';
 
 @NgModule({
   declarations: [
@@ -36,6 +37,7 @@ import { RichTextEditorModule } from '../../components/rich-text-editor/rich-tex
     CommonModule,
     FormsModule,
     RichTextEditorModule,
+    DataTablesModule,
     RouterModule.forChild(ProjectRoutes),
   ]
 })

@@ -23,6 +23,16 @@ public class QueuedEmailService : IQueuedEmailService
 
     #region Methods
 
+    public async Task<IPagedList<QueuedEmail>> GetAllQueuedEmailsAsync(int pageIndex = 0, int pageSize = int.MaxValue)
+    {
+        return await _queuedEmailRepository.GetAllPagedAsync(query =>
+        {
+            query = query.OrderByDescending(b => b.CreatedAtUTC);
+            return query;
+
+        }, pageIndex, pageSize);
+    }
+
     public async Task InsertAsync(QueuedEmail queuedEmail)
     {
         await _queuedEmailRepository.InsertAsync(queuedEmail);

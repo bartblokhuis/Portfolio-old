@@ -1,4 +1,5 @@
 using Portfolio.Domain.Models;
+using Portfolio.Domain.Models.Common;
 
 namespace Portfolio.Services.Projects;
 
@@ -7,6 +8,12 @@ public interface IProjectService
     Task<IEnumerable<Project>> GetAllAsync();
 
     Task<IEnumerable<Project>> GetAllPublishedAsync();
+
+    Task<IPagedList<Project>> GetAllProjectsAsync(int pageIndex = 0, int pageSize = int.MaxValue);
+
+    Task<IPagedList<ProjectPicture>> GetAllProjectPicturesAsync(int projectId, int pageIndex = 0, int pageSize = int.MaxValue);
+
+    Task<IPagedList<ProjectUrls>> GetAllProjectUrlsAsync(int projectId, int pageIndex = 0, int pageSize = int.MaxValue);
 
     Task<Project> GetByIdAsync(int id);
 

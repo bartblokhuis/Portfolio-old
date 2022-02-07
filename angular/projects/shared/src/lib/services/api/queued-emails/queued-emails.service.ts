@@ -1,7 +1,9 @@
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
+import { BaseSearchModel } from '../../../data/common/base-search-model';
 import { Result } from '../../../data/common/Result';
 import { QueuedEmail } from '../../../data/queued-email/queued-email';
+import { QueuedEmailList } from '../../../data/queued-email/queued-email-list';
 import { UpdateQueuedEmail } from '../../../data/queued-email/update-queued-email';
 import { ApiService } from '../api.service';
 
@@ -18,6 +20,10 @@ export class QueuedEmailsService {
 
   getById(id: number): Observable<Result<UpdateQueuedEmail>> {
     return this.apiService.get<UpdateQueuedEmail>(`QueuedEmail/GetById?id=${id}`)
+  }
+
+  list(searchModel: BaseSearchModel): Observable<Result<QueuedEmailList>> {
+    return this.apiService.post("QueuedEmail/List", searchModel);
   }
 
   edit(queuedEmail: UpdateQueuedEmail): Observable<Result<QueuedEmail>> {

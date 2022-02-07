@@ -1,6 +1,6 @@
 import { Routes } from "@angular/router";
-import { AntiAuthGuard } from "../../helpers/AntiAuthGuard";
-import { AuthGuard } from "../../helpers/AuthGuard";
+import { AntiAuthGuard } from "../../guards/AntiAuthGuard";
+import { AuthGuard } from "../../guards/AuthGuard";
 import { AdminComponent } from "../../layouts/admin/admin.component";
 import { AuthComponent } from "../../layouts/auth/auth.component";
 import { LoginComponent } from "./login/login.component";

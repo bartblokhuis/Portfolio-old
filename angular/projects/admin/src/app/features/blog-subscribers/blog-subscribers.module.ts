@@ -6,6 +6,7 @@ import { BlogSubscriberRoutes } from './blog-subscribers.routes';
 import { FormsModule } from '@angular/forms';
 import { PipesModule } from '../../pipes/pipes.module';
 import { DeleteBlogSubscriberComponent } from './delete-blog-subscriber/delete-blog-subscriber.component';
+import { DataTablesModule } from 'angular-datatables';
 
 
 
@@ -18,6 +19,7 @@ import { DeleteBlogSubscriberComponent } from './delete-blog-subscriber/delete-b
     CommonModule,
     FormsModule,
     PipesModule,
+    DataTablesModule,
     RouterModule.forChild(BlogSubscriberRoutes),
   ]
 })

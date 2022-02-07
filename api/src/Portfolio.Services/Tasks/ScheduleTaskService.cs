@@ -1,4 +1,5 @@
 ﻿using Portfolio.Domain.Models;
+using Portfolio.Domain.Models.Common;
 using Portfolio.Services.Repository;
 
 namespace Portfolio.Services.Tasks;
@@ -60,6 +61,16 @@ public class ScheduleTaskService : IScheduleTaskService
         });
 
         return tasks;
+    }
+
+    public async Task<IPagedList<ScheduleTask>> GetAllScheduleTasksAsync(int pageIndex = 0, int pageSize = int.MaxValue)
+    {
+        return await _taskRepository.GetAllPagedAsync(query =>
+        {
+            query = query.OrderByDescending(b => b.Seconds);
+            return query;
+
+        }, pageIndex, pageSize);
     }
 
     public virtual async Task InsertTaskAsync(ScheduleTask task)

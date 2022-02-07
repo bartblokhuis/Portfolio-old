@@ -5,6 +5,8 @@ namespace Portfolio.Services.QueuedEmails;
 
 public interface IQueuedEmailService
 {
+    Task<IPagedList<QueuedEmail>> GetAllQueuedEmailsAsync(int pageIndex = 0, int pageSize = int.MaxValue);
+
     Task InsertAsync(QueuedEmail queuedEmail);
 
     Task UpdateAsync(QueuedEmail queuedEmail);

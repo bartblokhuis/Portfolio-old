@@ -6,6 +6,8 @@ import { Message } from 'projects/shared/src/lib/data/messages/message';
 import { MessageStatus } from 'projects/shared/src/lib/data/messages/message-status';
 import { UpdateMessage } from 'projects/shared/src/lib/data/messages/update-message';
 import { ApiService } from 'projects/shared/src/lib/services/api/api.service';
+import { BaseSearchModel } from 'projects/shared/src/lib/data/common/base-search-model';
+import { MessageList } from 'projects/shared/src/lib/data/messages/list-message';
 @Injectable({
   providedIn: 'root'
 })
@@ -25,6 +27,10 @@ export class MessagesService {
         return res;
       })
     );
+  }
+
+  list(searchModel: BaseSearchModel): Observable<Result<MessageList>> {
+    return this.apiService.post("Messages/List", searchModel);
   }
 
   update(id: number, status: MessageStatus): Observable<Result<Message>> {

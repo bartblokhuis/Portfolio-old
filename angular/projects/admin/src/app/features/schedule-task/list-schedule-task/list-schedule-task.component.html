@@ -6,8 +6,8 @@
                     Schedule tasks
                 </h3>
             </div>
-            <div class="card-body table-responsive p-0">
-                <table class="table table-hover text-nowrap">
+            <div class="card-body">
+                <table datatable [dtOptions]="dtOptions" [dtTrigger]="dtTrigger" class="table table-bordered table-hover">
                     <thead>
                         <tr>
                           <th>Name</th>
@@ -18,9 +18,10 @@
                           <th>Last start date</th>
                           <th>Last end date</th>
                           <th>Last success date</th>
+                          <th>Actions</th>
                         </tr>
                       </thead>
-                      <tbody>
+                      <tbody *ngIf="scheduleTasks?.length != 0">
                         <tr *ngFor="let scheduleTask of scheduleTasks;">
                             <td> {{ scheduleTask.name }} </td>
                             <td> {{ scheduleTask.seconds }} </td>
@@ -52,6 +53,11 @@
                               </div>
                             </td>
                           </tr>
+                      </tbody>
+                      <tbody *ngIf="scheduleTasks?.length == 0">
+                        <tr>
+                          <td colspan="3" class="no-data-available">No data!</td>
+                        </tr>
                       </tbody>
                 </table>
             </div>

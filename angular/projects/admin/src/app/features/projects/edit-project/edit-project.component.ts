@@ -1,8 +1,7 @@
 import { Component, OnInit, QueryList, ViewChildren } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { combineLatest, Observable } from 'rxjs';
+import { combineLatest, Observable, Subject } from 'rxjs';
 import { Result } from 'projects/shared/src/lib/data/common/Result';
-import { AddUpdateProject } from 'projects/shared/src/lib/data/projects/add-update-project';
 import { Project } from 'projects/shared/src/lib/data/projects/project';
 import { UpdateProjectSkills } from 'projects/shared/src/lib/data/projects/update-project-skills';
 import { SkillGroup } from 'projects/shared/src/lib/data/skill-groups/skill-group';
@@ -26,6 +25,8 @@ export class EditProjectComponent implements OnInit {
   @ViewChildren('skillSelect') skills: QueryList<any> | undefined;
 
   project: Project | null = null;
+  projectSubject: Subject<Project> = new Subject();
+
   skillIds: number[] = [];
   model: UpdateProject = { description: '', displayNumber: 0, isPublished: false, title: '', id: 0 }
   skillModel: UpdateProjectSkills = {projectId: 0, skillIds: undefined }
@@ -52,6 +53,7 @@ export class EditProjectComponent implements OnInit {
       }
 
       this.project = result.data;
+      this.projectSubject.next(result.data);
       this.model = result.data;
 
       if(this.project.skills){

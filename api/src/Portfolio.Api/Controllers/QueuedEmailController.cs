@@ -2,10 +2,13 @@
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Portfolio.Core.Helpers;
+using Portfolio.Domain.Dtos.Common;
 using Portfolio.Domain.Dtos.QueuedEmails;
+using Portfolio.Domain.Extensions;
 using Portfolio.Domain.Wrapper;
 using Portfolio.Services.QueuedEmails;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace Portfolio.Controllers;
@@ -55,6 +58,24 @@ public class QueuedEmailController : ControllerBase
 
         var result = _mapper.Map<UpdateQueuedEmailDto>(queuedEmail);
         return Ok(await Result<UpdateQueuedEmailDto>.SuccessAsync(result));
+    }
+
+    #endregion
+
+    #region Post
+
+    [HttpPost("List")]
+    public async Task<IActionResult> List(BaseSearchModel baseSearchModel)
+    {
+        var queuedEmails = await _queuedEmailService.GetAllQueuedEmailsAsync(pageIndex: baseSearchModel.Page - 1, pageSize: baseSearchModel.PageSize);
+
+        var model = await new QueuedEmailListDto().PrepareToGridAsync(baseSearchModel, queuedEmails, () =>
+        {
+            return queuedEmails.ToAsyncEnumerable().SelectAwait(async queuedEmail => _mapper.Map<ListQueuedEmailDto>(queuedEmail));
+        });
+
+        var result = await Result<QueuedEmailListDto>.SuccessAsync(model);
+        return Ok(result);
     }
 
     #endregion
