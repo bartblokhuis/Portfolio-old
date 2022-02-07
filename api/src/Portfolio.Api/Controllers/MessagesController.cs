@@ -88,11 +88,11 @@ public class MessagesController : ControllerBase
     [HttpPost("List")]
     public async Task<IActionResult> List(BaseSearchModel baseSearchModel)
     {
-        var blogPosts = await _messageService.GetAllMessagesAsync(pageIndex: baseSearchModel.Page - 1, pageSize: baseSearchModel.PageSize);
+        var messages = await _messageService.GetAllMessagesAsync(pageIndex: baseSearchModel.Page - 1, pageSize: baseSearchModel.PageSize);
 
-        var model = await new MessagesListDto().PrepareToGridAsync(baseSearchModel, blogPosts, () =>
+        var model = await new MessagesListDto().PrepareToGridAsync(baseSearchModel, messages, () =>
         {
-            return blogPosts.ToAsyncEnumerable().SelectAwait(async plogPost => _mapper.Map<MessageDto>(plogPost));
+            return messages.ToAsyncEnumerable().SelectAwait(async message => _mapper.Map<MessageDto>(message));
         });
 
         var result = await Result<MessagesListDto>.SuccessAsync(model);

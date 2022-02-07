@@ -136,11 +136,11 @@ public class ProjectController : ControllerBase
     [HttpPost("List")]
     public async Task<IActionResult> List(BaseSearchModel baseSearchModel)
     {
-        var blogPosts = await _projectService.GetAllProjectsAsync(pageIndex: baseSearchModel.Page - 1, pageSize: baseSearchModel.PageSize);
+        var projects = await _projectService.GetAllProjectsAsync(pageIndex: baseSearchModel.Page - 1, pageSize: baseSearchModel.PageSize);
 
-        var model = await new ProjectListDto().PrepareToGridAsync(baseSearchModel, blogPosts, () =>
+        var model = await new ProjectListDto().PrepareToGridAsync(baseSearchModel, projects, () =>
         {
-            return blogPosts.ToAsyncEnumerable().SelectAwait(async plogPost => _mapper.Map<ProjectDto>(plogPost));
+            return projects.ToAsyncEnumerable().SelectAwait(async project => _mapper.Map<ProjectDto>(project));
         });
 
         var result = await Result<ProjectListDto>.SuccessAsync(model);

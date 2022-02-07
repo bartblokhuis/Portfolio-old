@@ -136,11 +136,11 @@ public class BlogSubscriberController : ControllerBase
     [HttpPost("List")]
     public async Task<IActionResult> List(BaseSearchModel baseSearchModel)
     {
-        var blogPosts = await _blogSubscriberService.GetAllSubscribersAsync(pageIndex: baseSearchModel.Page - 1, pageSize: baseSearchModel.PageSize);
+        var subscribers = await _blogSubscriberService.GetAllSubscribersAsync(pageIndex: baseSearchModel.Page - 1, pageSize: baseSearchModel.PageSize);
 
-        var model = await new BlogSubscriberListDto().PrepareToGridAsync(baseSearchModel, blogPosts, () =>
+        var model = await new BlogSubscriberListDto().PrepareToGridAsync(baseSearchModel, subscribers, () =>
         {
-            return blogPosts.ToAsyncEnumerable().SelectAwait(async plogPost => _mapper.Map<ListBlogSubscriberDto>(plogPost));
+            return subscribers.ToAsyncEnumerable().SelectAwait(async subscriber => _mapper.Map<ListBlogSubscriberDto>(subscriber));
         });
 
         var result = await Result<BlogSubscriberListDto>.SuccessAsync(model);
