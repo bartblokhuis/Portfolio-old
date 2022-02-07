@@ -11,6 +11,8 @@ public interface IProjectService
 
     Task<IPagedList<Project>> GetAllProjectsAsync(int pageIndex = 0, int pageSize = int.MaxValue);
 
+    Task<IPagedList<ProjectPicture>> GetAllProjectPicturesAsync(int projectId, int pageIndex = 0, int pageSize = int.MaxValue);
+
     Task<Project> GetByIdAsync(int id);
 
     Task<IEnumerable<Url>> GetProjectUrlsByIdAsync(int id);

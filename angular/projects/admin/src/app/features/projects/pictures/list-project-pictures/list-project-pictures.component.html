@@ -9,8 +9,8 @@
         </button>
     </div>
     </div>
-    <div class="card-body table-responsive p-0">
-      <table class="table table-hover text-nowrap">
+    <div class="card-body">
+      <table datatable [dtOptions]="dtOptions" [dtTrigger]="dtTrigger" class="table table-bordered table-hover">
           <thead>
               <tr>
                 <th>Display Number</th>
@@ -21,7 +21,7 @@
                 <th>Actions</th>
               </tr>
             </thead>
-            <tbody>
+            <tbody *ngIf="pictures?.length != 0">
               <tr *ngFor="let picture of pictures">
                 <td>{{ picture.displayNumber }}</td>
                 <td><img [src]="baseUrl + picture.path"></td>
@@ -38,6 +38,11 @@
                     </div>
                   </div>
                 </td>
+              </tr>
+            </tbody>
+            <tbody *ngIf="pictures?.length == 0">
+              <tr>
+                <td colspan="3" class="no-data-available">No data!</td>
               </tr>
             </tbody>
       </table>

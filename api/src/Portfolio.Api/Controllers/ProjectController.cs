@@ -147,6 +147,19 @@ public class ProjectController : ControllerBase
         return Ok(result);
     }
 
+    [HttpPost("Pictures/List")]
+    public async Task<IActionResult> PicturesList(ProjectPictureSearchModel searchModel)
+    {
+        var projects = await _projectService.GetAllProjectPicturesAsync(searchModel.ProjectId, pageIndex: searchModel.Page - 1, pageSize: searchModel.PageSize);
+
+        var model = await new ProjectPictureListDto().PrepareToGridAsync(searchModel, projects, () =>
+        {
+            return projects.ToAsyncEnumerable().SelectAwait(async project => _mapper.Map<ProjectPictureDto>(project));
+        });
+
+        var result = await Result<ProjectPictureListDto>.SuccessAsync(model);
+        return Ok(result);
+    }
 
     [HttpPost]
     public async Task<IActionResult> Create(CreateProjectDto model)

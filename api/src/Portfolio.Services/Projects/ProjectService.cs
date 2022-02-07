@@ -56,6 +56,17 @@ public class ProjectService : IProjectService
         }, pageIndex, pageSize);
     }
 
+    public async Task<IPagedList<ProjectPicture>> GetAllProjectPicturesAsync(int projectId, int pageIndex = 0, int pageSize = int.MaxValue)
+    {
+        return await _projectPictureRepository.GetAllPagedAsync(query =>
+        {
+            query = query.Include(x => x.Picture);
+            query = query.Include(x => x.Project);
+
+            return query.Where(x => x.ProjectId == projectId);
+        }, pageIndex, pageSize);
+    }
+
     public async Task<Project> GetByIdAsync(int id)
     {
         var projects = await _projectRepository.GetAllAsync(query => query.Include(x => x.Skills).Include(x => x.ProjectUrls).ThenInclude(x => x.Url).Include(x => x.ProjectPictures.OrderBy(x => x.DisplayNumber)).ThenInclude(x => x.Picture).Where(x => x.Id == id));
