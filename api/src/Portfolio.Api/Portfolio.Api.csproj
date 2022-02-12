@@ -29,4 +29,9 @@
 		</None>
 	</ItemGroup>
 
+	<ItemGroup>
+	  <Content Remove="wwwroot\languages\netherlands-33035.svg" />
+	  <Content Remove="wwwroot\languages\united-33135.svg" />
+	</ItemGroup>
+
 </Project>
