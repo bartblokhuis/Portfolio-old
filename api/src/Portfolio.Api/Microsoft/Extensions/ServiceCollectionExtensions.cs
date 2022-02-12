@@ -19,6 +19,7 @@ using Portfolio.Services.Blogs;
 using Portfolio.Services.BlogSubscribers;
 using Portfolio.Services.Comments;
 using Portfolio.Services.Common;
+using Portfolio.Services.Languages;
 using Portfolio.Services.Messages;
 using Portfolio.Services.Pictures;
 using Portfolio.Services.Projects;
@@ -129,6 +130,7 @@ public static class ServiceCollectionExtensions
             .AddScoped<IEmailService, EmailService>()
             .AddScoped<ITokenizer, Tokenizer>()
             .AddScoped<IMessageTokenProvider, MessageTokenProvider>()
+            .AddScoped<ILanguageService, LanguageService>()
             .AddScoped<IPictureService, PictureService>();
 
         return services;

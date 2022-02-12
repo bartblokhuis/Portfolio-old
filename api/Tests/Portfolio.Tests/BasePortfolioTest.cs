@@ -14,6 +14,7 @@ using Portfolio.Services.Blogs;
 using Portfolio.Services.BlogSubscribers;
 using Portfolio.Services.Comments;
 using Portfolio.Services.Common;
+using Portfolio.Services.Languages;
 using Portfolio.Services.Messages;
 using Portfolio.Services.Pictures;
 using Portfolio.Services.Projects;
@@ -85,6 +86,7 @@ public abstract class BasePortfolioTest
             .AddTransient<IEmailService, EmailService>()
             .AddTransient<ITokenizer, Tokenizer>()
             .AddTransient<IMessageTokenProvider, MessageTokenProvider>()
+            .AddTransient<ILanguageService, LanguageService>()
             .AddTransient<IPictureService, PictureService>();
 
         _serviceProvider = services.BuildServiceProvider();
