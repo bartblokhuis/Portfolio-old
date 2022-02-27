@@ -2,8 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { Result } from 'projects/shared/src/lib/data/common/Result';
 import { EmailSettings } from 'projects/shared/src/lib/data/settings/email-settings';
 import { SettingsService } from 'projects/shared/src/lib/services/api/settings/settings.service';
-import { BreadcrumbsService } from '../../../services/breadcrumbs/breadcrumbs.service';
-import { NotificationService } from '../../../services/notification/notification.service';
+import { BreadcrumbsService } from '../../../../services/breadcrumbs/breadcrumbs.service';
+import { NotificationService } from '../../../../services/notification/notification.service';
 
 declare var $: any;
 @Component({

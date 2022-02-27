@@ -45,8 +45,8 @@ const routes: Routes = [
       },
       {
         path: '',
-        loadChildren: () => import('./features/settings/settings.module').then(
-          module => module.SettingsModule
+        loadChildren: () => import('./features/configurations/configurations.module').then(
+          module => module.ConfigurationsModule
         ),
       },
       {

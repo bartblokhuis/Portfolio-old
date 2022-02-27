@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { MessageSettings } from 'projects/shared/src/lib/data/settings/message-settings';
 import { SettingsService } from 'projects/shared/src/lib/services/api/settings/settings.service';
-import { BreadcrumbsService } from '../../../services/breadcrumbs/breadcrumbs.service';
-import { NotificationService } from '../../../services/notification/notification.service';
+import { BreadcrumbsService } from '../../../../services/breadcrumbs/breadcrumbs.service';
+import { NotificationService } from '../../../../services/notification/notification.service';
 
 @Component({
   selector: 'app-message-settings',

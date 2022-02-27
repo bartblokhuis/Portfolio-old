@@ -8,7 +8,7 @@ import { EmailSettingsComponent } from './email-settings/email-settings.componen
 import { FormsModule } from '@angular/forms';
 import { BlogSettingsComponent } from './blog-settings/blog-settings.component';
 import { PublicSiteSettingsComponent } from './public-site-settings/public-site-settings.component';
-import { RichTextEditorModule } from '../../components/rich-text-editor/rich-text-editor.module';
+import { RichTextEditorModule } from '../../../components/rich-text-editor/rich-text-editor.module';
 import { ApiSettingsComponent } from './api-settings/api-settings.component';
 import { MessageSettingsComponent } from './message-settings/message-settings.component';
 

@@ -2,9 +2,9 @@ import { Component, OnInit } from '@angular/core';
 import { Result } from 'projects/shared/src/lib/data/common/Result';
 import { SeoSettings } from 'projects/shared/src/lib/data/settings/seo-settings';
 import { SettingsService } from 'projects/shared/src/lib/services/api/settings/settings.service';
-import { BreadcrumbsService } from '../../../services/breadcrumbs/breadcrumbs.service';
-import { ContentTitleService } from '../../../services/content-title/content-title.service';
-import { NotificationService } from '../../../services/notification/notification.service';
+import { BreadcrumbsService } from '../../../../services/breadcrumbs/breadcrumbs.service';
+import { ContentTitleService } from '../../../../services/content-title/content-title.service';
+import { NotificationService } from '../../../../services/notification/notification.service';
 
 @Component({
   selector: 'app-seo-settings',

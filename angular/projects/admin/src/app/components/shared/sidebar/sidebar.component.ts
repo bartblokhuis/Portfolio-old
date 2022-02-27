@@ -25,14 +25,16 @@ export class SidebarComponent {
     ] },
     { name: "Messages", path: "/messages", icon: "nav-icon fas fa-inbox" },
     { name: "Pictures", path: "/pictures", icon: "nav-icon fas fa-image" },
-    { name: 'Settings', path: '', icon: 'nav-icon fas fa-cog', menuItems: [
-      { name: 'General settings', icon: "far fa-circle nav-icon", path: "/settings/general-settings" },
-      { name: 'Seo settings', icon: "far fa-circle nav-icon", path: "/settings/seo-settings" },
-      { name: 'Email settings', icon: "far fa-circle nav-icon", path: "/settings/email-settings" },
-      { name: 'Blog settings', icon: "far fa-circle nav-icon", path: "/settings/blog-settings" },
-      { name: 'Public site settings', icon: "far fa-circle nav-icon", path: "/settings/public-site-settings" },
-      { name: 'API settings', icon: "far fa-circle nav-icon", path: "/settings/api-settings" },
-      { name: 'Message settings', icon: "far fa-circle nav-icon", path: "/settings/message-settings" },
+    { name: "Configuration", path: '', icon: "nav-icon fas fa-cubes", menuItems: [
+      { name: 'Settings', path: '', icon: 'nav-icon fas fa-cog', menuItems: [
+        { name: 'General settings', icon: "far fa-circle nav-icon", path: "/settings/general-settings" },
+        { name: 'Seo settings', icon: "far fa-circle nav-icon", path: "/settings/seo-settings" },
+        { name: 'Email settings', icon: "far fa-circle nav-icon", path: "/settings/email-settings" },
+        { name: 'Blog settings', icon: "far fa-circle nav-icon", path: "/settings/blog-settings" },
+        { name: 'Public site settings', icon: "far fa-circle nav-icon", path: "/settings/public-site-settings" },
+        { name: 'API settings', icon: "far fa-circle nav-icon", path: "/settings/api-settings" },
+        { name: 'Message settings', icon: "far fa-circle nav-icon", path: "/settings/message-settings" },
+      ]},
     ]},
     { name: 'System', icon: 'fas fa-server nav-icon', menuItems: [
       { name: 'Email Queue', icon: "far fa-circle nav-icon", path: "/system/email-queue" },

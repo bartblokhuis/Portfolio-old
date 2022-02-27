@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { ApiSettings } from 'projects/shared/src/lib/data/settings/api-settings';
 import { SettingsService } from 'projects/shared/src/lib/services/api/settings/settings.service';
-import { BreadcrumbsService } from '../../../services/breadcrumbs/breadcrumbs.service';
-import { NotificationService } from '../../../services/notification/notification.service';
+import { BreadcrumbsService } from '../../../../services/breadcrumbs/breadcrumbs.service';
+import { NotificationService } from '../../../../services/notification/notification.service';
 
 declare var $: any;
 
