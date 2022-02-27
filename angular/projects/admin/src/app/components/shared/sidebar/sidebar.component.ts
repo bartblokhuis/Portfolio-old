@@ -26,7 +26,10 @@ export class SidebarComponent {
     { name: "Messages", path: "/messages", icon: "nav-icon fas fa-inbox" },
     { name: "Pictures", path: "/pictures", icon: "nav-icon fas fa-image" },
     { name: "Configuration", path: '', icon: "nav-icon fas fa-cubes", menuItems: [
-      { name: 'Settings', path: '', icon: 'nav-icon fas fa-cog', menuItems: [
+      { name: 'Localization', path: '', icon: 'nav-icon far fa-circle', menuItems: [
+        {name: 'Languages', path: '/languages', icon: 'nav-icon far fa-circle'},
+      ]},
+      { name: 'Settings', path: '', icon: 'nav-icon far fa-circle', menuItems: [
         { name: 'General settings', icon: "far fa-circle nav-icon", path: "/settings/general-settings" },
         { name: 'Seo settings', icon: "far fa-circle nav-icon", path: "/settings/seo-settings" },
         { name: 'Email settings', icon: "far fa-circle nav-icon", path: "/settings/email-settings" },

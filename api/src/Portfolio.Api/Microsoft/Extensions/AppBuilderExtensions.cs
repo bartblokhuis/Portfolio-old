@@ -32,11 +32,10 @@ public static class AppBuilderExtensions
 
     private static void UsePortfolioOpenFiles(this IApplicationBuilder app, IWebHostEnvironment env)
     {
-        var path = Path.Combine(env.ContentRootPath, string.Format("wwwroot{0}uploads", Path.DirectorySeparatorChar));
+        var path = Path.Combine(env.ContentRootPath, string.Format("wwwroot", Path.DirectorySeparatorChar));
         app.UseStaticFiles(new StaticFileOptions
         {
             FileProvider = new PhysicalFileProvider(path),
-            RequestPath = string.Format("/uploads")
         });
     }
 
