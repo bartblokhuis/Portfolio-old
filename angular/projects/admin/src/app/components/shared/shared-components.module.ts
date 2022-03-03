@@ -6,13 +6,15 @@ import { MainHeaderComponent } from "./main-header/main-header.component";
 import { SidebarComponent } from "./sidebar/sidebar.component";
 import { ContentHeaderComponent } from './content-header/content-header.component';
 import { FormsModule } from "@angular/forms";
+import { LocalizationComponentsModule } from "../localizations/localization-components.module";
 
 @NgModule({
     declarations: [ FooterComponent, MainHeaderComponent, SidebarComponent, ContentHeaderComponent ],
     imports: [
         CommonModule,
         FormsModule,
-        RouterModule
+        RouterModule,
+        LocalizationComponentsModule
     ],
     exports: [
         FooterComponent,

@@ -16,5 +16,6 @@ public class LanguageProfile : Profile
         CreateMap<LanguageUpdateDto, Language>();
 
         CreateMap<ListResult<Language>, ListResult<LanguageListDto>>();
+        CreateMap<ListResult<Language>, ListResult<LanguageDto>>();
     }
 }

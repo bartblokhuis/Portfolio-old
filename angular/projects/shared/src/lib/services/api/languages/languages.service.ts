@@ -17,6 +17,10 @@ export class LanguagesService {
 
   constructor(private readonly apiService: ApiService) { }
 
+  getAll(): Observable<Result<Language[]>> {
+    return this.apiService.get<Language[]>(`${this.baseUrl}/GetAll`);
+  }
+
   getById(id: string): Observable<Result<Language>> {
     return this.apiService.get<Language>(`${this.baseUrl}/GetById?id=${id}`);
   }

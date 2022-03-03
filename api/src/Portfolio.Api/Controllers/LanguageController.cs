@@ -6,6 +6,7 @@ using Portfolio.Domain.Extensions;
 using Portfolio.Domain.Models.Localization;
 using Portfolio.Domain.Wrapper;
 using Portfolio.Services.Languages;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -57,6 +58,21 @@ public class LanguageController : ControllerBase
     #region Methods
 
     #region Get
+
+    [HttpGet("GetAll")]
+    public async Task<IActionResult> GetAll()
+    {
+        var languages = await _languageService.GetAllAsync();
+        if (languages == null)
+            return Ok(Result.FailAsync($"No languages found"));
+
+        var languagesResult = languages.ToListResult();
+
+        var result = _mapper.Map<ListResult<LanguageDto>>(languagesResult);
+        result.Succeeded = true;
+
+        return Ok(result);
+    }
 
     [HttpGet("GetById")]
     public async Task<IActionResult> GetById(int id)

@@ -21,12 +21,13 @@ import { BlogSubscribersModule } from './features/blog-subscribers/blog-subscrib
 import { EmailQueueModule } from './features/email-queue/email-queue.module';
 import { ScheduleTaskModule } from './features/schedule-task/schedule-task.module';
 import { ConfigurationsModule } from './features/configurations/configurations.module';
+import { LocalizationComponentsModule } from './components/localizations/localization-components.module';
 
 @NgModule({
   declarations: [
     AppComponent,
     AdminComponent,
-    AuthComponent
+    AuthComponent,
   ],
   imports: [
     BrowserModule,
@@ -44,7 +45,8 @@ import { ConfigurationsModule } from './features/configurations/configurations.m
     RichTextEditorModule,
     EmailQueueModule,
     ScheduleTaskModule,
-    ConfigurationsModule
+    ConfigurationsModule,
+    LocalizationComponentsModule
   ],
   providers: [
     {
