@@ -73,7 +73,7 @@ export class LanguagesListComponent implements OnInit, AfterViewInit, OnDestroy 
     modal.componentInstance.language = language;
 
     modal.result.then((result) => {
-      this.refresh();
+      if(result && result == "removed") this.refresh();
     });
 
   }

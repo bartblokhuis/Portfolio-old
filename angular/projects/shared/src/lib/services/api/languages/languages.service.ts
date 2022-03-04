@@ -42,6 +42,6 @@ export class LanguagesService {
   }
 
   delete(languageId: number): Observable<Result> {
-    return this.apiService.delete(`${this.baseUrl}?languageId=${languageId}`);
+    return this.apiService.delete(`${this.baseUrl}?id=${languageId}`);
   }
 }
