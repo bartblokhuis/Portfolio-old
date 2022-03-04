@@ -21,7 +21,7 @@
                       <tbody *ngIf="languages?.length != 0">
                         <tr *ngFor="let language of languages;">
                             <td> {{ language.name }} </td>
-                            <td class="flag-icon"> <img [src]="baseApiUrl + language.flagImageFilePath"> </td>
+                            <td class="flag-icon"> <img *ngIf="language.flagImageFilePath" [src]="baseApiUrl + language.flagImageFilePath"> </td>
                             <td> {{ language.languageCulture}} </td>
                             <td> 
                                 <ng-container *ngIf="language.isPublished; else unpublished">
@@ -50,6 +50,9 @@
                         </tr>
                       </tbody>
                 </table>
+            </div>
+            <div class="card-footer">
+              <a class="btn btn-primary" (click)="addLanguage()">Add new language</a>
             </div>
         </div>
     </div>

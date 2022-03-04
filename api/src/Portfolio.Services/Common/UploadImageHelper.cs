@@ -53,6 +53,24 @@ public class UploadImageHelper : IUploadImageHelper
         return path;
     }
 
+    public async Task<string> UploadLanguageFlagImageAsync(IFormFile image)
+    {
+        var fileExtension = Path.GetExtension(image.FileName);
+        var uniqueFileName = Path.GetRandomFileName() + fileExtension;
+
+        uniqueFileName = uniqueFileName.Replace(Path.DirectorySeparatorChar.ToString(), "");
+
+        var path = "languages/" + uniqueFileName;
+        var uploadPath = Path.Combine(_hostingEnvironment.ContentRootPath, string.Format("wwwroot{0}languages", Path.DirectorySeparatorChar));
+
+        var filePath = Path.Combine(uploadPath, uniqueFileName);
+
+        using Stream fileStream = new FileStream(filePath, FileMode.Create);
+
+        await image.CopyToAsync(fileStream);
+        return path;
+    }
+
     public void DeleteImage(string path)
     {
         var uploadPath = Path.Combine(_hostingEnvironment.ContentRootPath, string.Format("wwwroot{0}", Path.DirectorySeparatorChar));

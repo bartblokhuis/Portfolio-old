@@ -1,5 +1,5 @@
-import { LanguageBase } from "./language-base";
+import { LanguageBaseCreateUpdate } from "./language-base-create-update";
 
-export interface LanguageCreate extends LanguageBase {
+export interface LanguageCreate extends LanguageBaseCreateUpdate {
 
 }

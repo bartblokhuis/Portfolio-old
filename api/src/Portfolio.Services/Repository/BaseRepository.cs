@@ -72,7 +72,7 @@ public class BaseRepository<TEntity, TKey, TDbContext> : IBaseRepository<TEntity
         if (typeof(TEntity).GetInterface(nameof(IHasDisplayNumber)) == null)
             return query;
 
-        return query.OfType<IHasDisplayNumber>().OrderByDescending(entry => entry.DisplayNumber).OfType<TEntity>();
+        return query.OfType<IHasDisplayNumber>().OrderBy(entry => entry.DisplayNumber).OfType<TEntity>();
     }
 
     #endregion
@@ -111,7 +111,7 @@ public class BaseRepository<TEntity, TKey, TDbContext> : IBaseRepository<TEntity
             int pageIndex = 0, int pageSize = int.MaxValue, bool getOnlyTotalCount = false, bool includeDeleted = true, bool sortByDisplayNumber = true)
     {
         var query = AddDeletedFilter(Table, includeDeleted);
-        query = AddDeletedFilter(query, sortByDisplayNumber);
+        query = AddDisplayNumberFilter(query, sortByDisplayNumber);
 
         query = func != null ? func(query) : query;
 

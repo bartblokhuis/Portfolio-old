@@ -1,1 +1,59 @@
-<p>languages-add works!</p>
+<div class="modal-header">
+    <h4 class="modal-title" id="modal-project-title">Add language</h4>
+    <button type="button" class="close" aria-label="Close" (click)="modalRef?.close()">
+      <span aria-hidden="true">&times;</span>
+    </button>
+</div>
+<form id="addLanguageForm">
+    <div class="modal-body">
+        <div class="row">
+            <div class="col-12">
+                <div class="form-group">
+                    <label>Name</label>
+                    <input class="form-control" type="text" required [(ngModel)]="model.name" name="name"/>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-6">
+                <div class="form-group">
+                    <label>Culture type</label>
+                    <input class="form-control" type="text" required [(ngModel)]="model.languageCulture" name="languageCulture"/>
+                </div>
+            </div>
+            <div class="col-6">
+                <div class="form-group">
+                    <label>Display number</label>
+                    <input class="form-control" type="number" required [(ngModel)]="model.displayNumber" name="displayNumber"/>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-12">
+                <div class="form-group">
+                    <label>Language flag</label>
+                    <div class="custom-file">
+                        <input type="file" class="form-control" id="flagImageFilePath" name="flagImageFilePath" (change)="onFileChange($event)"/>
+                        <label class="custom-file-label" for="flagImageFilePath"> {{ imagePath }} </label>
+                    </div>
+                    <label *ngIf="imageRequiredError" class="error invalid-feedback" style="display: inline;">{{imageRequiredError}}</label>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-12">
+                <div class="form-check">
+                    <input class="form-check-input" type="checkbox" id="isPublished" [(ngModel)]="model.isPublished" name="isPublished"/>
+                    <label class="form-check-label" for="isPublished" >Published</label>
+                </div>
+            </div>
+        </div>
+        <div>
+            <span class="custom-error" *ngIf="error">{{error}}</span>
+        </div>
+    </div>
+    <div class="modal-footer justify-content-between">
+        <button type="button" class="btn btn-default" (click)="modalRef?.close()">Cancel</button>
+        <button type="button" class="btn btn-primary" (click)="submit()">Save</button>
+    </div>
+</form>

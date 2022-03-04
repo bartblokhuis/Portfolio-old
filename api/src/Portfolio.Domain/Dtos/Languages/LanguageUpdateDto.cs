@@ -1,6 +1,6 @@
 ﻿namespace Portfolio.Domain.Dtos.Languages;
 
-public class LanguageUpdateDto : LanguageBaseDto
+public class LanguageUpdateDto : LanguageBaseCreateUpdateDto
 {
     #region Properties
 

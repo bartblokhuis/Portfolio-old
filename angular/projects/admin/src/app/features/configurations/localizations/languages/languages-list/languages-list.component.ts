@@ -7,6 +7,9 @@ import { Language } from 'projects/shared/src/lib/data/localization/language';
 import { LanguageSearch } from 'projects/shared/src/lib/data/localization/language-search';
 import { LanguagesService } from 'projects/shared/src/lib/services/api/languages/languages.service';
 import { Subject } from 'rxjs';
+import { LanguagesAddComponent } from '../languages-add/languages-add.component';
+import { LanguagesDeleteComponent } from '../languages-delete/languages-delete.component';
+import { LanguagesUpdateComponent } from '../languages-update/languages-update.component';
 
 @Component({
   selector: 'app-languages-list',
@@ -48,36 +51,42 @@ export class LanguagesListComponent implements OnInit, AfterViewInit, OnDestroy 
     this.dtTrigger.next(this.dtOptions);
   }
 
-  edit(language: Language): void {
-    // const modal = this.openModal(EditMessageComponent);
-    // modal.componentInstance.message = message;
+  addLanguage(){
+    const modal = this.openModal(LanguagesAddComponent);
 
-    // modal.result.then(() => {
-    //   this.refresh();
-    // });
+    modal.result.then((result) => {
+      if(result && result == "added") this.refresh();
+    });
+  }
+
+  edit(language: Language): void {
+    const modal = this.openModal(LanguagesUpdateComponent);
+    modal.componentInstance.language = language;
+
+    modal.result.then((result) => {
+      if(result && result == "updated") this.refresh();
+    });
   }
 
   delete(language: Language): void {
-    // const modal = this.openModal(DeleteMessageComponent);
-    // modal.componentInstance.message = message;
+    const modal = this.openModal(LanguagesDeleteComponent);
+    modal.componentInstance.language = language;
 
-    // modal.result.then((result) => {
-    //   this.refresh();
-    // });
+    modal.result.then((result) => {
+      this.refresh();
+    });
 
   }
 
   openModal(component: any) : NgbModalRef {
     const modal = this.modalService.open(component, { size: 'lg' });
-    modal.componentInstance.modal = modal;
+    modal.componentInstance.modalRef = modal;
     return modal;
   }
 
   refresh(): void {
     this.dtElement?.dtInstance.then((dtInstance: DataTables.Api) => {
-      dtInstance.destroy();
-
-      this.dtTrigger.next(this.dtOptions);
+      dtInstance.ajax.reload();
     })
   }
 

@@ -7,6 +7,7 @@ import { DataTablesModule } from 'angular-datatables';
 import { LanguagesAddComponent } from './languages-add/languages-add.component';
 import { LanguagesUpdateComponent } from './languages-update/languages-update.component';
 import { LanguagesDeleteComponent } from './languages-delete/languages-delete.component';
+import { FormsModule } from '@angular/forms';
 
 
 
@@ -20,6 +21,7 @@ import { LanguagesDeleteComponent } from './languages-delete/languages-delete.co
   imports: [
     CommonModule,
     DataTablesModule,
+    FormsModule,
     RouterModule.forChild(LanguageRoutes),
   ]
 })

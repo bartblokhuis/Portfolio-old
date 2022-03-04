@@ -33,6 +33,10 @@ export class LanguagesService {
     return this.apiService.post<Language>(`${this.baseUrl}/Create`, language);
   }
 
+  uploadLanguageIcon(languageId: number, formData: FormData): Observable<Result<Language>> {
+    return this.apiService.post<Language>(`${this.baseUrl}/${languageId}/uploadLanguageIcon`, formData);
+  }
+
   update(language: LanguageUpdate): Observable<Result<Language>> {
     return this.apiService.put<Language>(this.baseUrl, language);
   }

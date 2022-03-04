@@ -1,6 +1,6 @@
 ﻿namespace Portfolio.Domain.Dtos.Languages;
 
-public class LanguageCreateDto : LanguageBaseDto
+public class LanguageCreateDto : LanguageBaseCreateUpdateDto
 {
 
 }

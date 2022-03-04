@@ -1,12 +1,16 @@
 ﻿using AutoMapper;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Portfolio.Domain.Dtos.Languages;
 using Portfolio.Domain.Extensions;
 using Portfolio.Domain.Models.Localization;
 using Portfolio.Domain.Wrapper;
+using Portfolio.Services.Common;
 using Portfolio.Services.Languages;
+using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -20,15 +24,17 @@ public class LanguageController : ControllerBase
     #region Fields
 
     private readonly ILanguageService _languageService;
+    private readonly IUploadImageHelper _uploadImageHelper;
     private readonly IMapper _mapper;
 
     #endregion
 
     #region Constructor
 
-    public LanguageController(ILanguageService languageService, IMapper mapper)
+    public LanguageController(ILanguageService languageService, IUploadImageHelper uploadImageHelper, IMapper mapper)
     {
         _languageService = languageService;
+        _uploadImageHelper = uploadImageHelper;
         _mapper = mapper;
     }
 
@@ -36,7 +42,7 @@ public class LanguageController : ControllerBase
 
     #region Utils
 
-    private async Task<string> ValidateCreateUpdate(LanguageBaseDto dto, int? id = null)
+    private async Task<string> ValidateCreateUpdate(LanguageBaseCreateUpdateDto dto, int? id = null)
     {
         if (dto == null)
             return "Unkown error";
@@ -46,6 +52,10 @@ public class LanguageController : ControllerBase
 
         if (string.IsNullOrEmpty(dto.LanguageCulture))
             return "Please enter the language culture type";
+
+        if (!CultureInfo.GetCultures(CultureTypes.AllCultures)
+            .Any(culture => string.Equals(culture.Name, dto.LanguageCulture, StringComparison.CurrentCultureIgnoreCase)))
+            return "There is no culture with the provided type";
 
         if (await _languageService.IsExistingNameOrCulture(dto.Name, dto.LanguageCulture, id ?? 0))
             return "The language name or culture is already used";
@@ -111,7 +121,32 @@ public class LanguageController : ControllerBase
         var language = _mapper.Map<Language>(languageDto);
         await _languageService.InsertAsync(language);
 
-        return Ok(Result<LanguageDto>.SuccessAsync(_mapper.Map<LanguageDto>(language)));
+        return Ok(await Result<LanguageDto>.SuccessAsync(_mapper.Map<LanguageDto>(language)));
+    }
+
+    [HttpPost("{languageId}/UploadLanguageIcon")]
+    public async Task<IActionResult> UploadLanguageIcon(int languageId, IFormFile file)
+    {
+        var language = await _languageService.GetByIdAsync(languageId);
+        if(language == null)
+            return Ok(await Result.FailAsync("No language found with the provided id"));
+
+        if (file == null)
+            return Ok(await Result.FailAsync("No image provided"));
+
+        //Validate image file
+        var errorMessage = _uploadImageHelper.ValidateImage(file);
+        if (!string.IsNullOrEmpty(errorMessage))
+            return Ok(await Result.FailAsync(errorMessage));
+
+        //Save the image file.
+        var imagePath = await _uploadImageHelper.UploadLanguageFlagImageAsync(file);
+
+        //Update the language
+        language.FlagImageFilePath = imagePath;
+        await _languageService.UpdateAsync(language);
+
+        return Ok(await Result<LanguageDto>.SuccessAsync(_mapper.Map<LanguageDto>(language)));
     }
 
     #endregion
