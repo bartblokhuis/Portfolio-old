@@ -14,8 +14,6 @@ public abstract class LanguageBaseCreateUpdateDto
 
     public string LanguageCulture { get; set; }
 
-    public string FlagImageFilePath { get; set; }
-
     public bool IsPublished { get; set; }
 
     public int DisplayNumber { get; set; }

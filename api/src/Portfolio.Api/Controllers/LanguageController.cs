@@ -167,7 +167,7 @@ public class LanguageController : ControllerBase
         language = _mapper.Map(languageDto, language);
         await _languageService.UpdateAsync(language);
 
-        return Ok(Result<LanguageDto>.SuccessAsync(_mapper.Map<LanguageDto>(language)));
+        return Ok(await Result<LanguageDto>.SuccessAsync(_mapper.Map<LanguageDto>(language)));
     }
 
     #endregion

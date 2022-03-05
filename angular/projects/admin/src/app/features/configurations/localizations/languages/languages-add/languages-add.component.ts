@@ -15,15 +15,13 @@ declare var $: any;
 export class LanguagesAddComponent implements OnInit {
 
   @Input() modalRef: NgbModalRef | undefined;
+  
   model: LanguageCreate = { name: '', languageCulture: '', isPublished: false, displayNumber: 0};
   error: string | null = null;
-  imageRequiredError: string | null = null;
   formData: FormData | null = null;
   imagePath: string = '';
   form: any;
 
-  
-  
   constructor(private languagesService: LanguagesService, private readonly notificationService: NotificationService) { }
 
   ngOnInit(): void {
