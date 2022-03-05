@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { environment } from 'projects/admin/src/environments/environment';
 import { Language } from 'projects/shared/src/lib/data/localization/language';
+import { LanguageSearch } from 'projects/shared/src/lib/data/localization/language-search';
 import { LanguagesService } from 'projects/shared/src/lib/services/api/languages/languages.service';
 
 @Component({
@@ -18,13 +19,13 @@ export class LanguageSelectorComponent implements OnInit {
 
   ngOnInit(): void {
     this.loadLanguages();
+    this.languagesService.reloadAvailableLanguages().subscribe(result => this.languages = result.data.data);
   }
 
   loadLanguages(): void {
-    this.languagesService.getAll().subscribe((result) => {
-      if(!result.succeeded) return;
-      this.languages = result.data;
-      this.selectedLanguage = result.data[0];
+    this.languagesService.availableLanguages.subscribe((availableLanguages) => {
+      this.languages = availableLanguages;
+      this.selectedLanguage = this.languages[0];
     })
   }
 

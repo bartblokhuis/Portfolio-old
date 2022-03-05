@@ -5,7 +5,7 @@ namespace Portfolio.Services.Languages;
 
 public interface ILanguageService
 {
-    Task<IPagedList<Language>> GetAllAsync(int pageIndex = 0, int pageSize = int.MaxValue);
+    Task<IPagedList<Language>> GetAllAsync(bool onlyShowPublished, int pageIndex = 0, int pageSize = int.MaxValue);
 
     Task<Language> GetByIdAsync(int languageId);
 

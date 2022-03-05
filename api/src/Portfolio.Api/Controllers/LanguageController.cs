@@ -69,21 +69,6 @@ public class LanguageController : ControllerBase
 
     #region Get
 
-    [HttpGet("GetAll")]
-    public async Task<IActionResult> GetAll()
-    {
-        var languages = await _languageService.GetAllAsync();
-        if (languages == null)
-            return Ok(Result.FailAsync($"No languages found"));
-
-        var languagesResult = languages.ToListResult();
-
-        var result = _mapper.Map<ListResult<LanguageDto>>(languagesResult);
-        result.Succeeded = true;
-
-        return Ok(result);
-    }
-
     [HttpGet("GetById")]
     public async Task<IActionResult> GetById(int id)
     {
@@ -101,7 +86,7 @@ public class LanguageController : ControllerBase
     [HttpPost("Search")]
     public async Task<IActionResult> Search(LanguageSearchDto dto)
     {
-        var languages = await _languageService.GetAllAsync(pageIndex: dto.Page - 1, pageSize: dto.PageSize);
+        var languages = await _languageService.GetAllAsync(dto.OnlyShowPublished, pageIndex: dto.Page - 1, pageSize: dto.PageSize);
         var model = await new LanguageListDto().PrepareToGridAsync(dto, languages, () =>
         {
             return languages.ToAsyncEnumerable().SelectAwait(async language => _mapper.Map<LanguageDto>(language));

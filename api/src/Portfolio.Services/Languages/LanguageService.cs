@@ -24,10 +24,13 @@ public class LanguageService : ILanguageService
 
     #region Methods
 
-    public async Task<IPagedList<Language>> GetAllAsync(int pageIndex = 0, int pageSize = int.MaxValue)
+    public async Task<IPagedList<Language>> GetAllAsync(bool onlyShowPublished, int pageIndex = 0, int pageSize = int.MaxValue)
     {
         return await _languageRepository.GetAllPagedAsync(query =>
         {
+            if (onlyShowPublished)
+                query = query.Where(language => language.IsPublished);
+
             return query;
         }, pageIndex, pageSize);
     }

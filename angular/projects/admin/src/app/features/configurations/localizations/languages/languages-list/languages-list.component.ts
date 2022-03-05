@@ -32,7 +32,7 @@ export class LanguagesListComponent implements OnInit, AfterViewInit, OnDestroy 
   ngOnInit(): void {
     const ajaxOptions = {  
       ajax: (dataTablesParameters: LanguageSearch, callback: any) => {  
-        const model : LanguageSearch = { availablePageSizes: availablePageSizes.toString(), draw: dataTablesParameters.draw.toString(), length: dataTablesParameters.length, page: 0, pageSize: dataTablesParameters.length, start: dataTablesParameters.start }
+        const model : LanguageSearch = { availablePageSizes: availablePageSizes.toString(), draw: dataTablesParameters.draw.toString(), length: dataTablesParameters.length, page: 0, pageSize: dataTablesParameters.length, start: dataTablesParameters.start, onlyShowPublished: false }
         this.languagesService.search(model).subscribe((result) => {
           this.languages = result.data.data;
           callback({
@@ -87,7 +87,9 @@ export class LanguagesListComponent implements OnInit, AfterViewInit, OnDestroy 
   refresh(): void {
     this.dtElement?.dtInstance.then((dtInstance: DataTables.Api) => {
       dtInstance.ajax.reload();
-    })
+    });
+
+    this.languagesService.reloadAvailableLanguages().subscribe();
   }
 
   ngOnDestroy(): void {
