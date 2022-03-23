@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Portfolio.Database;
 
@@ -11,9 +12,10 @@ using Portfolio.Database;
 namespace Portfolio.Database.Migrations.AuthMigrations
 {
     [DbContext(typeof(AuthenticationDbContext))]
-    partial class AuthenticationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20220305113702_add_user_preference_table")]
+    partial class add_user_preference_table
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -224,13 +226,13 @@ namespace Portfolio.Database.Migrations.AuthMigrations
                         {
                             Id = "8e445865-a24d-4543-a6c6-9443d048cdb9",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "47f62c3a-8f4d-461b-98ab-d2eef65b6357",
+                            ConcurrencyStamp = "7cd7e776-95d4-4f83-9a86-1810c406872f",
                             EmailConfirmed = false,
                             LockoutEnabled = false,
                             NormalizedUserName = "ADMIN",
-                            PasswordHash = "AQAAAAEAACcQAAAAEL6zzSyza5jtlqLd7VdX8vcu5BI9jaEOESRFYH2n5Jw4wJ/8B4cCP9YLwd52J0woVQ==",
+                            PasswordHash = "AQAAAAEAACcQAAAAEBLMIJUEf0hQuTUrY2YLCPVQyv98oJGyH6g1CwPTSYVDrnDAMTwHH+9ZI6JXcnGc0Q==",
                             PhoneNumberConfirmed = false,
-                            SecurityStamp = "5f6ec176-645f-4402-a3b5-3326247cce95",
+                            SecurityStamp = "d89348ed-1ec0-49c2-9344-6216cfaf390b",
                             TwoFactorEnabled = false,
                             UserName = "Admin"
                         });
@@ -247,10 +249,10 @@ namespace Portfolio.Database.Migrations.AuthMigrations
                     b.Property<string>("ApplicationUserId")
                         .HasColumnType("nvarchar(450)");
 
-                    b.Property<bool?>("IsUseDarkMode")
+                    b.Property<bool>("IsUseDarkMode")
                         .HasColumnType("bit");
 
-                    b.Property<int?>("SelectedLanguageId")
+                    b.Property<int>("SelectedLanguageId")
                         .HasColumnType("int");
 
                     b.HasKey("Id");

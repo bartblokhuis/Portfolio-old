@@ -1,6 +1,5 @@
-﻿using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Identity;
+﻿using AutoMapper;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.IdentityModel.Tokens;
@@ -8,6 +7,8 @@ using Portfolio.Core.Configuration;
 using Portfolio.Domain.Dtos.Authentication;
 using Portfolio.Domain.Models.Authentication;
 using Portfolio.Domain.Wrapper;
+using Portfolio.Services.Users;
+using Portfolio.Services.WorkContexts;
 using System;
 using System.Collections.Generic;
 using System.IdentityModel.Tokens.Jwt;
@@ -22,23 +23,23 @@ public class AuthenticateController : ControllerBase
 {
     #region Fields
 
-    private readonly UserManager<ApplicationUser> _userManager;
-    private readonly RoleManager<IdentityRole> _roleManager;
     private readonly IConfiguration _configuration;
-    private readonly IHttpContextAccessor _httpContextAccessor;
     private readonly AppSettings _appSettings;
+    private readonly IUserService _userService;
+    private readonly IWorkContext _workContext;
+    private readonly IMapper _mapper;
 
     #endregion
 
     #region Constructor
 
-    public AuthenticateController(UserManager<ApplicationUser> userManager, RoleManager<IdentityRole> roleManager, IConfiguration configuration, IHttpContextAccessor httpContextAccessor, AppSettings appSettings)
+    public AuthenticateController(IConfiguration configuration, AppSettings appSettings, IUserService userService, IWorkContext workContext, IMapper mapper)
     {
-        _userManager = userManager;
-        _roleManager = roleManager;
         _configuration = configuration;
-        _httpContextAccessor = httpContextAccessor;
         _appSettings = appSettings;
+        _userService = userService;
+        _workContext = workContext;
+        _mapper = mapper;
     }
 
     #endregion
@@ -47,8 +48,6 @@ public class AuthenticateController : ControllerBase
 
     private async Task<JwtSecurityToken> GetJwtSecurityToken(ApplicationUser user, bool rememberMe)
     {
-        var userRoles = await _userManager.GetRolesAsync(user);
-
         var authClaims = new List<Claim>
             {
                 new Claim(ClaimTypes.NameIdentifier, user.Id),
@@ -57,10 +56,6 @@ public class AuthenticateController : ControllerBase
             };
 
         var loginTime = rememberMe ? DateTime.Now.AddDays(7) : DateTime.Now.AddHours(8);
-
-        foreach (var userRole in userRoles)
-            authClaims.Add(new Claim(ClaimTypes.Role, userRole));
-
 
         var authSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_configuration["JWT:Secret"]));
 
@@ -71,16 +66,6 @@ public class AuthenticateController : ControllerBase
             claims: authClaims,
             signingCredentials: new SigningCredentials(authSigningKey, SecurityAlgorithms.HmacSha256)
             );
-    }
-
-    private Task<ApplicationUser> GetUserFromContext()
-    {
-        var currentUserName = _httpContextAccessor.HttpContext.User.FindFirst(ClaimTypes.Name)?.Value;
-
-        if (string.IsNullOrEmpty(currentUserName))
-            return null;
-
-        return _userManager.FindByNameAsync(currentUserName);
     }
 
     #endregion
@@ -94,20 +79,15 @@ public class AuthenticateController : ControllerBase
     [Authorize()]
     public async Task<IActionResult> GetUserDetails()
     {
-        var currentUserName = _httpContextAccessor.HttpContext.User.FindFirst(ClaimTypes.Name)?.Value;
+        var currentUser = await _workContext.GetCurrentUserAsync();
 
-        if (string.IsNullOrEmpty(currentUserName))
-            throw new ApplicationException("No logged in user found");
-
-        var user = await _userManager.FindByNameAsync(currentUserName);
-
-        if (user == null)
+        if (currentUser == null)
             throw new ApplicationException("No logged in user found");
 
         return Ok(await Result<ApplicationUserDto>.SuccessAsync(new ApplicationUserDto
         {
-            Email = user.Email,
-            Username = user.UserName
+            Email = currentUser.Email,
+            Username = currentUser.UserName
         }));
     }
 
@@ -119,8 +99,8 @@ public class AuthenticateController : ControllerBase
     [Route("login")]
     public async Task<IActionResult> Login([FromBody] LoginModel model)
     {
-        var user = await _userManager.FindByNameAsync(model.Username);
-        if (user == null || !await _userManager.CheckPasswordAsync(user, model.Password))
+        var user = await _userService.GetUserByNameOrEmail(model.Username);
+        if (user == null || !await _userService.CheckPasswordAsync(user, model.Password))
             return Ok(await Result.FailAsync("Invalid username or password."));
 
 
@@ -145,17 +125,17 @@ public class AuthenticateController : ControllerBase
         if (!ModelState.IsValid)
             return Ok(await Result.FailAsync("Invalid model"));
 
-        var user = await GetUserFromContext();
-        if (user == null || !await _userManager.CheckPasswordAsync(user, model.Password))
+        var currentUser = await _workContext.GetCurrentUserAsync();
+        if (currentUser == null || !await _userService.CheckPasswordAsync(currentUser, model.Password))
             return Ok(await Result.FailAsync("Invalid username or password."));
 
-        user.UserName = model.Username;
-        user.NormalizedUserName = model.Username.ToUpper();
+        currentUser.UserName = model.Username;
+        currentUser.NormalizedUserName = model.Username.ToUpper();
+        
+        currentUser.Email = model.Email;
+        currentUser.NormalizedEmail = model.Email.ToUpper();
 
-        user.Email = model.Email;
-        user.NormalizedEmail = model.Email.ToUpper();
-
-        await _userManager.UpdateAsync(user);
+        await _userService.UpdateAsync(currentUser);
         return Ok(await Result.SuccessAsync("User updated"));
     }
 
@@ -171,11 +151,11 @@ public class AuthenticateController : ControllerBase
             return Ok(await Result.FailAsync("Invalid model"));
         
 
-        var user = await GetUserFromContext();
-        if (user == null || !await _userManager.CheckPasswordAsync(user, model.OldPassword))
+        var currentUser = await _workContext.GetCurrentUserAsync();
+        if (currentUser == null || !await _userService.CheckPasswordAsync(currentUser, model.OldPassword))
             return Ok(await Result.FailAsync("Invalid username or password."));
 
-        var result = await _userManager.ChangePasswordAsync(user, model.OldPassword, model.Password);
+        var result = await _userService.ChangePasswordAsync(currentUser, model.OldPassword, model.Password);
         if (!result.Succeeded)
             return Ok(await Result.FailAsync(result.Errors.Select(x => x.Description).ToList()));
 

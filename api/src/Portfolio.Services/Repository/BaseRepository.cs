@@ -26,12 +26,12 @@ public class BaseRepository<TEntity, TKey> : BaseRepository<TEntity, TKey, Portf
 }
 
 public class BaseRepository<TEntity, TKey, TDbContext> : IBaseRepository<TEntity, TKey, TDbContext>
-    where TDbContext : PortfolioContext
+    where TDbContext : DbContext
     where TEntity : class, IBaseEntity<TKey>
 {
     #region Fields
 
-    private readonly PortfolioContext _context;
+    private readonly DbContext _context;
     private readonly DbSet<TEntity> _dbSet;
     private readonly IEventPublisher _eventPublisher;
     private readonly IStaticCacheManager _staticCacheManager;
