@@ -111,11 +111,8 @@ public class PortfolioFileProvider : PhysicalFileProvider, IPortfolioFileProvide
     ///  Depth-first recursive delete, with handling for descendant directories open in Windows Explorer.
     /// </summary>
     /// <param name="path">Directory path</param>
-    public void DeleteDirectory(string path)
+    public void DeleteDirectory(string path!!)
     {
-        if (string.IsNullOrEmpty(path))
-            throw new ArgumentNullException(path);
-
         //find more info about directory deletion
         //and why we use this approach at https://stackoverflow.com/questions/329355/cannot-delete-directory-with-directory-deletepath-true
 

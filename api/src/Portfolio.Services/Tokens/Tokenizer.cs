@@ -133,14 +133,8 @@ public class Tokenizer : ITokenizer
 
     #region Methods
 
-    public string Replace(string template, IEnumerable<Token> tokens, bool htmlEncode)
+    public string Replace(string template!!, IEnumerable<Token> tokens!!, bool htmlEncode)
     {
-        if (string.IsNullOrWhiteSpace(template))
-            throw new ArgumentNullException(nameof(template));
-
-        if (tokens == null)
-            throw new ArgumentNullException(nameof(tokens));
-
         //replace conditional statements
         template = ReplaceConditionalStatements(template, tokens);
 

@@ -73,11 +73,8 @@ public class ScheduleTaskService : IScheduleTaskService
         }, pageIndex, pageSize);
     }
 
-    public virtual async Task InsertTaskAsync(ScheduleTask task)
+    public virtual async Task InsertTaskAsync(ScheduleTask task!!)
     {
-        if (task == null)
-            throw new ArgumentNullException(nameof(task));
-
         await _taskRepository.InsertAsync(task);
     }
 
