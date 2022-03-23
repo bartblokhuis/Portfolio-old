@@ -26,12 +26,12 @@ public class BaseRepository<TEntity, TKey> : BaseRepository<TEntity, TKey, Portf
 }
 
 public class BaseRepository<TEntity, TKey, TDbContext> : IBaseRepository<TEntity, TKey, TDbContext>
-    where TDbContext : PortfolioContext
+    where TDbContext : DbContext
     where TEntity : class, IBaseEntity<TKey>
 {
     #region Fields
 
-    private readonly PortfolioContext _context;
+    private readonly DbContext _context;
     private readonly DbSet<TEntity> _dbSet;
     private readonly IEventPublisher _eventPublisher;
     private readonly IStaticCacheManager _staticCacheManager;
@@ -72,7 +72,7 @@ public class BaseRepository<TEntity, TKey, TDbContext> : IBaseRepository<TEntity
         if (typeof(TEntity).GetInterface(nameof(IHasDisplayNumber)) == null)
             return query;
 
-        return query.OfType<IHasDisplayNumber>().OrderByDescending(entry => entry.DisplayNumber).OfType<TEntity>();
+        return query.OfType<IHasDisplayNumber>().OrderBy(entry => entry.DisplayNumber).OfType<TEntity>();
     }
 
     #endregion
@@ -111,7 +111,7 @@ public class BaseRepository<TEntity, TKey, TDbContext> : IBaseRepository<TEntity
             int pageIndex = 0, int pageSize = int.MaxValue, bool getOnlyTotalCount = false, bool includeDeleted = true, bool sortByDisplayNumber = true)
     {
         var query = AddDeletedFilter(Table, includeDeleted);
-        query = AddDeletedFilter(query, sortByDisplayNumber);
+        query = AddDisplayNumberFilter(query, sortByDisplayNumber);
 
         query = func != null ? func(query) : query;
 

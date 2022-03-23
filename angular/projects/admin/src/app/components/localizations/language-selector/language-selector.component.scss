@@ -1,0 +1,22 @@
+.nav-link {
+
+    &:hover {
+        cursor: pointer;
+    }
+}
+
+.language-icon {
+    height: 100%;
+
+    &:hover{
+        cursor: pointer;
+    }  
+}
+
+.language{
+    padding: 3px 10px;
+    &:hover {
+        cursor: pointer;
+        background-color: #f5f5f5;
+    }
+}

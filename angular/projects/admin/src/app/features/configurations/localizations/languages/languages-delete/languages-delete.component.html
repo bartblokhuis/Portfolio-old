@@ -1,0 +1,15 @@
+<div class="modal-header">
+    <h4 class="modal-title" id="modal-skillGroup-title">Delete {{ language?.name}}</h4>
+    <button type="button" class="close" aria-label="Close" (click)="modalRef?.close()">
+      <span aria-hidden="true">&times;</span>
+    </button>
+</div>
+<div class="modal-body">
+    <p>Are you sure you want to remove <b>{{ language?.name }}</b>, this action can not be undone.</p>
+</div>
+<div class="modal-footer justify-content-between">
+
+  <button type="button" class="btn btn-default" (click)="modalRef?.close()">Cancel</button>
+  <button type="button" class="btn btn-danger" (click)="remove()">Remove</button>
+  
+</div>

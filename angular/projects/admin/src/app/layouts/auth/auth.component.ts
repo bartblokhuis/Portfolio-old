@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { ThemingService } from '../../services/theming/theming.service';
 
 @Component({
   selector: 'app-auth',
@@ -7,9 +8,10 @@ import { Component, OnInit } from '@angular/core';
 })
 export class AuthComponent implements OnInit {
 
-  constructor() { }
+  constructor(private readonly themingService: ThemingService) { }
 
   ngOnInit(): void {
+    this.themingService.initialize();
   }
 
 }

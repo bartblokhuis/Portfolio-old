@@ -16,6 +16,12 @@ public class AuthenticationDbContext : IdentityDbContext<ApplicationUser>
 
     #endregion
 
+    #region Fields
+
+    public DbSet<UserPreferences> UserPreferences { get; set; }
+
+    #endregion
+
     #region Methods
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)

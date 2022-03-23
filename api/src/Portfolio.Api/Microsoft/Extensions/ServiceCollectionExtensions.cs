@@ -19,6 +19,7 @@ using Portfolio.Services.Blogs;
 using Portfolio.Services.BlogSubscribers;
 using Portfolio.Services.Comments;
 using Portfolio.Services.Common;
+using Portfolio.Services.Languages;
 using Portfolio.Services.Messages;
 using Portfolio.Services.Pictures;
 using Portfolio.Services.Projects;
@@ -30,6 +31,9 @@ using Portfolio.Services.Skills;
 using Portfolio.Services.Tasks;
 using Portfolio.Services.Tokens;
 using Portfolio.Services.Urls;
+using Portfolio.Services.UserPreference;
+using Portfolio.Services.Users;
+using Portfolio.Services.WorkContexts;
 using System.Text;
 
 namespace Portfolio.Microsoft.Extensions;
@@ -129,7 +133,11 @@ public static class ServiceCollectionExtensions
             .AddScoped<IEmailService, EmailService>()
             .AddScoped<ITokenizer, Tokenizer>()
             .AddScoped<IMessageTokenProvider, MessageTokenProvider>()
-            .AddScoped<IPictureService, PictureService>();
+            .AddScoped<ILanguageService, LanguageService>()
+            .AddScoped<IPictureService, PictureService>()
+            .AddScoped<IUserService, UserService>()
+            .AddScoped<IUserPreferencesService, UserPreferencesService>()
+            .AddScoped<IWorkContext, WorkContext>();
 
         return services;
     }

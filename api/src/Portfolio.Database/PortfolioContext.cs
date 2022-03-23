@@ -3,6 +3,7 @@ using Portfolio.Database.Configurations;
 using Portfolio.Domain.Models;
 using Portfolio.Domain.Models.Blogs;
 using Portfolio.Domain.Models.Common;
+using Portfolio.Domain.Models.Localization;
 using Portfolio.Domain.Models.Settings;
 using System;
 using System.Linq;
@@ -65,6 +66,10 @@ public class PortfolioContext : DbContext
     public DbSet<ApiSettings> ApiSettings { get; set; }
 
     public DbSet<MessageSettings> MessageSettings { get; set; }
+
+    public DbSet<Language> Languages { get; set; }
+
+    public DbSet<LocaleStringResource> LocaleStringResources { get; set; }
 
     #endregion
 

@@ -8,6 +8,11 @@
   
     <!-- Right navbar links -->
     <ul class="navbar-nav ml-auto">
+
+      <li class="nav-item dropdown">
+        <app-language-selector></app-language-selector>
+      </li>
+
       <!-- Messages Dropdown Menu -->
       <li class="nav-item">
         <a [routerLink]="'/messages'" class="nav-link" data-toggle="dropdown" href="#">
@@ -17,9 +22,7 @@
       </li>
 
       <li class="nav-item">
-        <a class="nav-link" (click)="toggleTheme()">
-          <i class="far fa-moon"></i>
-        </a>
+        <app-theme-switcher></app-theme-switcher>
       </li>
 
       <li class="nav-item dropdown">

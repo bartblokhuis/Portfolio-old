@@ -1,0 +1,59 @@
+<div class="row">
+    <div class="col-12">
+        <div class="card">
+            <div class="card-header">
+                <h3 class="card-title">
+                    Languages
+                </h3>
+            </div>
+            <div class="card-body">
+                <table datatable [dtOptions]="dtOptions" [dtTrigger]="dtTrigger" class="table table-bordered table-hover">
+                    <thead>
+                        <tr>
+                          <th>Name</th>
+                          <th>Icon</th>
+                          <th>Culture type</th>
+                          <th>Is published</th>
+                          <th>DisplayNumber</th>
+                          <th>Actions</th>
+                        </tr>
+                      </thead>
+                      <tbody *ngIf="languages?.length != 0">
+                        <tr *ngFor="let language of languages;">
+                            <td> {{ language.name }} </td>
+                            <td class="flag-icon"> <img *ngIf="language.flagImageFilePath" [src]="baseApiUrl + language.flagImageFilePath"> </td>
+                            <td> {{ language.languageCulture}} </td>
+                            <td> 
+                                <ng-container *ngIf="language.isPublished; else unpublished">
+                                    <i class="fas fa-check"></i>
+                                  </ng-container>
+                                  <ng-template #unpublished>
+                                    <i class="fas fa-ban"></i> 
+                                  </ng-template>
+                            </td>
+                            <td> {{ language.displayNumber }} </td>
+                            <td> 
+                              <div class="actions">
+                                <div (click)="edit(language)" class="action">
+                                  <i class="fas fa-pen-alt"></i>
+                                </div>
+                                <div (click)="delete(language)" class="action">
+                                  <i class="fas fa-trash-alt danger"></i>
+                                </div>
+                              </div>
+                            </td>
+                          </tr>
+                      </tbody>
+                      <tbody *ngIf="languages?.length == 0">
+                        <tr>
+                          <td colspan="3" class="no-data-available">No data!</td>
+                        </tr>
+                      </tbody>
+                </table>
+            </div>
+            <div class="card-footer">
+              <a class="btn btn-primary" (click)="addLanguage()">Add new language</a>
+            </div>
+        </div>
+    </div>
+</div>

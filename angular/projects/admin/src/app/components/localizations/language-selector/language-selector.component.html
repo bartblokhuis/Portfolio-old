@@ -1,0 +1,10 @@
+<div class="nav-link" data-toggle="dropdown" href="#" *ngIf="selectedLanguage">
+        <img [src]="baseApiUrl + selectedLanguage.flagImageFilePath" class="language-icon" />
+</div>
+  
+<div class="dropdown-menu dropdown-menu-sm dropdown-menu-right">
+    <div *ngFor="let language of languages" class="language" (click)="switchSelectedLanguage(language)">
+        <img [src]="baseApiUrl + language.flagImageFilePath" height="40" width="40" class="language-icon" />
+        {{language.name}}
+    </div> 
+</div>

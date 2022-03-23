@@ -6,6 +6,8 @@ using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Portfolio.Database;
 
+#nullable disable
+
 namespace Portfolio.Database.Migrations.AuthMigrations
 {
     [DbContext(typeof(AuthenticationDbContext))]
@@ -15,9 +17,10 @@ namespace Portfolio.Database.Migrations.AuthMigrations
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .UseIdentityColumns()
-                .HasAnnotation("Relational:MaxIdentifierLength", 128)
-                .HasAnnotation("ProductVersion", "5.0.4");
+                .HasAnnotation("ProductVersion", "6.0.1")
+                .HasAnnotation("Relational:MaxIdentifierLength", 128);
+
+            SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder, 1L, 1);
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole", b =>
                 {
@@ -43,15 +46,16 @@ namespace Portfolio.Database.Migrations.AuthMigrations
                         .HasDatabaseName("RoleNameIndex")
                         .HasFilter("[NormalizedName] IS NOT NULL");
 
-                    b.ToTable("AspNetRoles");
+                    b.ToTable("AspNetRoles", (string)null);
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .UseIdentityColumn();
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
 
                     b.Property<string>("ClaimType")
                         .HasColumnType("nvarchar(max)");
@@ -67,15 +71,16 @@ namespace Portfolio.Database.Migrations.AuthMigrations
 
                     b.HasIndex("RoleId");
 
-                    b.ToTable("AspNetRoleClaims");
+                    b.ToTable("AspNetRoleClaims", (string)null);
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserClaim<string>", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .UseIdentityColumn();
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
 
                     b.Property<string>("ClaimType")
                         .HasColumnType("nvarchar(max)");
@@ -91,7 +96,7 @@ namespace Portfolio.Database.Migrations.AuthMigrations
 
                     b.HasIndex("UserId");
 
-                    b.ToTable("AspNetUserClaims");
+                    b.ToTable("AspNetUserClaims", (string)null);
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserLogin<string>", b =>
@@ -113,7 +118,7 @@ namespace Portfolio.Database.Migrations.AuthMigrations
 
                     b.HasIndex("UserId");
 
-                    b.ToTable("AspNetUserLogins");
+                    b.ToTable("AspNetUserLogins", (string)null);
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserRole<string>", b =>
@@ -128,7 +133,7 @@ namespace Portfolio.Database.Migrations.AuthMigrations
 
                     b.HasIndex("RoleId");
 
-                    b.ToTable("AspNetUserRoles");
+                    b.ToTable("AspNetUserRoles", (string)null);
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserToken<string>", b =>
@@ -147,7 +152,7 @@ namespace Portfolio.Database.Migrations.AuthMigrations
 
                     b.HasKey("UserId", "LoginProvider", "Name");
 
-                    b.ToTable("AspNetUserTokens");
+                    b.ToTable("AspNetUserTokens", (string)null);
                 });
 
             modelBuilder.Entity("Portfolio.Domain.Models.Authentication.ApplicationUser", b =>
@@ -212,23 +217,49 @@ namespace Portfolio.Database.Migrations.AuthMigrations
                         .HasDatabaseName("UserNameIndex")
                         .HasFilter("[NormalizedUserName] IS NOT NULL");
 
-                    b.ToTable("AspNetUsers");
+                    b.ToTable("AspNetUsers", (string)null);
 
                     b.HasData(
                         new
                         {
                             Id = "8e445865-a24d-4543-a6c6-9443d048cdb9",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "d799c3e1-74df-43a4-9a54-521e83c425d5",
+                            ConcurrencyStamp = "47f62c3a-8f4d-461b-98ab-d2eef65b6357",
                             EmailConfirmed = false,
                             LockoutEnabled = false,
                             NormalizedUserName = "ADMIN",
-                            PasswordHash = "AQAAAAEAACcQAAAAEJoUR4opdxTkyeY3nsk3VqUSK5AYBKOWmhbmUIJsENo17rEao5ptR6eGjXHVJ67I9g==",
+                            PasswordHash = "AQAAAAEAACcQAAAAEL6zzSyza5jtlqLd7VdX8vcu5BI9jaEOESRFYH2n5Jw4wJ/8B4cCP9YLwd52J0woVQ==",
                             PhoneNumberConfirmed = false,
-                            SecurityStamp = "2faf97cb-c7bb-41f9-aa25-285a43a7c8a4",
+                            SecurityStamp = "5f6ec176-645f-4402-a3b5-3326247cce95",
                             TwoFactorEnabled = false,
                             UserName = "Admin"
                         });
+                });
+
+            modelBuilder.Entity("Portfolio.Domain.Models.Authentication.UserPreferences", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+
+                    b.Property<string>("ApplicationUserId")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<bool?>("IsUseDarkMode")
+                        .HasColumnType("bit");
+
+                    b.Property<int?>("SelectedLanguageId")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("ApplicationUserId")
+                        .IsUnique()
+                        .HasFilter("[ApplicationUserId] IS NOT NULL");
+
+                    b.ToTable("UserPreferences");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
@@ -280,6 +311,20 @@ namespace Portfolio.Database.Migrations.AuthMigrations
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+                });
+
+            modelBuilder.Entity("Portfolio.Domain.Models.Authentication.UserPreferences", b =>
+                {
+                    b.HasOne("Portfolio.Domain.Models.Authentication.ApplicationUser", "ApplicationUser")
+                        .WithOne("UserPreferences")
+                        .HasForeignKey("Portfolio.Domain.Models.Authentication.UserPreferences", "ApplicationUserId");
+
+                    b.Navigation("ApplicationUser");
+                });
+
+            modelBuilder.Entity("Portfolio.Domain.Models.Authentication.ApplicationUser", b =>
+                {
+                    b.Navigation("UserPreferences");
                 });
 #pragma warning restore 612, 618
         }

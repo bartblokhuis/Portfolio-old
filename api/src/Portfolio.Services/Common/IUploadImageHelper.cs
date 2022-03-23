@@ -8,5 +8,7 @@ public interface IUploadImageHelper
 
     Task<string> UploadImageAsync(IFormFile image);
 
+    Task<string> UploadLanguageFlagImageAsync(IFormFile image);
+
     void DeleteImage(string path);
 }

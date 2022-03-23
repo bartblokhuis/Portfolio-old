@@ -14,19 +14,20 @@ import { BlogPostsModule } from './features/blog-posts/blog-posts.module';
 import { MessagesModule } from './features/messages/messages.module';
 import { PicturesModule } from './features/pictures/pictures.module';
 import { ProjectsModule } from './features/projects/projects.module';
-import { SettingsModule } from './features/settings/settings.module';
 import { SkillGroupsModule } from './features/skill-groups/skill-groups.module';
 import { UserModule } from './features/user/user.module';
 import { RichTextEditorModule } from './components/rich-text-editor/rich-text-editor.module';
 import { BlogSubscribersModule } from './features/blog-subscribers/blog-subscribers.module';
 import { EmailQueueModule } from './features/email-queue/email-queue.module';
 import { ScheduleTaskModule } from './features/schedule-task/schedule-task.module';
+import { ConfigurationsModule } from './features/configurations/configurations.module';
+import { LocalizationComponentsModule } from './components/localizations/localization-components.module';
 
 @NgModule({
   declarations: [
     AppComponent,
     AdminComponent,
-    AuthComponent
+    AuthComponent,
   ],
   imports: [
     BrowserModule,
@@ -37,14 +38,15 @@ import { ScheduleTaskModule } from './features/schedule-task/schedule-task.modul
     MessagesModule,
     ProjectsModule,
     UserModule,
-    SettingsModule,
     PicturesModule,
     BlogPostsModule,
     BlogSubscribersModule,
     SharedComponentsModule,
     RichTextEditorModule,
     EmailQueueModule,
-    ScheduleTaskModule
+    ScheduleTaskModule,
+    ConfigurationsModule,
+    LocalizationComponentsModule
   ],
   providers: [
     {

@@ -187,6 +187,86 @@ namespace Portfolio.Database.Migrations.Portfolio
                     b.ToTable("Comments");
                 });
 
+            modelBuilder.Entity("Portfolio.Domain.Models.Localization.Language", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+
+                    b.Property<int>("DisplayNumber")
+                        .HasColumnType("int");
+
+                    b.Property<string>("FlagImageFilePath")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<bool>("IsPublished")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("LanguageCulture")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasMaxLength(128)
+                        .HasColumnType("nvarchar(128)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Languages");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            DisplayNumber = 0,
+                            FlagImageFilePath = "languages/united-33135.svg",
+                            IsPublished = true,
+                            LanguageCulture = "en-US",
+                            Name = "English"
+                        },
+                        new
+                        {
+                            Id = 2,
+                            DisplayNumber = 1,
+                            FlagImageFilePath = "languages/netherlands-33035.svg",
+                            IsPublished = false,
+                            LanguageCulture = "nl-NL",
+                            Name = "Dutch"
+                        });
+                });
+
+            modelBuilder.Entity("Portfolio.Domain.Models.Localization.LocaleStringResource", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+
+                    b.Property<string>("Area")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("LanguageId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Page")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("ResourceName")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("ResourceValue")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("LanguageId");
+
+                    b.ToTable("LocaleStringResources");
+                });
+
             modelBuilder.Entity("Portfolio.Domain.Models.Message", b =>
                 {
                     b.Property<int>("Id")
@@ -238,7 +318,7 @@ namespace Portfolio.Database.Migrations.Portfolio
                         new
                         {
                             Id = 1,
-                            CreatedAtUTC = new DateTime(2022, 1, 26, 23, 35, 22, 41, DateTimeKind.Utc).AddTicks(5792),
+                            CreatedAtUTC = new DateTime(2022, 2, 7, 22, 56, 28, 650, DateTimeKind.Utc).AddTicks(8235),
                             Email = "info@bartblokhuis.com",
                             FirstName = "Bart",
                             HasSentNotification = false,
@@ -887,6 +967,17 @@ namespace Portfolio.Database.Migrations.Portfolio
                     b.Navigation("BlogPost");
 
                     b.Navigation("ParentComment");
+                });
+
+            modelBuilder.Entity("Portfolio.Domain.Models.Localization.LocaleStringResource", b =>
+                {
+                    b.HasOne("Portfolio.Domain.Models.Localization.Language", "Language")
+                        .WithMany()
+                        .HasForeignKey("LanguageId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Language");
                 });
 
             modelBuilder.Entity("Portfolio.Domain.Models.ProjectPicture", b =>
