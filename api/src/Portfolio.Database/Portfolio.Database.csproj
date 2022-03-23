@@ -4,6 +4,14 @@
         <TargetFramework>net7.0</TargetFramework>
     </PropertyGroup>
 
+    <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
+      <LangVersion>preview</LangVersion>
+    </PropertyGroup>
+
+    <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
+      <LangVersion>preview</LangVersion>
+    </PropertyGroup>
+
     <ItemGroup>
       <ProjectReference Include="..\Portfolio.Domain\Portfolio.Domain.csproj" />
     </ItemGroup>
