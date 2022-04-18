@@ -31,6 +31,9 @@ using Portfolio.Services.Skills;
 using Portfolio.Services.Tasks;
 using Portfolio.Services.Tokens;
 using Portfolio.Services.Urls;
+using Portfolio.Services.UserPreference;
+using Portfolio.Services.Users;
+using Portfolio.Services.WorkContexts;
 using System.Text;
 
 namespace Portfolio.Microsoft.Extensions;
@@ -131,7 +134,10 @@ public static class ServiceCollectionExtensions
             .AddScoped<ITokenizer, Tokenizer>()
             .AddScoped<IMessageTokenProvider, MessageTokenProvider>()
             .AddScoped<ILanguageService, LanguageService>()
-            .AddScoped<IPictureService, PictureService>();
+            .AddScoped<IPictureService, PictureService>()
+            .AddScoped<IUserService, UserService>()
+            .AddScoped<IUserPreferencesService, UserPreferencesService>()
+            .AddScoped<IWorkContext, WorkContext>();
 
         return services;
     }

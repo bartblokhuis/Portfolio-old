@@ -69,11 +69,8 @@ namespace Portfolio.Services.Pictures
             return picture;
         }
 
-        public async Task<Picture> UpdatePictureFromFileAsync(Picture picture, IFormFile file, string titleAttribute, string altAttribute)
+        public async Task<Picture> UpdatePictureFromFileAsync(Picture picture!!, IFormFile file, string titleAttribute, string altAttribute)
         {
-            if(picture == null)
-                throw new ArgumentNullException(nameof(picture));
-
             if(file != null)
             {
                 var errorMessage = _uploadImageHelper.ValidateImage(file);
@@ -92,11 +89,8 @@ namespace Portfolio.Services.Pictures
             return picture;
         }
 
-        public async Task<string> DeleteAsync(Picture picture)
+        public async Task<string> DeleteAsync(Picture picture!!)
         {
-            if (picture == null)
-                throw new ArgumentNullException(nameof(picture));
-
             try
             {
                 await _pictureRepository.DeleteAsync(picture);
@@ -123,11 +117,8 @@ namespace Portfolio.Services.Pictures
 
         #region Utils
 
-        private static string GetMimeType(string extension)
+        private static string GetMimeType(string extension!!)
         {
-            if (extension == null)
-                throw new ArgumentNullException("extension");
-
             if (extension.StartsWith("."))
                 extension = extension.Substring(1);
 

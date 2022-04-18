@@ -1,6 +1,7 @@
+import { UserPreferences } from "./user-preferences";
+
 export interface User {
-    id: string;
     username: string;
-    token: string;
-    expiration: string;
+    email: string;
+    userPreferences: UserPreferences;
 }

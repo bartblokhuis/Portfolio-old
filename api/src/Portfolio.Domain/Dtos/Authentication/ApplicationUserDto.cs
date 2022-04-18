@@ -12,5 +12,7 @@ public class ApplicationUserDto
     [Required]
     public string Email { get; set; }
 
+    public UserPreferencesDto UserPreferences { get; set; }
+
     #endregion
 }

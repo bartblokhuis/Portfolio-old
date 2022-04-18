@@ -191,11 +191,8 @@ public class ProjectController : ControllerBase
     }
 
     [HttpPost("Url/Create")]
-    public async Task<IActionResult> Create(CreateProjectUrlDto model)
+    public async Task<IActionResult> Create(CreateProjectUrlDto model!!)
     {
-        if(model == null)
-            throw new ArgumentNullException(nameof(model));
-
         var project = await _projectService.GetByIdAsync(model.ProjectId);
         if (project == null)
             return Ok(await Result.FailAsync("Project not found"));
@@ -208,11 +205,8 @@ public class ProjectController : ControllerBase
     }
 
     [HttpPost("Pictures/")]
-    public async Task<IActionResult> Create(CreateProjectPictureDto model)
+    public async Task<IActionResult> Create(CreateProjectPictureDto model!!)
     {
-        if (model == null)
-            throw new ArgumentNullException(nameof(model));
-
         var project = await _projectService.GetByIdAsync(model.ProjectId);
         if (project == null)
             return Ok(await Result.FailAsync("Project not found"));

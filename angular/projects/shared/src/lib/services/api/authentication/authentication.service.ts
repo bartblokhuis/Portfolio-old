@@ -5,28 +5,31 @@ import { ApiService } from '../api.service';
 import { Result } from 'projects/shared/src/lib/data/common/Result';
 import { ChangeUserPassword } from 'projects/shared/src/lib/data/user/change-password';
 import { LoginResponse } from 'projects/shared/src/lib/data/user/response';
-import { User } from 'projects/shared/src/lib/data/user/user';
+import { UserToken } from 'projects/shared/src/lib/data/user/user-token';
 import { UserDetails } from 'projects/shared/src/lib/data/user/user-details';
+import { User } from '../../../data/user/user';
 
 @Injectable({
   providedIn: 'root'
 })
 export class AuthenticationService {
 
-  private currentUserSubject: BehaviorSubject<User> | undefined;
-  public currentUser: Observable<User> | undefined;
+  private currentUserTokenSubject: BehaviorSubject<UserToken> | undefined;
+  public currentUserToken: Observable<UserToken> | undefined;
+
+  public currentUser: User | null = null;
   
   constructor(private apiService: ApiService) { 
 
     let localStorageUser = localStorage.getItem('currentUser');
     if(localStorageUser){
-      this.currentUserSubject = new BehaviorSubject<User>(JSON.parse(localStorageUser));
-      this.currentUser = this.currentUserSubject.asObservable();
+      this.currentUserTokenSubject = new BehaviorSubject<UserToken>(JSON.parse(localStorageUser));
+      this.currentUserToken = this.currentUserTokenSubject.asObservable();
     }
   }
 
-  public get currentUserValue(): User | undefined {
-    return this.currentUserSubject?.value;
+  public get currentUserValue(): UserToken | undefined {
+    return this.currentUserTokenSubject?.value;
   }
 
   login(username: string, password: string, rememberMe: boolean): Observable<Result<LoginResponse>> {
@@ -36,11 +39,11 @@ export class AuthenticationService {
         //If we dont have a token it means the login request failed.
         if(!result.succeeded || !result.data.token) return result;
 
-        const user: User = { username: username, expiration: result.data.expiration, id: result.data.userId, token: result.data.token }
+        const user: UserToken = { username: username, expiration: result.data.expiration, id: result.data.userId, token: result.data.token }
         localStorage.setItem('currentUser', JSON.stringify(user));
 
-        if(!this.currentUserSubject) this.currentUserSubject = new BehaviorSubject<User>(user);
-        else this.currentUserSubject?.next(user)
+        if(!this.currentUserTokenSubject) this.currentUserTokenSubject = new BehaviorSubject<UserToken>(user);
+        else this.currentUserTokenSubject?.next(user)
         
         return result;
       }))
@@ -49,7 +52,7 @@ export class AuthenticationService {
   logout() {
     // remove user from local storage to log user out
     localStorage.removeItem('currentUser');
-    this.currentUserSubject = undefined;
+    this.currentUserTokenSubject = undefined;
   }
 
   getUserDetails(): Observable<Result<UserDetails>> {
@@ -62,6 +65,13 @@ export class AuthenticationService {
 
   updatePassword(changePassword: ChangeUserPassword): Observable<Result> {
     return this.apiService.put('user/updatePassword', changePassword);
+  }
+
+  getCurrentUser(): Observable<Result<User>> {
+    return this.apiService.get<User>('User/Current').pipe(map(result => {
+      this.currentUser = result.data
+      return result
+    }));
   }
 
 }

@@ -9,13 +9,10 @@ namespace Portfolio.Domain.Extensions;
 
 public static class ModelExtensions
 {
-    public static async Task<TListModel> PrepareToGridAsync<TListModel, TModel, TObject>(this TListModel listModel,
+    public static async Task<TListModel> PrepareToGridAsync<TListModel, TModel, TObject>(this TListModel listModel!!,
             BaseSearchModel searchModel, IPagedList<TObject> objectList, Func<IAsyncEnumerable<TModel>> dataFillFunction)
             where TListModel : BasePagedListModel<TModel>
     {
-        if (listModel == null)
-            throw new ArgumentNullException(nameof(listModel));
-
         listModel.Data = await (dataFillFunction?.Invoke()).ToListAsync();
         listModel.Draw = searchModel?.Draw;
         listModel.RecordsTotal = objectList?.TotalCount ?? 0;
