@@ -73,7 +73,7 @@ public class ScheduleTaskService : IScheduleTaskService
         }, pageIndex, pageSize);
     }
 
-    public virtual async Task InsertTaskAsync(ScheduleTask task!!)
+    public virtual async Task InsertTaskAsync(ScheduleTask task)
     {
         await _taskRepository.InsertAsync(task);
     }

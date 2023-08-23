@@ -24,7 +24,7 @@ public class UserPreferencesService : IUserPreferencesService
 
     #region Utils
 
-    private async Task<UserPreferences> GetOrCreateUserPreferences(ApplicationUser user!!)
+    private async Task<UserPreferences> GetOrCreateUserPreferences(ApplicationUser user)
     {
         var preferences = await _userPreferenceRepo.FirstOrDefaultAsync(x => x.ApplicationUserId == user.Id);
         if(preferences != null) 

@@ -9,7 +9,7 @@ namespace Portfolio.Domain.Extensions;
 
 public static class ModelExtensions
 {
-    public static async Task<TListModel> PrepareToGridAsync<TListModel, TModel, TObject>(this TListModel listModel!!,
+    public static async Task<TListModel> PrepareToGridAsync<TListModel, TModel, TObject>(this TListModel listModel,
             BaseSearchModel searchModel, IPagedList<TObject> objectList, Func<IAsyncEnumerable<TModel>> dataFillFunction)
             where TListModel : BasePagedListModel<TModel>
     {

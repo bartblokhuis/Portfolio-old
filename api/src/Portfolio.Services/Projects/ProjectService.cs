@@ -160,7 +160,7 @@ public class ProjectService : IProjectService
         return project;
     }
 
-    public Task UpdateProjectPictureAsync(ProjectPicture picture!!)
+    public Task UpdateProjectPictureAsync(ProjectPicture picture)
     {
         picture.Project = null;
         picture.Picture = null;
@@ -178,7 +178,7 @@ public class ProjectService : IProjectService
         return;
     }
 
-    public async Task DeleteProjectUrlAsync(Project project!!, int urlId)
+    public async Task DeleteProjectUrlAsync(Project project, int urlId)
     {
         var projectUrl = await _projectUrlsRepository.FirstOrDefaultAsync(x => x.ProjectId == project.Id && x.UrlId == urlId);
         if (projectUrl == null)

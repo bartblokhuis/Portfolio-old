@@ -133,7 +133,7 @@ public class Tokenizer : ITokenizer
 
     #region Methods
 
-    public string Replace(string template!!, IEnumerable<Token> tokens!!, bool htmlEncode)
+    public string Replace(string template, IEnumerable<Token> tokens, bool htmlEncode)
     {
         //replace conditional statements
         template = ReplaceConditionalStatements(template, tokens);

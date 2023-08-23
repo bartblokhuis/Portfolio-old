@@ -191,7 +191,7 @@ public class ProjectController : ControllerBase
     }
 
     [HttpPost("Url/Create")]
-    public async Task<IActionResult> Create(CreateProjectUrlDto model!!)
+    public async Task<IActionResult> Create(CreateProjectUrlDto model)
     {
         var project = await _projectService.GetByIdAsync(model.ProjectId);
         if (project == null)
@@ -205,7 +205,7 @@ public class ProjectController : ControllerBase
     }
 
     [HttpPost("Pictures/")]
-    public async Task<IActionResult> Create(CreateProjectPictureDto model!!)
+    public async Task<IActionResult> Create(CreateProjectPictureDto model)
     {
         var project = await _projectService.GetByIdAsync(model.ProjectId);
         if (project == null)

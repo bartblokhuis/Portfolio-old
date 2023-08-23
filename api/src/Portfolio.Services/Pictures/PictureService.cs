@@ -69,7 +69,7 @@ namespace Portfolio.Services.Pictures
             return picture;
         }
 
-        public async Task<Picture> UpdatePictureFromFileAsync(Picture picture!!, IFormFile file, string titleAttribute, string altAttribute)
+        public async Task<Picture> UpdatePictureFromFileAsync(Picture picture, IFormFile file, string titleAttribute, string altAttribute)
         {
             if(file != null)
             {
@@ -89,7 +89,7 @@ namespace Portfolio.Services.Pictures
             return picture;
         }
 
-        public async Task<string> DeleteAsync(Picture picture!!)
+        public async Task<string> DeleteAsync(Picture picture)
         {
             try
             {
@@ -117,7 +117,7 @@ namespace Portfolio.Services.Pictures
 
         #region Utils
 
-        private static string GetMimeType(string extension!!)
+        private static string GetMimeType(string extension)
         {
             if (extension.StartsWith("."))
                 extension = extension.Substring(1);
