@@ -231,7 +231,7 @@ public static class ServiceCollectionExtensions
     {
         services.AddDbContext<TContext>(options =>
         {
-            options.UseSqlServer(connectionString, e => e.MigrationsAssembly(typeof(TContext).Assembly.FullName));
+            options.UseNpgsql(connectionString, e => e.MigrationsAssembly(typeof(TContext).Assembly.FullName));
         });
 
         //Apply new migrations
